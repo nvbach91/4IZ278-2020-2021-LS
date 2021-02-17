@@ -1,24 +1,39 @@
 <?php
 
-$avatar = 'jedi-logo.svg';
+// this is a one-line comment
+
+/*
+this is a multiline
+comment
+*/
+
+
+// variable declaration and initialization
+
+$avatar = 'jedi-logo.svg';                  // data type string
 $firstName = 'Anakin';
 $lastName = 'Skywalker';
 $title = 'Lead Developer / Architect';
 $company = 'First Order Jedi Council';
-$available = false;
-$phone = '+420 776 889 643';
+$phone = '+420 777 888 999';
 $email = 'skywalker@jedi-council.com';
 $website = 'www.jedi-council.com';
-
+$available = false;                         // data type boolean
 $street = 'Temple of Eedit';
-$propNumber = 42;
+$propertyNumber = 42;                       // datatype number
 $orientationNumber = 121;
 $city = 'Coruscant';
-$address = $street . ' ' . $propNumber . '/' . $orientationNumber . ', ' . $city;
+
+// string concatenation
+$address = $street . ' ' . $propertyNumber . '/' . $orientationNumber . ', ' . $city;
+
+// string variable interpolation
+$address = "$street $propertyNumber/$orientationNumber, $city";
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +43,7 @@ $address = $street . ' ' . $propNumber . '/' . $orientationNumber . ', ' . $city
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body>
     <main class="container">
         <h1 class="text-center">My Business Card in PHP</h1>
@@ -60,6 +76,7 @@ $address = $street . ' ' . $propNumber . '/' . $orientationNumber . ', ' . $city
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
-    <?php require '../hotreloader.php'; ?>
+    <?php require "../hotreloader.php" ?>
 </body>
+
 </html>
