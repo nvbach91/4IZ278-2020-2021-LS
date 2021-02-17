@@ -1,0 +1,9 @@
+INSERT {
+    ?t rdfs:label "something else"@en .
+}
+DELETE {
+    ?t rdfs:label "Test data Jerv (B2B and B2C)"@en .
+}
+WHERE {
+    BIND(<http://ontology.bisnode.net/dataset#testDataJerv> AS ?t)
+}
