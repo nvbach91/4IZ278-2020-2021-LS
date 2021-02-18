@@ -1,0 +1,163 @@
+<?php
+
+require __DIR__ . "/src/Contact.php";
+
+$people = [
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/ludie_kub_robel_biz.svg",
+        "Walter",
+        "Wolff",
+        new DateTime("1980-06-11"),
+        "Customer Designer",
+        "Hegmann-Parisian",
+        new Address("Sammy Flats", "7019", "South Patrick"),
+        "(732) 840-6898 x5663",
+        "ludie_kub@robel.biz",
+        "hammes.io",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/kaci_fahey_marsk_co.svg",
+        "Eleanore",
+        "Feest",
+        new DateTime("2002-07-16"),
+        "Government Analyst",
+        "D'Amore, Jenkins and Barton",
+        new Address("Ryann Trail", "4046", "Lake Moontown"),
+        "926.186.8289",
+        "kaci_fahey@marks.co",
+        "padberg.biz",
+        false
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/shielra_ferry_runolfsdottir_com.svg",
+        "Sherman",
+        "Schmidt",
+        new DateTime("1997-12-24"),
+        "Sales Director",
+        "Ferry, Schulist and Doyle",
+        new Address("Jay Creek", "7710", "Port Tracymouth"),
+        "932-283-9986 x85627",
+        "shira_ferry@runolfsdottir.com",
+        "mcglynn.io",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/malik_lynch_walsh_name.svg",
+        "Lyla",
+        "Okuneva",
+        new DateTime("1956-10-17"),
+        "Banking Strategist",
+        "Goodwin, Klein and Bayer",
+        new Address("Ginette Stravenue", "383", "West Jesusland"),
+        "1-340-252-4228 x48822",
+        "malik.lynch@walsh.name",
+        "lockman.com",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/pamelia_considine_org.svg",
+        "Granville",
+        "Hane",
+        new DateTime("1966-07-22"),
+        "Manufacturing Associate",
+        "Hagenes-Emard",
+        new Address("Wiza Prairie", "187", "Lake Lettyfort"),
+        "743-114-9656 x878",
+        "pamelia@considine.org",
+        "block-sporer.biz",
+        false
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/lucile_pachocha_ernser_co.svg",
+        "Shavonda",
+        "Funk",
+        new DateTime("1993-12-28"),
+        "Product Representative",
+        "Maggio-Willms",
+        new Address("Stark Forest", "7045", "Lake Mack"),
+        "947.424.8180",
+        "lucile@pacocha-ernser.co",
+        "rempel.org",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/buck_hettinger_org.svg",
+        "Erik",
+        "Cartwright",
+        new DateTime("1996-02-27"),
+        "Senior Technician",
+        "Dietrich, Greenholt and Pagac",
+        new Address("Joey Station", "445", "Kutchborough"),
+        "540-391-8912 x71946",
+        "buck@hettinger.org",
+        "tillman.info",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/joe_hermiston_predovic_co.svg",
+        "Antonette",
+        "Steuber",
+        new DateTime("2002-05-12"),
+        "National Architect",
+        "Bashirian-Thompson",
+        new Address("Jessika Shoal", "5288", "Sherronchester"),
+        "605-112-7588",
+        "joe.hermiston@predovic.co",
+        "mraz.org",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/clark_fisher_io.svg",
+        "Clyde",
+        "Lynch",
+        new DateTime("1988-10-07"),
+        "Farming Developer",
+        "Gulgowski-Jerde",
+        new Address("Daugherty Plaza", "93846", "Lake Robinton"),
+        "(303) 953-0699",
+        "clark@fisher.io",
+        "tremblay-lesch.com",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/rafael_stracke_schiller_co.svg",
+        "Dan",
+        "O'Reilly",
+        new DateTime("1984-04-23"),
+        "National Supervisor",
+        "Bergstrom-Runolfsson",
+        new Address("Tromp Camp", "657", "West Laylaside"),
+        "328.418.7222 x805",
+        "rafael@stracke-schiller.co",
+        "feil.name",
+        false
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/esperanza_robel_info.svg",
+        "Alejandro",
+        "Dickinson",
+        new DateTime("1969-01-16"),
+        "Mining Producer",
+        "Pfannerstill-Hammes",
+        new Address("Ernser Via", "3672", "Lakinburgh"),
+        "446-668-9448 x9235",
+        "esperanza@robel.info",
+        "heaney.name",
+        true
+    ),
+    new Contact(
+        "https://avatars.dicebear.com/4.5/api/avataaars/eneida_hamill_hodkiewicz_name.svg",
+        "Antwan",
+        "Hane",
+        new DateTime("1984-07-14"),
+        "Forward Engineer",
+        "Gutkowski, Littel and Thiel",
+        new Address("Kohler Drives", "615", "Port Janiece"),
+        "604-594-9799 x64462",
+        "eneida.hamill@hodkiewicz.name",
+        "connelly.co",
+        true
+    ),
+
+];
