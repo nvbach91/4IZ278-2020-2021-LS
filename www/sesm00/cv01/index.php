@@ -31,7 +31,7 @@ $adresa = $ulice . ' ' . $popisne . '/' . $orientacni . ', ' . $mesto;
     <div class="card-block">
         <div class="card card-top">
             <div class="card-left">
-                <img src="./img/<?php echo $logo; ?>"/>
+                <img src="./img/<?php echo $logo; ?>" alt="Baterka"/>
             </div>
             <div class="card-right">
                 <p><?php echo $jmeno; ?></p>
@@ -46,7 +46,7 @@ $adresa = $ulice . ' ' . $popisne . '/' . $orientacni . ', ' . $mesto;
         </div>
         <div class="space"></div>
         <div class="card card-back">
-            <img src="./img/<?php echo $logo; ?>"/>
+            <img src="./img/<?php echo $logo; ?>" alt="Baterka"/>
         </div>
     </div>
 
