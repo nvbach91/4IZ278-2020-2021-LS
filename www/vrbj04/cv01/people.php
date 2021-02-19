@@ -53,7 +53,7 @@ $people = [
         "1-340-252-4228 x48822",
         "malik.lynch@walsh.name",
         "lockman.com",
-        true
+        false
     ),
     new Contact(
         "https://avatars.dicebear.com/4.5/api/avataaars/pamelia_considine_org.svg",
@@ -118,7 +118,7 @@ $people = [
         "(303) 953-0699",
         "clark@fisher.io",
         "tremblay-lesch.com",
-        true
+        false
     ),
     new Contact(
         "https://avatars.dicebear.com/4.5/api/avataaars/rafael_stracke_schiller_co.svg",

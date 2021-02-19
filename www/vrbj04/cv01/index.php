@@ -35,6 +35,12 @@ $contact = $people[array_rand($people)];
                     <p class="text-xl pt-3 text-gray-500"><?= $contact->birth->diff(new DateTime())->y ?> let</p>
                     <p class="text-2xl pt-7 text-gray-500 uppercase font-bold"><?= $contact->job ?></p>
                     <p class="text-lg text-gray-400 uppercase font-bold"><?= $contact->company ?></p>
+                    <?php if ($contact->availableForHire):  ?>
+                        <hr class="my-3">
+                        <p class="font-bold text-green-700">
+                            Available for hire
+                        </p>
+                    <?php endif; ?>
                     <hr class="my-3">
                     <div class="py-3">
                         <p class="text-lg"><?= $contact->address->street ?> <?= $contact->address->streetNumber ?></p>
