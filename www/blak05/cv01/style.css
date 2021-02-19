@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1{
+    text-align: center;
+    padding: 10px;
+}
+.card{
+    max-width: 600px;
+    background: #E2E2E2;
+    margin: 0 auto;
+    box-shadow: 5px 10px 8px 10px lightgrey;
+    display: flex;
+    justify-content: space-around;
+}
+.card img{
+    max-width: 180px;
+}
+.card h2{
+    font-size: 25px;
+    margin-top: 20px;
+}
+.card p{
+    font-style: italic;
+    padding: 5px 0;
+}
+.card ul{
+    padding-top: 10px;
+}
+.card li{
+    list-style-type: none;
+    font-size: 16px;
+    line-height: 1.3em;
+}
+.card a{
+    color: black;
+}
