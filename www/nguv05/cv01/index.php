@@ -30,8 +30,6 @@ $number = '1000/4';
 $city = 'Praha';
 $zip = '10100';
 
-// $address = $street . ' ' . $number . ', ' . $city . ' ' . $zip;
-
 $address = "$street $number, $city $zip";
 
 ?>
