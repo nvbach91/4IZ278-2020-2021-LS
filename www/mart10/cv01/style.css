@@ -1,0 +1,98 @@
+div {
+    box-sizing: border-box;
+}
+.container {
+    margin: 0 auto;
+    max-width: 800px;
+}
+.card {
+    padding: 30px;
+    background-color: #fcfcfc;
+    color: #292a30;
+    min-width: 350px;
+    margin: 20px auto;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 5px 20px #999;
+}
+
+.front {
+    float: left;
+    position: relative;
+}
+
+.back {
+    padding: 0px;
+    float:right;
+    position:relative;
+}
+
+.back::before, .back::after {
+    border-bottom: 5px solid #FCE4B1;
+}
+.back::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 10px;
+    background-size: 20px 40px;
+    background-image: radial-gradient(circle at 10px -15px, transparent 20px, #FCE4B1 21px);
+}
+
+.back::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 15px;
+    background-size: 40px 40px;
+    background-image: radial-gradient(circle at 10px 26px, #FCE4B1 20px, transparent 21px);
+}
+
+.name {
+    margin-top: 3em;
+    line-height: 1.2em;
+    font-size: 2.5em;
+    text-transform: uppercase;
+}
+.surname {
+    line-height: 1.2em;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #ff6961;
+}
+.occupation, .company {
+    font-size: 1em;
+}
+.company {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.logo {
+    width: 150px;
+    height: 150px;
+    position:absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: -15px;
+    filter: sepia() saturate(10000%) hue-rotate(20deg);
+}
+.contacts {
+    padding-top: 8em;
+    font-size: 0.8em;
+    line-height: 1.5em;
+    text-align: center;
+}
+.back .name, .back .surname {
+    font-size: 2em;
+}
+
+.address {
+    font-weight: bold;
+}
