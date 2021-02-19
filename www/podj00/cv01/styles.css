@@ -1,0 +1,41 @@
+.center {
+    text-align: center;
+}
+
+.cardBackground {
+    background-color: black;
+    max-width: 500px;
+    margin: 0 auto;
+    height: 200px;
+    border-bottom: white 5px solid;
+}
+
+.logo {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.left {
+    max-width: 30%;
+}
+
+.right {
+    max-width: 70%;
+    text-align: center;
+}
+
+.name {
+    text-align: center;
+    color:red;
+    font-size: 25px;
+    margin-top: 25px;
+    margin-left: 50px;
+}
+
+.container {
+    display: flex;
+}
+
+.backSize {
+    margin-top: 80px;
+}
