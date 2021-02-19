@@ -41,7 +41,7 @@
     <h1>Business Card</h1>
     <div class="card">
         <div class="left">
-            <img src="logo.png">
+            <img alt="company-logo" src="logo.png">
         </div>
         <div class="right">
             <h2><?php echo $name ?></h2>
