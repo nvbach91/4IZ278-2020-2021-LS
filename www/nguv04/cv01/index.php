@@ -22,8 +22,6 @@ $person = [
 // jednoduche pole
 $fruits = ['orange', 'apple', 'berry'];
 
-$nothing = null;
-
 // echo 'Ahoj svete, Ahoj';
 // echo $name;
 // echo $points;
