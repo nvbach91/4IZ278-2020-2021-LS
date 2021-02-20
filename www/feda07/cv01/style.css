@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap');
 body{
-    
+
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -10,7 +11,7 @@ body{
     font-weight: 200;
     font-style: italic;
 }
-.strana-prvni{
+.first-page{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,9 +21,9 @@ body{
     padding: 20px;
     width: 550px;
     height: 250px;
-    
+
 }
-.strana-druha{
+.second-page{
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -49,7 +50,7 @@ h1,h2,p{
     margin:0;
 
 }
-.firma-prvni{
+.company-first{
     margin: 2mm;
     color: rgb(107, 7, 7);
     font-family: Georgia, 'Times New Roman', Times, serif;
