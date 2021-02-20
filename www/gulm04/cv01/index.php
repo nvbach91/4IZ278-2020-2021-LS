@@ -1,6 +1,6 @@
 <?php 
 
-echo 'Ahoj';
+//echo 'Ahoj';
 
 $name = 'None';
 $surname = 'Surnone';
@@ -20,10 +20,10 @@ $city = 'Praha';
 
 $address = $street . " " . $number . ' ' . $city;
 
-$job_pozition = 'Zomby';
-$firm_name = 'Umbrella copr.';
+$jobPozition = 'Zomby';
+$firmName = 'Umbrella copr.';
 
-$phone_number = '+420 444 666 007';
+$phoneNumber = '+420 444 666 007';
 $email = 'example@example.com';
 ?>
 
@@ -43,16 +43,14 @@ $email = 'example@example.com';
         <div class="personal">
             <p class="surname">Surname: <?php echo $surname; ?></p>
             <p class="name">Name: <?php echo $name; ?></p>
-            <p class="job">Position: <?php echo $job_pozition; ?></p>
+            <p class="job">Position: <?php echo $jobPozition; ?></p>
         </div>
-        <div class="image-cont">
-                <img src='./Umbrella_Corporation__ResidentEvil_-logo.png'>
-        </div>
+        <img src='./Umbrella_Corporation__ResidentEvil_-logo.png' alt=" ">
     </div>
     <div class="firm">
-        <p class="firm_name"><?php echo $firm_name; ?></p>
+        <p class="firm_name"><?php echo $firmName; ?></p>
         <p class="address"><?php echo $address; ?></p>
-        <p class="phone"><?php echo $phone_number; ?></p>
+        <p class="phone"><?php echo $phoneNumber; ?></p>
         <p class="email"><?php echo $email; ?></p>
     </div>
 </body>
