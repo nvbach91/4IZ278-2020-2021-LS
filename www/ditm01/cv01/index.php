@@ -33,19 +33,19 @@ $fullname = $firstname . ' ' . $secondname . ' ' . $lastname;
     <div class ="all">
         <h1>I am Batman</h1>
         <div class="business-card">
-            <div class = "left-side">
-                <div class = "avatar">
-                    <img class ="logo" src ="./img/<?php echo $avatar; ?>">
+            <div class="left-side">
+                <div class="avatar">
+                    <img class="logo" src ="./img/<?php echo $avatar; ?>">
                 </div>
             </div>
-            <div class = "right-side">
-                <div class = "name"><?php echo $fullname; ?></div>
-                <div class = "profession"><?php echo $profession; ?></div>
-                <div class = "fulladdress"><?php echo $fulladdress; ?></div>
-                <div class = "phone"><?php echo $phone; ?></div>
-                <div class = "email"><?php echo $email; ?></div>
-                <div class = "web"><?php echo $web; ?></div>
-                <div class = "availability"><?php echo $availability; ?></div>
+            <div class="right-side">
+                <div class="name"><?php echo $fullname; ?></div>
+                <div class="profession"><?php echo $profession; ?></div>
+                <div class="fulladdress"><?php echo $fulladdress; ?></div>
+                <div class="phone"><?php echo $phone; ?></div>
+                <div class="email"><?php echo $email; ?></div>
+                <div class="web"><?php echo $web; ?></div>
+                <div class="availability"><?php echo $availability; ?></div>
             </div>   
         </div>
     </div>
