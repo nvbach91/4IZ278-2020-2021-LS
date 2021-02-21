@@ -53,7 +53,7 @@ $availableForOffers = false;
         <div class="info-part">
 
             <div class="name">
-                <h2> <?php echo $fullName; ?></h3>
+                <h2> <?php echo $fullName; ?></h2>
             </div>
 
             <div class="address">
