@@ -23,55 +23,36 @@ $webpage = 'mypage.com';
 $avaib = 'yes';
 ?>
 <!DOCTYPE html>
-<html lang="cz">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<style>
-.styl{
-  margin: auto;
-  width: 70%;
-  margin-top:5%;
-  border-style: groove;
-  border-width: 7px;
-  border-color: lightblue;
-  padding: 10px;
-  top:5%;
-  background: linear-gradient(to bottom, #33ccff 0%, #003300 100%);
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  font-family: "Lucida Console", "Courier New", monospace;
-}
-img{
-  border-radius: 50%;
-}
-</style>
+    <link rel="stylesheet" href="styl.css">
     <title> Firemní vizitka  </title>
 </head>
 <body>
   <div class="styl">
    <div class="container-fluid">
-    <div style="clear: left;">
-      <p style="float: left;"><img src="<?php echo $avatar;?>" height="320px" width="390px" border="1px"></p>
-      <p><div class="container-fluid">Příjmení:<?php echo $surname;?><br>
-      Jméno: <?php echo $name; ?><br>
-      Věk: <?php echo $age ;?><br>
-      Povolání: <?php echo $position;?><br>
-      Název firmy: <?php echo $companyname;?><br>
-      Ulice:  <?php echo $street ;?> <br>
-      Číslo popisné: <?php echo $number;?> <br>
-      Číslo orientační: <?php echo $numbero;?> <br>
-      Město:   <?php echo $city;?> <br>
-      Telefon:     <?php echo $phone;?> <br>
-      Email: <?php echo $email;?><br>
-      <a href="https://eso.vse.cz/~tson00/cv01/" style="color:white;">Webová stránka: <?php echo $webpage;?></a><br>
-      dostupný:  <?php echo $avaib ;?></p>
+    <div class="styldiv">
+      <p><img alt="avatar" src="<?php echo $avatar;?>"></p>
+        <div class="container-fluid">Příjmení:<?php echo $surname;?><br>
+          Jméno: <?php echo $name; ?><br>
+          Věk: <?php echo $age ;?><br>
+          Povolání: <?php echo $position;?><br>
+          Název firmy: <?php echo $companyname;?><br>
+          Ulice:  <?php echo $street ;?> <br>
+          Číslo popisné: <?php echo $number;?> <br>
+          Číslo orientační: <?php echo $numbero;?> <br>
+          Město:   <?php echo $city;?> <br>
+          Telefon:     <?php echo $phone;?> <br>
+          Email: <?php echo $email;?><br>
+          <a href="https://eso.vse.cz/~tson00/cv01/">Webová stránka: <?php echo $webpage;?></a><br>
+          Dostupný:<?php echo $avaib ;?>
+        </div>
+      </div>
     </div>
   </div>
- </div>
-</div>
 </body>
 </html>
