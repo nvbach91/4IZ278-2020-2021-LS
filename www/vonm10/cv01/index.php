@@ -21,49 +21,64 @@ $availability = 'Not available.';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Business card</title> 
-<style>
-.firstRow {display : flex; text-align:center; align-items:center; justify-content:center;}
-.secondRow {text-align:center; align-items:center;}
-.card {padding:40px; background-color : #C6C6C6; width:350px}
-</style>
+    <title>Business card</title>
+    <style>
+        .firstRow {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secondRow {
+            text-align: center;
+            align-items: center;
+        }
+
+        .card {
+            padding: 40px;
+            background-color: #C6C6C6;
+            width: 350px
+        }
+    </style>
 </head>
 
 <body>
-<div class ="card">
-<div class = "firstRow">
-<div>
-<img src = <?php echo $avatar ?> width ="50" height ="50" alt= "logo">
-</div>
+    <div class="card">
+        <div class="firstRow">
+            <div>
+                <img src=<?php echo $avatar ?> width="50" height="50" alt="logo">
+            </div>
 
-<div>
-<?php echo $name . " " . $surname .", " . $age ?>
-<br>
-<?php echo $position ?>
-<br>
-<?php echo $company ?>
-</div>
+            <div>
+                <?php echo $name . " " . $surname . ", " . $age ?>
+                <br>
+                <?php echo $position ?>
+                <br>
+                <?php echo $company ?>
+            </div>
 
-<div>
+            <div>
 
-</div>
-<?php echo "$street $number"?>
-<br>
-<?php echo "$psc $city" ?>
-</div>
+            </div>
+            <?php echo "$street $number" ?>
+            <br>
+            <?php echo "$psc $city" ?>
+        </div>
 
-<div class = "secondRow">
-<br>
-<?php echo $phone ?>
-<br>
-<?php echo $mail ?>
-<br>
-<?php echo $webpage ?>
-<br>
-<?php echo $availability ?>
-</div>
-</div>
+        <div class="secondRow">
+            <br>
+            <?php echo $phone ?>
+            <br>
+            <?php echo $mail ?>
+            <br>
+            <?php echo $webpage ?>
+            <br>
+            <?php echo $availability ?>
+        </div>
+    </div>
 </body>
 
 
