@@ -23,26 +23,8 @@ $availability = 'Not available.';
 <html lang="en">
 
 <head>
-    <title>Business card</title>
-    <style>
-        .firstRow {
-            display: flex;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .secondRow {
-            text-align: center;
-            align-items: center;
-        }
-
-        .card {
-            padding: 40px;
-            background-color: #C6C6C6;
-            width: 350px
-        }
-    </style>
+    <title>Business card</title>    
+    <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
