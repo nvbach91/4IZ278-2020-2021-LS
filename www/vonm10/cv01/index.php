@@ -31,7 +31,7 @@ $availability = 'Not available.';
     <div class="card">
         <div class="firstRow">
             <div>
-                <img src=<?php echo $avatar ?> width="50" height="50" alt="logo">
+                <img src="<?php echo $avatar ?>" width="50" height="50" alt="logo">
             </div>
 
             <div>
