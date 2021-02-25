@@ -1,0 +1,17 @@
+.firstRow {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondRow {
+    text-align: center;
+    align-items: center;
+}
+
+.card {
+    padding: 40px;
+    background-color: #C6C6C6;
+    width: 350px
+}
