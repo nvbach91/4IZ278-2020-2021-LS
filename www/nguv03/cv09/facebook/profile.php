@@ -11,7 +11,7 @@ require __DIR__ . '/config.php';
 
 $fb = new \Facebook\Facebook(array_merge(CONFIG_FACEBOOK, ['default_access_token' => $_SESSION['fb_access_token']]));
 try {
-    $me = $fb->get('/me')->getGraphUser();
+    $person = $fb->get('/me')->getGraphUser();
     $picture = $fb->get('/me/picture?redirect=false&height=200')->getGraphUser();
 } catch(\Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
@@ -22,7 +22,7 @@ try {
 }
 ?>
 
-<pre><?php var_dump($me); ?></pre>
+<pre><?php var_dump($person); ?></pre>
 <pre><?php var_dump($picture); ?></pre>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ try {
                             <img src="<?php echo $picture['url']; ?>" alt="" class="img-rounded img-responsive" />
                         </div>
                         <div class="col-sm-6 col-md-8">
-                            <h4><?php echo $me->getName(); ?></h4>
+                            <h4><?php echo $person->getName(); ?></h4>
                             <small>
                                 <cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker"></i></cite>
                             </small>
