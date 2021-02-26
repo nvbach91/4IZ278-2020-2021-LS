@@ -22,7 +22,7 @@ try {
 }
 ?>
 
-<pre><?php var_dump(me); ?></pre>
+<pre><?php var_dump($me); ?></pre>
 <pre><?php var_dump($picture); ?></pre>
 
 <!DOCTYPE html>
