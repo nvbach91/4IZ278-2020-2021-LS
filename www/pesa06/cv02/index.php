@@ -10,5 +10,5 @@ $people = [
 ?>
 
 <?php include 'header.html';?>
-<?php include 'content.php';?>
 <?php include 'scripts.html';?>
+<?php include 'content.php';?>
