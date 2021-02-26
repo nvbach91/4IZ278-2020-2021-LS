@@ -1,0 +1,57 @@
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:200,900|Lato:100,300,900);
+
+html , body{
+  font-family: "Titillium Web", "lato" , sans-serif;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+	flex-flow: column;
+}
+
+.front {
+	background-image: url('../img/worm.jpg');
+	background-position: center;
+}
+
+.back {
+	background-image: url('../img/dune2.jpg');
+	background-position: auto;
+}
+
+.card {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	width: 500px;
+	height: 300px;
+
+	background-size: cover;
+
+	border-radius: 20px;
+	border: solid 5px hsla(75, 13%, 24%, 0.8);
+
+	margin-top: 10px;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	border: solid 5px hsla(174, 17%, 46%, .5);
+	
+
+	object-fit: cover;
+    	object-position: 58%;
+}
+
+.info {
+	width: 200px;
+	height: 200px;
+	border-radius: 20px;
+	border: solid 5px rgb(0,0,139, 0.1);
+	background-color: hsla(47, 38%, 60%, .5);
+}
