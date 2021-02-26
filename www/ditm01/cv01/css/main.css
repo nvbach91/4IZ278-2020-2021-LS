@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+.all {
+    max-width: 720px;
+    margin: 0 auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+    text-align: center;
+    font-size: 42px;
+}
+
+.business-card {
+    background-color: black;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.left-side {
+    width: 50%;
+}
+
+.logo {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.right-side {
+    width: 50%;
+    border-left: 2px solid yellow;
+    padding-left: 15px;
+    border-radius: 5px;
+}
+
+.name {
+    color: yellow;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 28px;
+}
+
+.profession {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.availability {
+    margin-top: 10px;
+    text-transform: uppercase;
+}

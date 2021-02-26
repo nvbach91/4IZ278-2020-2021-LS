@@ -1,0 +1,67 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 64px;
+    margin: 20px;
+}
+
+.front {
+    display: flex;
+    background-color: antiquewhite;
+    width: 700px;
+    margin: 20px auto 20px auto;
+    padding: 30px;
+    align-items: center;
+    height: 350px;
+}
+
+.personal {
+    margin-left: 30px;
+}
+
+.logo {
+    border-radius: 50%;
+}
+
+.back {
+    display: flex;
+    background-color: antiquewhite;
+    width: 700px;
+    margin: 20px auto;
+    padding: 30px;
+    align-items: center;
+    height: 350px;
+}
+
+.back-name {
+    padding-right: 30px;
+    border-right: 2px solid black;
+}
+
+.back-data {
+    padding-left: 30px;
+    font-size: 24px;
+}
+
+.name {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.last-name {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.job {
+    font-size: 24px;
+}
+
+.company {
+    font-size: 24px;
+}

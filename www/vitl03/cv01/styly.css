@@ -1,0 +1,97 @@
+html {
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    font-family: 'Heebo', sans-serif;
+    background-color: #ffffff;
+  }
+.first-side, .second-side{
+    width: 390px;
+    height: 220px;
+    display: grid;
+    grid-template-columns: 2% 96% 2%;
+    grid-template-rows: 4% 92% 4%;
+    position: relative;
+    margin: 20px auto;
+    overflow: hidden;
+    box-shadow: 2px 5px 15px 0px #17161694;
+    background-color: #122529;
+}
+.color-part {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(8, 50px);
+    grid-gap: 8px;
+    width: 150px;
+    height: 400px;
+    transform: rotate(-45deg);
+  }
+
+  .black {
+    background-color: #343536;
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 3;
+  }
+  .orange1{
+    background-color: #db973d;
+    grid-row: 2 / span 5;
+  }
+  .orange2 {
+    background-color: #db973d;
+    grid-column: 2 / span 2;
+    grid-row: 4/7;
+  }
+  .black2 {
+    background-color: #343536;
+    grid-column: 2/4;
+    grid-row: 7/9;
+  }
+  .info-part {
+    margin-top: 5px;
+    margin-bottom:5px;
+    margin-left: 5px;
+    padding:10px;
+    z-index: 999;
+    width: 100%;
+    height: 90%;
+    border-radius: 6px;
+    font-size: 12px;
+    display: grid;
+    line-height: 0.5px;
+    text-align: center;
+  }
+  .first-side .name-part {
+    margin-top:100px;
+    align-self: center;
+    z-index: 999;
+    width: 100%;
+    height: 40%;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: .1rem;
+    text-align: center;
+  }
+  .logo{
+    height: 40px;
+    width: 40px;
+    color:white;
+    align-self: center;
+  }
+
+  .name{
+    font-size: 16px;
+    text-transform: uppercase;
+    grid-column: 1;
+
+  }
+  .adress,.phone,.email, .web,.offers{
+    grid-column: 2;
+  }
+  .name-part h1,
+  .name-part h3{
+    text-transform: uppercase;
+  }
+  .info-part h3{
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
