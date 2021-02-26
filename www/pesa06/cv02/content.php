@@ -1,5 +1,3 @@
-
-<body>
 <div class="container" style="text-align: center">
     <?php foreach ($people as $person):?>
         <div class="card card-dark col-md-6 mb-5">
