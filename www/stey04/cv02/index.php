@@ -40,7 +40,9 @@ $fremen = [
             </ul>
         </div>
     </div>
-    <div class="card back"></div>
+    <div class="card back">
+        <h1><?php echo $f->getFullName(); ?></h1>
+    </div>
 <?php endforeach; ?>
 
 <?php include './includes/footer.php'; ?>

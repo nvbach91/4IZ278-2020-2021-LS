@@ -20,6 +20,13 @@ body {
 	margin-bottom: 50px;
 }
 
+.back h1 {
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	color: hsla(33, 73%, 49%, .9);
+	border-top: solid 5px hsla(0, 79%, 49%, .5);
+	border-bottom: solid 5px hsla(0, 79%, 49%, .5);
+}
+
 .card {
 	display: flex;
 	align-items: center;
