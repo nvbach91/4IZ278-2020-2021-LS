@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,200&display=swap');
+body{
+
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    background-color: rgb(199, 205, 207);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-style: italic;
+
+}
+.container{
+    margin: 15px;
+}
+.first-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    background-color: rgb(251, 255, 213);
+    box-shadow: 2px 8px 39px -7px rgba(0, 0, 0, 0.63);
+    padding: 20px;
+    width: 550px;
+    height: 250px;
+
+}
+.second-page{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 30px auto;
+    background-color: rgb(251, 255, 213);
+    box-shadow: 2px 8px 39px -7px rgba(0, 0, 0, 0.63);
+    padding: 20px;
+    width: 550px;
+    height: 250px;
+
+}
+.col{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 275px;
+}
+.logo{
+    max-width: 250px;
+
+}
+h1,h2,p{
+    margin:0;
+
+}
+.company-first{
+    margin: 2mm;
+    color: rgb(107, 7, 7);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 33px;
+    font-weight: 900;
+}
+
+
+
+
