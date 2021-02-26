@@ -25,7 +25,7 @@ $status = 'Available';
 <body>
     <div class="card front">
 
-        <img src=<?php echo $photo ?> alt="paul-muad'dib">
+        <img src="<?php echo $photo ?>" alt="paul-muad'dib">
 
         <div class="info">
             <ul class="fa-ul">
