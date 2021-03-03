@@ -1,0 +1,22 @@
+body {
+	background-color: #111111;
+	color: #bbbbbb;
+}
+h1 {
+	color: #ffbb77;
+	text-align: center;
+}
+a {
+	color: #77bbff;
+}
+.cardBorder {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #777777;
+	padding: 32px;
+	width: 720px;
+	background-color: #333333;
+	margin-left: auto;
+	margin-right: auto;
+}
+
