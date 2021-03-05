@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-sm-12 col-md-2">
         <div class="card">
-            <img src="<?= $_POST["avatarURL"] ?>" class="card-img-top">
+            <img src="<?= htmlspecialchars($_POST["avatarURL"]) ?>" class="card-img-top">
         </div>
     </div>
     <div class="col-sm-12 col-md-10">
@@ -16,18 +16,18 @@
 
                 <hr>
 
-                <h1><?= $_POST["name"] ?></h1>
+                <h1><?= htmlspecialchars($_POST["name"]) ?></h1>
                 <div class="text-muted">
                     <?= $_POST["gender"] === "m" ? "Male" : "Female" ?> &mdash;
-                    <?= $_POST["email"] ?> &mdash;
-                    <?= $_POST["phone"] ?>
+                    <?= htmlspecialchars($_POST["email"]) ?> &mdash;
+                    <?= htmlspecialchars($_POST["phone"]) ?>
                 </div>
 
                 <hr>
 
                 <small>Deck</small>
-                <h1 class="text-primary"><?= $_POST["deckName"] ?></h1>
-                <div>Contains <?= $_POST["deckSize"] ?> cards</div>
+                <h1 class="text-primary"><?= htmlspecialchars($_POST["deckName"]) ?></h1>
+                <div>Contains <?= htmlspecialchars($_POST["deckSize"]) ?> cards</div>
             </div>
         </div>
     </div>

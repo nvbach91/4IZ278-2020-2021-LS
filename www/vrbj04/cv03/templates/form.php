@@ -7,7 +7,7 @@
                     <label for="name">Name</label>
                     <input name="name" type="text"
                            class="form-control <?= in_array("name", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["name"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["name"] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
@@ -23,35 +23,35 @@
                     <label for="email">Email</label>
                     <input name="email" type="text"
                            class="form-control <?= in_array("email", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["email"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["email"] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
                     <input name="phone" type="text"
                            class="form-control <?= in_array("phone", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["phone"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["phone"] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="avatarURL">Avatar (URL)</label>
                     <input name="avatarURL" type="text"
                            class="form-control <?= in_array("avatarURL", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["avatarURL"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["avatarURL"] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="deckName">Deck name</label>
                     <input name="deckName" type="text"
                            class="form-control <?= in_array("deckName", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["deckName"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["deckName"] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="deckSize">Deck size</label>
                     <input name="deckSize" type="text"
                            class="form-control <?= in_array("deckSize", $violations) ? 'is-invalid' : '' ?>"
-                           value="<?= $_POST["deckSize"] ?? '' ?>">
+                           value="<?= htmlspecialchars($_POST["deckSize"] ?? '') ?>">
                 </div>
 
                 <hr>
