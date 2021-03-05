@@ -11,6 +11,8 @@
   $email = "";
   $phone = "";
   $avatar = "";
+  $cardPack = "";
+  $cardCount = null;
 
   function tryGetPost($name)
   {
@@ -47,6 +49,10 @@
     $email = tryGetPost('email');
     $phone = tryGetPost('phone');
     $avatar = tryGetPost('avatar');
+    $cardPack = tryGetPost('card_pack');
+    $cardCount = array_key_exists('card_count', $_POST) && is_int($_POST['card_count'])
+      ? (int)$_POST['card_count']
+      : 1;
 
     if (!$firstName) {
       $alertMessages[] = 'Please enter your firstname';
@@ -86,6 +92,16 @@
     if (!filter_var($avatar, FILTER_VALIDATE_URL)) {
       $alertMessages[] = 'Please use a valid URL for your avatar';
       $invalidInputs[] = 'avatar';
+    }
+
+    if (!$cardPack) {
+      $alertMessages[] = 'Please enter your card pack name';
+      $invalidInputs[] = 'card_pack';
+    }
+
+    if (!$cardCount || !is_int($cardCount) || $cardCount < 0) {
+      $alertMessages[] = 'Please enter a valid card count';
+      $invalidInputs[] = 'card_count';
     }
 
     if (!count($alertMessages)) {
@@ -199,6 +215,33 @@
                  value="<?php echo field_isset($avatar) ?>"
                  placeholder="Avatar"
                  class="form-control<?php echo validate('avatar') ?>"/>
+        </div>
+
+        <!-- Cards -->
+        <div class="row mb-2">
+            <!-- Card pack -->
+            <div class="col-sm" style="padding-left: 0">
+                <div class="form-outline">
+                    <input type="text"
+                           name="card_pack"
+                           id="card_pack"
+                           value="<?php echo field_isset($cardPack) ?>"
+                           class="form-control<?php echo validate('card_pack') ?>"
+                           placeholder="Card pack"/>
+                </div>
+            </div>
+            <!-- Last -->
+            <div class="col-sm" style="padding-left: 0; padding-right: 0">
+                <div class="form-outline">
+                    <input type="number"
+                           min="1"
+                           name="card_count"
+                           id="card_count"
+                           value="<?php echo field_isset($cardCount) ?>"
+                           class="form-control<?php echo validate('card_count') ?>"
+                           placeholder="Card count"/>
+                </div>
+            </div>
         </div>
 
         <div class="row">
