@@ -85,79 +85,70 @@ if ($formSubmitted) {
 <div class="row">
     <form class="form-signup" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="form-group">
-            <label>
-                <h3>Name</h3>
-            </label>
-            <input class="form-control <?php echo in_array('name', $invalid) ? 'is-invalid' : '' ?>" name="name" placeholder="Enter your name" value="<?php echo isset($name) ? $name : '' ?>">
+            <h3><label for="name">Name</label></h3>
+            <input class="form-control <?php echo in_array('name', $invalid) ? 'is-invalid' : '' ?>" id="name" name="name" placeholder="Enter your name" value="<?php echo isset($name) ? $name : '' ?>">
             <?php if(in_array('name', $invalid)): ?>
                 <small class="text-white bg-danger">For example: Karel Novák</small>
             <?php endif ?>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Gender</h3>
-            </label>
+            <h3>Gender</h3>
             <div class="radio-button-item row">
                 <input
                     checked
                     class="form-control radio"
                     type="radio"
                     name="gender"
+                    id="male"
                     value="M"
                     <?php echo isset($gender) && $gender === 'M' ? 'checked' : '' ?>>
-                <label for="M">Male</label>
+                <label for="male">Male</label>
             </div>
             <div class="radio-button-item row">
                 <input
                     class="form-control radio"
                     type="radio"
                     name="gender"
+                    id="female"
                     value="F"
                     <?php echo isset($gender) && $gender === 'F' ? 'checked' : '' ?>>
-                <label for="F">Female</label>
+                <label for="female">Female</label>
             </div>
             <div class="radio-button-item row">
                 <input
                     class="form-control radio"
                     type="radio"
                     name="gender"
+                    id="other"
                     value="O"
                     <?php echo isset($gender) && $gender === 'O' ? 'checked' : '' ?>>
-                <label for="O">Other</label>
+                <label for="other">Other</label>
             </div>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Email Address</h3>
-            </label>
-            <input class="form-control <?php echo in_array('email', $invalid) ? 'is-invalid' : '' ?>" placeholder="Enter your email address" name="email" value="<?php echo isset($email) ? $email : '' ?>">
+            <h3><label for="email">Email Address</label></h3>
+            <input class="form-control <?php echo in_array('email', $invalid) ? 'is-invalid' : '' ?>" id="email" placeholder="Enter your email address" name="email" value="<?php echo isset($email) ? $email : '' ?>">
             <?php if(in_array('email', $invalid)): ?>
                 <small class="text-white bg-danger">For example: novak@gmail.com</small>
             <?php endif ?>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Phone Number</h3>
-            </label>
-            <input class="form-control <?php echo in_array('phone', $invalid) ? 'is-invalid' : '' ?>" placeholder="Enter your phone number" name="phone" value="<?php echo isset($phone) ? $phone : '' ?>">
+            <h3><label for="phone">Phone Number</label></h3>
+            <input class="form-control <?php echo in_array('phone', $invalid) ? 'is-invalid' : '' ?>" id="phone" placeholder="Enter your phone number" name="phone" value="<?php echo isset($phone) ? $phone : '' ?>">
             <?php if(in_array('phone', $invalid)): ?>
                 <small class="text-white bg-danger">For example: +420 111 222 333</small>
             <?php endif ?>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Avatar URL</h3>
-            </label>
-            <input class="form-control <?php echo in_array('avatar', $invalid) ? 'is-invalid' : '' ?>" placeholder="Enter URL address of your selected avatar" name="avatar" value="<?php echo isset($avatar) ? $avatar : '' ?>">
+            <h3><label for="avatar">Avatar URL</label></h3>
+            <input class="form-control <?php echo in_array('avatar', $invalid) ? 'is-invalid' : '' ?>" id="avatar" placeholder="Enter URL address of your selected avatar" name="avatar" value="<?php echo isset($avatar) ? $avatar : '' ?>">
             <?php if(in_array('avatar', $invalid)): ?>
                 <small class="text-white bg-danger">For example: https://www.example.com/img/avatar.jpg</small>
             <?php endif ?>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Card Deck</h3>
-            </label>
-            <select class="form-control" name="deck">
+            <h3><label for="deck">Card Deck</label></h3>
+            <select class="form-control" id="deck" name="deck">
                 <option value="W"<?php echo isset($deckName) && $deckName === 'W' ? ' selected' : '' ?>>Warrior</option>
                 <option value="M"<?php echo isset($deckName) && $deckName === 'M' ? ' selected' : '' ?>>Mage</option>
                 <option value="P"<?php echo isset($deckName) && $deckName === 'P' ? ' selected' : '' ?>>Palladin</option>
@@ -166,10 +157,8 @@ if ($formSubmitted) {
             <small class="text-white">Choose your deck type</small>
         </div>
         <div class="form-group">
-            <label>
-                <h3>Number of Cards</h3>
-            </label>
-            <input class="form-control <?php echo in_array('cards', $invalid) ? 'is-invalid' : '' ?>" placeholder="Enter number of cards in your deck" name="cards" value="<?php echo isset($numberOfCards) ? $numberOfCards : '' ?>">
+            <h3><label for="cards">Number of Cards</label></h3>
+            <input class="form-control <?php echo in_array('cards', $invalid) ? 'is-invalid' : '' ?>" placeholder="Enter number of cards in your deck" name="cards" id="cards" value="<?php echo isset($numberOfCards) ? $numberOfCards : '' ?>">
             <?php if(in_array('cards', $invalid)): ?>
                 <small class="text-white bg-danger">For example: 55</small>
             <?php endif ?>
