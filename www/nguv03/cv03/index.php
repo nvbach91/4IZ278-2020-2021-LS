@@ -62,7 +62,7 @@ if ($submittedForm) {
 }
 
 ?>
-<?php require './components/header.php'; ?>
+<?php include './includes/header.php'; ?>
 <main class="container">
     <br>
     <h1 class="text-center">Form validation example</h1>
@@ -107,4 +107,4 @@ if ($submittedForm) {
         </form>
     </div>
 </main>
-<?php require './components/footer.php'; ?>
+<?php include './includes/footer.php'; ?>
