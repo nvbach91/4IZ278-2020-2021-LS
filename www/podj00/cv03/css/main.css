@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+
+main {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.mySelect {
+    width: 480px;
+}
