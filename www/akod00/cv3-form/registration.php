@@ -12,17 +12,41 @@
   $phone = "";
   $avatar = "";
 
+  function tryGetPost($name)
+  {
+      return array_key_exists($name, $_POST)
+        ? htmlspecialchars(trim($_POST[$name]))
+        : null;
+  }
+
+  function validate($name)
+  {
+    global $invalidInputs;
+
+    return in_array($name, $invalidInputs, true)
+      ? " is-invalid"
+      : "";
+  }
+
+  function field_isset($value)
+  {
+    return isset($value)
+      ? $value
+      : '';
+  }
+
   // check if form is submitted
   $submittedForm = !empty($_POST);
-  if ($submittedForm) {
-    $firstName = htmlspecialchars(trim($_POST['first_name']));
-    $lastName = htmlspecialchars(trim($_POST['last_name']));
-    $password = htmlspecialchars(trim($_POST['password']));
-    $confirmPassword = htmlspecialchars(trim($_POST['password_confirmation']));
-    $gender = htmlspecialchars(trim($_POST['gender']));
-    $email = htmlspecialchars(trim($_POST['email']));
-    $phone = htmlspecialchars(trim($_POST['phone']));
-    $avatar = htmlspecialchars(trim($_POST['avatar']));
+  if ($submittedForm)
+  {
+    $firstName = tryGetPost('first_name');
+    $lastName = tryGetPost('last_name');
+    $password = tryGetPost('password');
+    $confirmPassword = tryGetPost('password_confirmation');
+    $gender = tryGetPost('gender');
+    $email = tryGetPost('email');
+    $phone = tryGetPost('phone');
+    $avatar = tryGetPost('avatar');
 
     if (!$firstName) {
       $alertMessages[] = 'Please enter your firstname';
@@ -64,31 +88,10 @@
       $invalidInputs[] = 'avatar';
     }
 
-    if (!count($alertMessages) && !sendEmail($email, 'Registration confirmation')) {
-      $alertMessages[] = 'There was a problem sending email';
-    }
-
-    // if no errors at all: display success
     if (!count($alertMessages)) {
       $alertType = 'alert-success';
       $alertMessages = ['Registration complete'];
     }
-  }
-
-  function validate($name)
-  {
-    global $invalidInputs;
-
-    return in_array($name, $invalidInputs, true)
-      ? " is-invalid"
-      : "";
-  }
-
-  function field_isset($value)
-  {
-    return isset($value)
-      ? $value
-      : '';
   }
 
 ?>
