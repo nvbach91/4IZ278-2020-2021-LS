@@ -25,7 +25,6 @@ if (!empty($_POST)) {
         );
 
         require __DIR__ . "/templates/successful-registration.php";
-        exit;
     }
     else {
         $violations = $validator->getViolatedRules();
