@@ -1,17 +1,13 @@
-<?php
+<?php require __DIR__ . '/includes/head.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<?php require './form/php';
-?>
-</body>
-</html>
+
+    <main class="container">
+        <h1>Hey, register now!</h1>
+        <?php require __DIR__ . '/includes/form.php';
+        ?>
+    </main>
+
+<?php require __DIR__ . '/includes/foot.php';
+
+
