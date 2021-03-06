@@ -3,15 +3,15 @@
     <?php
     $invalidInputs = [];
 
-    $isSubmitted = !empty($_GET); //if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $isSubmitted = !empty($_POST); //if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = "";
 
     if ($isSubmitted) {
-        $name =  htmlspecialchars(trim($_GET['name']));
-        $gender = htmlspecialchars(trim($_GET['gender']));
-        $email =  htmlspecialchars(trim($_GET['email']));
-        $phone = htmlspecialchars(trim($_GET['phone']));
-        $avatar =  htmlspecialchars(trim($_GET['avatar']));
+        $name =  htmlspecialchars(trim($_POST['name']));
+        $gender = htmlspecialchars(trim($_POST['gender']));
+        $email =  htmlspecialchars(trim($_POST['email']));
+        $phone = htmlspecialchars(trim($_POST['phone']));
+        $avatar =  htmlspecialchars(trim($_POST['avatar']));
 
         //Name
         if (empty($name)) {
@@ -42,7 +42,7 @@
 
     <main>
         <h1>Card fest registration</h1>
-        <form class="form-signup">
+        <form class="form-signup" method="POST">
             <?php if ($isSubmitted) : ?>
                 <?php if (!empty($invalidInputs)) : ?>
                     <div class="alert alert-danger">
