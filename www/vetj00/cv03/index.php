@@ -19,28 +19,28 @@ if ($isSubmitted) {
         if (!$name) {
             array_push($invalidInputs, 'Please, fill the name in');
         } else {
-        array_push($invalidInputs, 'Name is not valid');
+            array_push($invalidInputs, 'Name is not valid');
         }
     }
     if (!preg_match('/^(\+\d{3} ?)?(\d{3} ?){3}$/', $phone)) {
         if (!$phone) {
             array_push($invalidInputs, 'Please, fill the phone in');
         } else {
-        array_push($invalidInputs, 'Phone is not valid');
+            array_push($invalidInputs, 'Phone is not valid');
         }
     }
     if (!filter_var($avatar, FILTER_VALIDATE_URL)) {
         if (!$avatar) {
             array_push($invalidInputs, 'Please, fill the avatar in');
         } else {
-        array_push($invalidInputs, 'Avatar is not valid');
+            array_push($invalidInputs, 'Avatar is not valid');
         }
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         if (!$email) {
             array_push($invalidInputs, 'Please, fill the email in');
         } else {
-        array_push($invalidInputs, 'Email is not valid');
+            array_push($invalidInputs, 'Email is not valid');
         }
     }
     if (!count($invalidInputs)) {
