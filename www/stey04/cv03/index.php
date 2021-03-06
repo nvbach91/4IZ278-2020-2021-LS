@@ -1,6 +1,4 @@
 <?php
-# echo $_SERVER['PHP_SELF'];
-# var_dump($_POST);
 $isSubmitted = !empty($_POST);
 $invalidInputs = [];
 
@@ -21,20 +19,29 @@ if ($isSubmitted) {
     if (!preg_match('/^[a-zA-Z0-9]{8,}$/', $password)) {
         array_push($invalidInputs, 'Password is too short');
     }
+
+    $alert = 'alert-success';
+    $success = "<h2>Form is submitted👍</h2>";
+    $fail = '<h2>😔</h2>';
+    # $alertMessages = $invalidInputs ? $fail . implode('<br>', $invalidInputs) : $success;
+    if ($invalidInputs) {
+        $alert = 'alert-danger';
+        $alertMessages = $fail . implode('<br>', $invalidInputs);
+    } else {
+        $alertMessages = $success;
+    }
 }
 ?>
 
 <?php include __DIR__ . '/includes/header.php' ?>
 
-<?php
-$fail = '<h2>😔</h2>';
-$success = "<h2>Form is submitted👍</h2>";
-if ($isSubmitted) {
-    echo $invalidInputs ? $fail . implode('<br>', $invalidInputs) : $success;
-}
-?>
 <main>
     <h1>Form submission</h1>
+    <?php if ($isSubmitted) : ?>
+        <div class="alert <?php echo $alert ?>" role="alert">
+            <?php echo $alertMessages ?>
+        </div>
+    <?php endif; ?>
     <form class="form-signup" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-3">
             <label for="user" class="form-label">Username</label>
