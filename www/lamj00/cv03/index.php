@@ -86,23 +86,9 @@ function echoErrors(){
             <div class="form-group">
                 <label>Gender*</label>
                 <select class="form-control" name="gender" >
-                    <option value="N" 
-                    <?php if ($gender == 'N'){
-                        echo 'selected';
-                    }
-                    ?>
-                    >Neutral</option>
-                    <option value="F" 
-                    <?php if ($gender == 'F'){
-                        echo 'selected';
-                    }
-                    ?>
-                    >Female</option>
-                    <option value="M" 
-                    <?php if ($gender == 'M'){
-                        echo 'selected';
-                    }
-                    ?>>Male</option>
+                    <option value="N" <?php echo $gender == 'N' ? ' selected' : '' ?>>Neutral</option>
+                    <option value="F" <?php echo $gender == 'F' ? ' selected' : '' ?>>Female</option>
+                    <option value="M" <?php echo $gender == 'M' ? ' selected' : '' ?>>Male</option>
                
                 </select>
             </div>
