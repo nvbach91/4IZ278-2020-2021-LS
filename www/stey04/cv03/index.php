@@ -41,12 +41,12 @@ if ($isSubmitted) {
 
 <h1>Form submission</h1>
 <main>
-    <form class="form-signup" method="post" action="/cv03/index.php">
+    <form class="form-signup" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-3">
             <label for="user" class="form-label">Username</label>
             <input name="username" type="" class="form-control" id="user">
         </div>
-         <div class="mb-3">
+        <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <input name="email" type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
