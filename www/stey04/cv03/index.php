@@ -18,7 +18,7 @@ if ($isSubmitted) {
     if (!$password) {
         array_push($invalidInputs, 'Password is empty');
     }
-    if (!preg_match('/^[a-zA-Z0-9]{8, }$/', $password)) {
+    if (!preg_match('/^[a-zA-Z0-9]{8,}$/', $password)) {
         array_push($invalidInputs, 'Password is too short');
     }
 }
@@ -26,16 +26,15 @@ if ($isSubmitted) {
 
 <?php include __DIR__ . '/includes/header.php' ?>
 
-<?php if ($isSubmitted) : ?>
-    <h2> Form is submitted</h2>
-    <?php echo implode('<br>', $invalidInputs); ?>
-<?php endif ?>
-
-<?php if (!$isSubmitted) : ?>
-<?php endif ?>
-
-<h1>Form submission</h1>
+<?php
+$fail = '<h2>😔</h2>';
+$success = "<h2>Form is submitted👍</h2>";
+if ($isSubmitted) {
+    echo $invalidInputs ? $fail . implode('<br>', $invalidInputs) : $success;
+}
+?>
 <main>
+    <h1>Form submission</h1>
     <form class="form-signup" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-3">
             <label for="user" class="form-label">Username</label>
