@@ -2,8 +2,8 @@
 
 final class Registration
 {
-    public const GENDER_MALE = true;
-    public const GENDER_FEMALE = false;
+    public const GENDER_MALE = 'm';
+    public const GENDER_FEMALE = 'f';
 
     public $name;
     public $gender;
