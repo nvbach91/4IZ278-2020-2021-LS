@@ -21,11 +21,9 @@ if ($isSubmitted) {
     if (!$password) {
         array_push($invalidInputs, 'Password is empty');
     }
-    /*
     if (!preg_match('/^[a-zA-Z0-9]{8, }$/', $password)) {
         array_push($invalidInputs, 'Password is too short');
     }
-    */
 }
 ?>
 
