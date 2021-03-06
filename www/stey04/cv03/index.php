@@ -4,11 +4,15 @@ $invalidInputs = [];
 
 if ($isSubmitted) {
     $name = htmlspecialchars(trim($_POST['username']));
+    $phone = htmlspecialchars(trim($_POST['phone']));
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
     if (!$name) {
         array_push($invalidInputs, 'Username is empty');
+    }
+    if (!$phone) {
+        array_push($invalidInputs, 'Phone is empty');
     }
     if (!$email) {
         array_push($invalidInputs, 'Email is empty');
@@ -46,6 +50,10 @@ if ($isSubmitted) {
         <div class="mb-3">
             <label for="user" class="form-label">Username</label>
             <input name="username" type="" class="form-control" id="user">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input name="phone" type="" class="form-control" id="phone">
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
