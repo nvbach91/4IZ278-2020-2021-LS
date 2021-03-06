@@ -5,16 +5,13 @@ $isSubmitted = !empty($_POST);
 $invalidInputs = [];
 
 if ($isSubmitted) {
-    $invalidInputs = [];
-    # $name = htmlspecialchars(trim($_POST['name']));
+    $name = htmlspecialchars(trim($_POST['username']));
     $email = htmlspecialchars(trim($_POST['email']));
-    $phone = htmlspecialchars(trim($_POST['password']));
-    $avatar = htmlspecialchars(trim($_POST['avatar']));
+    $password = htmlspecialchars(trim($_POST['password']));
 
     if (!$name) {
         array_push($invalidInputs, 'Username is empty');
     }
-
     if (!$email) {
         array_push($invalidInputs, 'Email is empty');
     }
@@ -51,10 +48,10 @@ if ($isSubmitted) {
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="mb-3 form-check">
-            <input name="password" type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
