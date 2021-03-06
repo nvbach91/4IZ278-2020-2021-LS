@@ -10,13 +10,9 @@ if (!empty($_POST)) {
     $validator = new Validator($_POST);
 
     if ($validator->validate()) {
-        $gender = $_POST["gender"] === "m"
-            ? Registration::GENDER_MALE
-            : Registration::GENDER_FEMALE;
-
         $registration = new Registration(
             $_POST["name"],
-            $gender,
+            $_POST["gender"],
             $_POST["email"],
             $_POST["phone"],
             $_POST["avatarURL"],
