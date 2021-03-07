@@ -14,6 +14,9 @@ if ($isSubmitted) {
     if (!$phone) {
         array_push($invalidInputs, 'Phone is empty');
     }
+    if (!preg_match('/^\+?([0-9]{3} ?){4}$/', $phone)) {
+        array_push($invalidInputs, 'Phone number is not a valid format');
+    }
     if (!$email) {
         array_push($invalidInputs, 'Email is empty');
     }
