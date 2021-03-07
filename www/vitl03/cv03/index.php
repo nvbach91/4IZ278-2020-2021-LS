@@ -85,7 +85,7 @@ if (filter_has_var(INPUT_POST, 'submit')) {
         <div class="form-group">
             <label>Avatar URL</label>
             <?php if (!empty($avatarUrl)) : ?>
-                <?php echo "<img src=".$avatarUrl." height=50 width=80 />"; ?>
+               <?php echo "<img src='" . $avatarUrl . "' height='40' width='70'> ";?>
             <?php endif; ?>
             <input class="form-control" name="avatarUrl" value="<?php echo isset($avatarUrl) ? $avatarUrl : ''; ?>">
             <small class="text-muted">Example: https://eso.vse.cz/~nguv03/cv03/img/homer.jpg</small>
@@ -102,5 +102,4 @@ if (filter_has_var(INPUT_POST, 'submit')) {
         <button class="btn btn-primary" type="submit" name="submit">Submit</button>
     </form>
 </div>
-
-<?php include '../footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php' ?>
