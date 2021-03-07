@@ -51,15 +51,20 @@
         }
 
         if(empty($_POST['deckName'])){
-            $invalidInputs['deckName'] = "Your deck needs a name <br />";
-        }
-
-        if(empty($_POST['numCards'])){
-            $invalidInputs['numCards'] = "We need this information <br />";
-        }else{
-            $numCards = $_POST['numCards'];
-            if(!preg_match('/^[0-9]\z/', $numCards)){
-                $invalidInputs['numCards'] =  "We need a number";
+          /*  $invalidInputs['deckName'] = "Your deck needs a name <br />"; */
+            $deckName = "Without his own Deck";
+            $numCards = 0;
+        } else{
+            if(empty($_POST['numCards']) && !$deckName == "Without his own Deck"){
+                $invalidInputs['numCards'] = "If your deck has a name, then it has cards! <br />";
+            }elseif($deckName == "Without his own Deck"){
+                $numCards = 0;
+            }
+            else{
+                $numCards = $_POST['numCards'];
+                if(!preg_match('/^[1-9][0-9]{0,15}$/', $numCards)){
+                    $invalidInputs['numCards'] =  "We need a number (max 15 digits)";
+                }
             }
         }
 
