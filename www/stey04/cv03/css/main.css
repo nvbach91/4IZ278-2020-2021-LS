@@ -1,7 +1,6 @@
 main {
-    /*
-    text-align: center;
-    */
-    padding-left: 50px;
-    width: 600px;
+    margin-top: 55px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 610px;
 }
