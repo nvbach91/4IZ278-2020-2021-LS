@@ -9,6 +9,8 @@ if (empty($_POST)) {
 $isSubmitted = empty($_POST) ? false : true;
 $invalidInputs = [];
 
+$isValidForm = count($invalidInputs) == 0;
+
 if ($isSubmitted) {
     $name = htmlspecialchars(trim($_POST['name']));
     $sex = htmlspecialchars(trim($_POST['sex']));
@@ -35,8 +37,13 @@ if ($isSubmitted) {
     {
         array_push($invalidInputs, 'Incorrect number of cards');
     }
+    
+    if ($isValidForm)
+    {
+        $message = "You have been successfully registered to Hearthstone Amateur League tournament.";
+        mail($email, 'Hearthstone tournament registration', $message); 
+    }
 
-    $isValidForm = count($invalidInputs) == 0;
 }
 
 ?>
@@ -53,10 +60,6 @@ if ($isSubmitted) {
         <div>
             <img src="<?php echo $avatar ?>" width="100" height="100" alt="avatar">
          </div>
-        <?php 
-        $message = "You have been successfully registered to Hearthstone Amateur League tournament.";
-        mail($email, 'Hearthstone tournament registration', $message); 
-        ?> 
     <?php endif; ?>
     <?php if (!$isValidForm) : ?>
         <h2> invalid form. </h2>
