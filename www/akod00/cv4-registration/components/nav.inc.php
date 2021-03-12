@@ -1,5 +1,5 @@
 <?php
-  require_once __DIR__ . "./../Constants.php";
+  require_once __DIR__ . "/../Constants.php";
 
   function activeMenu($name)
   {
@@ -26,13 +26,16 @@
                 <li class="nav-item<?php echo activeMenu('Home') ?>">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+                <li class="nav-item<?php echo activeMenu('Users') ?>">
+                    <a class="nav-link" href="/pages/admin/users.php">Users</a>
+                </li>
                 <li class="nav-item<?php echo activeMenu('About') ?>">
                     <a class="nav-link" href="/pages/about.php">About</a>
                 </li>
             </ul>
           <?php
             if (!isset($pageTitle) || ($pageTitle !== "Login" && $pageTitle !== "Register")) {
-                require __DIR__ . "./navAuth.inc.php";
+                require __DIR__ . "/navAuth.inc.php";
             }
           ?>
         </div>
