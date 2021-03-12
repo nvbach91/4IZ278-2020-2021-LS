@@ -12,7 +12,7 @@ function sendEmail($recipient, $subject, $message) {
         <h1>$subject</h1>
         <p>$message</p>
     ";
-    $mailResult = mail($recipient, $subject, $body, $header);
+    $mailResult = mail($recipient, $subject, $body, implode("\r\n", $header));
     return $mailResult;
 }
 
