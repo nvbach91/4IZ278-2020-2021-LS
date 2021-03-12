@@ -9,17 +9,18 @@ $userRecords = file($databaseFileName);
     <a href="../index.php">Homepage</a>
     <a href="../registration.php">Registration</a>
     <a href="../login.php">Login</a>
-    <main>
-        <h1>Users</h1>
+</nav>
+<main>
+    <h1>Users</h1>
 
-        <ul>
-            <?php foreach ($userRecords as $userRecord) : ?>
-                <li>
-                    <div><?php echo $userRecord ?></div>
-                </li>
-            <?php endforeach ?>
+    <ul>
+        <?php foreach ($userRecords as $userRecord) : ?>
+            <li>
+                <div><?php echo $userRecord ?></div>
+            </li>
+        <?php endforeach ?>
 
-        </ul>
+    </ul>
 
-    </main>
-    <?php include '../includes/foot.php'; ?>
+</main>
+<?php include '../includes/foot.php'; ?>
