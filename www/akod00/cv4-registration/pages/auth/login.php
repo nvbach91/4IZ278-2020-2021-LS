@@ -1,5 +1,5 @@
 <?php
-  require __DIR__ . '../../utils/utils.php';
+  require '../../utils/utils.php';
 
   $pageTitle = "Login";
   $invalidInputs = [];
@@ -49,7 +49,7 @@
 
     $authentication = authenticate($email, $password);
     if (!$authentication['success']) {
-      $errors['authentication'] = $authentication['message'];
+      $alertMessages[] = $authentication['message'];
     } else {
       header('Location: profile.php?email=' . $email);
       exit();
@@ -108,7 +108,7 @@
     </form>
 </div>
 <p class="mt-2 pl-0">
-    <a href="/pages/auth/registration.php">
+    <a href="/~akod00/cv04/pages/auth/registration.php">
         New member? Sign up
     </a>
 </p>

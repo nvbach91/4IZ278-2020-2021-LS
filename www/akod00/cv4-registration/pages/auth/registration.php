@@ -1,4 +1,5 @@
 <?php
+  require "../../utils/utils.php";
   $pageTitle = "Register";
   $invalidInputs = [];
   $alertMessages = [];
@@ -113,7 +114,7 @@
     }
 
     if (empty($alertMessages)) {
-      header('Location: pages/auth/login.php');
+      header('Location: ./login.php');
       exit();
     }
   }
@@ -258,7 +259,7 @@
     </form>
 </div>
 <p class="mt-2 pl-0">
-    <a href="/pages/auth/login.php">
+    <a href="/~akod00/cv04/pages/auth/login.php">
         Have an account? Sign in
     </a>
 </p>
