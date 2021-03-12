@@ -105,9 +105,16 @@
       $invalidInputs[] = 'card_count';
     }
 
-    if (!count($alertMessages)) {
-      $alertType = 'alert-success';
-      $alertMessages = ['Registration complete'];
+    if (empty($alertMessages)) {
+        $newUser = registerNewUser($_POST);
+        if (!$newUser['success']) {
+            $alertMessages[] = $newUser['message'];
+        }
+    }
+
+    if (empty($alertMessages)) {
+      header('Location: pages/auth/login.php');
+      exit();
     }
   }
 

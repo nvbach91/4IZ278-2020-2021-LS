@@ -29,3 +29,4 @@
 <?php require __DIR__ . "./nav.inc.php"?>
 
 <main class="container mt-2 mb-2 card p-5">
+    <div class="card-body">

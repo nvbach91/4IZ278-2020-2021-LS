@@ -1,4 +1,6 @@
 <?php
+  require __DIR__ . '../../utils/utils.php';
+
   $pageTitle = "Login";
   $invalidInputs = [];
   $alertMessages = [];
@@ -43,6 +45,14 @@
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $alertMessages[] = 'Please use a valid email';
       $invalidInputs[] = 'email';
+    }
+
+    $authentication = authenticate($email, $password);
+    if (!$authentication['success']) {
+      $errors['authentication'] = $authentication['message'];
+    } else {
+      header('Location: profile.php?email=' . $email);
+      exit();
     }
   }
 
