@@ -1,0 +1,12 @@
+* {
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
