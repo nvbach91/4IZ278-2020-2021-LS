@@ -1,0 +1,44 @@
+ * {
+    box-sizing: border-box;
+    font-family: 'Cambria';
+  }
+  .form-signup {
+      width: 480px;
+  }
+  .avatar {
+      height: 100px;
+  }
+  .form-control {
+      color: #434343;
+      box-shadow: 10px 10px 5px #2086ed;
+      margin-bottom: 10px;
+  }
+  .navbar{
+      background-color: #2086ed;
+  }
+  .navbar-brand{
+      margin: 0 auto;
+  }
+  .btn-primary{
+      background-color: #2086ed;
+  }
+  .row{
+      margin-bottom: 100px;
+  }
+  h2{
+      text-shadow: 0 0 3px #2086ed;
+  }
+  .form-registration, .form-auth {
+    width: 480px;
+    margin: 0 auto;
+  }
+  .card-body{
+    box-shadow: 0 0 10px #2086ed;
+  }
+  .card-link{
+    color: #2086ed;
+    font-weight: bolder;
+  }
+  .nav-link{
+      padding-left: 20px !important;
+  }
