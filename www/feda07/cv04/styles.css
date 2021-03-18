@@ -1,0 +1,86 @@
+nav{
+    background-color: #ffbb95;
+    height: 52px;
+    font-size: larger;
+}
+.button{
+    display: block;
+    background-color: #39394a;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 3px;
+}
+.registration{
+    max-width: 400px;
+    max-height: 600px;
+    margin: 0 auto;
+}
+
+.card-registration{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+    -moz-box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+    box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+}
+
+.login{
+    max-width: 420px;
+    max-height: 400px;
+    margin: 0 auto;
+    justify-content: center;
+}
+.card-login{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+    -moz-box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+    box-shadow: 7px 14px 52px -3px rgba(0,0,0,0.67);
+}
+.card-account{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+input{
+    width: 300px;
+}
+h1{
+    display: flex;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #5d0c2c;
+}
+.homepage{
+    font-size: 50pt;
+}
+.form-text{
+    width: 300px;
+    font-size: x-small;
+}
+
+.card-homepage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #5d0c2c;
+    background-color: #ffecd0;
+    height: 95vh;
+}
+.logo{
+    width: 400px;
+}
+p{
+    color: red;
+}
