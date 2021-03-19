@@ -21,7 +21,11 @@
     {
       $this->name = $name;
       $this->entityName = $entityName;
-      echo "An instance of " . $this->getName() . " has been instantiated";
+      echo "An instance of " . $this->getName() . " has been instantiated", PHP_EOL;
+    }
+
+    public function getConfig() {
+      echo "Path: " . $this->dbPath . ", Ext: " . $this->dbExtension . ", Del: " . $this->delimiter, PHP_EOL;
     }
 
     /**
