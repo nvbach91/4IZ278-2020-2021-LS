@@ -26,24 +26,31 @@ $orders = new OrdersDatabase();
 <?= $users ?>
 --------------
 <?php
-$users->create(["name" => "Jirka", "surname" => "Vrba"]);
-$users->fetch();
-$users->save();
-$users->delete();
+$users->create(["id" => 5, "name" => "Jirka", "surname" => "Vrba"]);
+print_r($users->fetch(5) ?? "null\n");
+
+$users->save(5, ["id" => 5, "name" => "something_else", "surname" => "also_this"]);
+print_r($users->fetch(5) ?? "null\n");
+
+$users->delete(5);
+print_r($users->fetch(5) ?? "null\n");
 ?>
 </pre>
 </code>
-
 
 <h1>Products</h1>
 <code><pre>
 <?= $products ?>
 --------------
 <?php
-$products->create(["id" => "994671548", "description" => "Ice cream vanilla flavor"]);
-$products->fetch();
-$products->save();
-$products->delete();
+$products->create(["id" => 1, "description" => "Ice cream vanilla flavor"]);
+print_r($products->fetch(1) ?? "null\n");
+
+$products->save(1, ["id" => 1, "description" => "Another ice cream, this time chocolate one"]);
+print_r($products->fetch(1) ?? "null\n");
+
+$products->delete(1);
+print_r($products->fetch(1) ?? "null\n");
 ?>
 </pre>
 </code>
@@ -53,10 +60,14 @@ $products->delete();
 <?= $orders ?>
 --------------
 <?php
-$orders->create(["id" => "006481759", "customer_id" => "99706", "note" => "This is an order note smh."]);
-$orders->fetch();
-$orders->save();
-$orders->delete();
+$orders->create(["id" => 4, "product_id" => 1, "customer_id" => 420, "note" => ""]);
+print_r($orders->fetch(4) ?? "null\n");
+
+$orders->save(4, ["id" => 4, "product_id" => 2, "customer_id" => 420, "note" => "Paid in advance"]);
+print_r($orders->fetch(4) ?? "null\n");
+
+$orders->delete(4);
+print_r($orders->fetch(4) ?? "null\n");
 ?>
 </pre>
 </code>

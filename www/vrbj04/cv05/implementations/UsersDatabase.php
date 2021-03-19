@@ -9,26 +9,46 @@ final class UsersDatabase extends Database
 {
     public function __construct() {
         parent::__construct(new DatabaseConfiguration(
-            "/app/database/users",
+            "/database/users",
             ".db",
             ";"
         ));
     }
 
     public function create(array $parameters) {
-        $serialized = json_encode($parameters);
-        $this->log("Created user with parameters: [$serialized].");
+        $users = $this->loadDatabaseItems();
+        $users[] = $parameters;
+
+        $this->storeDatabaseItems($users);
     }
 
-    public function fetch() {
-        $this->log("Fetched the user from database.");
+    public function fetch(int $id) {
+        $users = $this->loadDatabaseItems();
+        $matching = array_filter($users, function ($item) use ($id) { return $item[0] == $id; });
+
+        if (count($matching) === 0) {
+            return null;
+        }
+
+        return array_values($matching)[0];
     }
 
-    public function save() {
-        $this->log("Saved the user to database.");
+    public function save(int $id, array $parameters) {
+        $users = $this->loadDatabaseItems();
+
+        foreach ($users as $index => $user) {
+            if ($user[0] == $id) {
+                $users[$index] = $parameters;
+            }
+        }
+
+        $this->storeDatabaseItems($users);
     }
 
-    public function delete() {
-        $this->log("Deleted the user from database.");
+    public function delete(int $id) {
+        $users = $this->loadDatabaseItems();
+        $others = array_filter($users, function ($item) use ($id) { return $item[0] != $id; });
+
+        $this->storeDatabaseItems(array_values($others));
     }
 }
