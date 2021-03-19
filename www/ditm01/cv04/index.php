@@ -2,7 +2,7 @@
 <?php include './includes/navigation.php' ?>
 <main>
     <h1>Homepage</h1>
-    <?php if (isset($_GET['ref']) && @$_GET['ref'] === 'login'): ?>
+    <?php if (@$_GET['ref'] === 'login'): ?>
             <div class="alert alert-success">You have successfully logged in!</div>
     <?php endif; ?>
 </main>

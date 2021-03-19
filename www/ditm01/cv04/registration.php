@@ -76,7 +76,7 @@ if (!empty($_POST)) {
         array_push($invalidInputs, 'Please enter valid email');
     }
 
-    if (!$password || $password < 8) {
+    if (!$password || strlen($password) < 8) {
         array_push($invalidInputs, 'Please enter valid password');
     }
 
