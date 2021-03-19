@@ -7,8 +7,8 @@ function sendEmail($recipient, $subject, $message) {
     $headers = [
         'MIME-Version: 1.0',
         'Content-type: text/html, charset=utf-8',
-        'From: app@dev.com',
-        'Reply-To: app@dev.com',
+        'From: kadm08@vse.cz',
+        'Reply-To: kadm08@vse.cz',
         'X-Mailer: PHP/8.0',
     ];
     $msg = "
