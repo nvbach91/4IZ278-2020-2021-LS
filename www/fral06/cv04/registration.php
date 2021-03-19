@@ -65,7 +65,7 @@ if (!empty($_POST)) {
 
         if ($registrationResult['success']) {
             //send mail
-            sendEmail($email, 'Account created');
+            sendEmail($email, 'Registration confirmation');
             header("Location: login.php?email=$email");
         } else {
             array_push($invalidInputs, $registrationResult['msg']);
