@@ -1,6 +1,6 @@
 <?php
 
-  require "FakeDatabase.php";
+  require_once "FakeDatabase.php";
   require "UsersDb.php";
   require "User.php";
   require "ProductsDb.php";
