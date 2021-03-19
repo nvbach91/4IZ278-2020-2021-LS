@@ -21,4 +21,9 @@
 
       $this->id = $id;
     }
+
+    public function __toString()
+    {
+      return "To String Method not overridden";
+    }
   }

@@ -1,5 +1,13 @@
 <?php
 
+  require "FakeDatabase.php";
+  require "UsersDb.php";
+  require "User.php";
+  require "ProductsDb.php";
+  require "Product.php";
+  require "OrdersDb.php";
+  require "Order.php";
+
   $users = new UsersDB();
   $users->create(new User(1, "Bob"));
   $users->create(new User(2, "Bill"));

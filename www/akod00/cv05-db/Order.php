@@ -35,4 +35,9 @@
     {
       return $this->createdBy;
     }
+
+    public function __toString()
+    {
+      return "[" . $this->getId() . ", " . $this->createdBy . ", products: " . implode(", ", $this->products) . "]";
+    }
   }

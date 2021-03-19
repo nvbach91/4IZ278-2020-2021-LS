@@ -1,5 +1,7 @@
 <?php
 
+  require_once "BaseEntity.php";
+
   class User extends BaseEntity
   {
     private $name;
@@ -22,5 +24,10 @@
     public function getName()
     {
       return $this->name;
+    }
+
+    public function __toString()
+    {
+      return "[" . $this->getId() . ", " . $this->name . "]";
     }
   }

@@ -1,4 +1,5 @@
 <?php
+  require "DatabaseOperations.php";
 
   /**
    * Fake database provider
@@ -7,6 +8,9 @@
   {
     private $name;
     private $entityName;
+    private $dbPath = '/external/db/';
+    private $dbExtension = '.db';
+    private $delimiter = ';';
 
     /**
      * FakeDatabase constructor.
@@ -18,6 +22,54 @@
       $this->name = $name;
       $this->entityName = $entityName;
       echo "An instance of " . $this->getName() . " has been instantiated";
+    }
+
+    /**
+     * @return string
+     */
+    public function getDbPath()
+    {
+      return $this->dbPath;
+    }
+
+    /**
+     * @param string $dbPath
+     */
+    public function setDbPath($dbPath)
+    {
+      $this->dbPath = $dbPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDbExtension()
+    {
+      return $this->dbExtension;
+    }
+
+    /**
+     * @param string $dbExtension
+     */
+    public function setDbExtension($dbExtension)
+    {
+      $this->dbExtension = $dbExtension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDelimiter()
+    {
+      return $this->delimiter;
+    }
+
+    /**
+     * @param string $delimiter
+     */
+    public function setDelimiter($delimiter)
+    {
+      $this->delimiter = $delimiter;
     }
 
     /**
@@ -37,6 +89,15 @@
     public function fetch()
     {
       echo "A '" . $this->getEntityName() . "' entity was fetched", PHP_EOL;
+    }
+
+    /**
+     * Create a new
+     * @param BaseEntity $entity Instance of an entity
+     */
+    public function create($entity)
+    {
+      echo "Created a new instance of a " . $this->getEntityName() . " entity: " . $entity, PHP_EOL;
     }
 
     /**
