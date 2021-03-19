@@ -5,9 +5,10 @@ function sendEmail($recepient, $subject, $message)
 {
     $headers = [
         'MIME-Version: 1.0',
-        'Contect-type: text/html, charset=utf-8',
-        'From: app@dev.com',
-        'X-Mailer; PHP/8.0',
+        'Content-type: text/html, charset=utf-8',
+        'From: ditm01@vse.cz',
+        'Reply-To: ditm01@vse.cz',
+        'X-Mailer: PHP/8.0',
     ];
     $msg = "<h1>Registration confirmation</h1><p>$message</p>";
     return mail($recepient, $subject, $msg, implode("\r\n", $headers));
