@@ -55,7 +55,7 @@ if (!empty($_POST)) {
         array_push($errors, 'Please use a valid email');
     }
 
-    if (strlen($password) < 3) {
+    if (strlen($password) < 8) {
         array_push($errors, 'Passwords too short');
     }
 
