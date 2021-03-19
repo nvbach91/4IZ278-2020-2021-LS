@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+main {
+    max-width: 720px;
+    margin: 0 auto;
+    background-color: darkgray;
+    padding: 50px;
+    border-radius: 5%;
+}
+
+.title {
+    text-align: center;
+}
+
+.form-group {
+    padding-bottom: 15px;
+}
+
+.btn-primary:hover {
+    color:darkblue;
+}
