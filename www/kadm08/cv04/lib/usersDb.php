@@ -6,10 +6,10 @@ function fetchUsers() {
 
     $userRecords = file($databaseFileName);
 
-    foreach ($userRecords as $userRecords) {
-        $userRecords = trim($userRecords);
-        if (!$userRecords) continue; 
-        $fields = explode(";", $userRecords);
+    foreach ($userRecords as $userRecord) {
+        $userRecord = trim($userRecord);
+        if (!$userRecord) continue; 
+        $fields = explode(";", $userRecord);
         $users[$fields[1]] = [
             'name' => $fields[0],
             'email' => $fields[1],
