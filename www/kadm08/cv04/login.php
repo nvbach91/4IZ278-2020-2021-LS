@@ -26,7 +26,9 @@ function authenticate($email, $password) {
 
 if (array_key_exists("email", $_GET)) {
     array_push($successMessages, "Registration successful");
-    $defaultEmail = $_GET["email"];
+    $defaultEmail = htmlspecialchars($_GET["email"]);
+} else if (array_key_exists("email", $_POST)) {
+    $defaultEmail = htmlspecialchars($_POST["email"]);
 } else {
     $defaultEmail = "";
 }

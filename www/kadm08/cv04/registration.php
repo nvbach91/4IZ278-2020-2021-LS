@@ -70,6 +70,9 @@ if (!empty($_POST)) {
     }
 }
 
+
+$nameValue = array_key_exists("name", $_POST) ? htmlspecialchars($_POST["name"]) : "";
+$emailValue = array_key_exists("email", $_POST) ? htmlspecialchars($_POST["email"]) : "";
 ?>
 
 
@@ -81,8 +84,8 @@ if (!empty($_POST)) {
         <p><?php echo $message; ?></p>
     <?php endforeach; ?>
     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" novalidate>
-        <input placeholder="name" name="name"><br>
-        <input placeholder="email" name="email" type="email"><br>
+        <input placeholder="name" name="name" value="<?php echo $nameValue ?>"><br>
+        <input placeholder="email" name="email" type="email" value="<?php echo $emailValue ?>"><br>
         <input placeholder="password" name="password" type="password"><br>
         <input placeholder="confirm password" name="confirm" type="password"><br>
         <button>Register</button>
