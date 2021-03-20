@@ -57,7 +57,7 @@
         <div class="form">
             <form method="POST" action="<?php $_SERVER['PHP_SELF'];?>">
                 <label>Email:</label>
-                <input type="email" name="email" placeholder="<?php echo $mail?>">
+                <input type="email" name="email" value="<?php echo isset($email) ? $email : (isset($mail) ? $mail : '') ?>">
                 <label>Password:</label>
                 <input type="password" name="password">
                 <button>Log in</button>

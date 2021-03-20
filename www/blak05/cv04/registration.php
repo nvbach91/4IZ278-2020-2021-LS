@@ -4,7 +4,6 @@ $invalidInputs = [];
 
 function sendEmail($email, $subject, $message)
  {
-
      $header = [
          'MIME-Version_ 1.0',
          'Content-type: text/html, charset=utf-8',
@@ -16,8 +15,8 @@ function sendEmail($email, $subject, $message)
          <h1>$subject</h1>
          <p>$message</p>
      ";
-     return mail($email, $subject, $body, $header);
- }
+     return mail($email, $subject, $body, implode("\r\n", $headers));
+}
 
 function makeRegistration($data){
     $databaseFileName = __DIR__ . '/database/users.db';
@@ -89,7 +88,8 @@ if(!empty($_POST)){
     }
     if(empty($email)){
         array_push($invalidInputs, 'Doplňte prosím email');
-    }if(empty($password) || empty($conf)  ){
+    }
+    if(empty($password) || empty($conf)  ){
         array_push($invalidInputs, 'Doplňte prosím heslo');
     }
 
@@ -117,11 +117,11 @@ if(!empty($_POST)){
         <div class="form">
             <form method="POST" action="<?php $_SERVER['PHP_SELF'];?>"> 
                 <label>Name:</label>
-                <input name="name"><br>
+                <input name="name" value="<?php echo isset($name) ? $name : '' ?>"><br>
                 <label>Email:</label>
-                <input type="email" name="email"><br>
+                <input type="email" name="email" value="<?php echo isset($email) ? $email : '' ?>"><br>
                 <label>Password:</label>
-                <input type="password" name="password"><br>
+                <input type="password" name="password" ><br>
                 <label>Confirm Password:</label>
                 <input type="password" name="confirm"><br>
                 <button>Register me</button>
