@@ -3,28 +3,16 @@
   class Order extends BaseEntity
   {
     private $createdBy;
-    private $products;
 
     /**
      * Order constructor.
      * @param int $id Entity id
      * @param int $createdBy Author user id
-     * @param int[] $products Ordered product ids
      */
-    public function __construct($id, $createdBy, $products)
+    public function __construct($id, $createdBy)
     {
       parent::__construct($id);
       $this->createdBy = $createdBy;
-      $this->products = $products;
-    }
-
-    /**
-     * Getter property for the Products property
-     * @return int[] Product ids
-     */
-    public function getProducts()
-    {
-      return $this->products;
     }
 
     /**
@@ -38,6 +26,18 @@
 
     public function __toString()
     {
-      return "[" . $this->getId() . ", " . $this->createdBy . ", products: " . implode(", ", $this->products) . "]";
+      return sprintf("[%d, %d]", $this->getId(), $this->createdBy);
+    }
+
+    public function toCsv($delimiter)
+    {
+      return sprintf("%d%s%d", $this->getId(), $delimiter, $this->createdBy);
+    }
+
+    public static function fromCsv($entry, $delimiter)
+    {
+      $split = explode($delimiter, $entry);
+
+      return new Order($split[0], $split[1]);
     }
   }

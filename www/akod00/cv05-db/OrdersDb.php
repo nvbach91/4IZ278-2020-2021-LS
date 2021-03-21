@@ -6,4 +6,9 @@
     {
       parent::__construct("OrdersDb", "Order");
     }
+
+    public function parseCsv($line)
+    {
+      return Order::fromCsv($line, $this->getDelimiter());
+    }
   }

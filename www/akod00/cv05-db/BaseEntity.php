@@ -22,6 +22,8 @@
       $this->id = $id;
     }
 
+    abstract public function toCsv($delimiter);
+
     public function __toString()
     {
       return "To String Method not overridden";

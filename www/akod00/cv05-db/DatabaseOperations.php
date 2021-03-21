@@ -5,5 +5,5 @@
     public function fetch();
     public function create($entity);
     public function save();
-    public function delete();
+    public function delete($entity);
   }

@@ -1,3 +1,4 @@
+<pre>
 <?php
 
   require_once "FakeDatabase.php";
@@ -11,11 +12,11 @@
   $users = new UsersDB();
   $users->getConfig();
 
+  $users->fetch();
   $users->create(new User(1, "Bob"));
   $users->create(new User(2, "Bill"));
-  $users->fetch();
   $users->save();
-  $users->delete();
+  $users->delete(new User(1, ""));
   echo PHP_EOL;
 
   $products = new ProductsDB();
@@ -28,5 +29,7 @@
   $users->getConfig();
   echo PHP_EOL;
   echo $orders, PHP_EOL;
-  $orders->create(new Order(1, 1, [1, 2]));
+  $orders->create(new Order(1, 1));
   echo $orders, PHP_EOL;
+?>
+</pre>

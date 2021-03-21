@@ -6,4 +6,9 @@
     {
       parent::__construct("ProductsDb", "Product");
     }
+
+    public function parseCsv($line)
+    {
+      return Product::fromCsv($line, $this->getDelimiter());
+    }
   }

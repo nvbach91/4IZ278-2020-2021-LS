@@ -38,6 +38,18 @@
 
     public function __toString()
     {
-      return "[" . $this->getId() . ", " . $this->name . ", " . $this->price . "]";
+      return sprintf("[%d, %s, %f]", $this->getId(), $this->name, $this->price);
+    }
+
+    public function toCsv($delimiter)
+    {
+      return sprintf("%d%s%s%s%f", $this->getId(), $delimiter, $this->name, $delimiter, $this->price);
+    }
+
+    public static function fromCsv($entry, $delimiter)
+    {
+      $split = explode($delimiter, $entry);
+
+      return new Product((int)$split[0], $split[1], (double)$split[2]);
     }
   }
