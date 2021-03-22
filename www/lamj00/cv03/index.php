@@ -3,7 +3,6 @@
 $invalidInputs = [];
     $isSubmitted = !empty($_POST);
     $gender = 'N';
-    
     if($isSubmitted) {
         $name = htmlspecialchars(trim(($_POST['name'])));
         $gender = $_POST['gender'];
@@ -86,10 +85,21 @@ function echoErrors(){
             <div class="form-group">
                 <label>Gender*</label>
                 <select class="form-control" name="gender" >
-                    <option value="N" <?php echo $gender == 'N' ? ' selected' : '' ?>>Neutral</option>
-                    <option value="F" <?php echo $gender == 'F' ? ' selected' : '' ?>>Female</option>
-                    <option value="M" <?php echo $gender == 'M' ? ' selected' : '' ?>>Male</option>
-               
+                <?php if ($gender == 'N'):?>
+                    <?php echo ' <option value="N" selected>Neutral</option>';?>
+                    <?php echo ' <option value="F">Female</option>';?>
+                    <?php echo ' <option value="M">Male</option>';?>
+                <?php endif?>
+                <?php if ($gender == 'F'):?>
+                    <?php echo ' <option value="N" >Neutral</option>';?>
+                    <?php echo ' <option value="F" selected>Female</option>';?>
+                    <?php echo ' <option value="M">Male</option>';?>
+                <?php endif?>
+                <?php if ($gender == 'M'):?>
+                    <?php echo ' <option value="N" >Neutral</option>';?>
+                    <?php echo ' <option value="F" >Female</option>';?>
+                    <?php echo ' <option value="M" selected>Male</option>';?>
+                <?php endif?>
                 </select>
             </div>
             <div class="form-group">
