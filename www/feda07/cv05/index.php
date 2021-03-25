@@ -14,7 +14,7 @@ interface DatabaseOperations
 abstract class Database implements DatabaseOperations
 {
     protected $extension = ".db";
-    protected $dbPath = "./database";
+    protected $dbPath = __DIR__ ."/database";
     protected $separator = ";";
     protected $entities = array();
 
@@ -95,21 +95,21 @@ abstract class Database implements DatabaseOperations
 
     protected function clearFile()
     {
-        $f = fopen($this->getFile(), 'w');
-        fclose($f);
+        $file = fopen($this->getFile(), 'w');
+        fclose($file);
     }
 
 
     private function getFile(): string
     {
 
-        $databaseFileName = __DIR__ . "$this->dbPath/" . $this->getTableName() . "$this->extension";
+        $databaseFileName = "$this->dbPath/" . $this->getTableName() . "$this->extension";
         if (!file_exists($databaseFileName)) {
             touch($databaseFileName);
+
         }
         return $databaseFileName;
     }
-
 }
 
 class UsersDb extends Database
