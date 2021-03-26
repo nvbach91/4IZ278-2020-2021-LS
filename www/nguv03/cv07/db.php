@@ -1,4 +1,5 @@
 <?php
+// nenahravat username a password, ani dbname na git!
 $db = new PDO(
     'mysql:host=localhost;dbname=test;charset=utf8mb4', 
     'root', 
