@@ -3,14 +3,14 @@
 <?php if (!empty($slides)): ?>
     <h1>Akční nabídka</h1>
 
-    <div class="m5 px-5">
+    <div class="mx-auto px-5 w-50 mb-5">
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <?php foreach ($slides as $index => $slide): ?>
                 <div class="carousel-item <?= $index === 0 ? "active" : "" ?>">
                     <img src="<?= $slide["image_url"] ?>" class="d-block w-100" alt="<?= $slide["name"] ?>">
                     <div class="carousel-caption d-none d-md-block">
-                        <h1 class="bg-dark"><?= $slide["name"] ?></h1>
+                        <h4 class="bg-dark"><?= $slide["name"] ?></h4>
                     </div>
                 </div>
             <?php endforeach; ?>
