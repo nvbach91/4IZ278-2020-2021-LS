@@ -9,7 +9,7 @@ interface DatabaseOperations
 
 abstract class Database implements DatabaseOperations
 {
-    protected $dbPath = __DIR__ . '../db/';
+    protected $dbPath = __DIR__ . '/db/';
     protected $dbExtension = '.db';
     protected $delimiter = ';';
 
