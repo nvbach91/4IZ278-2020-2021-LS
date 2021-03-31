@@ -1,0 +1,57 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template/shop-homepage)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+  font-family: 'Nunito Sans', sans-serif;
+
+}
+
+
+.navbar {
+  background: linear-gradient(to bottom, #9be15d, #00e3ae);
+}
+
+
+.navbar-brand {
+  font-family: 'Megrim', sans-serif
+}
+
+h1{
+  font-family: 'Megrim', sans-serif;
+  transform: skewY(-5deg);
+  word-spacing: 3px;
+}
+
+.list-group-item, .list-group-item:visited, .list-group-item:link {
+  transform: skewX(-20deg);
+  margin-bottom: 2rem;
+  background-color: #79e17b;
+  border: none;
+  color: white;
+  font-family: 'Megrim', sans-serif;
+  font-size: 1.5rem;
+}
+
+.list-group-item:focus, .list-group-item:hover {
+  text-decoration: none;
+  color: white;
+}
+
+
+.carousel-item {
+  max-height: 350px;
+  overflow: hidden;
+}
+
+.card {
+  box-shadow: 0 2rem 6rem 1rem rgb(0 0 0 / 15%);
+  transition: all 0.5s;
+}
+
+.card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 3rem 8rem 2rem rgb(0 0 0 / 15%);
+}

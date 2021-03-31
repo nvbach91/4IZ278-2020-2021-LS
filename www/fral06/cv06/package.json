@@ -1,0 +1,14 @@
+{
+  "name": "eshop",
+  "version": "1.0.0",
+  "description": "lukas avocado eshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lukas Frajt",
+  "license": "ISC",
+  "dependencies": {
+    "startbootstrap-shop-homepage": "^4.2.3"
+  }
+}
