@@ -1,0 +1,17 @@
+body {
+    padding-top: 56px;
+}
+
+.card-img-top {
+    width: 100%;
+}
+
+.slide {
+    height: 400px;
+    text-align: center;
+}
+
+.slide img {
+    max-height: 300px;
+    margin: 0 auto;
+}
