@@ -1,7 +1,7 @@
 <?php
   require '../../utils/utils.php';
 
-  $pageTitle = "Login";
+  $title = "Login";
   $invalidInputs = [];
   $alertMessages = [];
   $alertType = 'alert-danger';
