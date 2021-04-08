@@ -1,6 +1,6 @@
 <?php
-  require_once __DIR__ . '../config/config.php';
-  require_once __DIR__ . '/IDatabaseOperations.php';
+  require_once __DIR__ . '\..\config\config.php';
+  require_once __DIR__ . '.\IDatabaseOperations.php';
 
   abstract class BaseDatabase implements IDatabaseOperations
   {
