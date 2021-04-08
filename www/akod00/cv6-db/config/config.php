@@ -1,7 +1,5 @@
 <?php
-define('DELIMITER', ';');
-define('DB_FILE_USERS', __DIR__ . '/database/users.db');
-define('SERVER_USER_NAME', 'akod00');
-define('PAGE_LOGIN', './pages/auth/login.php');
-
-$sender = SERVER_USER_NAME . '@vse.cz';
+  const DB_HOST = 'localhost';
+  const DB_DATABASE = 'test';
+  const DB_USERNAME = 'root';
+  const DB_PASSWORD = 'root';
