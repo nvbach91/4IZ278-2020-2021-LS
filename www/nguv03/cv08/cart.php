@@ -28,9 +28,9 @@ if (is_array($ids) && count($ids)) {
 <main class="container">
     <h1>My shopping cart</h1>
     Total goods selected: <?= @count($goods) ?>
-    <br/><br/>
+    <br><br>
     <a href="index.php">Back to the mangos!</a>
-    <br/><br/>
+    <br><br>
     <?php if(@$goods): ?>
     <div class="products">
         <?php foreach($goods as $row): ?>
