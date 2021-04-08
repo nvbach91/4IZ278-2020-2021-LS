@@ -6,5 +6,5 @@ const CONFIG_FACEBOOK = [
 ];
 const CONFIG_PROTOCOL = 'https://';
 const CONFIG_DOMAIN = 'vcap.me';
-const CONFIG_PATH = '/4IZ278-2020-2021-LS/www/nguv03/cv09/facebook';
+const CONFIG_PATH = '/4IZ278-2020-2021-LS/www/nguv03/cv10/facebook';
 ?>

@@ -1,24 +1,21 @@
+
 <?php
-
+session_start();
 require 'db.php';
-require 'user_required.php'; // pristup jen pro prihlaseneho uzivatele
-
+# session pole pro kosik
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
-
-$stmt = $db->prepare('SELECT * FROM products WHERE id = :id');
-$stmt->execute([
-    'id' => $_GET['id']
-]);
-$products = $stmt->fetch();
-
-if (!$products) {
-    exit('Unable to find products!');
+$sql = "SELECT * FROM goods WHERE id = :id";
+$stmt = $db->prepare($sql);
+$stmt->execute(['id' => $_GET['id']]);
+$goods = $stmt->fetch();
+if (!$goods){
+    exit("Unable to find goods!");
 }
-
-$_SESSION['cart'][] = $products['id'];
-
+# pridame id zbozi do session pole
+# TODO neresime, ze od jednoho zbozi muze byt vetsi mnozstvi nez 1, domaci ukol :)
+$_SESSION['cart'][] = $goods["id"];
 header('Location: cart.php');
-
+exit();
 ?>
