@@ -21,7 +21,7 @@
 </head>
 <body>
     <h2>Login</h2>
-    <form acion="." method="POST">
+    <form action="." method="POST">
         <label>Username</label>
         <input name="username">
         <button>Login</button>
