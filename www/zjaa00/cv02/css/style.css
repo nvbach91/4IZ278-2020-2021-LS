@@ -1,0 +1,90 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+/*clearfix*/
+.business-card::before,
+.business-card::after {
+  content: "";
+  display: table;
+}
+.business-card::after {
+  clear: both;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: #814155;
+}
+
+h1 {
+  text-align: center;
+  color: #f9f9f9;
+  font-size: 50px;
+}
+
+.business-card {
+  padding: 30px;
+  background-color: #f9f9f9;
+  color: #b6bec0;
+  width: 600px;
+  margin: 40px auto;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 5px 20px #000;
+  display: flex;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.logo {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 40px;
+}
+
+.info {
+  font-size: 20px;
+}
+
+.back {
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.me {
+  border-right: 2px solid #814155;
+  font-size: 20px;
+  padding-right: 10px;
+  width: 180px;
+}
+
+.contacts {
+  padding-left: 20px;
+  width: 320px;
+  color: #8e8f8e;
+}
+
+.firstname,
+.lastname {
+  color: #171717;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.company {
+  color: #814155;
+  font-weight: bolder;
+  font-size: 1.2em;
+}

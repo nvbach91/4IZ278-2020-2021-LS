@@ -1,0 +1,21 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+/*clearfix*/
+.class::before,
+.class::after {
+content: "";
+display: table;
+}
+.class::after {
+clear: both;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
