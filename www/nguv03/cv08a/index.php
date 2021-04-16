@@ -1,4 +1,6 @@
+<?php require __DIR__ . '/db.php' ?>
 <?php
+
 
 if (!empty($_GET)) {
     $offset = $_GET['offset'];
@@ -6,11 +8,6 @@ if (!empty($_GET)) {
     $offset = 0;
 }
 
-$pdo = new PDO(
-    "mysql:host=localhost;dbname=test;charset=utf8mb4",
-    "root",
-    "",
-);
 $numberOfItemsPerPagination = 4;
 $numberOfGoods = $pdo->query("SELECT COUNT(id) FROM goods;")->fetchColumn();
 
@@ -87,7 +84,7 @@ $numberOfPaginations = ceil($numberOfGoods / $numberOfItemsPerPagination);
                 <div class="price"><?php echo $good['price']; ?></div>
                 <div class="description"><?php echo $good['description']; ?></div>
                 <div class="controls">
-                    <a href="buy.php?id=<?php echo $good['id']; ?>">Buy id=<?php echo $good['id']; ?></a>
+                    <a href="buy.php?id=<?php echo $good['id']; ?>&offset=<?php echo $offset; ?>">Buy id=<?php echo $good['id']; ?></a>
                 </div>
             </div>
         <?php endforeach; ?>

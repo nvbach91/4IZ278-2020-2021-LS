@@ -1,32 +1,27 @@
+<?php require __DIR__ . '/db.php' ?>
 <?php 
     session_start();
-    $ids = @$_SESSION['cart'];
+    
+    $offset = $_GET['offset'];
+    $_SESSION['offset'] = $offset;
 
-
-    if (!empty($_GET)) {
-
-        // check login data!
-
-        $id = $_GET['id'];
-        array_push($ids, $id);
-        header('Location: index.php');
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
     }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form acion="." method="POST">
-        <label>Username</label>
-        <input name="username">
-        <button>Login</button>
-    </form>
-</body>
-</html>
+    $id = $_GET['id'];
+
+    $sql = "SELECT * FROM goods WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
+    $goods = $statement->fetchAll();
+
+    if (!$goods) {
+        header('Location: 404.php');
+        exit();
+    }
+    if (!in_array($id, $_SESSION['cart'])) {
+        $_SESSION['cart'][] = $id;
+    }
+    header('Location: cart.php');
+?>

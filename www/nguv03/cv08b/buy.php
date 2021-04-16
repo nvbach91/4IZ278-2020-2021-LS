@@ -1,35 +1,30 @@
+<?php require __DIR__ . '/db.php'; ?>
 <?php 
-if (!empty($_POST)) {
-    $username = $_POST['username'];
 
-    // check login data!
-    // check user password
+    session_start();
 
-    setcookie('username', $username, time() + 3600);
-    header('Location: index.php');
-}
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $_SESSION['offset'] = $_GET['offset'];
+
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM goods WHERE id = :id;";
+    
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
+    $goods = $statement->fetchAll();
+
+    if (!$goods) {
+        header('Location: 404.php');
+        exit();
+    }
+
+    if (!in_array($id, $_SESSION['cart'])) {
+        array_push($_SESSION['cart'], $id);
+    }
+    header('Location: cart.php');
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <nav>
-        <?php if (@$_COOKIE['username']): ?>
-            <a href="logout.php">Logout</a>
-        <?php else: ?>
-            <a href="login.php">Go to login</a>
-        <?php endif; ?>
-    </nav>
-    <h1>Login</h1>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <label>Username</label>
-        <input name="username" placeholder="your username">
-        <button>Login</button>
-    </form>
-</body>
-</html>
