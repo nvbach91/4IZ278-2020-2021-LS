@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/db.php' ?>
 <?php
 
 if (!empty($_GET)) {
@@ -6,11 +7,6 @@ if (!empty($_GET)) {
     $offset = 0;
 }
 
-$pdo = new PDO(
-    "mysql:host=localhost;dbname=testBach;charset=utf8mb4",
-    "root",
-    ""
-);
 $numberOfItemsPerPagination = 4;
 $numberOfGoods = $pdo->query("SELECT COUNT(id) FROM goods;")->fetchColumn();
 
@@ -27,49 +23,13 @@ $numberOfPaginations = ceil($numberOfGoods / $numberOfItemsPerPagination);
 
 <?php require __DIR__ . '/incl/header.php'; ?>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">YourMango.com</a>    
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Košík</a>
-                    </li>
-                    <li class="nav-item">
-                    <?php if (@$_COOKIE['username']): ?>
-                        <a class="nav-link" href="profil.php"><?php echo $_COOKIE['username']; ?></a>
-                        <?php else: ?>
-                        <a class="nav-link" href="profil.php">Profil</a>
-                        <?php endif; ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (@$_COOKIE['username']): ?>
-                        <a class="nav-link" href="logout.php">Logout</a>
-                        <?php else: ?>
-                        <a class="nav-link" href="login.php">Login</a>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<?php require __DIR__ . '/incl/navbar.php'; ?>
     <main>
         <h1>Vítejte na eshopu s mangy!</h1>
         Total mango count: <?php echo $numberOfGoods ?> <br>
         Total number of pages: <?php echo $numberOfPaginations ?>
         <div class="goods">
             <?php foreach($goods as $good): ?>
-            <!--
-                <div class="good">
-                    <div class="image" style="background-image: url(<?php echo $good['img']; ?>)"></div>
-                    <div class="controls">
-                        <a href="buy.php?id=<?php echo $good['id']; ?>">Buy id=<?php echo $good['id']; ?></a>
-                    </div>
-                </div>
-                -->
                 <div class="card" style="width: 25%;">
                     <img class="card-img-top" style="height: 10rem;" src="<?php echo $good['img']; ?>" alt="Card image cap">
                     <div class="card-body">
