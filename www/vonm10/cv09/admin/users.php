@@ -20,18 +20,17 @@ if (!empty($_POST)) {
 
 <?php require __DIR__ . '/../incl/header.php'; ?>
 <h1>Users</h1>
-<form method="POST">
-    <table border="1">
-        <tr>
-            <th>id</th>
-            <th>email</th>
-            <th>password</th>
-            <th>role</th>
-            <th>new role</th>
-            <th>confirm</th>
-        </tr>
-        <?php foreach ($userRecords as $userRecord) : ?>
-
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>email</th>
+        <th>password</th>
+        <th>role</th>
+        <th>new role</th>
+        <th>confirm</th>
+    </tr>
+    <?php foreach ($userRecords as $userRecord) : ?>
+        <form method="POST">
             <tr>
                 <td><?php echo $userRecord['id'] ?></td>
                 <td><?php echo $userRecord['email'] ?></td>
@@ -46,8 +45,7 @@ if (!empty($_POST)) {
                 </td>
                 <td><button name="button" value=<?php echo $userRecord['id'] ?>>Confirm</button></td>
             </tr>
-
-        <?php endforeach ?>
-    </table>
-</form>
+        </form>
+    <?php endforeach ?>
+</table>
 <?php require __DIR__ . '/../incl/footer.php'; ?>
