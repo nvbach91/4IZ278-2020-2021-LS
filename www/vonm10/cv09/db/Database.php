@@ -65,9 +65,9 @@ abstract class Database implements DatabaseOperations
 
     public function updateRole($id, $newRole)
     {
-        $sql = 'UPDATE ' . $this->tableName . ' SET admin = "' . $newRole . '" WHERE id = ' . $id . ';';
+        $sql = 'UPDATE ' . $this->tableName . ' SET admin = :newRole WHERE id = :id;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute(['newRole' => $newRole, 'id' => $id]);
         return "You have successfully updated role for user " . $id;
     }
 }
