@@ -39,7 +39,7 @@ $users = $stmt->fetchAll();
                 <div><a><?php echo $user['email'];?></a></div>
                 <div></div>
                     <div>
-                        <select form="theForm" name="<?php echo $user['id'] ?></option>"  >
+                        <select form="theForm" name="<?php echo $user['id'] ?>">
                             <option value="1" <?php echo $user['privileges'] == '1' ? ' selected' : '' ?>>User</option>
                             <option value="2" <?php echo $user['privileges'] == '2' ? ' selected' : '' ?>>Manager</option>
                             <option value="3" <?php echo $user['privileges'] == '3' ? ' selected' : '' ?>>Admin</option>
