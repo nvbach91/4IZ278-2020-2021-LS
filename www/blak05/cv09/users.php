@@ -48,7 +48,16 @@
         <label class="form-label">Email:</label>
         <input name="email" class="form-control" type="email" value="<?php echo $user["email"]?>">
         <label class="form-label">Privilege:</label>
-        <input name="privilege" class="form-control" type="privilege" value="<?php echo $user['privilege']?>">
+        <!--<input name="privilege" class="form-control" type="privilege" value="<?php echo $user['privilege']?>"> -->
+        <select class="form-control" name="privilege" id="select-privilege">
+            <?php if($user['privilege']==2): ?>
+                <option>1</option>
+                <option selected>2</option>
+            <?php else: ?>
+                <option selected>1</option>
+                <option>2</option>
+            <?php endif; ?>
+        </select>
         <button type="submit" class="btn btn-dark">Odeslat</button>
     </form>
     <?php endforeach ?>

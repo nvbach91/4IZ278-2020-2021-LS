@@ -15,11 +15,11 @@
 
         if(password_verify($password, $user['password'])){
             $_SESSION['username'] = $user['email'];
-            $pageOffset = @$_COOKIE['offset'];
-            header("Location: index.php?offset=$pageOffset");
             if($user['privilege'] == 2) {
                 setcookie('privilege', 2, time() + 3600);
             }
+            $pageOffset = @$_COOKIE['offset'];
+            header("Location: index.php?offset=$pageOffset");
         }else{
             $error = "<div class='alert alert-danger' role='alert'> Your password is wrong </div>";
         }
