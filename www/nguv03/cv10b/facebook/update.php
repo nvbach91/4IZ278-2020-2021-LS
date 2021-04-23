@@ -16,7 +16,7 @@ $stmt->execute([
 $product = $stmt->fetch();
 
 if (!$product) {
-    exit(404);
+    exit('Unable to find product!');
 }
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
@@ -27,16 +27,11 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
     if ($_SESSION[$_GET['id'] . '_last_updated_at'] != $last_updated_at) {
         # tady by idealne mel byt navrat na formular s oznacenymi daty, 
-        # co se zmenilo a nabidnout prepis nebo ponechani dat, nebo zobrazit rozdily
+        # co se zmenilo a nabidnout prepis nebo ponechani dat, porovnani 
         # pro zjednoduseni ted jen umiram
         die ("The product was updated by someone else in the meantime!");
     }
-    $stmt = $db->prepare("
-        UPDATE products SET name = :name, 
-                            description = :description, 
-                            price = :price, 
-                            last_updated_at = now() 
-                        WHERE id = :id");
+    $stmt = $db->prepare('UPDATE products SET name = :name, description = :description, price = :price, last_updated_at = now() WHERE id = :id');
     $stmt->execute([
         'name' => $_POST['name'], 
         'description' => $_POST['description'], 

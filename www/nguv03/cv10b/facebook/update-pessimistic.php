@@ -12,38 +12,31 @@ $stmt->execute([
     'id' => $_GET['id']
 ]);
 $product = $stmt->fetch();
+// pokud edited_by != null 
+//      pokud edited_by != ja 
+//          pokud now() - opened_at < 30minut
+//              umrit
+// jinak pokracovat
 
-if (!$product) {
-    exit('Unable to find product!');
-}
-
-$pessimisticLockTime = 30;
-
-// pokud nekdo zrovna edituje (otevrel editacni stranku pred nami)
-//      pokud to nejsem ja
-//          pokud je stale aktivni
-//              neotevreme editacni stranku
-// pokud nic neplati tak otevru editaci
-
-if ($product['edit_by']) {
-    if ($product['edit_by'] != $_COOKIE['user_id']) {
-        if (time() - time($product['opened_at']) < 30 * 60) {
-            exit("Some else is still editing this record");
+if ($product['edited_by']) {
+    if ($_COOKIE['user_id'] != $product['edited_by']) {
+        if (time() - $product['opened_at'] < 30 * 60) {
+            exit('Someone else is still editing this record');
         }
     }
 }
 
 
+if (!$product) {
+    exit('Unable to find product!');
+}
+
 $sql = "UPDATE products SET edited_by = :user_id, opened_at = now() WHERE id = :product_id;";
 $stmt = $db->prepare($sql);
-$stmt ->execute([
+$stmt->execute([
     'user_id' => $_COOKIE['user_id'],
     'product_id' => $_GET['id'],
 ]);
-
-
-
-
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
     $stmt = $db->prepare('UPDATE products SET name = :name, description = :description, price = :price WHERE id = :id');
@@ -53,29 +46,17 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         'price' => (float) $_POST['price'], 
         'id' => $_POST['id']
     ]);
-    
-    
 
     $sql = "UPDATE products SET edited_by = :user_id, opened_at = :opened_at WHERE id = :product_id;";
     $stmt = $db->prepare($sql);
-    $stmt ->execute([
+    $stmt->execute([
         'user_id' => null,
         'opened_at' => null,
         'product_id' => $_GET['id'],
     ]);
 
-
     header('Location: index.php');
 }
-
-// table users 
-//  id      name    privilege
-//  10      nguv03          3
-
-// table products
-//  id   name   price   img    edited_by    opened_at
-//   1   Abc    10.00   url                          
-
 
 ?>
 
