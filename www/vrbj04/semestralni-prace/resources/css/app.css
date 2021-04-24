@@ -1,0 +1,60 @@
+/* ./resources/css/app.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+    width: 100vw;
+    min-height: 100vh;
+
+    @apply flex flex-col;
+}
+
+.button {
+    @apply inline-block bg-blue-500 py-2 px-4 uppercase text-sm font-bold tracking-wider text-white rounded shadow hover:shadow-lg hover:bg-blue-600 cursor-pointer;
+}
+
+.button.button--muted {
+    @apply bg-gray-700 hover:bg-gray-600;
+}
+
+.button.button--danger {
+    @apply bg-red-500 hover:bg-red-600;
+}
+
+.button.button--action {
+    @apply bg-green-500 hover:bg-green-600;
+}
+
+form.form {
+    @apply flex flex-col bg-gray-800 p-10 rounded-xl;
+}
+
+label {
+    @apply text-sm uppercase font-bold tracking-widest text-gray-500;
+}
+
+label .label__meta {
+    @apply text-gray-400 tracking-wide;
+}
+
+.input {
+    @apply bg-gray-700 border border-gray-800 my-2 rounded font-bold text-gray-300 focus:bg-gray-600 focus:ring-gray-400 focus:border-gray-300 focus:ring-4;
+}
+
+.title {
+    @apply text-4xl font-bold text-white;
+}
+
+.question {
+    min-height: 500px;
+    @apply self-stretch flex flex-col justify-center items-center text-gray-300 bg-gray-800 rounded-xl text-xl;
+}
+
+.question.question--revealed {
+    @apply bg-gray-700 text-2xl;
+}
+
+.question.question--hidden, .question .question__content--hidden  {
+    display: none;
+}
