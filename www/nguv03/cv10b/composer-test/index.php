@@ -1,16 +1,18 @@
-<?php
-
+<?php 
+// automaticke nacteni trid
 require __DIR__ . '/vendor/autoload.php';
 
+// nacteni namespace kvuli zkraceni nazvu trid pri pouziti
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-$log = new Logger('name');
+// vytvareni instance
+$log = new Logger('index.php');
 
-$handler = new StreamHandler('warning.log', Logger::WARNING);
+// nastaveni instance
+$log->pushHandler(new StreamHandler('warning.log', Logger::WARNING));
 
-$log->pushHandler($handler);
-
-$log->warning('abcdef');
+// pouziti instance
+$log->warning('warning');
 
 ?>
