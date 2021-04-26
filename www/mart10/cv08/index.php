@@ -45,9 +45,13 @@ $numberOfPages = ceil($numberOfGoods / $itemsPerPagination);
     <div class="price"><?php echo $good['price']; ?></div>
     <div class="description"><?php echo $good['description']; ?></div>
     <div class="controls">
-        <a href="buy.php?id=<?php echo $good['id']; ?>">Buy</a>
-        <!--<a class="btn btn-secondary card-link" href='./update.php?id=<?php// echo $row['id'] ?>'>Edit</a>
-        <a class="btn btn-secondary card-link" href='./delete.php?id=<?php// echo $row['id'] ?>'>Delete</a>-->
+        <?php if (isset($_COOKIE['username'])) : ?>
+            <a class="btn btn-secondary card-link" href='buy.php?id=<?php echo $good['id'] ?>'>Buy</a>
+            <a class="btn btn-secondary card-link" href='edit-item.php?id=<?php echo $good['id'] ?>'>Edit</a>
+            <a class="btn btn-secondary card-link" href='delete-item.php?id=<?php echo $good['id'] ?>'>Delete</a>
+        <?php else : ?>
+            <a class="btn btn-secondary card-link" href='buy.php?id=<?php echo $good['id'] ?>'>Buy</a>
+        <?php endif; ?>
     </div>
 </div>
  <?php endforeach; ?>

@@ -8,7 +8,7 @@ if (!empty($_POST)) {
     if (!is_numeric($_POST['price'])) array_push($errors, "Price must be a number");
 }
 if (!empty($_POST) and empty($errors)) {
-    $statement = $pdo->prepare("
+    $statement = $db->prepare("
                          INSERT INTO goods (name, price, description, img) 
                          VALUES (?, ?, ?, ?)                                           
                          ");
@@ -22,7 +22,7 @@ if (!empty($_POST) and empty($errors)) {
 }
 ?>
 
-<?php require __DIR__ . '/includes/header.php'; ?>
+<?php require __DIR__ . '/incl/header.php'; ?>
 <main class="container">
     <h1>Add new item</h1>
     <ul>
@@ -48,4 +48,4 @@ if (!empty($_POST) and empty($errors)) {
         <button type="submit" class="btn btn-primary">Add</button>
     </form>
 </main>
-<?php require __DIR__ . '/includes/footer.php'; ?>
+<?php require __DIR__ . '/incl/footer.php'; ?>

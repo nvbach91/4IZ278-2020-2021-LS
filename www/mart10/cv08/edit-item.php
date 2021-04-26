@@ -1,6 +1,5 @@
+<?php require __DIR__.'/db.php'; ?>
 <?php
-require __DIR__ . '/db.php';
-
 $success = false;
 $errors = [];
 
@@ -8,7 +7,7 @@ if (!empty($_POST)) {
     if (!is_numeric($_POST['price'])) array_push($errors, "Price must be a number");
 }
 if (!empty($_POST)) {
-    $statement = $pdo->prepare("
+    $statement = $db->prepare("
       UPDATE goods SET
       name = :name,
       description = :description,
@@ -26,12 +25,12 @@ if (!empty($_POST)) {
 
     $success = true;
 }
-$item = $pdo->prepare("SELECT * FROM goods WHERE id = :id;");
+$item = $db->prepare("SELECT * FROM goods WHERE id = :id;");
 $item->execute(['id' => $_GET['id']]);
 $item = $item->fetchAll()[0];
 ?>
 
-<?php require __DIR__ . '/includes/header.php'; ?>
+<?php require __DIR__ . '/incl/header.php'; ?>
 <main class="container">
     <h1>Edit an item</h1>
     <ul>
@@ -57,4 +56,4 @@ $item = $item->fetchAll()[0];
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </main>
-<?php require __DIR__ . '/includes/footer.php'; ?>
+<?php require __DIR__ . '/incl/footer.php'; ?>
