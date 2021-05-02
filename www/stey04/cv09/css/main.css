@@ -1,0 +1,29 @@
+.goods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.good {
+    width: 25%;
+}
+
+.image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100px;
+}
+
+/*
+.pagination {
+    padding: 5px;
+    background-color: aquamarine;
+    margin-left: 5px;
+    color: white;
+}
+
+.pagination.active {
+    background-color: firebrick;
+}
+*/
