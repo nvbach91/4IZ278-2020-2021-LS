@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\GalaxyController;
-use App\Models\Galaxy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/galaxies', function () {
-    $galaxiesController = new GalaxyController();
-    $galaxies = $galaxiesController->fetchAll();
-    return view('galaxies')->with('galaxies', $galaxies);
 });

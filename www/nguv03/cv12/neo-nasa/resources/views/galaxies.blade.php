@@ -13,5 +13,10 @@
     </head>
     <body class="antialiased">
         <h1>ahoj</h1>
+        <ul>
+            @foreach($galaxies as $galaxy) 
+                <li>{{ $galaxy->name }}</li>
+            @endforeach
+        </ul>
     </body>
 </html>
