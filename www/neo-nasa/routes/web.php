@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\GalaxyController;
+use App\Http\Controllers\SpaceStationController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
