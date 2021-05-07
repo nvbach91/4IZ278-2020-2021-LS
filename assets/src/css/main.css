@@ -1,0 +1,95 @@
+/*----------------- parameters declaration ------------------------*/
+/*----------------------------------------------------------------*/
+*, *:after, *:before {
+  box-sizing: border-box;
+  margin: 0; }
+
+:is(h1, h2, h3, h4, h5, h6) {
+  font-family: "Roboto Slab", serif; }
+
+a {
+  color: #f25c05; }
+
+::selection {
+  background-color: #191919;
+  color: #f2cb05; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #191919; }
+
+.vertic-100 {
+  height: 100vh; }
+
+.bg-yellow {
+  background-color: #f2cb05; }
+
+.title {
+  font-size: 5.5rem;
+  font-weight: 800;
+  margin-bottom: 1em; }
+
+.sub-title {
+  padding: 0 5em; }
+
+p {
+  font-size: 1rem; }
+
+.center {
+  text-align: center; }
+
+.bold {
+  font-weight: 800; }
+
+.soc-icons {
+  margin: 0 0.5rem; }
+  .soc-icons img {
+    height: 1.2rem; }
+
+/*login*/
+.logo {
+  height: 2.5em; }
+
+.login-form {
+  margin-top: 2rem; }
+  .login-form .inp {
+    position: relative;
+    margin-bottom: 2rem;
+    width: 100%; }
+    .login-form .inp input {
+      width: 100%;
+      border-radius: 3px;
+      height: 4em; }
+      .login-form .inp input:focus {
+        outline: none !important;
+        border: 2px solid #f2cb05;
+        box-shadow: none; }
+    .login-form .inp a {
+      float: right;
+      color: #f25c05;
+      margin: 1rem 0 2rem 0; }
+    .login-form .inp label {
+      transition: 0.3s ease-out; }
+
+.btn-log {
+  border-style: none;
+  width: 100%;
+  border-radius: 3px;
+  height: 4em;
+  background-color: #f2cb05;
+  color: white;
+  margin-bottom: 2em; }
+
+.btn-fb {
+  border-style: none;
+  width: 100%;
+  border-radius: 3px;
+  height: 4em;
+  background-color: #0084ff;
+  color: white;
+  margin-bottom: 2em; }
+
+.reg {
+  text-align: center; }
