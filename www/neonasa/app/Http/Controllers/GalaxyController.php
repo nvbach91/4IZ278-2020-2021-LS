@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 class GalaxyController extends Controller
 {
-    public function fetchAll() {
+    public function fetchById($id)
+    {
+        return Galaxy::where("id", $id)->first();
+    }
 
+    public function fetchAll()
+    {
+        return Galaxy::all();
     }
 }
