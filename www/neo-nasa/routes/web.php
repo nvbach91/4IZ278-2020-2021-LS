@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +18,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users', function () {
-    $userController = new UserController();
-    $users = $userController->fetchAll();
-    return view('users')->with('users',$users);
+Route::get('/galaxies', function () {
+    $galaxyController = new GalaxyController();
+    $galaxies = $galaxyController->fetchAll();
+    return view('galaxies')->with('galaxies', $galaxies);
 });
+
+Route::get('/galaxies/{id}', function ($galaxy_id) {
+    $galaxyController = new GalaxyController();
+    $galaxyById = $galaxyController->fetchById($galaxy_id);
+    return view('galaxyById')->with('galaxyById', $galaxyById);
+});
+
+Route::get('/galaxies/{id}/spacestations', function ($galaxy_id) {
+    $spaceStationController = new SpaceStationController();
+    $spaceStations = $spaceStationController->fetchAllSpacestationsByGalaxyId($galaxy_id);
+    return view('spaceStations')->with('spaceStations', $spaceStations);
+});
+
+Route::get('/spacestations/{spaceStation_id}', function ($spaceStation_id) {
+    $spaceStationController = new SpaceStationController();
+    $spaceStationById = $spaceStationController->fetchById($spaceStation_id);
+    return view('spaceStationById')->with('spaceStationById', $spaceStationById);
+});
+
+
+
+
+
