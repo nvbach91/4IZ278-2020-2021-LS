@@ -7,26 +7,25 @@ $(function () {
    * on refresh or filter request by user
   */
   function filter_data() {
-    
+   
     //disable search bar when loading
-    $("#search").prop("disabled", true);
-
-    //spinner delay
-    var delay = 1000;
+    $("nav .search_input").prop("disabled", true);
+   
+    var spinnerDelay = 1000;
     setTimeout(function () {
-      if ($("#box").children().length === 0 && $("#spinner").length === 0) {
-        if (!$("#box").is(":visible")) {
-          $("#box").fadeIn();
+      if ($("#drinks_box").children().length === 0 && $("#spinner").length === 0) {
+        if (!$("#drinks_box").is(":visible")) {
+          $("#drinks_box").fadeIn();
         }
 
-        $("#box").html(
+        $("#drinks_box").html(
           '<div id="spinner" style="background-image: url(&apos;img/spinner.svg&apos;)"></div>'
         );
         
         $("#spinner").hide().fadeIn(500);
         
       }
-    }, delay);
+    }, spinnerDelay);
 
     //data to be sent
     var action = "fetch_data",
@@ -38,7 +37,7 @@ $(function () {
 
     //database request
     $.ajax({
-      url: "_inc/fetch_data.php",
+      url: "./partials/fetch_data.php",
       method: "POST",
       data: {
         action: action,
@@ -52,11 +51,11 @@ $(function () {
       success: function (data) {
         
         //enable search bar after data is loaded
-        $("#search").prop("disabled", false);
+        $("nav .search_input").prop("disabled", false);
 
         //fade-in animation after data is loaded
         var speed = 500;
-        $("#box")
+        $("#drinks_box")
           .html(data)
           .hide()
           .stop()
@@ -68,15 +67,14 @@ $(function () {
 
   //SEARCH BAR
   //functionality
-  $("#search").keyup(function () {
-    var filter = $("#search")
+  $("nav .search_input").keyup(function () {
+    var filter = $("nav .search_input")
           .val()
           .toUpperCase() //search is not case-sensitive
           .normalize("NFD").replace(/[\u0300-\u036f]|\s/g, ""), //search doesn't follow diacritics
-        li = $("#box .card");
+        li = $("#drinks_box .card");
     li.each(function () { //match check
       var txtValue = $(this).find(".content h2").text();
-
       if (
         txtValue
           .toUpperCase()
@@ -89,19 +87,19 @@ $(function () {
       }
     });
 
-    var results = $("#box .card:visible"), //number of search results
+    var results = $("#drinks_box .card:visible"), //number of search results
         noMatch = "Žiadne výsledky"; //"NO MATCH" message
 
-    if (results.length == 0 && $("#box > h3").length == 0) { //if there are 0 results and "NO MATCH" header is not present
-      $("<h3>"+ noMatch +"</h3>").appendTo("#box"); //create "NO MATCH" message
-    } else if (results.length > 0 && $("#box > h3").length) { //if there are any results and "NO MATCH" header is stil present
-      $("#box h3").remove(); //remove "NO MATCH" message
+    if (results.length == 0 && $("#drinks_box > h3").length == 0) { //if there are 0 results and "NO MATCH" header is not present
+      $("<h3>"+ noMatch +"</h3>").appendTo("#drinks_box"); //create "NO MATCH" message
+    } else if (results.length > 0 && $("#drinks_box > h3").length) { //if there are any results and "NO MATCH" header is stil present
+      $("#drinks_box h3").remove(); //remove "NO MATCH" message
     }
   });
 
   //clear icon
-  var clearIcon = $("#clear-icon"),
-      searchBar = $("#search");
+  var clearIcon = $("nav .clear_icon"),
+      searchBar = $("nav .search_input");
 
   //show clear icon when search bar input is not empty and hide it if it is
   searchBar.on("keyup", function () {
@@ -121,79 +119,85 @@ $(function () {
 
   //FILTER SLIDER
   //filter - options' initial opacity 
-  $("#filter div").css("opacity", 0);
+  $("#filter_slider div").css("opacity", 0);
 
-  function slideDown(object, content, slideSpeed, optionsFadeSpeed) {
+  function goDown(object, content, slideSpeed, optionsFadeSpeed) {
     var slider = $(object),
-        options = $(object + " " + content),
-        slideSp = slideSpeed, //slide animation speed
-        optionsFadeSp = optionsFadeSpeed; //text fade-in/-out speed;
+        options = $(object + " " + content);
 
     if (options.css("opacity") == 0) {
-      $("nav").animate(
+      $("nav").stop().animate(
         {
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
         },
         100,
         function () {
-          slider.slideDown(slideSp, function () {
-            options.animate({ opacity: "1" }, optionsFadeSp);
+          slider.slideDown(slideSpeed, function () {
+            options.animate({ opacity: "1" }, optionsFadeSpeed);
           });
         }
       );
     }
   }
 
-  function slideUp(object, content, slideSpeed, optionsFadeSpeed) {
+  function goUp(object, content, slideSpeed, optionsFadeSpeed, callback) {
     var slider = $(object),
-        options = $(object + " " + content),
-        slideSp = slideSpeed, //slide animation speed
-        optionsFadeSp = optionsFadeSpeed; //text fade-in/-out speed;
+        options = $(object + " " + content);
 
     if (options.css("opacity") == 1) {
-      options.animate({ opacity: "0" }, optionsFadeSp, function () {
-        slider.slideUp(slideSp, function () {
-          $("nav").animate(
+      options.animate({ opacity: "0" }, optionsFadeSpeed, function () {
+        slider.slideUp(slideSpeed, function () {
+          $("nav").stop().animate(
             {
               borderBottomLeftRadius: "20px",
               borderBottomRightRadius: "20px",
             },
             100
           );
+
+          if (typeof callback === 'function') { 
+            callback(); 
+          }
         });
       });
     }
+
   }
 
   //filter - slide-down/-up animation
   $('.logo').on("click", function() {
     //slide-down
-    slideDown("#filter", "div", 300, 200);
-
+    goUp("#menu_slider", "div", 300, 200, function() {
+      goDown("#filter_slider", "div", 300, 200);
+    });
+    if ($("#menu_slider div").css("opacity") == 0 || $("#menu_slider").length == 0) {
+      goDown("#filter_slider", "div", 300, 200);
+    }
+    
     //slide-up
-    slideUp("#filter", "div", 300, 200);
+    goUp("#filter_slider", "div", 300, 200);
   });
 
   //OK button
   $("#ok").on("click", function (e) {
     e.preventDefault();
-    $("#box").hide().empty();
+    $("#drinks_box").hide().empty();
     filter_data();
-    $("#search").val("");
+    $("nav .search_input").val("");
   });
 
   //SHUFFLE button
   $("#shuffle").on("click", function (e) {
     e.preventDefault();
     $("#random").val(1);
-    $("#box").hide().empty();
+    $("#drinks_box").hide().empty();
     filter_data();
     $("#random").val("");
   });
 
   //FILTER - RADIO INPUTS - options' select, values & animation
-  $("#filter div a:not([id])").on("click", function (e) {
+  $("#filter_slider div a:not([id])").on("click", function (e) {
     e.preventDefault();
     var a = $(this),
       cl = a.attr("class").split(" ")[0],
@@ -224,5 +228,246 @@ $(function () {
       a.addClass("selected");
     }
   });
+
+
+  /* ORDER */
+  sumUpdate();
+
+  function sendOrder(path, callback) {
+    var order = {};
+    $("#menu_slider .my_order .order_item").each(function() {
+      var drink_id = Number($(this).find("option:selected").val()),
+          drink_name = $(this).find("option:selected").text(),
+          drink_amount = Number($(this).find(".amount").html()),
+          drink_price = Number($(this).find(".drink_price").html()).toFixed(2),
+          drink_sum = Number($(this).find(".drink_sum").html()).toFixed(2);
+      if (drink_id) {
+        order[drink_id] = {
+          name: drink_name,
+          amount: drink_amount,
+          price: drink_price,
+          sum: drink_sum
+        };
+      }
+    });
+
+    console.log("ellou");
+    $.ajax({
+      url: path,
+      method: "POST",
+      data: {order: order},
+      success: function() {
+        if (typeof callback === 'function') { 
+          callback(); 
+        }
+      }
+    });
+  };
+
+  $("#menu_slider div").css("opacity", 0);
+  $('#menu').on("click", function(e) {
+    e.preventDefault();
+    //slide-down
+    goUp("#filter_slider", "div", 300, 200, function() {
+      goDown("#menu_slider", "div", 300, 200);
+    });
+    if ($("#filter_slider div").css("opacity") == 0) {
+      goDown("#menu_slider", "div", 300, 200);
+    }
+
+    //slide-up
+    goUp("#menu_slider", "div", 300, 200);
+
+  });
+
+  function addItem(id) {
+    var item = $("#blank_item .order_item").clone();
+    if (id) {
+      var checkIfExists = $(".order_item option[value='" + id + "']").is(':selected');
+      if (checkIfExists) {
+        item = $(".order_item option[value='" + id + "']:selected").closest(".order_item");
+        newAmount = Number(item.find(".amount").html()) + 1;
+        item.find(".amount").html(newAmount);
+
+      } else {
+        item.find("select").val(id);
+        $("#menu_slider .my_order").append(item);
+
+      }
+    } else {
+      $("#menu_slider .my_order").append(item);
+    }
+
+    itemUpdate(item);
+
+    sumUpdate();
+    sendOrder("_inc/order_session.php");
+  }
+  
+  $("#add").on("click", function(e) {
+    e.preventDefault();
+    addItem();
+  });
+
+  $("#menu_slider .my_order").on("click", ".delete_button", function(e) {
+    e.preventDefault();
+
+    var item = $(this).closest(".order_item");
+    item.addBack().remove();
+
+    itemUpdate(item)
+
+    sumUpdate();
+    sendOrder("_inc/order_session.php");
+  });
+
+  function sumUpdate() {
+    var sum = 0.00;
+    $('#menu_slider .my_order .drink_sum').each(function() {
+        sum += Number($(this).html());
+    });
+    if (!sum) {
+      $("#menu_slider .order_sum").html("0.00");
+    } else {
+      $("#menu_slider .order_sum").html(sum.toFixed(2));
+    }
+  }
+
+  function itemUpdate(item) {
+    var id = item.find("select").val(),
+        drinkId = "#drink-" + id,
+        price = $(drinkId).find(".price_tag span").html(),
+        amount = Number(item.find(".amount").html()),
+        drink_sum = (amount * price);
+        
+    item.find(".drink_price").html(price);
+
+    if (drink_sum) {
+      item.find(".drink_sum").html(drink_sum.toFixed(2));
+      $(drinkId).find(".add div:visible").html(amount);
+    } else {
+      item.find(".drink_sum").html("0.00");
+    }
+    
+    $("#drinks_box .card").has(".add div:visible").each(function() {
+      var id = $(this).attr("id").replace('drink-', ''),
+          isInOrder = $("#menu_slider .order_item option[value=" + id + "]:selected");
+      
+      if(isInOrder.length == 0) {
+        $(this).find(".add div").fadeOut(200);
+      }
+    });
+
+    var tag = $(drinkId).find(".add div:hidden");
+    tag.html("1");
+    tag.fadeIn(200);
+
+    sumUpdate();
+  }
+
+  $("#menu_slider .my_order").on("change", "select", function() {
+    item = $(this).closest(".order_item");
+    itemUpdate(item);
+  
+    sumUpdate();
+    sendOrder("_inc/order_session.php");
+  });
+
+  $("#menu_slider .my_order").on("click", "button", function(e) {
+    e.preventDefault();
+    var item = $(this).closest(".order_item"),
+        button = $(this).attr("class"),
+        amount = $(this).closest(".order_item").find(".amount"),
+        value = Number(amount.html()),
+        min = 1,
+        max = 99;
+    if (button == "plus_button" && amount.html() != max) {
+      newAmount = value + 1;
+      amount.html(newAmount);
+
+      itemUpdate(item);
+      sumUpdate();
+      sendOrder("_inc/order_session.php");
+    } else if (button == "minus_button" && amount.html() != min) {
+      newAmount = value - 1;
+      amount.html(newAmount);
+
+      itemUpdate(item);
+      sumUpdate();
+      sendOrder("_inc/order_session.php");
+    }
+  });
+
+  $("#make_order").on("click", function(e) {
+    e.preventDefault();
+
+    sendOrder("_inc/add_to_order.php", function() {
+      $("#menu_slider .my_order").empty();
+      
+      $("#drinks_box .card .add div:visible").each(function() {
+        $(this).html("").fadeOut(200);
+      });
+      sumUpdate();
+      sendOrder("_inc/order_session.php");
+    });
+  });
+
+  $("#drinks_box").on("click", ".add", function() {
+    var id = $(this).closest(".card").attr("id").replace('drink-', '');
+
+    addItem(id);
+  });
+
+  var box = $("#orders_box"),
+      spinner = $('<div id="spinner" style="background-image: url(&apos;img/spinner.svg&apos;)"></div>'),
+      limit = 10,
+      offset = $("#orders_box .order_card").length,
+      areItemsLeft = 1;
+
+  $(document).scroll(function() {
+    if ($(document).scrollTop() == $(document).height() - $(window).height() && areItemsLeft != 0 && offset) {
+
+        spinnerClone = spinner.clone();
+        box.append(spinner);
+
+      var request = $.ajax({
+        url: "./_inc/load_orders.php",
+        method: "POST",
+        data: {offset: offset, limit: limit}
+      });
+      request.done(function(data) {
+        var items = $(data).find(".order_card");
+        numberOfItems = items.length;
+
+        if (numberOfItems == limit) {
+          box.append(items);
+        } else if(numberOfItems < limit) {
+          box.append(items);
+          areItemsLeft = 0;
+        }
+        
+        offset = offset + limit;
+      });
+      request.fail(function() {
+        alert("Server error");
+      });
+      request.always(function() {
+        $('#spinner').remove();
+        console.log(areItemsLeft);
+      });
+    }
+  });
+
+  $('#show_password input').removeAttr('checked');
+  $(".password[type='text']").attr("type", "password");
+  $("#show_password").on("click", function() {
+    var x = $(this).prev("input");
+
+    if (x.attr("type") === "password") {
+      x.attr("type", "text");
+    } else {
+      x.attr("type", "password");
+    }
+  })
 
 });

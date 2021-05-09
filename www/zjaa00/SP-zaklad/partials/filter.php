@@ -1,4 +1,4 @@
-<div id="filter_slider" style="display: none;">
+<div id="filter" style="display: none;">
   <div>
     <a class="alco" data-alco="1" href="#"><i class="fas fa-glass-martini"></i> alko</a>
     <a class="alco" data-alco="0" href="#"><i class="fas fa-coffee"></i> nealko</a>

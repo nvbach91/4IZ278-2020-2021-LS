@@ -1,24 +1,13 @@
-<?php
-  include "partials/header.php";
-  require "partials/navbar.php";
-?>
-<main id="drinks_page">
-  <?php if(@($_COOKIE['privilege']) > 1): ?>
-    <div id="create_buttons">
-      <div class="btn-group">
-        <a href="create_item.php" class="btn btn-light">Nový drink</a>
-        <a href="ingredients.php" class="btn btn-outline-light">Ingrediencie</a>
-        <a href="create_ingredient.php" class="btn btn-outline-light"><i class="fas fa-plus"></i></a>
-      </div>
-    </div>
-  <?php endif; ?>
+<?php include "partials/header.php"; ?>
 
-  <div id="drinks_box" style="display: none;">
+<?php include "partials/navbar.php"; ?>
 
 
-  </div>
+<div id="box" style="display: none;">
 
-</main>
+
+</div>
+
 <!-- <footer>
     <div class="trademark">
       <p>

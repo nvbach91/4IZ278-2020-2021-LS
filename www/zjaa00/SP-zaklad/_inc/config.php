@@ -45,4 +45,4 @@ $connect = new PDO(
 );
 
 $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //zmeniť na ERRMODE_SILENT
-$connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); //iba pripravuje MySQL ale treba to len pri starších verziách - preto false
+$connect->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); //iba pripravuje MySQL ale treba to len pri starších verziách - preto false
