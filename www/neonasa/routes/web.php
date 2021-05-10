@@ -20,19 +20,19 @@ Route::get('/', function () {
 });
 
 
-Router::get('/galaxies', function() {
+Route::get('/galaxies', function() {
     return view('galaxies', ['galaxies' => GalaxyController::fetchAll()]);
 });
 
-Router::get('/galaxies/{id}', function($id) {
+Route::get('/galaxies/{id}', function($id) {
     return view('galaxyDetail', ['galaxy' => GalaxyController::fetchById($id)]);
 });
 
-Router::get('/spacestations', function() {
+Route::get('/spacestations', function() {
     return view('spacestations', ['stations' => SpaceStationController::fetchAll()]);
 });
 
-Router::get('/spacestations/{id}', function($id) {
+Route::get('/spacestations/{id}', function($id) {
     return view('spacestationDetail', ['station' => SpaceStationController::fetchByGalaxyId($id)]);
 });
 
