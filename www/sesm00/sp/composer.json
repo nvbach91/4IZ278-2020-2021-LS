@@ -1,0 +1,13 @@
+{
+    "name": "dev/superbazar",
+    "description": "Super bazar store",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Sestak",
+            "email": "sesm00@vse.cz"
+        }
+    ],
+    "require": {}
+}
