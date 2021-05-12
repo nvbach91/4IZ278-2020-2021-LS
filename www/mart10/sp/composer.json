@@ -1,0 +1,18 @@
+{
+    "name": "tadma/sp-mart10",
+    "description": "Essay for 4IZ278",
+    "type": "project",
+    "authors": [
+        {
+            "name": "mart10vse",
+            "email": "mart10@vse.cz"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "classmap": ["classes"]
+    },
+    "require": {
+      "ext-pdo": "*"
+    }
+}
