@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    font-size: medium;
+}
+h1,h2,h4,h5,p,span,.btn{
+    font-family: 'Roboto', sans-serif;
+}
+h1{
+    color: #fff;
+}
+a{
+    color: rgb(45, 153, 153);
+}
+
+.color{
+    color: #0cc;
+}
+a:hover{
+    color: #0cc;
+}
+.logo {
+    height: 100px;
+    width: 125px;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+    font-size: 25px !important;
+    margin-right: 20px;
+}
+
+.nav-item{
+    margin-right: 40px;
+}
+
+.nav-item:hover{
+    color: white;
+    background-color: rgba(0,0,0,.55);
+}
+
+.my-bg {
+    background-image: url(https://wallpaperaccess.com/full/1087589.jpg);
+    height: 100vh;"
+}

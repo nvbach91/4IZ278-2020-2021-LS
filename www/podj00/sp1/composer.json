@@ -1,0 +1,12 @@
+{
+    "name": "podj00/sp1",
+    "authors": [
+        {
+            "name": "Jan Podestát",
+            "email": "podj00@vse.cz"
+        }
+    ],
+    "require": {
+        "facebook/graph-sdk": "^5.1"
+    }
+}
