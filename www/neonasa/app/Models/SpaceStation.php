@@ -13,7 +13,6 @@ class SpaceStation extends Model
         'name',
         'gps',
         'img',
-        'galaxy_id'
     ];
 
     public function galaxy() {
