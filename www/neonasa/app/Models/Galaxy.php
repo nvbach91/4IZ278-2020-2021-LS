@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Galaxy extends Model
 {
@@ -15,7 +16,7 @@ class Galaxy extends Model
         'img'
     ];
 
-    public function spaceStations() {
-        $this->hasMany(SpaceStation::class);
+    public function spaceStations(): HasMany {
+        return $this->hasMany(SpaceStation::class);
     }
 }
