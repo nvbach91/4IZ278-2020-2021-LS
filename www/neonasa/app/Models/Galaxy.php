@@ -9,7 +9,7 @@ class Galaxy extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'name',
         'size',
         'img'

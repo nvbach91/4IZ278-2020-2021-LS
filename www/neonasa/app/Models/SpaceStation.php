@@ -9,7 +9,7 @@ class SpaceStation extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'name',
         'gps',
         'img',
