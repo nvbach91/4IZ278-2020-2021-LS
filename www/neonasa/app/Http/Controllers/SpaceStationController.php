@@ -12,8 +12,8 @@ class SpaceStationController extends Controller
         return view()->make('space-stations.index', ['stations' => SpaceStation::all()]);
     }
 
-    public function show(Galaxy $galaxy)
+    public function show(SpaceStation $station)
     {
-        return view()->make('space-stations.show', ['stations' => $galaxy->stations]);
+        return view()->make('space-stations.show', ['station' => $station]);
     }
 }

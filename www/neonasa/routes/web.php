@@ -22,4 +22,4 @@ Route::get('/galaxies', [GalaxyController::class, 'index'])->name('galaxies.inde
 Route::get('/galaxy/{galaxy}', [GalaxyController::class, 'show'])->name('galaxies.show');
 
 Route::get('/space-stations', [SpaceStationController::class, 'index'])->name('space-stations.index');
-Route::get('/space-stations/{galaxy}', [SpaceStationController::class, 'show'])->name('space-stations.show');
+Route::get('/space-stations/{station}', [SpaceStationController::class, 'show'])->name('space-stations.show');

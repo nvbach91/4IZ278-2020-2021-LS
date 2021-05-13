@@ -1,13 +1,17 @@
 @extends("layout.master")
 @section("content")
-<div class="card" style="width: 18rem;">
-    <div class="card-header">
-      Galaxies
+  <div class="mx-20">
+    <div class="grid grid-cols-4 grid-flow-row gap-4">
+        @foreach($galaxies as $galaxy)
+        <div class="bg-gray-800 rounded-xl hover:bg-green-900">
+          <a href="{{ route('galaxies.show', $galaxy) }}" class="flex flex-col w-full h-64 rounded-xl">
+
+            <div style="background-image: url('{{ $galaxy->img }}'); background-size: cover; background-position: center center;" class="h-64 rounded-xl m-3"></div>
+
+            <div class="ml-5 mb-5 font-bold text-white text-lg">{{ $galaxy->name }}</div>
+          </a>
+        </div>
+        @endforeach
     </div>
-    <ul class="list-group list-group-flush">
-      @foreach($galaxies as $galaxy)
-        <li class="list-group-item"><a href="./galaxies/<?= $galaxy["id"] ?>">{{ $galaxy->name }}</a></li>
-      @endforeach
-    </ul>
   </div>
 @endsection
