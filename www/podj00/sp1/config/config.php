@@ -1,9 +1,9 @@
 <?php
 
-// nenahravat username a password, ani dbname na git!
+// DB STUFF
 const DB_HOST = 'localhost';
-const DB_DATABASE = 'test';
-const DB_USERNAME = 'podj00';
+const DB_DATABASE = 'podj00';
+const DB_USERNAME = 'root';
 const DB_PASSWORD = '';
 
 // used to send mails
@@ -35,5 +35,15 @@ $emailTemplates = [
         );
     },
 ];
+
+//FACEBOOK STUFF -mby has to be solo file ?!
+const CONFIG_FACEBOOK = [
+    'app_id' => '200260135276136',
+    'app_secret' => '', //TODO asi není good dávat na git :)
+    'default_graph_version' => 'v2.10',
+];
+const CONFIG_PROTOCOL = 'https://';
+const CONFIG_DOMAIN = 'vcap.me'; //pro local
+const CONFIG_PATH = '/4IZ270-2020-2021-LS/www/podj00/sp1/config';
 
 ?>

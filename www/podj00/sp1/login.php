@@ -9,16 +9,23 @@ $message = "";
 
 if ($isSubmitted) {
     $name = htmlspecialchars(trim($_POST['name']));
-    $gender = htmlspecialchars(trim($_POST['gender']));
-    $email = htmlspecialchars(trim($_POST['email']));
-    $phone = htmlspecialchars(trim($_POST['phone']));
-    $avatar = htmlspecialchars(trim($_POST['avatar']));
+    $password = htmlspecialchars(trim($_POST['password']));
 
     //Name
     if (empty($name)) {
         array_push($invalidInputs, 'Name is not filled');
     }
 
+    if (empty($password)) {
+        array_push($invalidInputs, 'Password is not filled');
+    }
+
+    if(empty($invalidInputs)){
+        //TODO get user?
+        header('Location: index.php');
+        exit();
+    }
+    /*
     //mail
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         array_push($invalidInputs, 'Email is not valid');
@@ -36,62 +43,43 @@ if ($isSubmitted) {
 
     if (!count($invalidInputs)) {
         $message = 'You have sucessfully logged into tournament';
-    }
+    } */
 }
 
 ?>
 
 <?php require __DIR__ . '/includes/head.php'; ?>
 
-<main>
-    <h1>Card fest registration</h1>
-    <form class="form-signup" method="POST">
-        <?php if ($isSubmitted) : ?>
-            <?php if (!empty($invalidInputs)) : ?>
-                <div class="alert alert-danger">
-                <?php foreach ($invalidInputs as $msg) : ?>
-                    <p><?php echo $msg; ?></p>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            </div>
-            <?php if ($message) : ?>
-                <div class="alert-success">
-                    <h3><?php echo $message; ?></h3>
+    <main>
+        <div style="width: 20%; text-align: center; margin: 0 auto;">
+            <h1>
+                Login or Register
+            </h1>
+            <form class="form-signup" method="POST">
+                <?php if ($isSubmitted) : ?>
+                    <?php if (!empty($invalidInputs)) : ?>
+                        <div class="alert alert-danger">
+                        <?php foreach ($invalidInputs as $msg) : ?>
+                            <p><?php echo $msg; ?></p>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    </div>
+                    <?php if ($message) : ?>
+                        <div class="alert-success">
+                            <h3><?php echo $message; ?></h3>
+                        </div>
+                        <img width="200" height="200" src="<?php echo $avatar ?>" alt="avatar">
+                    <?php endif; ?>
+                <?php endif; ?>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="name" value="<?php echo isset($name) ? $name : '' ?>">
                 </div>
-                <img width="200" height="200" src="<?php echo $avatar ?>" alt="avatar">
-            <?php endif; ?>
-        <?php endif; ?>
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" name="name" value="<?php echo isset($name) ? $name : '' ?>">
-        </div>
-        <div class="form-group">
-            <label>Gender</label><br>
-            <select class="form-control" name="gender" id="gender">
-                <option value="Male" <?php if (isset($gender) && $gender == 'Male')
-                    echo ' selected="selected"';
-                ?>>Male
-                </option>
-                <option value="Female" <?php if (isset($gender) && $gender == 'Female')
-                    echo ' selected="selected"';
-                ?>>Female
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" name="email" value="<?php echo isset($email) ? $email : '' ?>">
-        </div>
-        <div class="form-group">
-            <label>Phone</label>
-            <input class="form-control" name="phone" value="<?php echo isset($phone) ? $phone : '' ?>">
-        </div>
-        <div class="form-group">
-            <label>Avatar URL</label>
-            <input class="form-control" name="avatar" value="<?php echo isset($avatar) ? $avatar : '' ?>">
-        </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-</main>
-
-<?php require __DIR__ . '/includes/foot.php'; ?>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" name="password" value="<?php echo isset($password) ? $password : '' ?>">
+                </div>
+                <button class="btn btn-primary" type="submit">Přihlásit</button>
+            </form>
+            <button class="fa fa-facebook"></button>
+    </main>

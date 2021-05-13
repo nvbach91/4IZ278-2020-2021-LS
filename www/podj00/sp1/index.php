@@ -1,8 +1,12 @@
 <?php require __DIR__ . '/includes/head.php'; ?>
 <?php require __DIR__ . '/includes/navbar.php'; ?>
+<?php require __DIR__ . '/database/repositories/CoachRepository.php' ?>
 <?php
 
-require './database/db.php';
+$db = new CoachRepository();
+
+$response = $db->fetchAll();
+var_dump($response);
 
 /*
 $nItemsPerPagination = 4;

@@ -2,7 +2,6 @@
 <?php require __DIR__ . '/includes/navbar.php'; ?>
 <?php
 
-require './database/db.php';
 
 ?>
 <main class="container">

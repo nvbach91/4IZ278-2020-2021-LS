@@ -5,25 +5,14 @@
 body {
     font-size: medium;
 }
-h1,h2,h4,h5,p,span,.btn{
-    font-family: 'Roboto', sans-serif;
-}
-h1{
-    color: #fff;
-}
-a{
-    color: rgb(45, 153, 153);
-}
 
-.color{
-    color: #0cc;
-}
-a:hover{
-    color: #0cc;
-}
 .logo {
     height: 100px;
     width: 125px;
+}
+
+h1 {
+    color: black !important;
 }
 
 .navbar-collapse{
@@ -44,4 +33,16 @@ a:hover{
 .my-bg {
     background-image: url(https://wallpaperaccess.com/full/1087589.jpg);
     height: 100vh;"
+}
+
+/**
+* FontAWESOME
+ */
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    color: black; !important;
 }
