@@ -16,20 +16,10 @@ use App\Http\Controllers\SpaceStationController;
 |
 */
 
-Route::get('/', function () { return redirect()->to("g/galaxies"); });
+Route::get('/', fn () => redirect()->route('galaxies.index'));
 
-Route::get('/galaxies', function() {
-    return view('galaxies', ['galaxies' => (new GalaxyController())->fetchAll()]);
-});
+Route::get('/galaxies', [GalaxyController::class, 'index'])->name('galaxies.index');
+Route::get('/galaxy/{id}', [GalaxyController::class, 'show'])->name('galaxies.show');
 
-Route::get('/galaxies/{id}', function($id) {
-    return view('galaxyDetail', ['galaxy' => (new GalaxyController())->fetchById($id)]);
-});
-
-Route::get('/spacestations', function() {
-    return view('spacestations', ['stations' => (new SpaceStationController())->fetchAll()]);
-});
-
-Route::get('/spacestations/{id}', function($id) {
-    return view('spacestationDetail', ['station' => (new SpaceStationController())->fetchByGalaxyId($id)]);
-});
+Route::get('/space-stations', [SpaceStationController::class, 'index'])->name('space-stations.index');
+Route::get('/space-stations/{id}', [SpaceStationController::class, 'show'])->name('space-stations.show');
