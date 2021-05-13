@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Galaxy extends Model
 {
     use HasFactory;
+
+    public $fillable = [
+        'name',
+        'size',
+        'img'
+    ];
+
+    public function spaceStations() {
+        $this->hasMany(SpaceStation::class);
+    }
 }

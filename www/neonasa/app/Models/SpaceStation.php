@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class SpaceStation extends Model
 {
     use HasFactory;
+
+    public $fillable = [
+        'name',
+        'gps',
+        'img',
+        'galaxy_id'
+    ];
+
+    public function galaxy() {
+        return $this->belongsTo(Galaxy::class);
+    }
 }
