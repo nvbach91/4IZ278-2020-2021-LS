@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Galaxy;
 
 class GalaxyController extends Controller
 {
-    public function fetchById($id)
+    public function index()
     {
-        return Galaxy::where("id", $id)->first();
+        return view()->make("galaxies.index", ["galaxies" => Galaxy::all()]);
     }
 
-    public function fetchAll()
+    public function show(Galaxy $galaxy)
     {
-        return Galaxy::all();
+        return view()->make("galaxies.show", ["galaxy" => $galaxy]);
     }
 }

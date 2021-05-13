@@ -19,7 +19,7 @@ use App\Http\Controllers\SpaceStationController;
 Route::get('/', fn () => redirect()->route('galaxies.index'));
 
 Route::get('/galaxies', [GalaxyController::class, 'index'])->name('galaxies.index');
-Route::get('/galaxy/{id}', [GalaxyController::class, 'show'])->name('galaxies.show');
+Route::get('/galaxy/{galaxy}', [GalaxyController::class, 'show'])->name('galaxies.show');
 
 Route::get('/space-stations', [SpaceStationController::class, 'index'])->name('space-stations.index');
-Route::get('/space-stations/{id}', [SpaceStationController::class, 'show'])->name('space-stations.show');
+Route::get('/space-stations/{galaxy}', [SpaceStationController::class, 'show'])->name('space-stations.show');

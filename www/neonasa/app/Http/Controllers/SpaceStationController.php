@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Galaxy;
 use App\Models\SpaceStation;
 
 class SpaceStationController extends Controller
 {
-    public function fetchByGalaxyId($id)
+    public function index()
     {
-        return SpaceStation::where("galaxy_id", $id)->get();
+        return view()->make('space-stations.index', ['stations' => SpaceStation::all()]);
     }
 
-    public function fetchAll()
+    public function show(Galaxy $galaxy)
     {
-        return SpaceStation::all();
+        return view()->make('space-stations.show', ['stations' => $galaxy->stations]);
     }
 }
