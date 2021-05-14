@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    padding-top: 84px;
+
+}
+.bg-primary {
+    background-color: #007ACC!important;
+}
+
+.goods {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.good {
+    border: none;
+    cursor: pointer;
+    width: calc((100%/3));
+}
+.good:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.good a:hover {
+    text-decoration: underline;
+}
+.pagination a {
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: #eee;
+}
+.pagination a.active {
+    color: cadetblue;
+}
+.logo {
+    height: 50px;
+    width: 50px;
+}
+.image {
+    padding: 20px;
+    background-position: center;
+    background-size: contain;
+    height: 200px;
+    background-repeat: no-repeat;
+}
+
+.main {
+    min-height: 78vh;
+    width: 90%;
+    margin: 0 auto;
+    padding: 5em 5em 5em 5em;
+}
