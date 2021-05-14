@@ -22,6 +22,10 @@
     </head>
     <body class="antialiased">
         <h1>Neo NASA</h1>
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 30c810fa343191f4da02bdecfab49f43a3afa6c2
     </body>
 </html>
