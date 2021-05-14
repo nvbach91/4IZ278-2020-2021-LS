@@ -27,13 +27,13 @@ $templates = [
         global $htmlSecondPart;
         return (
             $htmlFirstPart .
-            '<h2>Registration confirmation</h2>' .
-            '<p>Thank you for signing up!</p>' .
-            '<h4>You registered email:</h4>' .
-            '<p><a href="mailto:' . $recipient. '">' . $recipient . '</a></p>' .
-            '<p>You can now sign in here: <a href="https://eso.vse.cz/~nguv03/">https://eso.vse.cz/~nguv03/</a></p>' .
-            '<hr>' .
-            '<p>If you need help, please contact <a href="mailto:' . $sender . '">' . $sender. '</a></p>' .
+            '<h2>Registration confirmation</h2>
+            <p>Thank you for signing up!</p>
+            <h4>You registered email:</h4>
+            <p><a href="mailto:' . $recipient. '">' . $recipient . '</a></p>
+            <p>You can now sign in here: <a href="https://eso.vse.cz/~nguv03/">https://eso.vse.cz/~nguv03/</a></p>
+            <hr>
+            <p>If you need help, please contact <a href="mailto:' . $sender . '">' . $sender. '</a></p>' .
             $htmlSecondPart
         );
     },

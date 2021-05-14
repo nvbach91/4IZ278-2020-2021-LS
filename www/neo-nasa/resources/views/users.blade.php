@@ -22,6 +22,9 @@
     </head>
     <body class="antialiased">
         <h1>Neo NASA</h1>
-        
+        <h2>USERS</h2>
+        @foreach($users as $user)
+            <div>{{ $user->name }}: {{ $user->age }}</div>
+        @endforeach 
     </body>
 </html>

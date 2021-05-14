@@ -1,26 +1,15 @@
-# allow indexing with +, disallow with -
 Options +Indexes
 
-# fancy indexing
-IndexOptions FancyIndexing
+#DirectoryIndex main.php
 
-# change the default entry point (default is index.php)
-DirectoryIndex main.php
+IndexIgnore *.txt *.pem *.ps
 
-# ignore/exclude/hide file extensions
-IndexIgnore *.txt *.ico
-
-# define custom extension for php parsing
-AddType application/x-httpd-php .xp
-
-# restricting access to a certain file
-<files python.conf>
+<files e.txt>
     order allow,deny
     deny from all
 </files>
 
-# block access of multiple files
-<FilesMatch "\.(ps|ts|pem)">
+<FilesMatch "\.txt">
     order allow,deny
     deny from all
 </FilesMatch>
