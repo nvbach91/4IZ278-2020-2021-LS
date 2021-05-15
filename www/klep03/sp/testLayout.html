@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0px;
+            height: 100vh;
+        }
+
+        .gray {
+            background-color: rgb(201, 201, 201);
+        }
+
+        .border {
+            border: 1px;
+            border-style: solid;
+        }
+
+        header {
+            height: 10%;
+            min-height: 100px;
+            max-height: 120px;
+            width: 100%;
+        }
+
+        #mid {
+            display: flex;
+            flex-direction: row;
+            height: 90%;
+        }
+
+        aside {
+            width: 15%;
+            height: 100%;
+        }
+
+        main {
+            width: 70%;
+            height: 100%;
+        }
+        
+        .noTopBorder {
+            border-top-style: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="gray border"></header>
+    <div id="mid">
+        <aside class="gray border noTopBorder">
+
+        </aside>
+        <main>
+        </main>
+        <aside class="gray border noTopBorder"></aside>
+    </div>
+</body>
+</html>
