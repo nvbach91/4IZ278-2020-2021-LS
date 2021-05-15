@@ -5,6 +5,7 @@
     $password = trim($_POST['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+    //skontrolujeme, či sa daný užívateľ už nachádza v databáze
     $exists = $connect->prepare('
       SELECT * FROM users
       WHERE email = :email
@@ -23,8 +24,11 @@
       => strlen($password) >= 6
     ];
 
-    $validity = count(array_filter($conditions));
-    if ($validity == count($conditions)) {
+    //vytvoríme array s podmienkami v $conditions, ktoré mali hodnotu TRUE a zrátame ich
+    $true_conditions = count(array_filter($conditions));
+
+    //ak sa počet všetkých podmienok ($conditions) rovná tým, ktoré mali hodnotu TRUE ($true_conditions), tak prebehla registrácia úspešne
+    if ($true_conditions == count($conditions)) {
 
       $add = $connect->prepare("INSERT INTO users (email, password) VALUES (:email, :password);");
       $add->execute([
@@ -32,7 +36,7 @@
         'password' => $hashed_password
       ]);
 
-      $minutesOfLogin = 60*24; //in minutes
+      $minutesOfLogin = 60*12; //v minútach
       setcookie('email', $email, time() + $minutesOfLogin*60);
       setcookie('privilege', 1, time() + $minutesOfLogin*60);
       
@@ -45,6 +49,7 @@
       header("Location: index.php");
     }
 
+    //pokiaľ registrácia neprebehla úspešne, tak vypíšeme všetky chybové hlášky
     foreach ($conditions as $error_message => $condition) :
       if (!$condition) :
 ?>

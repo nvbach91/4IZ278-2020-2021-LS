@@ -1,9 +1,11 @@
 <?php
-  include "./partials/header.php";
-  require "./_inc/config.php";
+  require_once "./_inc/config.php";
+  require "./_inc/require_admin.php";
+  require "./partials/header.php";
 
   if ($_GET['drink_id']):
     
+    //pokiaľ máme k dispozícií parameter $_GET['available']), tak vieme nastaviť drink na hodnotu available 0 (manipulate_item.php riadok 46) alebo 1 (load_drinks.php.php riadok 165)
     if (isset($_GET['available'])) {
       $stmt = $connect->prepare("
         UPDATE drinks SET
@@ -18,18 +20,19 @@
       header("Location: ./index.php");
     }
 
-    $was_ordered = $connect->prepare("
+    //zistíme, či už si drink niekto objednal
+    $stmt = $connect->prepare("
       SELECT order_id FROM drinks_orders
       WHERE drink_id = :drink_id;;
     ");
-    $was_ordered->execute([
+    $stmt->execute([
       "drink_id" => $_GET['drink_id'],
       ]);
-    @$was_ordered = $was_ordered->fetchColumn();
-
-    var_dump($was_ordered);
+    @$was_ordered = $stmt->fetchColumn();
     
+    //ak si drink niekto objednal, tak ponúkneme možnosť drinku nastaviť hodnotu available na 0, aby sa užívateľom už nezobrazoval
     if (@$was_ordered): ?>
+    
       <body style="background-color: white;">
         <div class="card text-dark bg-info mb-3" style="width: 18rem; margin: 20px auto;">
           <div class="card-body">
@@ -49,17 +52,20 @@
           </div>
         </div>
       </body>
-    <?php else:
+      <?php require "./partials/footer.php";
 
+    else:
+
+      //ak si drink ešte nikto neobjednal je bezpečné tento drink na trvalo vymazať z databáze
       $delete = $connect->prepare("
-        DELETE FROM drinks
-        WHERE drink_id = :drink_id;;
+      DELETE FROM drinks
+      WHERE drink_id = :drink_id;;
       ");
       $delete->execute([
         "drink_id" => $_GET['drink_id'],
-      ]);
-
-      header("Location: ./index.php");
+        ]);
+        
+        header("Location: ./index.php");
+        
     endif;
   endif;
-  include "./partials/footer.php";

@@ -1,6 +1,6 @@
 <?php
-  require "./config.php";
-  require "require_user.php";
+  require_once "../config.php";
+  require "../require_user.php";
 
   $orders = $connect->prepare('
     SELECT orders.order_id as id, created_at, SUM(amount * price) as order_sum

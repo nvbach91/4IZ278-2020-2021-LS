@@ -1,18 +1,21 @@
 <?php
-  include "partials/header.php";
+  require_once "./_inc/config.php";
   require "./_inc/require_user.php";
+  require "./partials/header.php";
+
+  $email = $_COOKIE['email'];
 ?>
 <body id="orders_page">
   <div>
     <h1>OBJEDNÁVKY</h1>
-    <h3><?= $_COOKIE['email'] ?></h3>
+    <h3><?= $email ?></h3>
     
-    <?php include "./partials/orders_stats.php"; ?>
+    <?php require "./partials/orders_page/orders_stats.php"; ?>
 
   </div>
   <div id="orders_box">
-  <?php 
-    $orders = $connect->prepare('
+  <?php
+    $stmt = $connect->prepare('
       SELECT open, orders.order_id as id, created_at, SUM(amount * price) as order_sum
       FROM orders
       JOIN drinks_orders
@@ -22,9 +25,10 @@
       ORDER BY created_at desc
       LIMIT 10 OFFSET 0;
     ');
-    $orders->execute(['email' => $_COOKIE['email']]);
-    $orders = $orders->fetchAll();
-    if ($orders):
+    $stmt->execute(['email' => $email]);
+    $orders = $stmt->fetchAll();
+    $total_row = $stmt->rowCount();
+    if ($total_row):
       foreach($orders as $order):
   ?>
 
@@ -37,7 +41,7 @@
             <div class="my_order">
 
             <?php
-              $order_items = $connect->prepare('
+              $stmt = $connect->prepare('
                 SELECT drinks_orders.name, drinks_orders.price, amount, (drinks_orders.price * amount) as drink_sum
                 FROM orders
                 JOIN drinks_orders
@@ -47,13 +51,14 @@
                 WHERE orders.order_id = :id AND orders.email = :email
                 ORDER BY amount desc;
               ');
-              $order_items->execute([
-                'email' => $_COOKIE['email'],
+              $stmt->execute([
+                'email' => $email,
                 'id' => $order['id']
               ]);
-              $order_items = $order_items->fetchAll();
+              $order_items = $stmt->fetchAll();
               foreach($order_items as $order_item):
             ?>
+            
                 <div class="order_item">
                   <p class="name"><?= $order_item['name'] ?></p>
                   <p class="amount"><?= (int) $order_item['amount'] ?></p>
@@ -86,4 +91,4 @@
 
   </div>
 
-<?php include "partials/footer.php"; ?>
+<?php require "./partials/footer.php"; ?>

@@ -1,7 +1,13 @@
-<?php 
-  $statement = $connect->prepare("SELECT drink_id, name, volume, price FROM drinks WHERE available = 1 ORDER BY name asc;");
-  $statement->execute();
-  $drinks = $statement->fetchAll();
+<?php
+  //vyberieme drinky, ktoré necháme vypísať ako možnosti v select pre každú položku objednávky
+  $stmt = $connect->prepare("SELECT drink_id, name, volume, price FROM drinks WHERE available = 1 ORDER BY name asc;");
+  $stmt->execute();
+  $drinks = $stmt->fetchAll();
+
+  //zistíme, či su nejaké objednávky na našom účte otvorené a podľa toho priradíme funkcionalitu tlačidlu "Zaplatené"
+  $stmt = $connect->prepare("SELECT * FROM orders WHERE email = :email AND open = 1 LIMIT 1;");
+  $stmt->execute(['email' => $_COOKIE['email']]);
+  $open_order = $stmt->fetchColumn();
 ?>
   <div id="menu_slider" style="display: none;">
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Odhlásiť</a>
@@ -13,12 +19,11 @@
       </div>
       <form action="orders.php" method="POST">
         <div class="my_order">
-        <?php 
-        if(@$_SESSION['order']):
+        <?php if(@$_SESSION['order']):
           foreach($_SESSION['order'] as $id => $item): ?>
             <div class="order_item">
-              <select name="drink" required>
-                <?php foreach($drinks as $drink): echo $id; ?>
+              <select name="drink">
+                <?php foreach($drinks as $drink): ?>
                   <option value="<?= $drink['drink_id'] ?>" <?= ($drink['drink_id'] == $id) ? "selected" : "" ?>><?= $drink['name'] ?></option>
                 <?php endforeach; ?>
               </select>
@@ -31,7 +36,8 @@
               <div class="minus"><button class="minus_button"><i class="fas fa-minus"></i></button></div>
               <div class="plus"><button class="plus_button"><i class="fas fa-plus"></i></button></div>
             </div>
-          <?php endforeach; endif; ?>
+          <?php endforeach;
+        endif; ?>
         </div>
         <div class="overall">
           <p>CELKOM</p>
@@ -40,15 +46,16 @@
         <div id="order_options">
           <button id="add"><i class="fas fa-beer"></i></button>
           <button id="make_order">Objednané</button>
-          <a href="./_inc/add_to_order.php?order_finished=1" id="pay">Zaplatené</a>
+          <a class="unselectable<?= $open_order ? "" : " disabled" ?>" href="./_inc/user/add_to_order.php?order_finished=1" id="pay">Zaplatené</a>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- prázdna položka objednávky, ktorej kópie je možne pridávať "add" buttonom -->
   <div id="blank_item" style="display: none;">
     <div class="order_item">
-      <select name="drink" required>
+      <select name="drink">
         <option hidden value selected></option>
         <?php foreach($drinks as $drink): ?>
           <option value="<?= $drink['drink_id'] ?>"><?= $drink['name'] ?></option>

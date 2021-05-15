@@ -1,4 +1,8 @@
-<?php require("./partials/header.php"); ?>
+<?php
+  require_once "./_inc/config.php";
+  require "./_inc/require_admin.php";
+  require "./partials/header.php";
+?>
 
 <body id="admin_page">
 
@@ -11,17 +15,19 @@
     $percentage = @$_POST['percentage'] ? round((float) $_POST['percentage'], 2) : null;
     
     $sql = "SELECT * from ingredients WHERE name = :ingr_name";
+
     $execute[":ingr_name"] = $ingr_name;
-    
     if ($percentage) {
-      $sql .= " AND percentage = :percentage";
+      $sql .= "
+      AND percentage = :percentage";
       $execute[":percentage"] = $percentage;
     }
     
-    $exists = $connect->prepare($sql);
-    $exists->execute($execute);
-    $exists = $exists->fetchColumn();
+    $stmt = $connect->prepare($sql);
+    $stmt->execute($execute);
+    $exists = $stmt->fetchColumn();
     
+    //ak už existuje ingrediencia s daným menom a percentom alkoholu, tak vyhodíme chybovú hlášku, ak nie tak hlášku úspechu
     if (!$exists):  
       
       $insert = $connect->prepare("
@@ -32,7 +38,8 @@
         ":ingr_name" => $ingr_name,
         ":percentage" => $percentage,
       ]);
-        
+      
+      //odchytíme si ID novovytvorenej ingrediencie
       $ingr_id = $connect->lastInsertId();
     ?>
 
@@ -80,4 +87,4 @@
     <a href="index.php">späť</a>
   <?php endif; ?>
 
-<?php require("./partials/footer.php"); ?>
+<?php require "./partials/footer.php"; ?>

@@ -1,4 +1,4 @@
-<?php require("./partials/header.php"); ?>
+<?php require "./partials/header.php"; ?>
 
 <body id="login_page">
 
@@ -26,4 +26,4 @@
     </form>
   </div>
 
-<?php require("./partials/footer.php"); ?>
+<?php require "./partials/footer.php"; ?>

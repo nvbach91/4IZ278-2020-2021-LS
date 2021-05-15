@@ -1,6 +1,6 @@
 <?php
-  require "config.php";
-
+  require_once "../config.php";
+  require "../require_admin.php";
 
   if ($_GET['drink_id']) {
     $insert = $connect->prepare('

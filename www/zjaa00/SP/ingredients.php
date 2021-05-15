@@ -1,4 +1,8 @@
-<?php require "./partials/header.php"; ?>
+<?php
+  require_once "./_inc/config.php";
+  require "./_inc/require_admin.php";
+  require "./partials/header.php";
+?>
 
 <body id="admin_page">
   <h1>Ingrediencie</h1>
@@ -6,18 +10,13 @@
 
 <?php
   
-
-  if (@$_COOKIE['privilege'] < 2) {
-    header('Location: logout.php');
-    die();
-  }
-
-  if (@$_POST) {
+  if (isset($_POST)) {
 
     $ingr_id = $_POST['ingr_id'];
     $ingr_name = trim($_POST['ingr_name']);
     $percentage = @$_POST['percentage'] ? round((float) $_POST['percentage'], 2) : null;
 
+    //pokiaľ sme ingredienciu upravovali
     if(isset($_POST['edit'])) {
       $update = $connect->prepare('
         UPDATE ingredients SET
@@ -31,7 +30,10 @@
         ":ingr_name" => $ingr_name,
         ":percentage" => $percentage,
       ]);
-    } else if(isset($_POST['delete'])) {
+    }
+    
+    //pokiaľ sme ingredienciu mazali
+    if(isset($_POST['delete'])) {
       $update = $connect->prepare('
         DELETE FROM ingredients
         WHERE ingr_id = :ingr_id;
@@ -42,18 +44,17 @@
     }
   }
   
-  $ingredients = $connect->prepare('
+  //výpis všetkých ingrediencií
+  $stmt = $connect->prepare('
     SELECT ingr_id, name as ingr_name, percentage
     FROM ingredients
     ORDER BY ingr_name asc;
   ');
-  $ingredients->execute();
-  $ingredients = $ingredients->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+  $stmt->execute();
+  $ingredients = $stmt->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
   
   ?>
-      <!-- <a class="btn btn-outline-danger" href="./_inc/delete_ingredient.php?drink_id=<?= $_GET['drink_id'] ?>&ingr_id=<?= $ingredient['ingr_id'] ?>">Vymazať</a>
-      <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Uložiť</button> alebo <a href="index.php">späť</a>
- -->
+      
 <?php foreach($ingredients as $id => $ingredient): ?>
 
   <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
@@ -68,6 +69,5 @@
   </form>
 
 <?php endforeach; ?>
-  
 
 <?php require "./partials/footer.php"; ?>

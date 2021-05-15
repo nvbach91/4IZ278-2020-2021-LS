@@ -1,43 +1,62 @@
 <?php
-  require "./config.php";
-
-  require "./require_user.php";
+  require_once "../config.php";
+  require "../require_user.php";
   
   $email = $_COOKIE['email'];
 
-  $open_order = $connect->prepare('
+  $stmt = $connect->prepare('
     SELECT drinks_orders.drink_id, drinks_orders.order_id, amount
     FROM orders
     JOIN drinks_orders
         on drinks_orders.order_id = orders.order_id
     WHERE open = 1 AND drinks_orders.email = :email;
   ');
-  $open_order->execute(['email' => $email]);
-  $open_order = $open_order->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+  $stmt->execute(['email' => $email]);
+  $open_order = $stmt->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
   
+  //odchytíme si ID objednávky od lubovoľného z drinkov
   @$order_id = $open_order[array_keys($open_order)[0]]['order_id'];
-  
+
+  //ak bolo stlačené tlačidlo "Zaplatené", tak s ním do tohoto skriptu príchádza aj
+  //premenná $_GET['order_finished'], ktorá hlási, aby sme zmenili hodnotu atribútu
+  //drinku open na 0 a presmerovali uživateľa na jeho objednávky - ak nemal nič objednané,
+  //tak sa stránka znovu načíta (v JS je to ošetrené, tak, aby k tomuto nedošlo)
+  if(isset($_GET['order_finished']) && $open_order) {
+
+    $update = $connect->prepare('
+      UPDATE orders SET
+      open = 0
+      WHERE email = :email AND order_id = :order_id;
+    ');
+    $update->execute([
+      'email' => $email,
+      'order_id' => $order_id
+    ]);
+
+    header("Location: ../../orders.php");
+    die();
+  } elseif (isset($_GET['order_finished'])) {
+    header("Location: ../../index.php");
+    die();
+
+  }
+
+  //ak sme dostali AJAX request s nejakou objednávkou, tak ju pridáme do otvoreného účtu
   if (@$_POST['order']) {
     
+    //ak sa chystáme otvoriť nový účet, tak si ho musíme najprv vytvoriť
     if(!$open_order) {
       $insert = $connect->prepare('
         INSERT INTO orders (email, created_at, open)
         VALUES (:email, now(), 1);
       ');
       $insert->execute(['email' => $email]);
-      $open_order = $connect->prepare('
-        SELECT order_id
-        FROM orders
-        WHERE open = 1 AND email = :email
-        LIMIT 1;
-      ');
-      $open_order->execute(['email' => $email]);
-      $open_order = $open_order->fetchColumn();
-      
-      $order_id = $open_order;
+
+      $order_id = $connect->lastInsertId();
     }
 
     foreach($_POST['order'] as $id => $item) {
+      //ak už sme si nejaký drink objednali, tak len navýšime jeho množstvo - ak nie, tak ho pridáme do objednávky
       if (is_array($open_order) && in_array($id, array_keys($open_order))) {
         $updatedAmount = (int) ($open_order[$id]['amount'] + $item['amount']);
 
@@ -67,23 +86,4 @@
         ]);
       }
     }
-  }
-
-  if(isset($_GET['order_finished']) && $open_order) {
-
-    $update = $connect->prepare('
-      UPDATE orders SET
-      open = 0
-      WHERE email = :email AND order_id = :order_id;
-    ');
-    $update->execute([
-      'email' => $email,
-      'order_id' => $order_id
-    ]);
-
-    header("Location: ../orders.php");
-    die();
-  } else {
-    header("Location: ../index.php");
-    die();
   }

@@ -1,8 +1,8 @@
 <?php
 
-require '../_inc/config.php';
+require_once '../../_inc/config.php';
 
-if (isset($_COOKIE['email'])) {
+if (authorize()) {
 	session_start();
 }
 
@@ -22,7 +22,7 @@ if (isset($_POST["action"])) {
 		where drink_id IS NOT NULL
 	";
 
-	if (@$_COOKIE["privilege"] == 1) {
+	if (authorize(1)) {
 		$query .= "
 		AND available = 1";
 	}
@@ -60,38 +60,41 @@ if (isset($_POST["action"])) {
 		}
 	}
 	
-	$variable["price"] = null;
-	
 	if (isset($_POST["price"])) {
 		if ($_POST["price"] === "asc") {
-			$query .= " order by price asc";
+			$query .= "
+			order by price asc";
 		} else if ($_POST["price"] === "desc") {
-			$query .= " order by price desc";
+			$query .= "
+			order by price desc";
 		}
 	} else {
-		$query .= " order by drink_name asc";
+		$query .= "
+		order by drink_name asc";
 	}
 }
 
+//získame všetky drinky a zistíme, či nejaké vôbec existujú
+$stmt = $connect->prepare($query);
+$stmt->execute();
+$result = $stmt->fetchAll();
+$total_row = $stmt->rowCount();
 
-$statement = $connect->prepare($query);
-$statement->execute();
-$result = $statement->fetchAll();
-$total_row = $statement->rowCount();
-if ($_POST["shuffle"] && $total_row) {
-	$drink = $result[array_rand($result)];
-	$result = array();
-	array_push($result, $drink);
-}
-if ($total_row) :
+if ($total_row):
+	//shuffle
+	if ($_POST["shuffle"]) {
+		$drink = $result[array_rand($result)];
+		$result = array();
+		array_push($result, $drink);
+	}
 
-	foreach ($result as $drink) :
-?>
+	foreach ($result as $drink): ?>
 
 		<div
 		unselectable="on"
 		onselectstart="return false;" 
-		onmousedown="return false;" class="card
+		onmousedown="return false;"
+		class="card
 		<?= $drink['inflammatory'] ? "inflammatory" : "" ?>
 		<?= $drink['deadly'] ? "deadly" : "" ?>"
 		id="drink-<?= $drink['drink_id'] ?>">
@@ -101,6 +104,7 @@ if ($total_row) :
 				<h3><?= $drink['drink_volume'] ?>l</h3>
 				<ul>
 					<?php
+					//vyberieme si ingrediencie daného drinku
 					$query = "
 						select CONCAT_WS(' ',
 						CONCAT(TRIM(TRAILING '.' FROM TRIM(TRAILING '0' from drinks_ingredients.volume)), 'l'),
@@ -113,11 +117,10 @@ if ($total_row) :
 							on drinks.drink_id = drinks_ingredients.drink_id
 						WHERE drinks_ingredients.drink_id = :drink_id
 					";
-					$statement = $connect->prepare($query);
-					$statement->execute([':drink_id' => $drink['drink_id']]);
-					$result = $statement->fetchAll();
-					foreach ($result as $row) :
-					?>
+					$stmt = $connect->prepare($query);
+					$stmt->execute([':drink_id' => $drink['drink_id']]);
+					$result = $stmt->fetchAll();
+					foreach ($result as $row): ?>
 
 						<li><?= $row['ingredient'] ?></li>
 
@@ -128,7 +131,8 @@ if ($total_row) :
 						<strong><span><?= $drink['price'] ?></span>&euro;</strong>
 					</div>
 
-					<?php if ($drink['inflammatory']) : ?>
+					<!-- pridáme na kartičku značky -->
+					<?php if ($drink['inflammatory']): ?>
 						<i class="fas fa-fire"></i>
 					<?php endif; ?>
 
@@ -137,19 +141,25 @@ if ($total_row) :
 					<?php endif; ?>
 
 				</div>
-				<?php if(@$_COOKIE["privilege"] > 1): ?>
+				<?php if(authorize(2)): ?>
 					<div class="manager_tools">
 						<a class="btn btn-light" href="edit_item.php?drink_id=<?= $drink['drink_id'] ?>">Upraviť</a>
 						<a class="btn btn-danger" href="./manipulate_item.php?drink_id=<?= $drink['drink_id'] ?>">Vymazať</a>
 					</div>
 				<?php endif; ?>
 			</div>
-			<!-- <img src="img/drink.png" alt="Drink"> --> <!-- TODO: change /"drink".png for ?= strtolower preg_replace '/\s+/', '_', $drink'name'   ?> -->
-			<div class="img" style="background-image: url('img/<?= $drink['image'] ?>');"></div> <!-- TODO: change /"drink".png for ?= strtolower preg_replace '/\s+/', '_', $drink'name'   ?> -->
-			<?php if (@$_COOKIE['privilege'] == 1): ?>
-				<div class="add"><div style="<?= @!$_SESSION['order'][$drink['drink_id']]['amount'] ? "display: none;" : "" ?>"><?= @$_SESSION['order'][$drink['drink_id']]['amount'] ? $_SESSION['order'][$drink['drink_id']]['amount'] : "" ?></div></div>
+
+			<div class="img" style="background-image: url('img/<?= $drink['image'] ?>');"></div>
+
+			<!-- ak sme užívateľ, tak si vieme načítať zo SESSION objednávku a počty jednotlivých drinkov dať na ich kartičky -->
+			<?php if (authorize(1)):
+				@$drink_amount = $_SESSION['order'][$drink['drink_id']]['amount'];
+			?>
+				<div class="add"><div style="<?= @$drink_amount ? "" : "display: none;" ?>"><?= @$drink_amount ? $drink_amount : "" ?></div></div>
 			<?php endif; ?>
-			<?php if(@$_COOKIE["privilege"] > 1 && !$drink['available']): ?>
+
+			<!-- pokiaľ sme admin, tak sa nám ukážu aj drinky, ktoré už nie sú k dispozícií (viz. riadok 25) --> 
+			<?php if(authorize(2) && !$drink['available']): ?>
 				<div class="unavailable">
 					<h2>Nepredáva sa</h2>
 					<a class="btn btn-light" href="./manipulate_item.php?drink_id=<?= $drink['drink_id'] ?>&available=1">Obnoviť drink</a>
@@ -158,12 +168,9 @@ if ($total_row) :
 		</div>
 	<?php
 	endforeach;
-else :
-	?>
+
+else: ?>
 
 	<h3>Žiadne výsledky</h3>
 
-<?php
-endif;
-
-?>
+<?php endif; ?>

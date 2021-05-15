@@ -5,6 +5,10 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP DATABASE IF EXISTS `drinks`;
+CREATE DATABASE `drinks` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `drinks`;
+
 DROP TABLE IF EXISTS `drinks`;
 CREATE TABLE `drinks` (
   `drink_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'automaticky generované - ak nie je nutné, tak nevypĺňať',
@@ -19,7 +23,7 @@ CREATE TABLE `drinks` (
   PRIMARY KEY (`drink_id`),
   UNIQUE KEY `drink_name_drink_vol` (`name`,`volume`),
   KEY `drink_id` (`drink_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 TRUNCATE `drinks`;
 INSERT INTO `drinks` (`drink_id`, `name`, `volume`, `price`, `image`, `alcoholic`, `inflammatory`, `deadly`, `available`) VALUES
@@ -186,6 +190,21 @@ CREATE TABLE `drinks_orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 TRUNCATE `drinks_orders`;
+INSERT INTO `drinks_orders` (`drink_id`, `email`, `order_id`, `name`, `price`, `amount`) VALUES
+(20,	'admin.zjavka@gmail.com',	1,	'Anubis',	1.80,	6),
+(21,	'admin.zjavka@gmail.com',	1,	'Bahno',	1.80,	2),
+(23,	'admin.zjavka@gmail.com',	1,	'BH27',	1.80,	5),
+(20,	'admin.zjavka@gmail.com',	2,	'Anubis',	1.80,	4),
+(17,	'admin.zjavka@gmail.com',	2,	'Babco',	2.60,	1),
+(20,	'admin.zjavka@gmail.com',	3,	'Anubis',	1.80,	3),
+(17,	'admin.zjavka@gmail.com',	3,	'Babco',	2.60,	1),
+(17,	'admin.zjavka@gmail.com',	4,	'Babco',	2.60,	1),
+(17,	'admin.zjavka@gmail.com',	5,	'Babco',	2.60,	3),
+(17,	'admin.zjavka@gmail.com',	6,	'Babco',	2.60,	1),
+(20,	'admin.zjavka@gmail.com',	7,	'Anubis',	1.80,	2),
+(20,	'admin.zjavka@gmail.com',	8,	'Anubis',	1.80,	2),
+(17,	'admin.zjavka@gmail.com',	8,	'Babco',	2.60,	3),
+(23,	'admin.zjavka@gmail.com',	8,	'BH27',	1.80,	2);
 
 DROP TABLE IF EXISTS `ingredients`;
 CREATE TABLE `ingredients` (
@@ -194,7 +213,7 @@ CREATE TABLE `ingredients` (
   `percentage` decimal(5,2) unsigned DEFAULT NULL COMMENT 'jednotka: percentá [%]',
   PRIMARY KEY (`ingr_id`),
   UNIQUE KEY `ingr_name_percentage` (`name`,`percentage`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 TRUNCATE `ingredients`;
 INSERT INTO `ingredients` (`ingr_id`, `name`, `percentage`) VALUES
@@ -231,15 +250,24 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `email` varchar(254) NOT NULL,
   `order_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `open` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`email`,`order_id`),
   KEY `order_id` (`order_id`),
   KEY `email` (`email`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 TRUNCATE `orders`;
+INSERT INTO `orders` (`email`, `order_id`, `created_at`, `open`) VALUES
+('admin.zjavka@gmail.com',	1,	'2021-04-30 18:08:21',	0),
+('admin.zjavka@gmail.com',	2,	'2021-05-09 12:02:35',	0),
+('admin.zjavka@gmail.com',	3,	'2021-05-09 12:07:55',	0),
+('admin.zjavka@gmail.com',	4,	'2021-05-09 12:11:11',	0),
+('admin.zjavka@gmail.com',	5,	'2021-05-09 12:13:03',	0),
+('admin.zjavka@gmail.com',	6,	'2021-05-09 12:13:13',	0),
+('admin.zjavka@gmail.com',	7,	'2021-05-09 12:16:54',	0),
+('admin.zjavka@gmail.com',	8,	'2021-05-09 12:25:42',	1);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -252,6 +280,7 @@ CREATE TABLE `users` (
 
 TRUNCATE `users`;
 INSERT INTO `users` (`email`, `password`, `privilege`) VALUES
+('admin.zjavka@gmail.com',	'$2y$10$ods.Qz.GteM/OGe1WJ/.zeFo6.KyKwU1spUE5P8TnmUiICSfvURtq',	1),
 ('admin@admin.sk',	'$2y$10$LiZLEf6UVrGSfef.GYIeaOfpQqmfZ5VTKSNvmU42xlwY3q/o/e9My',	2);
 
--- 2021-04-22 01:18:44
+-- 2021-05-14 09:49:05

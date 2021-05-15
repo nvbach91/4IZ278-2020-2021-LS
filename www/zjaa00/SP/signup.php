@@ -19,11 +19,11 @@
         <input name="show_password" type="checkbox">
         <label for="show_password">Ukázať heslo</label>
       </div>
-      <small>Heslo musí obsahovať aspoň 6 znakov.</small>
+      <small>Heslo musí obsahovať aspoň 6 znakov bez medzier.</small>
     </div>
     <button type="submit" class="btn btn-primary">Registrovať</button>
     <a class="home" href="login.php">späť</a>
   </form>
 </div
 
-<?php require("./partials/footer.php"); ?>
+<?php require "./partials/footer.php"; ?>

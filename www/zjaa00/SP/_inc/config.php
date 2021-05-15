@@ -46,3 +46,19 @@ $connect = new PDO(
 
 $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //zmeniť na ERRMODE_SILENT
 $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); //iba pripravuje MySQL ale treba to len pri starších verziách - preto false
+
+function authorize($privilege = null) {
+	if (!isset($_COOKIE['privilege'])) {
+		return false;
+	}
+
+	if ($privilege == null) {
+		return true;
+	}
+
+	if ($_COOKIE['privilege'] == $privilege) {
+		return true;
+	}
+
+	return false;
+}

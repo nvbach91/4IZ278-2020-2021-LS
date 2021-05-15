@@ -1,5 +1,6 @@
 <?php
-  require "config.php";
+  require_once "../_inc/config.php";
+  require "../_inc/require_admin.php";
   
   if ($_GET['drink_id']) {
     $stmt = $connect->prepare("

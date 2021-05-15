@@ -1,15 +1,19 @@
-<?php require("./partials/header.php"); ?>
+<?php
+  require_once "./_inc/config.php";
+  require "./_inc/require_admin.php";
+  require "./partials/header.php";
+?>
 
 <body id="admin_page">
   <h1>Upraviť drink</h1>
 <?php  
   
-  $drink = $connect->prepare("
+  $stmt = $connect->prepare("
     SELECT drink_id, name as drink_name, volume as drink_volume, price, alcoholic, inflammatory, deadly, available
     FROM drinks WHERE drink_id = :drink_id;"
   );
-  $drink->execute(['drink_id' => $_GET['drink_id']]);
-  @$drink = $drink->fetchAll()[0];
+  $stmt->execute(['drink_id' => $_GET['drink_id']]);
+  @$drink = $stmt->fetchAll()[0];
 
   if (!empty($_POST)):
 
@@ -21,15 +25,16 @@
     $inflammatory = isset($_POST['inflammatory']) ? 1 : (int) 0;
     $deadly = isset($_POST['deadly']) ? 1 : (int) 0;
     
-    $exists = $connect->prepare("
+    $stmt = $connect->prepare("
       SELECT * from drinks WHERE name = :drink_name AND drink_id != :drink_id;
     ");
-    $exists->execute([
+    $stmt->execute([
       ":drink_name" => $drink_name,
       ":drink_id" => $drink_id,
     ]);
-    $exists = $exists->fetchColumn();
+    $exists = $stmt->fetchColumn();
 
+    //ak už drink s daným menom existuje, vypíšeme chybovú hlášku
     if (@!$exists):
       $stmt = $connect->prepare("
         UPDATE drinks SET
@@ -87,7 +92,7 @@
     <?php endif; ?>
   <?php endif;
   
-  $drink_ingredients = $connect->prepare("
+  $stmt = $connect->prepare("
     SELECT
       ingredients.ingr_id as ingr_id,
       drinks_ingredients.volume as ingr_volume,
@@ -101,10 +106,10 @@
       ON drinks.drink_id = drinks_ingredients.drink_id
     WHERE drinks_ingredients.drink_id = :drink_id;
   ");
-  $drink_ingredients->execute(['drink_id' => $_GET['drink_id']]);
-  $drink_ingredients = $drink_ingredients->fetchAll();
+  $stmt->execute(['drink_id' => $_GET['drink_id']]);
+  $drink_ingredients = $stmt->fetchAll();
 
-  $ingredients = $connect->prepare("
+  $stmt = $connect->prepare("
     SELECT
       ingredients.ingr_id as ingr_id,
       CONCAT_WS(' ',
@@ -118,8 +123,8 @@
     GROUP BY ingr_id, ingr_name
     ORDER BY ingredients.name;
   ");
-  $ingredients->execute();
-  $ingredients = $ingredients->fetchAll();
+  $stmt->execute();
+  $ingredients = $stmt->fetchAll();
 
   ?>
 
@@ -166,7 +171,7 @@
             <input required name="new_ingr_volumes[]" min="0.00" value="<?= $ingredient['ingr_volume'] ?>" step="any" type="number" class="form-control" placeholder="Objem ingrediencie" aria-label="Objem ingrediencie" aria-describedby="button-addon2">
             <span class="input-group-text">litra</span>
             <input required name="old_ingr_ids[]" type="hidden" value="<?= $ingredient['ingr_id'] ?>">
-            <a class="btn btn-outline-danger" href="./_inc/delete_ingredient.php?drink_id=<?= $_GET['drink_id'] ?>&ingr_id=<?= $ingredient['ingr_id'] ?>">Vymazať</a>
+            <a class="btn btn-outline-danger" href="./_inc/admin/delete_ingredient.php?drink_id=<?= $_GET['drink_id'] ?>&ingr_id=<?= $ingredient['ingr_id'] ?>">Vymazať</a>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
@@ -177,7 +182,7 @@
     </form>
       
     <h1>Pridať ingredienciu</h1>
-    <form action="./_inc/asign_ingredient.php?drink_id=<?= $_GET['drink_id'] ?>" class="form-signin" method="POST">
+    <form action="./_inc/admin/assign_ingredient.php?drink_id=<?= $_GET['drink_id'] ?>" class="form-signin" method="POST">
       <div class="input-group mb-3">
         <select name="ingr_id" class="form-select" aria-label="Default select example">
           <?php foreach($ingredients as $item): ?>
@@ -190,4 +195,4 @@
       </div>
     </form>
 
-<?php require("./partials/footer.php"); ?>
+<?php require "./partials/footer.php"; ?>

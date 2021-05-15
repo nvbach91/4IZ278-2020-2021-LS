@@ -28,7 +28,7 @@ $(function () {
     }, spinnerDelay);
 
     //data to be sent
-    var action = "fetch_data",
+    var action = "load_drinks",
         price = $("#price input[name=price]:checked").val(),
         alcoholic = $("#alco input[name=alco]:checked").val(),
         deadly = $("input[name=deadly]:checked").val(),
@@ -37,7 +37,7 @@ $(function () {
 
     //database request
     $.ajax({
-      url: "./partials/fetch_data.php",
+      url: "./partials/homepage/load_drinks.php",
       method: "POST",
       data: {
         action: action,
@@ -121,6 +121,7 @@ $(function () {
   //filter - options' initial opacity 
   $("#filter_slider div").css("opacity", 0);
 
+  //slider dole
   function goDown(object, content, slideSpeed, optionsFadeSpeed) {
     var slider = $(object),
         options = $(object + " " + content);
@@ -140,7 +141,7 @@ $(function () {
       );
     }
   }
-
+  //slider hore
   function goUp(object, content, slideSpeed, optionsFadeSpeed, callback) {
     var slider = $(object),
         options = $(object + " " + content);
@@ -231,8 +232,15 @@ $(function () {
 
 
   /* ORDER */
-  sumUpdate();
 
+  //pri načítaní zrátať drinky v objednávke, pridané cez SESSION
+  sumUpdate();
+  
+  //opacita na nulu pre všetky div elementy v menu slideri
+  $("#menu_slider div").css("opacity", 0);
+
+
+  //vytvorenie arrayu z objednávky a poslanie ho cez AJAX request na istú adresu
   function sendOrder(path, callback) {
     var order = {};
     $("#menu_slider .my_order .order_item").each(function() {
@@ -251,38 +259,91 @@ $(function () {
       }
     });
 
-    console.log("ellou");
     $.ajax({
       url: path,
       method: "POST",
       data: {order: order},
       success: function() {
         if (typeof callback === 'function') { 
-          callback(); 
+          callback();
         }
       }
     });
   };
 
-  $("#menu_slider div").css("opacity", 0);
-  $('#menu').on("click", function(e) {
-    e.preventDefault();
-    //slide-down
-    goUp("#filter_slider", "div", 300, 200, function() {
-      goDown("#menu_slider", "div", 300, 200);
+  //časť funkcie itemUpdate(), ktorá aktualizuje celkový súčet cien v objednávke
+  function sumUpdate() {
+    var sum = 0.00,
+        orderItems = Boolean($("#menu_slider .my_order .order_item").length);
+
+    //zrátame ceny všetkých drinkov násobené počtom ich kusov (trieda drink_sum)
+    $('#menu_slider .my_order .drink_sum').each(function() {
+        sum += Number($(this).html());
     });
-    if ($("#filter_slider div").css("opacity") == 0) {
-      goDown("#menu_slider", "div", 300, 200);
+
+    //pokiaľ v objednávke nie sú žiadne drinky, tak nastavíme sumu na 0.00 - ak áno, tak zaokrúhľujeme na 2 desatinné miesta
+    if (!sum) {
+      $("#menu_slider .order_sum").html("0.00");
+    } else {
+      $("#menu_slider .order_sum").html(sum.toFixed(2));
     }
 
-    //slide-up
-    goUp("#menu_slider", "div", 300, 200);
+    //pokiaľ je  počet drinkov v objednávke 0, tak znefunkčníme tlačidlo "Objednané" - ak nie tak ho sfunkčníme
+    if (!orderItems) {
+      $("#make_order").addClass("disabled");
+    } else if($("#make_order.disabled.unselectable")) {
+      $("#make_order").removeClass("disabled");
+    }
+  }
 
-  });
+  //funkcia, ktorá má nastarosť celkovú aktualizáciu objednávky, po zmene údajov nejakého drinku a prenesenie množstva na tag karty drinku - atribút je položka .order_item
+  function itemUpdate(item) {
+    var id = item.find("select").val(),
+        drinkCardId = "#drink-" + id,
+        price = $(drinkCardId).find(".price_tag span").html(),
+        amount = Number(item.find(".amount").html()),
+        drink_sum = (amount * price);
+    
+    //aktualizujeme údaj o cene drinku v menu slideri
+    item.find(".drink_price").html(price);
 
+    //ak je súčet ceny za isté drinky nenulový, tak ho zaokrúhlime a aktualizujeme počet drinkov na kartičke
+    //- ak nie tak len nastavíme daný súčet na 0.00
+    if (drink_sum) {
+      item.find(".drink_sum").html(drink_sum.toFixed(2));
+      $(drinkCardId).find(".add div:visible").html(amount);
+    } else {
+      item.find(".drink_sum").html("0.00");
+    }
+    
+    //vyberieme všetky karty s drinkami, čo majú tag s počtom daných drinkov v objednávke
+    //a pokiaľ sa už drink s ich ID v objednávke nenachádza, tak tento tag schováme
+    $("#drinks_box .card").has(".add div:visible").each(function() {
+      var id = $(this).attr("id").replace('drink-', ''),
+          isInOrder = $("#menu_slider .order_item option[value=" + id + "]:selected");
+      
+      if(isInOrder.length == 0) {
+        $(this).find(".add div").fadeOut(200);
+      }
+    });
+
+    //pokiaľ mal drink svoj tag skrytý, tak ho zviditeľníme a nastavíme na hodnotu 1
+    var tag = $(drinkCardId).find(".add div:hidden");
+    tag.html("1");
+    tag.fadeIn(200);
+
+    //aktualizujeme výpočty
+    sumUpdate();
+    //aktualizujeme SESSION
+    sendOrder("_inc/user/order_session.php");
+  }
+
+  //funkcia pridávajúca drink do objednávky podľa ID - keď nie je ID k zadané, tak sa pridá prázdna položka
   function addItem(id) {
+    //kópia prázdnej položky
     var item = $("#blank_item .order_item").clone();
     if (id) {
+      //pokiaľ už položka v objednávke je, tak jej iba zväčšíme počet ks - ak nie, tak ju do objednávky pridáme s 1ks
       var checkIfExists = $(".order_item option[value='" + id + "']").is(':selected');
       if (checkIfExists) {
         item = $(".order_item option[value='" + id + "']:selected").closest(".order_item");
@@ -298,81 +359,50 @@ $(function () {
       $("#menu_slider .my_order").append(item);
     }
 
+    //aktualizujeme výpočty objednávky a kartičky drinkov
     itemUpdate(item);
-
-    sumUpdate();
-    sendOrder("_inc/order_session.php");
   }
+
+  //toggle menu slideru po kliknutí na menu ikonku
+  $('#menu').on("click", function(e) {
+    e.preventDefault();
+    //slide-down
+    goUp("#filter_slider", "div", 300, 200, function() {
+      goDown("#menu_slider", "div", 300, 200);
+    });
+    if ($("#filter_slider div").css("opacity") == 0) {
+      goDown("#menu_slider", "div", 300, 200);
+    }
+
+    //slide-up
+    goUp("#menu_slider", "div", 300, 200);
+
+  });
   
+  //pridanie prázdnej položky do objednávky
   $("#add").on("click", function(e) {
     e.preventDefault();
     addItem();
   });
 
+  //vymazanie položky z objednávky
   $("#menu_slider .my_order").on("click", ".delete_button", function(e) {
     e.preventDefault();
 
+    //vrátane delete_buttonu
     var item = $(this).closest(".order_item");
     item.addBack().remove();
 
     itemUpdate(item)
-
-    sumUpdate();
-    sendOrder("_inc/order_session.php");
   });
 
-  function sumUpdate() {
-    var sum = 0.00;
-    $('#menu_slider .my_order .drink_sum').each(function() {
-        sum += Number($(this).html());
-    });
-    if (!sum) {
-      $("#menu_slider .order_sum").html("0.00");
-    } else {
-      $("#menu_slider .order_sum").html(sum.toFixed(2));
-    }
-  }
-
-  function itemUpdate(item) {
-    var id = item.find("select").val(),
-        drinkId = "#drink-" + id,
-        price = $(drinkId).find(".price_tag span").html(),
-        amount = Number(item.find(".amount").html()),
-        drink_sum = (amount * price);
-        
-    item.find(".drink_price").html(price);
-
-    if (drink_sum) {
-      item.find(".drink_sum").html(drink_sum.toFixed(2));
-      $(drinkId).find(".add div:visible").html(amount);
-    } else {
-      item.find(".drink_sum").html("0.00");
-    }
-    
-    $("#drinks_box .card").has(".add div:visible").each(function() {
-      var id = $(this).attr("id").replace('drink-', ''),
-          isInOrder = $("#menu_slider .order_item option[value=" + id + "]:selected");
-      
-      if(isInOrder.length == 0) {
-        $(this).find(".add div").fadeOut(200);
-      }
-    });
-
-    var tag = $(drinkId).find(".add div:hidden");
-    tag.html("1");
-    tag.fadeIn(200);
-
-    sumUpdate();
-  }
-
+  //pri zmene drinku cez select sa objednávka aktualizuje
   $("#menu_slider .my_order").on("change", "select", function() {
     item = $(this).closest(".order_item");
     itemUpdate(item);
-  
-    sumUpdate();
-    sendOrder("_inc/order_session.php");
   });
 
+  //pri stlačení jedného z buttonov (plus_button a minus_button) zväčšíme/zmenšíme množstvo
   $("#menu_slider .my_order").on("click", "button", function(e) {
     e.preventDefault();
     var item = $(this).closest(".order_item"),
@@ -384,64 +414,75 @@ $(function () {
     if (button == "plus_button" && amount.html() != max) {
       newAmount = value + 1;
       amount.html(newAmount);
-
-      itemUpdate(item);
-      sumUpdate();
-      sendOrder("_inc/order_session.php");
     } else if (button == "minus_button" && amount.html() != min) {
       newAmount = value - 1;
       amount.html(newAmount);
+    }
+    
+    itemUpdate(item);
+  });
 
-      itemUpdate(item);
-      sumUpdate();
-      sendOrder("_inc/order_session.php");
+  //po stlačení tlačidla "Objednané"
+  $("#make_order").on("click", function(e) {
+    e.preventDefault();
+    var orderItems = Boolean($("#menu_slider .my_order .order_item").length);
+
+    if (orderItems) {
+      //odošle sa objednávka
+      sendOrder("_inc/user/add_to_order.php", function() {
+        //vyprázdni sa objednávka v menu slideri
+        $("#menu_slider .my_order").empty();
+        
+        //zmiznú tagy s počtom drinkov v objednávke na kartičkách drinkov
+        $("#drinks_box .card .add div:visible").each(function() {
+          $(this).html("").fadeOut(200);
+        });
+
+        //tlačidlo "Zaplatené" sa sfunkční
+        $("#pay.disabled").removeClass("disabled");
+        //aktualizujú sa počty
+        sumUpdate();
+        //aktualizuje sa SESSION
+        sendOrder("_inc/user/order_session.php");
+      });
     }
   });
 
-  $("#make_order").on("click", function(e) {
-    e.preventDefault();
-
-    sendOrder("_inc/add_to_order.php", function() {
-      $("#menu_slider .my_order").empty();
-      
-      $("#drinks_box .card .add div:visible").each(function() {
-        $(this).html("").fadeOut(200);
-      });
-      sumUpdate();
-      sendOrder("_inc/order_session.php");
-    });
-  });
-
+  //po kliknutí na kartičku drinku sa zväčší počet ks tu aj v objednávke v menu slideri
   $("#drinks_box").on("click", ".add", function() {
     var id = $(this).closest(".card").attr("id").replace('drink-', '');
 
     addItem(id);
   });
 
+  //OBJEDNÁVKY
   var box = $("#orders_box"),
       spinner = $('<div id="spinner" style="background-image: url(&apos;img/spinner.svg&apos;)"></div>'),
       limit = 10,
       offset = $("#orders_box .order_card").length,
       areItemsLeft = 1;
 
+  //pokiaľ zoskrolujeme úplne dole, nie sú ešte načítané všetky objednávky a počet objednávok nie je 0 tak sa načítajú ďalšie objednávky z databáze
   $(document).scroll(function() {
     if ($(document).scrollTop() == $(document).height() - $(window).height() && areItemsLeft != 0 && offset) {
 
-        spinnerClone = spinner.clone();
-        box.append(spinner);
+      //zobraz spinner
+      spinnerClone = spinner.clone();
+      box.append(spinner);
 
       var request = $.ajax({
-        url: "./_inc/load_orders.php",
+        url: "./_inc/user/load_orders.php",
         method: "POST",
         data: {offset: offset, limit: limit}
       });
       request.done(function(data) {
         var items = $(data).find(".order_card");
-        numberOfItems = items.length;
+        numberOfItemsLeft = items.length;
 
-        if (numberOfItems == limit) {
+        //pokiaľ je už počet objednávok menší ako limit (sú posledné na načítanie), tak nastavíme premennú areItemsLeft na 0 a akcia sa už nebude opakovať
+        if (numberOfItemsLeft == limit) {
           box.append(items);
-        } else if(numberOfItems < limit) {
+        } else if(numberOfItemsLeft < limit) {
           box.append(items);
           areItemsLeft = 0;
         }
@@ -453,11 +494,12 @@ $(function () {
       });
       request.always(function() {
         $('#spinner').remove();
-        console.log(areItemsLeft);
       });
     }
   });
 
+  //LOGIN/SIGNUP
+  //schovať/zobraziť heslo pri písaní
   $('#show_password input').removeAttr('checked');
   $(".password[type='text']").attr("type", "password");
   $("#show_password").on("click", function() {

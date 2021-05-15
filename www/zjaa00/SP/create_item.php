@@ -1,4 +1,8 @@
-<?php require("./partials/header.php"); ?>
+<?php
+  require_once "./_inc/config.php";
+  require "./_inc/require_admin.php";
+  require "./partials/header.php";
+?>
 
 <body id="admin_page">
 
@@ -7,12 +11,13 @@
 <?php
   if (!empty($_POST)):
     
-    $exists = $connect->prepare("
+    $stmt = $connect->prepare("
     SELECT * from drinks WHERE name = :drink_name;
     ");
-    $exists->execute([":drink_name" => $_POST['drink_name']]);
-    $exists = $exists->fetchColumn();
+    $stmt->execute([":drink_name" => $_POST['drink_name']]);
+    $exists = $stmt->fetchColumn();
     
+    //ak neexistuje drink s daným menom, tak ho vytvoríme - inak vyhodíme chybovú hlášku
     if (!$exists):
       
       $drink_name = trim($_POST['drink_name']);
@@ -34,7 +39,8 @@
         ":inflammatory" => $inflammatory,
         ":deadly" => $deadly,
       ]);
-        
+      
+      //odchytíme si ID novovytvoreného drinku
       $drink_id = $connect->lastInsertId();
     ?>
 
@@ -91,6 +97,7 @@
     <?php endif; ?>
   </form>
   
+  <!-- ak sme drink úspešne vytvorili, môžeme mu ďalej aj priradiť ingrediencie -->
   <?php if (isset($drink_id)): ?>
     <div style="display: inline-block;" class="alert alert-dark" role="alert">
       <a href="edit_item.php?drink_id=<?= $drink_id ?>" class="alert-link">Pridať ingrediencie a upraviť drink</a>
@@ -101,4 +108,4 @@
     <a href="index.php">domov</a>
   <?php endif; ?>
 
-<?php require("./partials/footer.php"); ?>
+<?php require "./partials/footer.php"; ?>
