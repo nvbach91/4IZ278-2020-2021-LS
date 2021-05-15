@@ -1,0 +1,12 @@
+{
+    "name": "adam/o-auth",
+    "authors": [
+        {
+            "name": "socka25",
+            "email": "zjaa00@vse.cz"
+        }
+    ],
+    "require": {
+        "facebook/graph-sdk": "^5.7"
+    }
+}

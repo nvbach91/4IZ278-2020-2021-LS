@@ -1,4 +1,17 @@
-<?php require "./partials/header.php"; ?>
+<?php
+  require "./partials/header.php";
+  require "./_inc/composer/vendor/autoload.php";
+
+  $fb = new Facebook\Facebook([
+    'app_id' => APP_ID,
+    'app_secret' => APP_SECRET,
+      'default_graph_version' => 'v2.10',
+  ]);
+
+  $helper = $fb->getRedirectLoginHelper();
+  $loginUrl = $helper->getLoginUrl(LOGIN_CALLBACK_URL);
+
+?>
 
 <body id="login_page">
 
@@ -23,6 +36,9 @@
       <a class="home" href="index.php">späť</a>
       <br>
       <a class="register" href="signup.php">Nová registrácia</a>
+      <hr>
+      <p>Prihlásiť sa cez:</p>
+      <a class="fb_login" href="<?= $loginUrl; ?>"><i class="fab fa-facebook-f"></i></a>
     </form>
   </div>
 

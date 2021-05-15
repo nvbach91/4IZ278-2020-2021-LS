@@ -1,0 +1,12 @@
+{
+    "name": "adam/composer",
+    "require": {
+        "facebook/graph-sdk": "^5.7"
+    },
+    "authors": [
+        {
+            "name": "socka25",
+            "email": "zjaa00@vse.cz"
+        }
+    ]
+}

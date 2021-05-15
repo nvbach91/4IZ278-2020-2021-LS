@@ -9,12 +9,6 @@ error_reporting(-1); //neskôr zmeniť na 1
 $base_url = "http://nebra.sk/";
 $searchPlaceholder = "Hľadaj drink";
 
-//constants
-const APP_ID = '1567592203631828';
-const APP_SECRET = '960c6247366ddb6cf0ae3edb6fcd5c52';
-
-const LOGIN_CALLBACK_URL = 'http://localhost/4IZ278-2020-2021-LS/www/zjaa00/SP/_inc/facebook-login-callback.php';
-
 // configurations
 $config = [
 
@@ -53,18 +47,7 @@ $connect = new PDO(
 $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //zmeniť na ERRMODE_SILENT
 $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); //iba pripravuje MySQL ale treba to len pri starších verziách - preto false
 
-function authorize($privilege = null) {
-	if (!isset($_COOKIE['privilege'])) {
-		return false;
-	}
+const APP_ID = '1567592203631828';
+const APP_SECRET = '960c6247366ddb6cf0ae3edb6fcd5c52';
 
-	if ($privilege == null) {
-		return true;
-	}
-
-	if ($_COOKIE['privilege'] == $privilege) {
-		return true;
-	}
-
-	return false;
-}
+const LOGIN_CALLBACK_URL = 'http://localhost/4IZ278-2020-2021-LS/www/zjaa00/OAuth/facebook-login-callback.php';

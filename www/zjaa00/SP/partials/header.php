@@ -1,6 +1,6 @@
 <?php
-  require_once './_inc/config.php';
   session_start();
+  require_once './_inc/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="sk">
