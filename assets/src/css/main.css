@@ -48,6 +48,12 @@ p {
   .soc-icons img {
     height: 1.2rem; }
 
+.error_msg {
+  color: #e23a3a;
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center; }
+
 /*login*/
 .logo {
   height: 2.5em; }
@@ -58,14 +64,16 @@ p {
     position: relative;
     margin-bottom: 2rem;
     width: 100%; }
-    .login-form .inp input {
+    .login-form .inp input, .login-form .inp textarea {
       width: 100%;
       border-radius: 3px;
       height: 4em; }
-      .login-form .inp input:focus {
+      .login-form .inp input:focus, .login-form .inp textarea:focus {
         outline: none !important;
         border: 2px solid #f2cb05;
         box-shadow: none; }
+    .login-form .inp .text-area {
+      height: 100%; }
     .login-form .inp a {
       float: right;
       color: #f25c05;
@@ -79,8 +87,13 @@ p {
   border-radius: 3px;
   height: 4em;
   background-color: #f2cb05;
-  color: white;
-  margin-bottom: 2em; }
+  color: #191919;
+  font-weight: bold; }
+
+.or {
+  width: 100%;
+  text-align: center;
+  color: #cecece; }
 
 .btn-fb {
   border-style: none;
@@ -93,3 +106,100 @@ p {
 
 .reg {
   text-align: center; }
+
+/*main page*/
+.main .side-bar {
+  z-index: 999;
+  background-color: #f2cb05;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0; }
+  .main .side-bar .logo {
+    margin-bottom: 5em;
+    text-align: center;
+    padding: 2em 1em; }
+    .main .side-bar .logo img {
+      width: 5em; }
+  .main .side-bar .side-menu {
+    position: relative; }
+    .main .side-bar .side-menu ul {
+      padding: 0;
+      list-style-type: none; }
+      .main .side-bar .side-menu ul li {
+        width: 100%;
+        text-align: center; }
+        .main .side-bar .side-menu ul li a {
+          display: block;
+          width: 100%;
+          color: #191919;
+          text-decoration: none;
+          line-height: 5rem;
+          font-size: 1rem;
+          transition: 0.3s;
+          position: relative;
+          width: inherit;
+          z-index: 3; }
+          .main .side-bar .side-menu ul li a:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0px;
+            left: 0px;
+            bottom: 0px;
+            z-index: 2;
+            background-color: #191919;
+            transition: 0.3s; }
+          .main .side-bar .side-menu ul li a:hover {
+            text-shadow: 0px 0px 0px #191919; }
+            .main .side-bar .side-menu ul li a:hover::before {
+              height: 10%; }
+  .main .side-bar .logout {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2em;
+    border: none;
+    background: none; }
+
+.main-container {
+  padding: 5em 5em 0em 14em; }
+  .main-container .main-headline {
+    margin-bottom: 2em; }
+  .main-container .note {
+    box-shadow: 25px 22px 74px -34px rgba(0, 0, 0, 0.32);
+    margin: 1em;
+    padding: 1.5em; }
+    .main-container .note h2 {
+      font-size: 1.5rem; }
+    .main-container .note .note-body p {
+      font-family: "Poppins", sans-serif;
+      font-size: 0.8rem; }
+
+.insert-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 3rem; }
+  .insert-btn i {
+    padding: 1rem;
+    border-radius: 100%;
+    background-color: #191919;
+    color: white;
+    transition: 0.3s;
+    user-select: none; }
+    .insert-btn i:hover {
+      color: #191919;
+      background-color: #f2cb05;
+      cursor: pointer; }
+
+.note-editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  height: 100vh;
+  padding: 5em 12em 0em 14em;
+  z-index: 2; }

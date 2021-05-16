@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php include('view/head.php') ?>
+<?php
+    session_start();
+    if(isset($_SESSION["VER"]))
+    {
+        include ('model/pdo.php');
+        include ('model/login_ver.php');
 
-<body>
-    <?php include('view/login.php') ?>
-    <?php include('view/bottom.php') ?>
-</body>
-
-</html>
+        if($data)
+        {
+            include('view/main.php');
+            include('view/bottom.php');
+        }
+        else
+        {
+            include('logout.php');
+        }
+    }
+    else
+    {
+        include('view/login.php');
+        include('view/bottom.php');
+    }
+?>

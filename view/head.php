@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
     <!---------------------------------->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="assets/src/js/main.js" ></script>
 
     <title>Noter...</title>
 

@@ -1,27 +1,34 @@
+<?php include('controller/login_check.php') ?>     
+<!DOCTYPE html>
+<html lang="en">
+<?php include('view/head.php') ?>
+<body>
 <div class="row gx-0">
         <div class="col-12 col-md-5 gx-0">
             <div class="vertic-100 p-5">
                 <div class="row gx-0 h-100">
                     <div class="col-12">
-                        <img class="logo" src="assets/svg/logo-color.svg" alt="noter... logo">
+                        <?php require('view/logo.php');?>
                     </div>
                     <div class="col-12">
                         <h1 class="bold">Sign in</h1>
-                        <form action="." metod="POST" class="login-form ">
+                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="login-form ">
                             <div class="inp form-floating">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="&nbsp;" required>
-                                <label for="name">name</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="&nbsp;" required>
+                                <label for="name">email</label>
                             </div>
                             <div class="inp form-floating">
-                                <input type="password" class="form-control" name="pass" id="password" placeholder="&nbsp;" required>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="&nbsp;" required>
                                 <label for="password">password</label>
                                 <a href="#">Forgot passoword?</a>
                             </div>
-                            <button class="btn-log">Sign in</button>
+                            <button type="submit" name="btn_login" class="btn-log">Sign in</button>
+                            <p class="error_msg"><?php include('controller/fce_error.php')?></p>
                         </form>
-                        <button class="btn-fb">Sign in using <b>facebook</b></button>
+                        <p class="or">or</p>
+                        <button class="btn-fb" >Sign in via <b>facebook</b></button>
                         <hr>
-                        <p class="reg">dont have an account? <a href="#">Sing up</a></p>
+                        <p class="reg">dont have an account? <a href="registration.php">Sing up</a></p>
                     </div>
                 </div>
             </div>
