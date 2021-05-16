@@ -1,0 +1,187 @@
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex-grow: 1;
+}
+
+.card-img {
+  max-width: 100%;
+}
+
+.spinner {
+  height: 30px;
+}
+
+.image-container {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-card .card-upper {
+  min-height: 200px;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+
+.card-title {
+  border-bottom: 1px solid black;
+}
+
+.spinner-number {
+  width: 45px;
+  height: 100%;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #aaaaaa;
+}
+
+.event-card {
+  border: none;
+  background-color: #4fd89c;
+  box-shadow: grey 2px 2px 5px 1px;
+}
+
+.event-card .card-footer {
+  background-color: #bef5e2;
+  width: 100%;
+}
+
+.up, .down {
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.up {
+  border-radius: 0 5px 5px 0;
+}
+
+.down {
+  border-radius: 5px 0 0 5px;
+}
+
+.up:hover, .down:hover {
+  background-color: #7d7c7c !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.gradient {
+  background: #00c767;
+  background: linear-gradient(135deg, #00c767 0%, #001859 100%);
+}
+
+.background-image {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.ticket-img {
+  width: 80%;
+}
+
+.sidebar {
+  z-index: 2;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  overflow-x: hidden;
+  transition: 0.4s;
+}
+
+.sidebar .form-control {
+  font-size: 0.6rem;
+}
+
+.sidebar label {
+  font-size: 0.8rem;
+  margin-bottom: 0;
+}
+
+.cancel-button {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 20px 20px 0 0;
+}
+
+form.login-form, form.register-form {
+  width: 80%;
+}
+
+.sidebar-container > div {
+  width: 80%;
+  border-bottom: 1px solid white;
+}
+
+.card-title.cart-event-title {
+  border-bottom: 1px solid white;
+}
+
+.logout {
+  border-left: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.profile-pills {
+  min-width: 225px;
+}
+
+.profile-pills .nav-link {
+  border-radius: 0 !important;
+}
+
+.ticket-container {
+  width: 450px;
+  min-height: 350px;
+  border: 1px solid black;
+}
+
+.ticket-container hr {
+  width: 85%;
+}
