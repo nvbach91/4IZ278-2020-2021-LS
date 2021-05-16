@@ -1,8 +1,7 @@
 <?php
   require_once "../config.php";
-  require "../require_user.php";
 
-  $orders = $connect->prepare('
+  $select = $connect->prepare('
     SELECT orders.order_id as id, created_at, SUM(amount * price) as order_sum
     FROM orders
     JOIN drinks_orders
@@ -12,8 +11,8 @@
     ORDER BY created_at desc
     LIMIT '.$_POST['limit'].' OFFSET '.$_POST['offset'].';
   ');
-  $orders->execute(['email' => $_COOKIE['email']]);
-  $orders = $orders->fetchAll();
+  $select->execute(['email' => $_COOKIE['email']]);
+  $orders = $select->fetchAll();
 
   if ($orders): ?>
     <div>
@@ -28,7 +27,7 @@
             <div class="my_order">
 
             <?php
-              $order_items = $connect->prepare('
+              $select = $connect->prepare('
                 SELECT drinks_orders.name, drinks_orders.price, amount, (drinks_orders.price * amount) as drink_sum
                 FROM orders
                 JOIN drinks_orders
@@ -38,11 +37,11 @@
                 WHERE orders.order_id = :id AND orders.email = :email
                 ORDER BY amount desc;
               ');
-              $order_items->execute([
+              $select->execute([
                 'email' => $_COOKIE['email'],
                 'id' => $order['id']
               ]);
-              $order_items = $order_items->fetchAll();
+              $order_items = $select->fetchAll();
               foreach($order_items as $order_item):
             ?>
                 <div class="order_item">

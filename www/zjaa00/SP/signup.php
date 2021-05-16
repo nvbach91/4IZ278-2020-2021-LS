@@ -1,4 +1,9 @@
-<?php require "./partials/header.php"; ?>
+<?php
+  require "./partials/header.php";
+
+  require "./_inc/require_unregistered.php";
+
+?>
 
 <body id="signup_page">
 

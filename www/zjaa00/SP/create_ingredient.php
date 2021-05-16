@@ -1,7 +1,8 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_admin.php";
+
   require "./partials/header.php";
+  require "./_inc/require_admin.php";
+
 ?>
 
 <body id="admin_page">
@@ -23,9 +24,9 @@
       $execute[":percentage"] = $percentage;
     }
     
-    $stmt = $connect->prepare($sql);
-    $stmt->execute($execute);
-    $exists = $stmt->fetchColumn();
+    $select = $connect->prepare($sql);
+    $select->execute($execute);
+    $exists = $select->fetchColumn();
     
     //ak už existuje ingrediencia s daným menom a percentom alkoholu, tak vyhodíme chybovú hlášku, ak nie tak hlášku úspechu
     if (!$exists):  

@@ -5,13 +5,13 @@ if (!empty($_POST)):
   $password = trim($_POST['password']);
 
   //skontrolujeme, či sa daný užívateľ nachádza v databáze
-  $exists = $connect->prepare('
+  $select = $connect->prepare('
     SELECT * FROM users
     WHERE email = :email
     LIMIT 1;
   ');
-  $exists->execute(['email' => $email]);
-  @$user = $exists->fetchAll()[0];
+  $select->execute(['email' => $email]);
+  @$user = $select->fetchAll()[0];
   
   $conditions = [
     "Email je neplatný"

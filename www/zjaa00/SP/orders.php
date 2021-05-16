@@ -1,7 +1,6 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_user.php";
   require "./partials/header.php";
+  require "./_inc/require_user.php";
 
   $email = $_COOKIE['email'];
 ?>
@@ -15,7 +14,7 @@
   </div>
   <div id="orders_box">
   <?php
-    $stmt = $connect->prepare('
+    $select = $connect->prepare('
       SELECT open, orders.order_id as id, created_at, SUM(amount * price) as order_sum
       FROM orders
       JOIN drinks_orders
@@ -25,14 +24,14 @@
       ORDER BY created_at desc
       LIMIT 10 OFFSET 0;
     ');
-    $stmt->execute(['email' => $email]);
-    $orders = $stmt->fetchAll();
-    $total_row = $stmt->rowCount();
+    $select->execute(['email' => $email]);
+    $orders = $select->fetchAll();
+    $total_row = $select->rowCount();
     if ($total_row):
       foreach($orders as $order):
   ?>
 
-        <div class="order_card <?= $order['open'] ? "open" : "" ?>">
+        <div class="order_card unselectable <?= $order['open'] ? "open" : "" ?>">
           <div class="content">
             <div class="head">
               <h3><?= date("M d, Y", strtotime($order['created_at'])) ?></h3>
@@ -41,7 +40,7 @@
             <div class="my_order">
 
             <?php
-              $stmt = $connect->prepare('
+              $select = $connect->prepare('
                 SELECT drinks_orders.name, drinks_orders.price, amount, (drinks_orders.price * amount) as drink_sum
                 FROM orders
                 JOIN drinks_orders
@@ -51,11 +50,11 @@
                 WHERE orders.order_id = :id AND orders.email = :email
                 ORDER BY amount desc;
               ');
-              $stmt->execute([
+              $select->execute([
                 'email' => $email,
                 'id' => $order['id']
               ]);
-              $order_items = $stmt->fetchAll();
+              $order_items = $select->fetchAll();
               foreach($order_items as $order_item):
             ?>
             

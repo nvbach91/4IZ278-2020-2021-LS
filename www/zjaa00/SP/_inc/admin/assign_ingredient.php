@@ -1,6 +1,5 @@
 <?php
   require_once "../config.php";
-  require "../require_admin.php";
 
   if ($_GET['drink_id']) {
     $insert = $connect->prepare('
@@ -13,5 +12,5 @@
       'ingr_volume' => $_POST['ingr_volume'],
     ]);
 
-    header('Location: ../edit_item.php?drink_id='.$_GET['drink_id']);
+    header('Location: ../../edit_item.php?drink_id='.$_GET['drink_id']);
   }

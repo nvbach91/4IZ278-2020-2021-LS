@@ -1,7 +1,6 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_admin.php";
   require "./partials/header.php";
+  require "./_inc/require_admin.php";
 ?>
 
 <body id="admin_page">
@@ -10,7 +9,7 @@
 
 <?php
   
-  if (isset($_POST)) {
+  if (@$_POST) {
 
     $ingr_id = $_POST['ingr_id'];
     $ingr_name = trim($_POST['ingr_name']);
@@ -34,24 +33,24 @@
     
     //pokiaľ sme ingredienciu mazali
     if(isset($_POST['delete'])) {
-      $update = $connect->prepare('
+      $delete = $connect->prepare('
         DELETE FROM ingredients
         WHERE ingr_id = :ingr_id;
       ');
-      $update->execute([
+      $delete->execute([
         ":ingr_id" => $ingr_id,
       ]);
     }
   }
   
   //výpis všetkých ingrediencií
-  $stmt = $connect->prepare('
+  $select = $connect->prepare('
     SELECT ingr_id, name as ingr_name, percentage
     FROM ingredients
     ORDER BY ingr_name asc;
   ');
-  $stmt->execute();
-  $ingredients = $stmt->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+  $select->execute();
+  $ingredients = $select->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
   
   ?>
       

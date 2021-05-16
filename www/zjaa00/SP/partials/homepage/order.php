@@ -1,13 +1,15 @@
 <?php
+  require "./_inc/require_user.php";
+
   //vyberieme drinky, ktoré necháme vypísať ako možnosti v select pre každú položku objednávky
-  $stmt = $connect->prepare("SELECT drink_id, name, volume, price FROM drinks WHERE available = 1 ORDER BY name asc;");
-  $stmt->execute();
-  $drinks = $stmt->fetchAll();
+  $select = $connect->prepare("SELECT drink_id, name, volume, price FROM drinks WHERE available = 1 ORDER BY name asc;");
+  $select->execute();
+  $drinks = $select->fetchAll();
 
   //zistíme, či su nejaké objednávky na našom účte otvorené a podľa toho priradíme funkcionalitu tlačidlu "Zaplatené"
-  $stmt = $connect->prepare("SELECT * FROM orders WHERE email = :email AND open = 1 LIMIT 1;");
-  $stmt->execute(['email' => $_COOKIE['email']]);
-  $open_order = $stmt->fetchColumn();
+  $select = $connect->prepare("SELECT * FROM orders WHERE email = :email AND open = 1 LIMIT 1;");
+  $select->execute(['email' => $_COOKIE['email']]);
+  $open_order = $select->fetchColumn();
 ?>
   <div id="menu_slider" style="display: none;">
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Odhlásiť</a>

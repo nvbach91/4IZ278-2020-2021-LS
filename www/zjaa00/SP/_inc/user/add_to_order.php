@@ -1,18 +1,17 @@
 <?php
   require_once "../config.php";
-  require "../require_user.php";
   
   $email = $_COOKIE['email'];
 
-  $stmt = $connect->prepare('
+  $select = $connect->prepare('
     SELECT drinks_orders.drink_id, drinks_orders.order_id, amount
     FROM orders
     JOIN drinks_orders
         on drinks_orders.order_id = orders.order_id
     WHERE open = 1 AND drinks_orders.email = :email;
   ');
-  $stmt->execute(['email' => $email]);
-  $open_order = $stmt->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+  $select->execute(['email' => $email]);
+  $open_order = $select->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
   
   //odchytíme si ID objednávky od lubovoľného z drinkov
   @$order_id = $open_order[array_keys($open_order)[0]]['order_id'];

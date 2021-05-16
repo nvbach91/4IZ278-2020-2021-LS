@@ -2,10 +2,6 @@
 
 require_once '../../_inc/config.php';
 
-if (authorize()) {
-	session_start();
-}
-
 if (isset($_POST["action"])) {
 	$query = "
 		select

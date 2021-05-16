@@ -1,7 +1,6 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_admin.php";
   require "./partials/header.php";
+  require "./_inc/require_admin.php";
 ?>
 
 <body id="admin_page">
@@ -11,11 +10,11 @@
 <?php
   if (!empty($_POST)):
     
-    $stmt = $connect->prepare("
-    SELECT * from drinks WHERE name = :drink_name;
+    $select = $connect->prepare("
+      SELECT * from drinks WHERE name = :drink_name;
     ");
-    $stmt->execute([":drink_name" => $_POST['drink_name']]);
-    $exists = $stmt->fetchColumn();
+    $select->execute([":drink_name" => $_POST['drink_name']]);
+    $exists = $select->fetchColumn();
     
     //ak neexistuje drink s daným menom, tak ho vytvoríme - inak vyhodíme chybovú hlášku
     if (!$exists):

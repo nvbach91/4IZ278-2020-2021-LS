@@ -1,15 +1,16 @@
 <?php
   require "./partials/header.php";
+  require "./_inc/require_unregistered.php";
   require "./_inc/composer/vendor/autoload.php";
 
-  $fb = new Facebook\Facebook([
+  $fb = new \Facebook\Facebook([
     'app_id' => APP_ID,
     'app_secret' => APP_SECRET,
-      'default_graph_version' => 'v2.10',
+    'default_graph_version' => 'v2.10',
   ]);
 
   $helper = $fb->getRedirectLoginHelper();
-  $loginUrl = $helper->getLoginUrl(LOGIN_CALLBACK_URL);
+  $loginUrl = $helper->getLoginUrl($LOGIN_CALLBACK_URL);
 
 ?>
 

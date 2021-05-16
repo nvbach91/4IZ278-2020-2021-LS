@@ -1,18 +1,17 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_admin.php";
   require "./partials/header.php";
+  require "./_inc/require_admin.php";
 
   if ($_GET['drink_id']):
     
     //pokiaľ máme k dispozícií parameter $_GET['available']), tak vieme nastaviť drink na hodnotu available 0 (manipulate_item.php riadok 46) alebo 1 (load_drinks.php.php riadok 165)
     if (isset($_GET['available'])) {
-      $stmt = $connect->prepare("
+      $update = $connect->prepare("
         UPDATE drinks SET
         available = :available
         WHERE drink_id = :drink_id;
       ");
-      $stmt->execute([
+      $update->execute([
         "available" => $_GET['available'],
         "drink_id" => $_GET['drink_id'],
       ]);
@@ -21,14 +20,14 @@
     }
 
     //zistíme, či už si drink niekto objednal
-    $stmt = $connect->prepare("
+    $select = $connect->prepare("
       SELECT order_id FROM drinks_orders
       WHERE drink_id = :drink_id;;
     ");
-    $stmt->execute([
+    $select->execute([
       "drink_id" => $_GET['drink_id'],
       ]);
-    @$was_ordered = $stmt->fetchColumn();
+    @$was_ordered = $select->fetchColumn();
     
     //ak si drink niekto objednal, tak ponúkneme možnosť drinku nastaviť hodnotu available na 0, aby sa užívateľom už nezobrazoval
     if (@$was_ordered): ?>
@@ -58,8 +57,8 @@
 
       //ak si drink ešte nikto neobjednal je bezpečné tento drink na trvalo vymazať z databáze
       $delete = $connect->prepare("
-      DELETE FROM drinks
-      WHERE drink_id = :drink_id;;
+        DELETE FROM drinks
+        WHERE drink_id = :drink_id;;
       ");
       $delete->execute([
         "drink_id" => $_GET['drink_id'],

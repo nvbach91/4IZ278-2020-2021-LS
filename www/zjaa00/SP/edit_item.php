@@ -1,19 +1,18 @@
 <?php
-  require_once "./_inc/config.php";
-  require "./_inc/require_admin.php";
   require "./partials/header.php";
+  require "./_inc/require_admin.php";
 ?>
 
 <body id="admin_page">
   <h1>Upraviť drink</h1>
 <?php  
   
-  $stmt = $connect->prepare("
+  $select = $connect->prepare("
     SELECT drink_id, name as drink_name, volume as drink_volume, price, alcoholic, inflammatory, deadly, available
     FROM drinks WHERE drink_id = :drink_id;"
   );
-  $stmt->execute(['drink_id' => $_GET['drink_id']]);
-  @$drink = $stmt->fetchAll()[0];
+  $select->execute(['drink_id' => $_GET['drink_id']]);
+  @$drink = $select->fetchAll()[0];
 
   if (!empty($_POST)):
 
@@ -25,18 +24,18 @@
     $inflammatory = isset($_POST['inflammatory']) ? 1 : (int) 0;
     $deadly = isset($_POST['deadly']) ? 1 : (int) 0;
     
-    $stmt = $connect->prepare("
+    $select = $connect->prepare("
       SELECT * from drinks WHERE name = :drink_name AND drink_id != :drink_id;
     ");
-    $stmt->execute([
+    $select->execute([
       ":drink_name" => $drink_name,
       ":drink_id" => $drink_id,
     ]);
-    $exists = $stmt->fetchColumn();
+    $exists = $select->fetchColumn();
 
     //ak už drink s daným menom existuje, vypíšeme chybovú hlášku
     if (@!$exists):
-      $stmt = $connect->prepare("
+      $update = $connect->prepare("
         UPDATE drinks SET
         name = :drink_name,
         volume = :drink_volume,
@@ -46,7 +45,7 @@
         deadly = :deadly
         WHERE drink_id = :drink_id;
       ");
-      $stmt->execute([
+      $update->execute([
         "drink_id" => $drink_id,
         "drink_name" => $drink_name,
         "drink_volume" => $drink_volume,
@@ -61,14 +60,14 @@
       $new_ingr_volumes = $_POST['new_ingr_volumes'];
 
       for ($i=0; $i < sizeof($new_ingr_ids); $i++) { 
-        $stmt = $connect->prepare("
+        $update = $connect->prepare("
           UPDATE drinks_ingredients SET
           drink_id = :drink_id,
           ingr_id = :new_ingr_id,
           volume = :new_ingr_volume
           WHERE ingr_id = :old_ingr_id AND drink_id = :drink_id;
         ");
-        $stmt->execute([
+        $update->execute([
           "drink_id" => $drink_id,
           "new_ingr_id" => $new_ingr_ids[$i],
           "new_ingr_volume" => $new_ingr_volumes[$i],
@@ -92,7 +91,7 @@
     <?php endif; ?>
   <?php endif;
   
-  $stmt = $connect->prepare("
+  $select = $connect->prepare("
     SELECT
       ingredients.ingr_id as ingr_id,
       drinks_ingredients.volume as ingr_volume,
@@ -106,10 +105,10 @@
       ON drinks.drink_id = drinks_ingredients.drink_id
     WHERE drinks_ingredients.drink_id = :drink_id;
   ");
-  $stmt->execute(['drink_id' => $_GET['drink_id']]);
-  $drink_ingredients = $stmt->fetchAll();
+  $select->execute(['drink_id' => $_GET['drink_id']]);
+  $drink_ingredients = $select->fetchAll();
 
-  $stmt = $connect->prepare("
+  $select = $connect->prepare("
     SELECT
       ingredients.ingr_id as ingr_id,
       CONCAT_WS(' ',
@@ -123,8 +122,8 @@
     GROUP BY ingr_id, ingr_name
     ORDER BY ingredients.name;
   ");
-  $stmt->execute();
-  $ingredients = $stmt->fetchAll();
+  $select->execute();
+  $ingredients = $select->fetchAll();
 
   ?>
 

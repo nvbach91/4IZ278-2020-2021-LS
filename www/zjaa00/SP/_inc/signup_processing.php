@@ -6,13 +6,13 @@
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     //skontrolujeme, či sa daný užívateľ už nachádza v databáze
-    $exists = $connect->prepare('
+    $select = $connect->prepare('
       SELECT * FROM users
       WHERE email = :email
       LIMIT 1;
     ');
-    $exists->execute(['email' => $email]);
-    @$user = $exists->fetchAll();
+    $select->execute(['email' => $email]);
+    @$user = $select->fetchAll();
     
     $conditions = [
       "Email je neplatný"
@@ -30,8 +30,8 @@
     //ak sa počet všetkých podmienok ($conditions) rovná tým, ktoré mali hodnotu TRUE ($true_conditions), tak prebehla registrácia úspešne
     if ($true_conditions == count($conditions)) {
 
-      $add = $connect->prepare("INSERT INTO users (email, password) VALUES (:email, :password);");
-      $add->execute([
+      $insert = $connect->prepare("INSERT INTO users (email, password) VALUES (:email, :password);");
+      $insert->execute([
         'email' => $email,
         'password' => $hashed_password
       ]);

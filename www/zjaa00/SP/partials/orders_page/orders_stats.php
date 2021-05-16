@@ -1,35 +1,35 @@
 <?php
 
-  $stat1 = $connect->prepare('
+  $select = $connect->prepare('
     SELECT SUM(price * amount) as total_sum
     FROM drinks_orders
     WHERE email = :email;
   ');
-  $stat1->execute([
+  $select->execute([
     'email' => $_COOKIE['email'],
   ]);
-  $stat1 = $stat1->fetchColumn();
+  $stat1 = $select->fetchColumn();
   
-  $stat2 = $connect->prepare('
+  $select = $connect->prepare('
     SELECT SUM(amount) as total_drinks
     FROM drinks_orders
     WHERE email = :email
     LIMIT 1;
   ');
-  $stat2->execute([
+  $select->execute([
     'email' => $_COOKIE['email'],
   ]);
-  $stat2 = $stat2->fetchColumn();
+  $stat2 = $select->fetchColumn();
   
-  $stat3 = $connect->prepare('
+  $select = $connect->prepare('
     SELECT COUNT(order_id) as total_orders
     FROM orders
     WHERE email = :email;
   ');
-  $stat3->execute([
+  $select->execute([
     'email' => $_COOKIE['email'],
   ]);
-  $stat3 = $stat3->fetchColumn();
+  $stat3 = $select->fetchColumn();
 
 ?>
   <div id="stats">
