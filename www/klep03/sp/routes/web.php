@@ -68,3 +68,45 @@ Route::get('/songs/{song_id}', function ($song_id) {
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
+
+Route::get('/profile', function () {
+
+    $asideItemsController   = new AsideItemsController;
+    $buttonsController      = new ButtonsController;
+
+    $asideItems             = $asideItemsController->getAsideItems();
+    $buttons                = $buttonsController->getButtons();
+
+    return view('profile')  ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);
+});
+
+Route::get('/savedChords', function () {
+
+    $asideItemsController   = new AsideItemsController;
+    $buttonsController      = new ButtonsController;
+
+    $asideItems             = $asideItemsController->getAsideItems();
+    $buttons                = $buttonsController->getButtons();
+
+    return view('savedChords')  ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);
+});
+
+Route::get('/createdByMe', function () {
+
+    $asideItemsController   = new AsideItemsController;
+    $buttonsController      = new ButtonsController;
+
+    $asideItems             = $asideItemsController->getAsideItems();
+    $buttons                = $buttonsController->getButtons();
+
+    return view('createdByMe')  ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);
+});

@@ -100,16 +100,49 @@
         main {
             width: 70%;
             height: 100%;
-            padding: 20px;
+            padding: 0 20px;
+            overflow: scroll;
+            border-bottom-style: solid;
+            border-width: 1px;
         }
 
         .noTopBorder {
             border-top-style: none;
         }
 
+        #searchDiv {
+            display: flex;
+            align-items: center;
+        }
+
+        #searchTextArea {
+            resize: none;
+            font-family: inherit;
+            font-size: inherit;
+            height: 23px;
+        }
+
+        #search {
+            margin-left: 5px;
+        }
+
+        .innerAreaButton {
+            padding: 8px;
+            background-color: black;
+            color: white;
+        }
+
+        .innerAreaButton:hover {
+            padding: 8px;
+            background-color: rgb(204, 204, 204);
+            color: black;
+        }
+
         a {
             color: inherit;
             text-decoration: none;
+            margin: 0px;
+            padding: 0px;
         }
     </style>
 </head>
@@ -126,20 +159,12 @@
     <div id="mid">
         <aside class="gray border noTopBorder">
             @foreach ($asideItems as $key => $value)
-                <a href="<?=$value?>"><div class="leftAsideItem hoverable">{{$key}}</div></a>
-            @endforeach
+            <a href="<?= $value ?>">
+            <div class="leftAsideItem hoverable">{{ $key }}</div>
+        </a>
+        @endforeach
         </aside>
         <main>
-            <h1>Users</h1>
-            <div class="users">
-                <ul>
-                    @foreach ($users as $user)
-                        <li>
-                            {{$user->name}}
-                        </li>
-                    @endforeach 
-                </ul>
-            </div>
         </main>
         <aside class="gray border noTopBorder"></aside>
     </div>

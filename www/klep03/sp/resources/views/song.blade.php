@@ -121,7 +121,7 @@
 <body>
     <header class="gray border">
         <div id="headerLeft" class="headerSubElement">{{ $LoggedUser }}</div>
-        <div id="headerMid" class="headerSubElement">MySongs</div>
+        <div id="headerMid" class="headerSubElement"><a href="/">MySongs</a></div>
         <div id="headerRight" class="headerSubElement">
             <div id="divSignup" class="active hoverable">{{ $Button1 }}</div>
             <div id="divLogout" class="active hoverable">{{ $Button2 }}</div>

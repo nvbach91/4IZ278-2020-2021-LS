@@ -101,6 +101,9 @@
             width: 70%;
             height: 100%;
             padding: 0 20px;
+            overflow: scroll;
+            border-bottom-style: solid;
+            border-width: 1px;
         }
 
         .noTopBorder {
@@ -134,13 +137,18 @@
             background-color: rgb(204, 204, 204);
             color: black;
         }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
     </style>
 </head>
 
 <body>
     <header class="gray border">
         <div id="headerLeft" class="headerSubElement">{{$LoggedUser}}</div>
-        <div id="headerMid" class="headerSubElement">MySongs</div>
+        <div id="headerMid" class="headerSubElement"><a href="/">MySongs</a></div>
         <div id="headerRight" class="headerSubElement">
             <div id="divSignup" class="active hoverable">{{$Button1}}</div>
             <div id="divLogout" class="active hoverable">{{$Button2}}</div>
@@ -148,9 +156,11 @@
     </header>
     <div id="mid">
         <aside class="gray border noTopBorder">
-            <div class="leftAsideItem hoverable">My Profile</div>
-            <div class="leftAsideItem hoverable">Saved Chords</div>
-            <div class="leftAsideItem active hoverable">Created By Me</div>
+            @foreach ($asideItems as $key => $value)
+            <a href="<?= $value ?>">
+            <div class="leftAsideItem hoverable">{{ $key }}</div>
+        </a>
+        @endforeach
         </aside>
         <main>
             <h1>Welcome!</h1>
