@@ -1,0 +1,23 @@
+.card {
+    margin: 20px;
+} 
+
+.container-fluid {
+    margin-top: 10px;
+}
+
+.events-row {
+    justify-content: center;
+    margin: 20px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+#login-area, #register-area {
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    margin-top: 100px;
+}
