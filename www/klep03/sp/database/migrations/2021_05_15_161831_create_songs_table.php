@@ -19,10 +19,10 @@ class CreateSongsTable extends Migration
             $table->longText('lyrics_w_chords');
             $table->string('artist');
             $table->enum('difficulty', array('beginner', 'easy', 'medium', 'hard'));
-            $table->integer('created_by')->unsigned();
-            $table->foreign('created_by')->references('id')->on('Users');
-            $table->integer('style')->unsigned();
-            $table->foreign('style')->references('id')->on('Styles');
+            // $table->unsignedBigInteger('created_by');
+            $table->foreignId('created_by')->references('id')->on('users');
+            // $table->unsignedBigInteger('style');
+            $table->foreignId('style')->references('id')->on('styles');
             $table->timestamps();
         });
     }
