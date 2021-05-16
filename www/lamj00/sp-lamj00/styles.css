@@ -1,0 +1,86 @@
+html,
+body{
+    height: 100%;
+    font-size: 1rem;
+    background-color: #fdbb2d;
+    font-family: 'Roboto Mono', monospace;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+footer{
+    background-color: #22c1c3;
+    font-size:  1rem;
+    padding: 1rem;
+}
+.navbar{
+    font-family: 'Roboto Mono', monospace;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #22c1c3;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: darkred;
+}
+
+
+.grad{
+    background: rgb(253,187,45);
+    background: linear-gradient(0deg, rgba(253,187,45,1) 20%, rgba(34,193,195,1) 100%);
+}
+.page-header{
+    font-family: 'Roboto Mono', monospace;
+    background-attachment: fixed;
+    background-image: url("img/background.jpg");
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+h1{
+    color: #22c1c3;
+    font-size: 3rem;
+    text-shadow: 2px 2px #fdbb2d;
+}
+.icon{
+    margin: 5px;
+    height: 100px;
+
+}
+.shad{
+    border-radius: 5%;
+    box-shadow: 2px 2px darkred;
+}
+.scrolling-wrapper-flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+
+.cont   {
+    position : relative;
+    width  : 80%;
+    max-width: 480px;
+    margin : 20px auto;
+    padding: 2em 4em;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0px 15px 10px grey;
+    font-family: 'Roboto Mono', monospace;
+    border-width: 3px;
+}
