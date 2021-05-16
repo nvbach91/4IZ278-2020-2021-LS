@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Song;
 
 class SongsController extends Controller
 {
@@ -45,7 +46,7 @@ class SongsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Song::query()->where("id", $id)->get();
     }
 
     /**
