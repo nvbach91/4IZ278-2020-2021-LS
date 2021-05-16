@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SongsController;
+use App\Http\Controllers\ButtonsController;
+use App\Http\Controllers\AsideItemsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,44 +18,53 @@ use App\Http\Controllers\SongsController;
 */
 
 Route::get('/', function () {
-    return view('main');
-});
+    $buttonsController      = new ButtonsController;
+    $asideItemsController   = new AsideItemsController;
+
+    $buttons                = $buttonsController->getButtons();
+    $asideItems             = $asideItemsController->getAsideItems();
+
+    return view('homepage') ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);;
+    });
 
 Route::get('/dbtest', function () {
     return view('dbtest');
 });
 
 Route::get('/users', function () {
-    $usersController = new UsersController;
-    $users = $usersController->index();
+    $usersController        = new UsersController;
+    $buttonsController      = new ButtonsController;
+    $asideItemsController   = new AsideItemsController;
 
-    $asideItems = [
-        'My Profile' => '/profile',
-        'Saved Chords' => '/savedChords',
-        'Created By Me' => '/createdByMe',
-    ];
+    $users                  = $usersController->index();
+    $buttons                = $buttonsController->getButtons();
+    $asideItems             = $asideItemsController->getAsideItems();
 
-    return view('users')->with('users', $users)
-        ->with('LoggedUser', 'Logged User: Peta Default')
-        ->with('Button1', 'Sign Up')
-        ->with('Button2', 'Sign In')
-        ->with('asideItems', $asideItems);
+    return view('users')    ->with('users', $users)
+                            ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);
 });
 
 Route::get('/songs/{song_id}', function ($song_id) {
-    $asideItems = [
-        'My Profile' => '/profile',
-        'Saved Chords' => '/savedChords',
-        'Created By Me' => '/createdByMe',
-    ];
-    $songsController = new SongsController;
-    $song = $songsController->show($song_id);
-    return view('song')
-        ->with('songArray', $song)
-        ->with('LoggedUser', 'Logged User: Peta Default')
-        ->with('Button1', 'Sign Up')
-        ->with('Button2', 'Sign In')
-        ->with('asideItems', $asideItems);
+
+    $asideItemsController   = new AsideItemsController;
+    $songsController        = new SongsController;
+    $buttonsController      = new ButtonsController;
+
+    $asideItems             = $asideItemsController->getAsideItems();
+    $song                   = $songsController->show($song_id);
+    $buttons                = $buttonsController->getButtons();
+
+    return view('song')     ->with('songArray', $song)
+                            ->with('LoggedUser', 'Logged User: Peta Default')
+                            ->with('Button1', $buttons['button1'])
+                            ->with('Button2', $buttons['button2'])
+                            ->with('asideItems', $asideItems);
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');

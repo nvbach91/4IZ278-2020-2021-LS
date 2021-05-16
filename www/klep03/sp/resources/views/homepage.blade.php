@@ -139,11 +139,11 @@
 
 <body>
     <header class="gray border">
-        <div id="headerLeft" class="headerSubElement">{{LoggedUser}}</div>
+        <div id="headerLeft" class="headerSubElement">{{$LoggedUser}}</div>
         <div id="headerMid" class="headerSubElement">MySongs</div>
         <div id="headerRight" class="headerSubElement">
-            <div id="divSignup" class="active hoverable">{{Button1}}</div>
-            <div id="divLogout" class="active hoverable">{{Button2}}</div>
+            <div id="divSignup" class="active hoverable">{{$Button1}}</div>
+            <div id="divLogout" class="active hoverable">{{$Button2}}</div>
         </div>
     </header>
     <div id="mid">
