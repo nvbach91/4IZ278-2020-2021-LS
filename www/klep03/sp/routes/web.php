@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\SongsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use App\Http\Controllers\UsersController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
 
 Route::get('/dbtest', function () {
@@ -33,6 +34,22 @@ Route::get('/users', function () {
     ];
 
     return view('users')->with('users', $users)
+        ->with('LoggedUser', 'Logged User: Peta Default')
+        ->with('Button1', 'Sign Up')
+        ->with('Button2', 'Sign In')
+        ->with('asideItems', $asideItems);
+});
+
+Route::get('/songs/{song_id}', function ($song_id) {
+    $asideItems = [
+        'My Profile' => '/profile',
+        'Saved Chords' => '/savedChords',
+        'Created By Me' => '/createdByMe',
+    ];
+    $songsController = new SongsController;
+    $song = $songsController->show($song_id);
+    return view('song')
+        ->with('songArray', $song)
         ->with('LoggedUser', 'Logged User: Peta Default')
         ->with('Button1', 'Sign Up')
         ->with('Button2', 'Sign In')
