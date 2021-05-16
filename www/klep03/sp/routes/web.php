@@ -22,4 +22,21 @@ Route::get('/dbtest', function () {
     return view('dbtest');
 });
 
-Route::resource('users', 'App\Http\Controllers\UsersController');
+Route::get('/users', function () {
+    $usersController = new UsersController;
+    $users = $usersController->index();
+
+    $asideItems = [
+        'My Profile' => '/profile',
+        'Saved Chords' => '/savedChords',
+        'Created By Me' => '/createdByMe',
+    ];
+
+    return view('users')->with('users', $users)
+        ->with('LoggedUser', 'Logged User: Peta Default')
+        ->with('Button1', 'Sign Up')
+        ->with('Button2', 'Sign In')
+        ->with('asideItems', $asideItems);
+});
+
+// Route::resource('users', 'App\Http\Controllers\UsersController');
