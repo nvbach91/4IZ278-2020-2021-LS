@@ -1,0 +1,30 @@
+.nav-pills .nav-link.active {
+    background-color: rgb(235, 235, 235) !important;
+}
+
+.w-100 {
+    height: 30vh!important;
+    object-fit: cover;
+}
+
+.badge {
+    background-color: rgb(110, 110, 110) !important;
+}
+
+.card-img-top {
+    height: 200px !important;
+    object-fit: contain;
+    padding: 20px;
+}
+
+.registration {
+    max-width: 500px;
+}
+
+.login {
+    max-width: 500px;
+}
+
+.contact {
+    max-width: 800px;
+}
