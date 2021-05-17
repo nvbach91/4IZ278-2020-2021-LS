@@ -1,0 +1,82 @@
+parameters:
+    leanmapper:
+        host: localhost
+        username: root
+        password: ''
+        driver: mysqli
+        database: cechie_dubec
+    mailerData:
+        username: cechiedubecapp@gmail.com
+        password: inlocal
+        host: smtp.gmail.com
+        secure: tls
+        smtp: true
+        port: 587
+
+
+application:
+    errorPresenter: Error
+    mapping:
+        *: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+di:
+    export:
+        parameters: no
+        tags: no
+
+
+services:
+    router: App\Router\RouterFactory::createRouter
+
+    db:
+        factory: LeanMapper\Connection(%leanmapper%)
+        setup:
+            - @db.panel::register(@db)
+
+    db.panel:
+        class: Dibi\Bridges\Tracy\Panel
+
+    - Etyka\Mapper\Mapper
+    - LeanMapper\DefaultEntityFactory
+
+    - App\Domain\Repository\MemberRepository
+    - App\Components\Grid\MemberGridBuilder
+    - App\Components\Grid\TeamGridBuilder
+    - App\Domain\Repository\TeamRepository
+    - App\Domain\Repository\PlayerRepository
+    - App\Components\Grid\PlayerGridBuilder
+    - App\Components\Grid\ArticleGridBuilder
+    - App\Domain\Repository\ArticleRepository
+    - App\Domain\Repository\StaffRepository
+    - App\Components\Grid\StaffGridBuilder
+    - App\Domain\Repository\EmailTemplateRepository
+    - App\Components\Grid\EmailTemplateGridBuilder
+
+
+    - App\Components\Form\Member\MemberFormFactory
+    - App\Components\Form\Member\MemberFormProcessor
+    - App\Components\Form\Team\TeamFormFactory
+    - App\Components\Form\Team\TeamFormProcessor
+    - App\Components\Form\Article\ArticleUpsertFormFactory
+    - App\Components\Form\Article\ArticleUpsertFormProcessor
+    - App\Components\Form\Staff\StaffUpsertFormFactory
+    - App\Components\Form\Staff\StaffUpsertFormProcessor
+    - App\Components\Form\Email\EmailTemplateUpsertFormFactory
+    - App\Components\Form\Email\EmailTemplateUpsertFormProcessor
+    - App\Components\Form\Email\SendEmailFormFactory
+    - App\Components\Form\Email\SendEmailFormProcessor
+
+    - App\Service\Import\MemberXlsImportService
+    - App\Service\Import\PlayerXlsImportService
+
+    - App\Handler\PlayerIsActiveToggleHandler
+    - App\Handler\AssignPlayersToTeamsHandler
+
+    - App\Service\Email\EmailService(%mailerData%)
+
+    - App\Service\Assembler\TeamAssembler
