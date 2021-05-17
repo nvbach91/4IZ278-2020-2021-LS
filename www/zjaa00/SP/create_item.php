@@ -1,6 +1,8 @@
 <?php
   require "./partials/header.php";
   require "./_inc/require_admin.php";
+
+  $drinks_images = array_slice(scandir("./img/items/"), 2);
 ?>
 
 <body id="admin_page">
@@ -8,7 +10,7 @@
 <h1>Vytvoriť drink</h1>
 
 <?php
-  if (!empty($_POST)):
+  if (@$_POST):
     
     $select = $connect->prepare("
       SELECT * from drinks WHERE name = :drink_name;
@@ -22,18 +24,20 @@
       $drink_name = trim($_POST['drink_name']);
       $drink_volume = round((float) $_POST['drink_volume'], 2);
       $price = round((float) $_POST['price'], 2);
+      $image = trim($_POST['image']);
       $alcoholic = isset($_POST['alcoholic']) ? 1 : (int) 0;
       $inflammatory = isset($_POST['inflammatory']) ? 1 : (int) 0;
       $deadly = isset($_POST['deadly']) ? 1 : (int) 0;
       
       $insert = $connect->prepare("
-        INSERT INTO drinks (name, volume, price, alcoholic, inflammatory, deadly, available)
-        VALUES (:drink_name, :drink_volume, :price, :alcoholic, :inflammatory, :deadly, 1);
+        INSERT INTO drinks (name, volume, price, image, alcoholic, inflammatory, deadly, available)
+        VALUES (:drink_name, :drink_volume, :price, :image, :alcoholic, :inflammatory, :deadly, 1);
       ");
       $insert->execute([
         ":drink_name" => $drink_name,
         ":drink_volume" => $drink_volume,
         ":price" => $price,
+        ":image" => $image,
         ":alcoholic" => $alcoholic,
         ":inflammatory" => $inflammatory,
         ":deadly" => $deadly,
@@ -75,6 +79,13 @@
       <input name="price" required value="<?= isset($_POST['price']) ? $_POST['price'] : "" ?>" <?= isset($drink_id) ? "disabled" : "" ?> type="number" min="0.00" step="any" class="form-control" placeholder="Cena drinku" aria-label="Cena drinku" aria-describedby="button-addon2">
       <span class="input-group-text">&euro;</span>
     </div>
+
+    <label for="image" class="form-label">Fotka</label>
+    <select name="image" class="form-select mb-3" aria-label="Meno fotky drinku">
+      <?php foreach($drinks_images as $image): ?>
+        <option <?= ($image == @$_POST['image']) ? "selected" : "" ?>><?= $image ?></option>
+      <?php endforeach; ?>
+    </select>
 
     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
       <input name="alcoholic" <?= @$_POST['alcoholic'] ? "checked" : "" ?> <?= isset($drink_id) ? "disabled" : "" ?> type="checkbox" class="btn-check" id="alcoholic" autocomplete="off">

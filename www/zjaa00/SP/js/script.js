@@ -168,16 +168,17 @@ $(function () {
 
   //filter - slide-down/-up animation
   $('.logo').on("click", function() {
+    var speed = 50;
     //slide-down
-    goUp("#menu_slider", "div", 300, 200, function() {
-      goDown("#filter_slider", "div", 300, 200);
+    goUp("#menu_slider", "div", speed, speed, function() {
+      goDown("#filter_slider", "div", speed, speed);
     });
     if ($("#menu_slider div").css("opacity") == 0 || $("#menu_slider").length == 0) {
-      goDown("#filter_slider", "div", 300, 200);
+      goDown("#filter_slider", "div", speed, speed);
     }
     
     //slide-up
-    goUp("#filter_slider", "div", 300, 200);
+    goUp("#filter_slider", "div", speed, speed);
   });
 
   //OK button
@@ -366,16 +367,18 @@ $(function () {
   //toggle menu slideru po kliknutí na menu ikonku
   $('#menu').on("click", function(e) {
     e.preventDefault();
+    var speed = 50;
+
     //slide-down
-    goUp("#filter_slider", "div", 300, 200, function() {
-      goDown("#menu_slider", "div", 300, 200);
+    goUp("#filter_slider", "div", speed, speed, function() {
+      goDown("#menu_slider", "div", speed, speed);
     });
     if ($("#filter_slider div").css("opacity") == 0) {
-      goDown("#menu_slider", "div", 300, 200);
+      goDown("#menu_slider", "div", speed, speed);
     }
 
     //slide-up
-    goUp("#menu_slider", "div", 300, 200);
+    goUp("#menu_slider", "div", speed, speed);
 
   });
   
@@ -463,9 +466,10 @@ $(function () {
       areItemsLeft = 1;
 
   //pokiaľ zoskrolujeme úplne dole, nie sú ešte načítané všetky objednávky a počet objednávok nie je 0 tak sa načítajú ďalšie objednávky z databáze
-  $(document).scroll(function() {
-    if ($(document).scrollTop() == $(document).height() - $(window).height() && areItemsLeft != 0 && offset) {
-
+  $(window).scroll(function() {
+    var scrollHeight = $(document).height() - 20;
+    var scrollPosition = $(window).height() + $(window).scrollTop();
+    if ((scrollHeight - scrollPosition) <= 0 && areItemsLeft != 0 && offset != 0) {
       //zobraz spinner
       spinnerClone = spinner.clone();
       box.append(spinner);
