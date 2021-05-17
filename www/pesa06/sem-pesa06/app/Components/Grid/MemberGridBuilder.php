@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Grid;
 
 
-use App\Domain\Entity\MemberEntity;
-use App\Domain\Repository\MemberRepository;
+use Domain\Entity\MemberEntity;
+use Domain\Repository\MemberRepository;
 use Dibi\Row;
 use Grido\Components\Filters\Filter;
 use Grido\Customization;
@@ -74,7 +74,7 @@ class MemberGridBuilder
                 return Html::el('a')
                     ->setAttribute('class', 'btn btn-outline-primary')
                     ->setText('Upravit clena')
-                    ->href($this->linkGenerator->link('Member:upsert', ['memberId' => $row['id']]));
+                    ->href($this->linkGenerator->link('Backoffice:Member:upsert', ['memberId' => $row['id']]));
             });
     }
 

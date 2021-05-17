@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Form\Article;
 
 
-use App\Domain\Entity\ArticleEntity;
-use App\Domain\Repository\ArticleRepository;
+use Domain\Entity\ArticleEntity;
+use Domain\Repository\ArticleRepository;
 use Nette\Application\UI\Form;
 
 class ArticleUpsertFormProcessor

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Form\Team;
 
 
-use App\Domain\Entity\TeamEntity;
-use App\Domain\Repository\TeamRepository;
+use Domain\Entity\TeamEntity;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 
 class TeamFormProcessor

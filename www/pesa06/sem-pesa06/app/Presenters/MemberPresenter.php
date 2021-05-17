@@ -6,9 +6,9 @@ namespace App\Presenters;
 
 use App\Components\Form\Member\MemberFormFactory;
 use App\Components\Grid\MemberGridBuilder;
-use App\Domain\Repository\MemberRepository;
-use App\Domain\Repository\PlayerRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\MemberRepository;
+use Domain\Repository\PlayerRepository;
+use Domain\Repository\TeamRepository;
 use App\Service\Import\MemberXlsImportService;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI\Form;

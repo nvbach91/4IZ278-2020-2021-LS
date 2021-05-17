@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Form\Staff;
 
 
-use App\Domain\Entity\StaffEntity;
-use App\Domain\Repository\StaffRepository;
+use Domain\Entity\StaffEntity;
+use Domain\Repository\StaffRepository;
 use Nette\Application\UI\Form;
 
 class StaffUpsertFormProcessor
@@ -25,9 +25,7 @@ class StaffUpsertFormProcessor
         $staff = $oldStaff === null ? new StaffEntity() : $oldStaff;
         $staff->setFirstName($values[StaffUpsertFormFactory::FIRST_NAME]);
         $staff->setLastName($values[StaffUpsertFormFactory::LAST_NAME]);
-        $staff->setPosition($values[StaffUpsertFormFactory::POSITION]);
         $staff->setMemberId(empty($values[StaffUpsertFormFactory::MEMBER_ID]) ? null : (int)$values[StaffUpsertFormFactory::MEMBER_ID]);
-        $staff->setTeamId(empty($values[StaffUpsertFormFactory::TEAM_ID]) ? null : (int)$values[StaffUpsertFormFactory::TEAM_ID]);
         if ($oldStaff === null) {
             $staff->setCreatedAt(new \DateTime());
             $staff->setCreatedBy('admin');

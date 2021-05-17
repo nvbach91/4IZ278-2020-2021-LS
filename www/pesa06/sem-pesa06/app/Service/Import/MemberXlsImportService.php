@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Service\Import;
 
 
-use App\Domain\Entity\MemberEntity;
-use App\Domain\Repository\MemberRepository;
+use Domain\Entity\MemberEntity;
+use Domain\Repository\MemberRepository;
 use Nette\Utils\FileSystem;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 

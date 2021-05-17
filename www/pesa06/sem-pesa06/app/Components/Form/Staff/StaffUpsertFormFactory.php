@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Components\Form\Staff;
 
 
-use App\Domain\Entity\StaffEntity;
+use Domain\Entity\StaffEntity;
 use App\Domain\Enum\StaffTypeEnum;
-use App\Domain\Repository\MemberRepository;
-use App\Domain\Repository\StaffRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\MemberRepository;
+use Domain\Repository\StaffRepository;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
 
@@ -17,7 +17,6 @@ class StaffUpsertFormFactory
     public const ID = 'id';
     public const FIRST_NAME = 'firstName';
     public const LAST_NAME = 'lastName';
-    public const POSITION = 'position';
     public const MEMBER_ID = 'memberId';
     public const FACR_ID = 'facrId';
 
@@ -60,9 +59,6 @@ class StaffUpsertFormFactory
             ->setDefaultValue($staff === null ? null : $staff->getFirstName());
         $form->addText(self::LAST_NAME, 'Příjmení')
             ->setDefaultValue($staff === null ? null : $staff->getLastName());
-        $form->addSelect(self::POSITION, 'Pozice')
-            ->setItems(StaffTypeEnum::getValues(), false)
-            ->setDefaultValue($staff === null ? null : $staff->getPosition());
         $form->addText(self::FACR_ID, '')
             ->setDefaultValue($member === null ? null : $member->getFacrId());
         $form->addSubmit('submit', 'Odeslat');

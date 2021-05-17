@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use App\Components\Form\Staff\StaffUpsertFormFactory;
 use App\Components\Grid\StaffGridBuilder;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;
 

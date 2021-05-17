@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Components\Form\Team;
 
 
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
 

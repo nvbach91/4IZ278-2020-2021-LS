@@ -1,0 +1,83 @@
+{block content}
+    <br>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3><b>{$team['name']}</b></h3>
+            {if empty($team['ageUnder']) === false}<small>U{$team['ageUnder']}</small>
+                {/if}</p>
+        </div>
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        Soutěž
+                    </div>
+                    <div class="col-md-4">
+                        {$team['competition']}
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            Mládež
+                        </div>
+                        <div class="col-md-4">
+                            {if $team['isYouth'] === true}
+                                ANO
+                            {else}
+                                NE
+                            {/if}
+                        </div>
+                    </div>
+            <br>
+            <br>
+            <h4>Trenéři a vedoucí</h4>
+                    <table class="table table-striped" width="45%">
+                        <thead>
+                        <tr style="text-align: center">
+                            <th width="30%">Jméno</th>
+                            <th width="20%">Fačr ID</th>
+                            <th width="30%">Email</th>
+                            <th width="20%">Pozice</th>
+                        </tr>
+                        </thead>
+                        <tbody style="text-align: center">
+                        {foreach $team['staff'] as $staff}
+                            <tr>
+                                <td>{$staff['name']}</td>
+                                <td>{$staff['facrId']}</td>
+                                <td>{if $staff['email'] !== null}
+                                        {$staff['email']}
+                                    {else}
+                                        Email není vyplněn.
+                                    {/if}
+                                </td>
+                                <td>{$staff['position']}</td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+            <br>
+            <br>
+            <h4>Hráči</h4>
+                <table class="table table-striped" width="100%">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th width="30%">Jméno</th>
+                            <th width="20%">Fačr ID</th>
+                            <th width="20%">Rok narození</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center">
+                    {foreach $team['players'] as $player}
+                        <tr>
+                            <td>{$player['name']}</td>
+                            <td>{$player['facrId']}</td>
+                            <td>{$player['yearOfBirth']}</td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+{/block}

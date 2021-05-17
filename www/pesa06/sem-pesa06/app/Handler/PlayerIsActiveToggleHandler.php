@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Handler;
 
 
-use App\Domain\Repository\PlayerRepository;
+use Domain\Repository\PlayerRepository;
 use App\Handler\Exception\PlayerIsActiveToggleHandlerException;
 
 class PlayerIsActiveToggleHandler

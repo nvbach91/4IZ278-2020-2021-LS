@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Components\Form\Member;
 
 
-use App\Domain\Repository\MemberRepository;
+use Domain\Repository\MemberRepository;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
 

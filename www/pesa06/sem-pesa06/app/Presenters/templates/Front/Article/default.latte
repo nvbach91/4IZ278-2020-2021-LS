@@ -1,0 +1,23 @@
+{block content}
+<br>
+    <div class="container container-fluid col-md-12">
+        <div class="row">
+            <div n:foreach="$articles as $article" class="card col-md-5 mr-4 ml-lg-5">
+                <div class="card-header">{$article['title']}<span class="float-right" n:if="$article['teamId'] !== null">{$article['teamName']}</span></div>
+                <div class="card-body">
+                    {if strlen($article['content']) > 250}
+                        {mb_substr($article['content'], 0, 250)|noescape} ...
+                    {else}
+                        {$article['content']|noescape}
+                    {/if}
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-2">{$article['created']}</div>
+                        <div class="col-md-6">Autor: {$article['author']}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

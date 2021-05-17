@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use App\Components\Form\Team\TeamFormFactory;
 use App\Components\Grid\TeamGridBuilder;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use App\Service\Assembler\TeamAssembler;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;

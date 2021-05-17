@@ -5,7 +5,7 @@ namespace App\Service\Email;
 
 
 use App\Domain\Enum\EmailRecipientEnum;
-use App\Domain\Repository\MemberRepository;
+use Domain\Repository\MemberRepository;
 use App\Service\Email\Exception\EmailServiceException;
 use Nette\Mail\Message;
 use Nette\Mail\SmtpMailer;

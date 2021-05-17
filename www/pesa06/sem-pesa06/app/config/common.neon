@@ -12,12 +12,15 @@ parameters:
         secure: tls
         smtp: true
         port: 587
+    commands:
+        - App\Service\Console\CreateUserCommand
 
 
 application:
     errorPresenter: Error
     mapping:
-        *: App\*Module\Presenters\*Presenter
+        Backoffice: App\Presenters\*Presenter
+        Front: App\Presenters\Front\*Presenter
 
 
 session:
@@ -28,7 +31,6 @@ di:
     export:
         parameters: no
         tags: no
-
 
 services:
     router: App\Router\RouterFactory::createRouter
@@ -41,21 +43,23 @@ services:
     db.panel:
         class: Dibi\Bridges\Tracy\Panel
 
+
     - Etyka\Mapper\Mapper
     - LeanMapper\DefaultEntityFactory
 
-    - App\Domain\Repository\MemberRepository
+    - Domain\Repository\MemberRepository
     - App\Components\Grid\MemberGridBuilder
     - App\Components\Grid\TeamGridBuilder
-    - App\Domain\Repository\TeamRepository
-    - App\Domain\Repository\PlayerRepository
+    - Domain\Repository\TeamRepository
+    - Domain\Repository\PlayerRepository
     - App\Components\Grid\PlayerGridBuilder
     - App\Components\Grid\ArticleGridBuilder
-    - App\Domain\Repository\ArticleRepository
-    - App\Domain\Repository\StaffRepository
+    - Domain\Repository\ArticleRepository
+    - Domain\Repository\StaffRepository
     - App\Components\Grid\StaffGridBuilder
-    - App\Domain\Repository\EmailTemplateRepository
+    - Domain\Repository\EmailTemplateRepository
     - App\Components\Grid\EmailTemplateGridBuilder
+    - Domain\Repository\AccountRepository
 
 
     - App\Components\Form\Member\MemberFormFactory
@@ -70,6 +74,8 @@ services:
     - App\Components\Form\Email\EmailTemplateUpsertFormProcessor
     - App\Components\Form\Email\SendEmailFormFactory
     - App\Components\Form\Email\SendEmailFormProcessor
+    - App\Components\Form\Login\LoginFormFactory
+    - App\Components\Form\Login\LoginFormProcessor
 
     - App\Service\Import\MemberXlsImportService
     - App\Service\Import\PlayerXlsImportService
@@ -80,3 +86,6 @@ services:
     - App\Service\Email\EmailService(%mailerData%)
 
     - App\Service\Assembler\TeamAssembler
+    - App\Service\Assembler\Article\ArticleAssembler
+
+    - App\Service\Authenticator\AuthenticatorService([%fakeAccountUsername%, %fakeAccountPassword%])

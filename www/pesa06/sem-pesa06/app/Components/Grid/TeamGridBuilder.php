@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Components\Grid;
 
 
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use Grido\Components\Filters\Filter;
 use Grido\Customization;
 use Grido\Grid;
@@ -61,7 +61,7 @@ class TeamGridBuilder
         ->setCustomRender(function (Row $row) {
             return Html::el('a')
                 ->setText($row['name'])
-                ->href($this->linkGenerator->link('Team:detail', ['teamId' => $row['id']]));
+                ->href($this->linkGenerator->link('Backoffice:Team:detail', ['teamId' => $row['id']]));
         });
         $grid->addColumnText(self::COMPETITION, 'Soutěž')
             ->setSortable();
@@ -84,7 +84,7 @@ class TeamGridBuilder
                 return Html::el('a')
                     ->setAttribute('class', 'btn btn-outline-primary')
                     ->setText('Upravit tým')
-                    ->href($this->linkGenerator->link('Team:upsert', ['teamId' => $row['id']]));
+                    ->href($this->linkGenerator->link('Backoffice:Team:upsert', ['teamId' => $row['id']]));
             });
     }
 

@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use App\Components\Form\Article\ArticleUpsertFormFactory;
 use App\Components\Grid\ArticleGridBuilder;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;
 

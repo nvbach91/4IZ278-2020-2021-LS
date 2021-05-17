@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Repository;
+namespace Domain\Repository;
 
 
 use Etyka\Repository\Repository;

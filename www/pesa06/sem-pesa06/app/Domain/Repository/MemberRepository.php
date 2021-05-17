@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Repository;
+namespace Domain\Repository;
 
 
-use App\Domain\Entity\MemberEntity;
+use Domain\Entity\MemberEntity;
 use App\Domain\Enum\StaffTypeEnum;
 use Etyka\Repository\Repository;
 

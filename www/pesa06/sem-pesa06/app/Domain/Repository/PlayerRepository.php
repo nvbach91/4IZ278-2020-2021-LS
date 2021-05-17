@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Repository;
+namespace Domain\Repository;
 
 
-use App\Domain\Entity\PlayerEntity;
-use App\Domain\Entity\TeamEntity;
+use Domain\Entity\PlayerEntity;
+use Domain\Entity\TeamEntity;
 use Dibi\Fluent;
 use Etyka\Repository\Repository;
 

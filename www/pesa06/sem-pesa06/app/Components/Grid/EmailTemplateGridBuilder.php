@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Components\Grid;
 
 
-use App\Domain\Repository\EmailTemplateRepository;
+use Domain\Repository\EmailTemplateRepository;
 use Dibi\Row;
 use Grido\Components\Filters\Filter;
 use Grido\Customization;
@@ -67,11 +67,11 @@ class EmailTemplateGridBuilder
                 ->addHtml(Html::el('a')
                     ->setAttribute('class', 'btn btn-outline-primary')
                     ->setText('Upravit šablonu')
-                    ->href($this->linkGenerator->link('EmailTemplate:upsert', ['templateId' => $row['id']])))
+                    ->href($this->linkGenerator->link('Backoffice:EmailTemplate:upsert', ['templateId' => $row['id']])))
                 ->addHtml(Html::el('a')
                     ->setAttribute('class', 'btn btn-outline-success')
                     ->setText('Poslat email')
-                    ->href($this->linkGenerator->link('EmailTemplate:send', ['templateId' => $row['id']])));
+                    ->href($this->linkGenerator->link('Backoffice:EmailTemplate:send', ['templateId' => $row['id']])));
         });
     }
 

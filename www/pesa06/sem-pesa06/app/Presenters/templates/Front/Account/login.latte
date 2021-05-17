@@ -1,0 +1,33 @@
+{block content}
+    <div class="container align-content-center">
+        <div class="card">
+            <div class="card-header">
+                Přihlášení
+            </div>
+            <div class="card-body">
+                <form n:name="loginForm">
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            {label username}
+                        </div>
+                        <div class="col-md-8">
+                            <input n:name="username" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            {label password}
+                        </div>
+                        <div class="col-md-8">
+                            <input type="password" n:name="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" n:name="submit" class="btn btn-outline-primary">Odeslat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{/block}

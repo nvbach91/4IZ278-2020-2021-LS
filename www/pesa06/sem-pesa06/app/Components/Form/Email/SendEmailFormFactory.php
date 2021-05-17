@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Components\Form\Email;
 
 
-use App\Domain\Entity\EmailTemplateEntity;
+use Domain\Entity\EmailTemplateEntity;
 use App\Domain\Enum\EmailRecipientEnum;
-use App\Domain\Repository\EmailTemplateRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\EmailTemplateRepository;
+use Domain\Repository\TeamRepository;
 use App\Service\Email\Exception\EmailServiceException;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;

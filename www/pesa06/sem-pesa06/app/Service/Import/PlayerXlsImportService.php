@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Service\Import;
 
 
-use App\Domain\Entity\MemberEntity;
-use App\Domain\Entity\PlayerEntity;
-use App\Domain\Repository\MemberRepository;
-use App\Domain\Repository\PlayerRepository;
+use Domain\Entity\MemberEntity;
+use Domain\Entity\PlayerEntity;
+use Domain\Repository\MemberRepository;
+use Domain\Repository\PlayerRepository;
 use Nette\Utils\FileSystem;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 

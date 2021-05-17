@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Grid;
 
 
-use App\Domain\Repository\ArticleRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\ArticleRepository;
+use Domain\Repository\TeamRepository;
 use Dibi\Row;
 use Grido\Components\Filters\Filter;
 use Grido\Customization;
@@ -63,7 +63,7 @@ class ArticleGridBuilder
             ->setCustomRender(function (Row $row) {
                 return Html::el('a')
                     ->setText($row['title'])
-                    ->href($this->linkGenerator->link('Article:upsert', ['articleId' => $row['id']]));
+                    ->href($this->linkGenerator->link('Backoffice:Article:upsert', ['articleId' => $row['id']]));
             });
         $grid->addColumnText(self::TEAM_ID, 'Tým')
             ->setSortable()
@@ -74,7 +74,7 @@ class ArticleGridBuilder
                 }
             return Html::el('a')
                 ->setText($this->teamRepository->findById($row['team_id'])->getName())
-                ->href($this->linkGenerator->link('Team:upsert', ['teamId' => $row['team_id']]));
+                ->href($this->linkGenerator->link('Backoffice:Team:upsert', ['teamId' => $row['team_id']]));
             });
         $grid->addColumnText(self::CREATED_AT, 'Datum vytvoření')
             ->setSortable()
@@ -87,7 +87,7 @@ class ArticleGridBuilder
                 return Html::el('a')
                     ->setAttribute('class', 'btn btn-outline-primary')
                     ->setText('Upravit článek')
-                    ->href($this->linkGenerator->link('Article:upsert', ['articleId' => $row['id']]));
+                    ->href($this->linkGenerator->link('Backoffice:Article:upsert', ['articleId' => $row['id']]));
             });
     }
 

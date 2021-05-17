@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Entity;
+namespace Domain\Entity;
 
 
 use DateTime;
@@ -13,8 +13,6 @@ class StaffEntity extends Entity
     public const FIRST_NAME = 'first_name';
     public const LAST_NAME = 'last_name';
     public const MEMBER_ID = 'member_id';
-    public const POSITION = 'position';
-    public const TEAM_ID = 'team_id';
     public const CREATED_AT = 'created_at';
     public const CREATED_BY = 'created_by';
     public const MODIFIED_AT = 'modified_at';
@@ -58,26 +56,6 @@ class StaffEntity extends Entity
     public function setMemberId(?int $memberId): void
     {
         $this->row->{self::MEMBER_ID} = $memberId;
-    }
-
-    public function getPosition(): string
-    {
-        return $this->row->{self::POSITION};
-    }
-
-    public function setPosition(string $position): void
-    {
-        $this->row->{self::POSITION} = $position;
-    }
-
-    public function getTeamId(): ?int
-    {
-        return $this->row->{self::TEAM_ID};
-    }
-
-    public function setTeamId(?int $teamId): void
-    {
-        $this->row->{self::TEAM_ID} = $teamId;
     }
 
     public function getCreatedAt(): DateTime

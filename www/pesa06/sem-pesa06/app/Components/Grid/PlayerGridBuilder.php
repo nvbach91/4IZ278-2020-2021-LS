@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Grid;
 
 
-use App\Domain\Repository\PlayerRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\PlayerRepository;
+use Domain\Repository\TeamRepository;
 use App\Handler\PlayerIsActiveToggleHandler;
 use Dibi\Fluent;
 use Dibi\Row;
@@ -89,7 +89,7 @@ class PlayerGridBuilder
                 }
                 return Html::el('a')
                     ->setText($row['team_name'])
-                    ->href($this->linkGenerator->link('Team:detail', ['teamId' => $row['team_id']]));
+                    ->href($this->linkGenerator->link('Backoffice:Team:detail', ['teamId' => $row['team_id']]));
             });
         $grid->addColumnText(self::YEAR_OF_BIRTH, 'Rok narození')
             ->setSortable();
@@ -109,11 +109,11 @@ class PlayerGridBuilder
                     ->addHtml(Html::el('a')
                         ->setAttribute('class', $row['is_active'] ? 'btn btn-outline-danger' : 'btn btn-outline-success')
                         ->setText($row['is_active'] ? 'Deaktivovat' : 'Aktivovat')
-                        ->href($this->linkGenerator->link('Player:togglePlayerIsActive', ['playerId' => $row['id']])))
+                        ->href($this->linkGenerator->link('Backoffice:Player:togglePlayerIsActive', ['playerId' => $row['id']])))
                     ->addHtml(Html::el('a')
                         ->setAttribute('class', 'btn btn-outline-primary')
                         ->setText('Upravit clena')
-                        ->href($this->linkGenerator->link('Member:upsert', ['memberId' => $row['member_id']])));
+                        ->href($this->linkGenerator->link('Backoffice:Member:upsert', ['memberId' => $row['member_id']])));
             });
     }
 

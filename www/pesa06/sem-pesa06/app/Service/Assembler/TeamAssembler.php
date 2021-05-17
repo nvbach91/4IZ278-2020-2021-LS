@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Service\Assembler;
 
 
-use App\Domain\Entity\PlayerEntity;
-use App\Domain\Entity\StaffEntity;
-use App\Domain\Repository\MemberRepository;
-use App\Domain\Repository\PlayerRepository;
-use App\Domain\Repository\StaffRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Entity\PlayerEntity;
+use Domain\Entity\StaffEntity;
+use Domain\Repository\MemberRepository;
+use Domain\Repository\PlayerRepository;
+use Domain\Repository\StaffRepository;
+use Domain\Repository\TeamRepository;
 use App\Service\Assembler\ValueObject\Player;
 use App\Service\Assembler\ValueObject\Staff;
 use App\Service\Assembler\ValueObject\Team;

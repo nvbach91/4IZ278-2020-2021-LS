@@ -7,7 +7,7 @@ namespace App\Presenters;
 use App\Components\Form\Email\EmailTemplateUpsertFormFactory;
 use App\Components\Form\Email\SendEmailFormFactory;
 use App\Components\Grid\EmailTemplateGridBuilder;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IComponent;
 

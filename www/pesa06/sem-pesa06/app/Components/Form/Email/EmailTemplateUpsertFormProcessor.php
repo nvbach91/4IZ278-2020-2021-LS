@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Components\Form\Email;
 
 
-use App\Domain\Entity\EmailTemplateEntity;
-use App\Domain\Repository\EmailTemplateRepository;
+use Domain\Entity\EmailTemplateEntity;
+use Domain\Repository\EmailTemplateRepository;
 use Nette\Application\UI\Form;
 
 class EmailTemplateUpsertFormProcessor

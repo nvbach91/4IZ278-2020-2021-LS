@@ -5,7 +5,7 @@ namespace App\Presenters;
 
 
 use App\Components\Grid\PlayerGridBuilder;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\TeamRepository;
 use App\Handler\AssignPlayersToTeamsHandler;
 use App\Handler\Exception\PlayerIsActiveToggleHandlerException;
 use App\Handler\PlayerIsActiveToggleHandler;
@@ -26,7 +26,7 @@ class PlayerPresenter extends LayoutPresenter
         AssignPlayersToTeamsHandler $assignPlayersHandler,
         TeamRepository $teamRepository
     ) {
-        parent::__construct($teamRepository);
+        parent::__construct();
         $this->playerGridBuilder = $playerGridBuilder;
         $this->playerXlsImportService = $playerXlsImportService;
         $this->activeToggleHandler = $activeToggleHandler;

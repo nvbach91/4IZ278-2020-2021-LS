@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
-use App\Domain\Repository\MemberRepository;
+use Domain\Repository\MemberRepository;
 use Nette;
 
 

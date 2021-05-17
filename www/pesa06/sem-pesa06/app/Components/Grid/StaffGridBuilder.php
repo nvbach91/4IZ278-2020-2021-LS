@@ -5,8 +5,7 @@ namespace App\Components\Grid;
 
 
 use App\Domain\Enum\StaffTypeEnum;
-use App\Domain\Repository\StaffRepository;
-use App\Domain\Repository\TeamRepository;
+use Domain\Repository\StaffRepository;
 use Dibi\Fluent;
 use Dibi\Row;
 use Grido\Components\Filters\Filter;
@@ -20,23 +19,18 @@ class StaffGridBuilder
 {
     private const FIRST_NAME = 'first_name';
     private const LAST_NAME = 'last_name';
-    private const TEAM_NAME = 'team_name';
-    private const POSITION = 'position';
     private const IS_MEMBER = 'is_member';
     private const ACTION = 'action';
 
     private LinkGenerator $linkGenerator;
     private StaffRepository $staffRepository;
-    private TeamRepository $teamRepository;
 
     public function __construct(
         LinkGenerator $linkGenerator,
-        StaffRepository $staffRepository,
-        TeamRepository $teamRepository
+        StaffRepository $staffRepository
     ) {
         $this->linkGenerator = $linkGenerator;
         $this->staffRepository = $staffRepository;
-        $this->teamRepository = $teamRepository;
     }
 
     public function create(): IComponent
@@ -67,15 +61,6 @@ class StaffGridBuilder
             ->setSortable();
         $grid->addColumnText(self::LAST_NAME, 'Příjmení')
             ->setSortable();
-        $grid->addColumnText(self::POSITION, 'Pozice')
-            ->setSortable();
-        $grid->addColumnText(self::TEAM_NAME, 'Tým')
-            ->setSortable()
-            ->setCustomRender(function (Row $row) {
-                return Html::el('a')
-                    ->setText($row['team_name'])
-                    ->href($this->linkGenerator->link('Team:upsert', ['teamId' => $row['team_id']]));
-            });
         $grid->addColumnText(self::IS_MEMBER, 'Členem')
             ->setSortable()
             ->setCustomRender(function (Row $row) {
@@ -95,12 +80,12 @@ class StaffGridBuilder
                     ->addHtml(Html::el('a')
                         ->setAttribute('class', 'btn btn-outline-primary')
                         ->setText('Upravit zaměstnance')
-                        ->href($this->linkGenerator->link('Staff:upsert', ['staffId' => $row['id']])));
+                        ->href($this->linkGenerator->link('Backoffice:Staff:upsert', ['staffId' => $row['id']])));
                 if ($row['member_id'] !== null) {
                     $div->addHtml(Html::el('a')
                         ->setAttribute('class', 'btn btn-outline-secondary')
                         ->setText('Upravit clena')
-                        ->href($this->linkGenerator->link('Member:upsert', ['memberId' => $row['member_id']])));
+                        ->href($this->linkGenerator->link('Backoffice:Member:upsert', ['memberId' => $row['member_id']])));
                 }
                 return $div;
             });
@@ -110,11 +95,6 @@ class StaffGridBuilder
     {
         $grid->addFilterText(self::FIRST_NAME, '');
         $grid->addFilterText(self::LAST_NAME, '');
-        $grid->addFilterSelect(self::POSITION, '', ['' => '---'] + StaffTypeEnum::getValues());
-        $grid->addFilterSelect(self::TEAM_NAME, '', ['' => '---'] + $this->teamRepository->fetchPairs('id', 'name'))
-        ->setWhere(function (int $value, Fluent $fluent) {
-            return $fluent->where('s.team_id = %i', $value);
-        });
         $grid->addFilterSelect(self::IS_MEMBER, '', ['' => '---', true => 'ANO', false => 'NE'])
             ->setWhere(function ($value, Fluent $fluent) {
                 if ($value === true) {
