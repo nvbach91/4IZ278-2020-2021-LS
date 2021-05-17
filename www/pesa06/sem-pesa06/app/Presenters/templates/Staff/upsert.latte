@@ -1,0 +1,74 @@
+{block content}
+<div class="container align-content-center">
+    <div class="card">
+        <div class="card-header">
+            Editace zaměstnance
+        </div>
+        <div class="card-body">
+            <form n:name="staffUpsertForm">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label firstName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="firstName" class="form-control" id="firstName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label lastName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="lastName" class="form-control" id="lastName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label position}
+                    </div>
+                    <div class="col-md-6">
+                        <select n:name="position" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label>FAČR ID</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input n:name="facrId" disabled class="form-control" id="facrId">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-secondary" onclick="suggest()">Hledat dle jména</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label teamId}
+                    </div>
+                    <div class="col-md-6">
+                        <select n:name="teamId" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" n:name="submit" class="btn btn-outline-info">Odeslat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    function suggest() {
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        fetch('http://localhost:800/cechie-dubec/www/member/suggest-member?firstName=' + firstName + '&lastName=' + lastName).then(res => res.json()).then(response => {
+            if (response.error === true) {
+                document.getElementById('facrId').value = 'Nenalezeno!';
+                document.getElementById('memberId').value = null;
+                return;
+            }
+            document.getElementById('facrId').value = response.facrId;
+            document.getElementById('memberId').value = response.memberId;
+        })
+    }
+</script>

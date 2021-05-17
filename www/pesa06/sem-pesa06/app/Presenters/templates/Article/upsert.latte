@@ -1,0 +1,47 @@
+{block content}
+<div class="container align-content-center">
+    <div class="card">
+        <div class="card-header">
+            Editace článku
+        </div>
+        <div class="card-body">
+            <form n:name="articleUpsertForm">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        {label title}
+                    </div>
+                    <div class="col-md-8">
+                        <input n:name="title" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        {label team_id}
+                    </div>
+                    <div class="col-md-8">
+                        <select n:name="team_id" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        {label value}
+                    </div>
+                    <div class="col-md-8">
+                        <textarea n:name="value" class="form-control" id="wysiwyg" rows="25"></textarea>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" n:name="submit" class="btn btn-outline-primary">Odeslat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.tiny.cloud/1/b92cf2tp8bocq9i69k4fr19bry44wfk5q52oodu1v1lre8xe/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#wysiwyg'
+      });
+    </script>
+{/block}

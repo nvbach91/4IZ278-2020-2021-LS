@@ -1,0 +1,56 @@
+{block content}
+<div class="container align-content-center">
+    <div class="card">
+        <div class="card-header">
+            Editace člena
+        </div>
+        <div class="card-body">
+            <form n:name="upsertMemberForm">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label firstName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="firstName" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label lastName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="lastName" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label facrId}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="facrId" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label yearOfBirth}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="yearOfBirth" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label email}
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" n:name="email" class="form-control">
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" n:name="submit" class="btn btn-outline-info">Odeslat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
