@@ -1,0 +1,48 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60%;
+  margin: 5px auto;
+}
+.product-image {
+  width: 200px;
+  height: 350px;
+}
+.row {
+  margin-top: 30px;
+}
+.form-signin {
+  width: 30%;
+  margin: 30px auto;
+}
+.card,
+.col-lg-4 {
+  width: 300px;
+  height: 450px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  justify-self: center;
+  margin: 30px auto;
+}
+.product-image {
+  width: 250px;
+  height: 250px;
+}
