@@ -127,23 +127,6 @@ class User
         $this->permissionid = $permissionid;
     }
 
-    /**
-     * @return Permission
-     */
-    public function getPermission()
-    {
-        return $this->permission;
-    }
-
-    /**
-     * @param Permission $permission
-     */
-    public function setPermission(Permission $permission)
-    {
-        $this->permission = $permission;
-    }
-
-
 
 
 }

@@ -23,6 +23,15 @@ if(isset($_GET['logout']))
             </button>
             <input class="form-control form-control-dark w-50" type="text" placeholder="Search" aria-label="Search">
             <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <?php
+                if(isset($_SESSION['user'])):
+                    if(unserialize($_SESSION['user'])->getPermissionId() == 3): ?>
+                        <a class="nav-link" href="./administration.php">Administrace</a>
+                <?php endif; endif; ?>
+            </li>
+            </ul>
+            <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <?php if(!isset($_SESSION['username'])): ?>
                     <a class="nav-link" href="./login.php">Přihlášení</a>

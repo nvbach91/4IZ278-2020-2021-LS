@@ -3,6 +3,7 @@ session_start();
 require("database/Db.php");
 require("database/Dao.php");
 $error= isset($_SESSION['username']) ? "Už jsi přihlášený, nemůžeš se zaregistrovat!" : "";
+$success = "";
 
 if(!empty($_POST))
 {
@@ -16,6 +17,7 @@ if(!empty($_POST))
 
         $dao = new Dao($conn->getConn());
         $dao->createUser($user);
+        $success = "Úspěšná registrace";
 
         $conn->closeConn();
     }
@@ -44,6 +46,7 @@ if(!empty($_POST))
             </div>
             <div class="container" style="width:50%">
                 <div class="alert-danger text-center mb-4"><?=$error;?></div>
+                <div class="alert-success text-center mb-4"><?=$success;?></div>
                 <?php if(!isset($_SESSION['username'])): ?>
                 <form method="post">
                     <div class="form-group pb-1">

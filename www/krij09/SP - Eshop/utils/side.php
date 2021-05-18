@@ -32,48 +32,18 @@
             <span>Kategorie</span>
         </h6>
         <ul class="nav flex-column mb-2">
+            <?php
+            $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+            $conn->createConn();
+            $dao = new Dao($conn->getConn());
+             foreach($dao->fetchCategories() as $category): ?>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <span data-feather="file-text"></span>
-                    Akční
+                    <?= $category->getName(); ?>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Simulátory
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Adventury
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    RPG
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Strategie
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Hudební a pohybové
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    FPS / Střílečky
-                </a>
-            </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 </nav>

@@ -1,5 +1,7 @@
 <?php
     session_start();
+require("database/Db.php");
+require("database/Dao.php");
 ?>
 <?php require("utils/header.php"); ?>
 
@@ -45,10 +47,16 @@
                 <div class="col">
                     <div class="card shadow-sm">
                         <img src="https://images.gog-statics.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="bd-placeholder-img card-img-top">
-
+                        <?php
+                        $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+                        $conn->createConn();
+                        $dao = new Dao($conn->getConn());
+                        $cate = $dao->fetchCategories();
+                        $random = array_rand($cate);
+                        ?>
                         <div class="card-body">
-                            <h6 class="card-header">Akční hry</h6>
-                            <p class="card-text mt-1">Tu jsou akční hry.</p>
+                            <h6 class="card-header"><?= $cate[$random]->getName()?></h6>
+                            <p class="card-text mt-1"><?= $cate[$random]->getDescription()?></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Zobrazit kategorii</button>
