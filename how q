@@ -1,0 +1,745 @@
+[33mcommit a27cbf4d081679e5fcd6ba2f6b931802a763740d[m[33m ([m[1;36mHEAD -> [m[1;32msp-kadm08[m[33m, [m[1;31morigin/sp-kadm08[m[33m)[m
+Author: Mariola Kadlubiec <mariola.kadlubiec@gmail.com>
+Date:   Sun May 16 20:22:28 2021 +0200
+
+    sp-kadm08
+    
+    pilotni verze semestralni prace
+
+[1mdiff --git a/semestralni_prace/coworking/aboutus.php b/semestralni_prace/coworking/aboutus.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..96e2b71[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/aboutus.php[m
+[36m@@ -0,0 +1,35 @@[m
+[32m+[m[32m<?php include __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<div class="bg-light">[m[41m[m
+[32m+[m[32m    <div class="container py-5">[m[41m[m
+[32m+[m[32m        <div class="row h-100 align-items-center py-5">[m[41m[m
+[32m+[m[32m            <div class="col-lg-6">[m[41m[m
+[32m+[m[32m                <h3 class="display-5">About us page</h3>[m[41m[m
+[32m+[m[32m                <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[32m            <div class="col-lg-6 d-none d-lg-block"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/illus_kftyh4.png" alt="" class="img-fluid"></div>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m</div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<div class="bg-white py-5">[m[41m[m
+[32m+[m[32m  <div class="container py-5">[m[41m[m
+[32m+[m[32m    <div class="row align-items-center mb-5">[m[41m[m
+[32m+[m[32m      <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>[m[41m[m
+[32m+[m[32m        <h3 class="font-weight-light">Lorem ipsum dolor sit amet</h3>[m[41m[m
+[32m+[m[32m        <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><a href="#" class="btn btn-light px-5  shadow-sm">Learn More</a>[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m    <div class="row align-items-center">[m[41m[m
+[32m+[m[32m      <div class="col-lg-5 px-5 mx-auto"></div>[m[41m[m
+[32m+[m[32m      <div class="col-lg-6">[m[41m[m
+[32m+[m[32m        <h3 class="font-weight-light">Lorem ipsum dolor sit amet</h3>[m[41m[m
+[32m+[m[32m        <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><a href="#" class="btn btn-light px-5  shadow-sm">Learn More</a>[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m  </div>[m[41m[m
+[32m+[m[32m</div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/footer.php'; ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/contact.php b/semestralni_prace/coworking/contact.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1f8eea9[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/contact.php[m
+[36m@@ -0,0 +1,71 @@[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[32m$errorMessages = [];[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mfunction sendMail($name, $email, $message)[m[41m[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m    $recepient = 'kadm08@vse.cz';[m[41m[m
+[32m+[m[32m    $subject = $name;[m[41m[m
+[32m+[m[32m    $headers = [[m[41m[m
+[32m+[m[32m        'MIME-Version: 1.0',[m[41m[m
+[32m+[m[32m        'Content-type: text/html, charset=utf-8',[m[41m[m
+[32m+[m[32m        'From: ' . $email,[m[41m[m
+[32m+[m[32m        'Reply-To: ' . $email,[m[41m[m
+[32m+[m[32m        'X-Mailer: PHP/8.0',[m[41m[m
+[32m+[m[32m    ];[m[41m[m
+[32m+[m[32m    return mail($recepient, $subject, $message, implode("\r\n", $headers));[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mif (!empty($_POST)) {[m[41m[m
+[32m+[m[32m    $name = htmlspecialchars(trim($_POST['name']));[m[41m[m
+[32m+[m[32m    $email = htmlspecialchars(trim($_POST['email']));[m[41m[m
+[32m+[m[32m    $message = htmlspecialchars(trim($_POST['message']));[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (!$name || !preg_match('/^[a-zA-Z ]*$/', $name)) {[m[41m[m
+[32m+[m[32m        array_push($errorMessages, 'Please enter your name');[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {[m[41m[m
+[32m+[m[32m        array_push($errorMessages, 'Please enter valid email address');[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (empty($errorMessages)) {[m[41m[m
+[32m+[m[32m        sendMail($name, $email, $message);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<br></br><br></br>[m[41m[m
+[32m+[m[32m<div class="container contact-form">[m[41m[m
+[32m+[m[32m            <form method="post">[m[41m[m
+[32m+[m[32m                <h3>Drop Us a Message</h3>[m[41m[m
+[32m+[m[32m                <?php foreach ($errorMessages as $message) : ?>[m[41m[m
+[32m+[m[32m                    <p style="color:red;"><?php echo $message; ?></p>[m[41m[m
+[32m+[m[32m                    <?php endforeach; ?>[m[41m[m
+[32m+[m[32m               <div class="row">[m[41m[m
+[32m+[m[32m                    <div class="col-md-6">[m[41m[m
+[32m+[m[32m                        <div class="form-group">[m[41m[m
+[32m+[m[32m                            <input type="text" id="name" name="name" class="form-control" placeholder="Your Name *" value="" />[m[41m[m
+[32m+[m[32m                        </div>[m[41m[m
+[32m+[m[32m                        <div class="form-group">[m[41m[m
+[32m+[m[32m                            <input type="text" id="email" name="email" class="form-control" placeholder="Your Email *" value="" />[m[41m[m
+[32m+[m[32m                        </div>[m[41m[m
+[32m+[m[32m                        <div class="form-group">[m[41m[m
+[32m+[m[32m                            <input type="text" id="text" name="phone" class="form-control" placeholder="Your Phone Number *" value="" />[m[41m[m
+[32m+[m[32m                        </div>[m[41m[m
+[32m+[m[32m                        <div class="form-group">[m[41m[m
+[32m+[m[32m                            <input type="submit" name="btnSubmit" class="btn btn-light px-5  shadow-sm" value="Send Message" />[m[41m[m
+[32m+[m[32m                        </div>[m[41m[m
+[32m+[m[32m                    </div>[m[41m[m
+[32m+[m[32m                    <div class="col-md-6">[m[41m[m
+[32m+[m[32m                        <div class="form-group">[m[41m[m
+[32m+[m[32m                            <textarea name="txtMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;"></textarea>[m[41m[m
+[32m+[m[32m                        </div>[m[41m[m
+[32m+[m[32m                    </div>[m[41m[m
+[32m+[m[32m                </div>[m[41m[m
+[32m+[m[32m            </form>[m[41m[m
+[32m+[m[32m</div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/footer.php'; ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/db.php b/semestralni_prace/coworking/db.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4cfe961[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/db.php[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[32m$pdo = new PDO([m[41m[m
+[32m+[m[32m    'mysql:host=localhost;dbname=coworking;charset=utf8mb4',[m[41m [m
+[32m+[m[32m    'root',[m[41m [m
+[32m+[m[32m    ''[m[41m[m
+[32m+[m[32m);[m[41m[m
+[32m+[m[32m$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);[m[41m[m
+[32m+[m[32m$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);[m[41m[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/includes/footer.php b/semestralni_prace/coworking/includes/footer.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0f709e2[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/includes/footer.php[m
+[36m@@ -0,0 +1,70 @@[m
+[32m+[m[32m<footer class="text-center text-lg-start bg-light text-muted">[m[41m[m
+[32m+[m[32m    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">[m[41m[m
+[32m+[m[32m        <div class="me-5 d-none d-lg-block">[m[41m[m
+[32m+[m[32m            <span>Get connected with us on social networks:</span>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        <div>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-facebook-f"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-twitter"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-google"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-instagram"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-linkedin"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m            <a href="" class="me-4 text-reset">[m[41m[m
+[32m+[m[32m                <i class="fab fa-github"></i>[m[41m[m
+[32m+[m[32m            </a>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </section>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    <section class="">[m[41m[m
+[32m+[m[32m        <div class="container text-center text-md-start mt-5">[m[41m[m
+[32m+[m[32m            <div class="row mt-3">[m[41m[m
+[32m+[m[32m                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">[m[41m[m
+[32m+[m[32m                    <h6 class="text-uppercase fw-bold mb-4">[m[41m[m
+[32m+[m[32m                        <i class="fas fa-gem me-3"></i> Coworking Smetana[m[41m[m
+[32m+[m[32m                    </h6>[m[41m[m
+[32m+[m[32m                    <p>[m[41m[m
+[32m+[m[32m                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.[m[41m[m
+[32m+[m[32m                    </p>[m[41m[m
+[32m+[m[32m                </div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">[m[41m[m
+[32m+[m[32m                    <h6 class="text-uppercase fw-bold mb-4">[m[41m[m
+[32m+[m[32m                        Contact[m[41m[m
+[32m+[m[32m                    </h6>[m[41m[m
+[32m+[m[32m                    <p><i class="fas fa-home me-3"></i> Smetanova 217/22, 737 01 Český Těšín</p>[m[41m[m
+[32m+[m[32m                    <p>[m[41m[m
+[32m+[m[32m                        <i class="fas fa-envelope me-3"></i>[m[41m[m
+[32m+[m[32m                        coworkingsmetana@gmail.com[m[41m[m
+[32m+[m[32m                    </p>[m[41m[m
+[32m+[m[32m                    <p><i class="fas fa-phone me-3"></i> + 420 234 567 889</p>[m[41m[m
+[32m+[m[32m                    <p><i class="fas fa-print me-3"></i> + 420 234 567 899</p>[m[41m[m
+[32m+[m[32m                </div>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </section>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">[m[41m[m
+[32m+[m[32m        © 2021 Copyright:[m[41m[m
+[32m+[m[32m        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m</footer>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>[m[41m[m
+[32m+[m[32m<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>[m[41m[m
+[32m+[m[32m<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>[m[41m[m
+[32m+[m[32m<?php require '../hotreloader.php'; ?>[m[41m[m
+[32m+[m[32m</body>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/includes/header.php b/semestralni_prace/coworking/includes/header.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c292249[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/includes/header.php[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32m<!DOCTYPE html>[m[41m[m
+[32m+[m[32m<html lang="en">[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<head>[m[41m[m
+[32m+[m[32m    <meta charset="utf-8">[m[41m[m
+[32m+[m[32m    <title>Coworking Smetana</title>[m[41m[m
+[32m+[m[32m    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Eo_circle_grey_letter-s.svg/1200px-Eo_circle_grey_letter-s.svg.png">[m[41m[m
+[32m+[m[32m    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">[m[41m[m
+[32m+[m[32m    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">[m[41m[m
+[32m+[m[32m    <link rel="stylesheet" href="/coworking/styles/styles.css">[m[41m[m
+[32m+[m[32m</head>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php require __DIR__ . '/navbar.php'; ?>[m[41m[m
+[1mdiff --git a/semestralni_prace/coworking/includes/navbar.php b/semestralni_prace/coworking/includes/navbar.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..aa0ca2e[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/includes/navbar.php[m
+[36m@@ -0,0 +1,39 @@[m
+[32m+[m[32m<body>[m[41m[m
+[32m+[m[32m    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">[m[41m[m
+[32m+[m[32m        <div class="container">[m[41m[m
+[32m+[m[32m            <a class="navbar-brand" href="#">Coworking Smetana</a>[m[41m[m
+[32m+[m[32m            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">[m[41m[m
+[32m+[m[32m                <span class="navbar-toggler-icon"></span>[m[41m[m
+[32m+[m[32m            </button>[m[41m[m
+[32m+[m[32m            <div class="collapse navbar-collapse" id="navbarResponsive">[m[41m[m
+[32m+[m[32m                <ul class="navbar-nav ml-auto">[m[41m[m
+[32m+[m[32m                    <li class="nav-item active">[m[41m[m
+[32m+[m[32m                        <a class="nav-link" href="index.php">Home[m[41m[m
+[32m+[m[32m                            <span class="sr-only">(current)</span>[m[41m[m
+[32m+[m[32m                        </a>[m[41m[m
+[32m+[m[32m                    </li>[m[41m[m
+[32m+[m[32m                     <?php if (isset($_SESSION['email'])) : ?>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m[m
+[32m+[m[32m                        <li><a class="nav-link" href="myAccount.php">My account</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m   [m
+[32m+[m[32m                            <a class="nav-link" href="logout.php">My reservations</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                    <?php else : ?>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m[m
+[32m+[m[32m                            <a class="nav-link" href="pricing.php">Pricing</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m[m
+[32m+[m[32m                            <a class="nav-link" href="aboutus.php">About us</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m[m
+[32m+[m[32m                            <a class="nav-link" href="contact.php">Contact us</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                        <li class="nav-item">[m[41m[m
+[32m+[m[32m                            <a class="nav-link" href="login.php">Login</a>[m[41m[m
+[32m+[m[32m                        </li>[m[41m[m
+[32m+[m[32m                    <?php endif; ?>[m[41m[m
+[32m+[m[32m                </ul>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </nav>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/index.php b/semestralni_prace/coworking/index.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c4f0a0e[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/index.php[m
+[36m@@ -0,0 +1,43 @@[m
+[32m+[m[32m<?php require __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php require_once __DIR__ . '/lib/SlidesDB.php'; ?> <?php[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m                                                      $slidesDB = new SlidesDB();[m[41m[m
+[32m+[m[32m                                                      $slides = $slidesDB->fetchAll();[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m                                                      ?>[m[41m[m
+[32m+[m[32m<main class="container">[m[41m[m
+[32m+[m[32m  <div id="slider" class="carousel slide my-4" data-ride="carousel">[m[41m[m
+[32m+[m[32m    <ol class="carousel-indicators">[m[41m[m
+[32m+[m[32m      <?php foreach ($slides as $index => $slide) : ?>[m[41m[m
+[32m+[m[32m        <li data-target="#slider" data-slide-to="<?php echo $index; ?>" class="<?php echo $index == 0 ? 'active' : ''; ?>"></li>[m[41m[m
+[32m+[m[32m      <?php endforeach; ?>[m[41m[m
+[32m+[m[32m    </ol>[m[41m[m
+[32m+[m[32m    <div class="carousel-inner" role="listbox">[m[41m[m
+[32m+[m[32m      <?php foreach ($slides as $index => $slide) : ?>[m[41m[m
+[32m+[m[32m        <div class="carousel-item slide <?php echo $index == 0 ? 'active' : ''; ?>">[m[41m[m
+[32m+[m[32m          <img class="d-block img-fluid slide-image" src="<?php echo $slide['img']; ?>" alt="<?php echo $slide['title']; ?>">[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m      <?php endforeach; ?>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m    <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">[m[41m[m
+[32m+[m[32m      <span class="carousel-control-prev-icon" aria-hidden="true"></span>[m[41m[m
+[32m+[m[32m      <span class="sr-only">Previous</span>[m[41m[m
+[32m+[m[32m    </a>[m[41m[m
+[32m+[m[32m    <a class="carousel-control-next" href="#slider" role="button" data-slide="next">[m[41m[m
+[32m+[m[32m      <span class="carousel-control-next-icon" aria-hidden="true"></span>[m[41m[m
+[32m+[m[32m      <span class="sr-only">Next</span>[m[41m[m
+[32m+[m[32m    </a>[m[41m[m
+[32m+[m[32m  </div>[m[41m[m
+[32m+[m[32m  <div class="card">[m[41m[m
+[32m+[m[32m    <div class="card-body">[m[41m[m
+[32m+[m[32m      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>[m[41m[m
+[32m+[m[32m      <div class="card-footer">[m[41m[m
+[32m+[m[32m      <div class="btn-wrapper text-center justify-content-between">[m[41m[m
+[32m+[m[32m      <a href="register.php" class="btn btn-light px-5  shadow-sm">Sign up</a>[m[41m[m
+[32m+[m[32m      <a href="login.php" class="btn btn-light px-5  shadow-sm">Log in</a>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m  </div>[m[41m[m
+[32m+[m[32m  </div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m  <?php require __DIR__ . '/includes/footer.php'; ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/lib/Database.php b/semestralni_prace/coworking/lib/Database.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3f83479[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/lib/Database.php[m
+[36m@@ -0,0 +1,52 @@[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32minterface DatabaseOperations[m[41m[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m    public function fetchAll();[m[41m[m
+[32m+[m[32m    public function create($item);[m[41m[m
+[32m+[m[32m    public function fetchBy($id, $value);[m[41m[m
+[32m+[m[32m    public function deleteBy($id, $value);[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mabstract class Database implements DatabaseOperations[m[41m[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m    protected $pdo;[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function __construct()[m[41m[m
+[32m+[m[32m    {[m[41m[m
+[32m+[m[32m        $this->pdo = new PDO([m[41m[m
+[32m+[m[32m            'mysql:host=localhost;dbname=coworking;charset=utf8mb4',[m[41m [m
+[32m+[m[32m            'root',[m[41m [m
+[32m+[m[32m            ''[m[41m[m
+[32m+[m[32m        );[m[41m[m
+[32m+[m[32m        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);[m[41m[m
+[32m+[m[32m        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function fetchAll() {[m[41m[m
+[32m+[m[32m        $sql = 'SELECT * FROM ' . $this->tableName;[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute();[m[41m[m
+[32m+[m[32m        return $statement->fetchAll();[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function fetchBy($id, $value)[m[41m[m
+[32m+[m[32m    {[m[41m[m
+[32m+[m[32m        $sql = 'SELECT * FROM ' . $this->tableName .  ' WHERE ' . $id . ' = :value';[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute(['value' => $value]);[m[41m[m
+[32m+[m[32m        return $statement->fetchAll();[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function deleteBy($id, $value) {[m[41m[m
+[32m+[m[32m        $sql = 'DELETE FROM ' . $this->tableName . ' WHERE ' . $id . ' = :value';[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute(['value' => $value]);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m [m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/lib/SlidesDB.php b/semestralni_prace/coworking/lib/SlidesDB.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6372451[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/lib/SlidesDB.php[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32m<?php require_once __DIR__ . '/Database.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mclass SlidesDB extends Database[m[41m[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m    protected $tableName = 'slides';[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function create($item)[m[41m[m
+[32m+[m[32m    {[m[41m[m
+[32m+[m[32m        $sql = 'INSERT INTO ' . $this->tableName . '(img, title) VALUES (:img, :title)';[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute([[m[41m[m
+[32m+[m[32m            'img' => $item['img'],[m[41m[m
+[32m+[m[32m            'title' => $item['title'],[m[41m[m
+[32m+[m[32m        ]);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    public function fetchBy($id, $value)[m[41m[m
+[32m+[m[32m    {[m[41m[m
+[32m+[m[32m        $sql = 'SELECT * FROM ' . $this->tableName .  ' WHERE ' . $id . ' = :value';[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute(['value' => $value]);[m[41m[m
+[32m+[m[32m        return $statement->fetchAll();[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/lib/WorplacesDB.php b/semestralni_prace/coworking/lib/WorplacesDB.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e50662c[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/lib/WorplacesDB.php[m
+[36m@@ -0,0 +1,21 @@[m
+[32m+[m[32m<?php require_once __DIR__ . '/Database.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mclass WorkplacesDB extends Database[m[41m[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m    protected $tableName = 'workplace';[m[41m[m
+[32m+[m[41m    [m
+[32m+[m[41m      [m
+[32m+[m[32m    public function create($item) {[m[41m[m
+[32m+[m[32m        $sql = 'INSERT INTO ' . $this->tableName . '(name, price, active) VALUES (:name, :price, :active)';[m[41m[m
+[32m+[m[32m        $statement = $this->pdo->prepare($sql);[m[41m[m
+[32m+[m[32m        $statement->execute([[m[41m[m
+[32m+[m[32m            'name' => $item['name'],[m[41m [m
+[32m+[m[32m            'price' => $item['price'],[m[41m [m
+[32m+[m[32m            'active' => $item['active'],[m[41m[m
+[32m+[m[32m        ]);[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/login.php b/semestralni_prace/coworking/login.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..00cfb94[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/login.php[m
+[36m@@ -0,0 +1,76 @@[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[32msession_start();[m[41m[m
+[32m+[m[32mrequire __DIR__ . '/db.php';[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m$errorMessages = [];[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mif($_SERVER["REQUEST_METHOD"] == "POST"){[m[41m[m
+[32m+[m[41m [m
+[32m+[m[32m   if(empty($_POST["email"])){[m[41m[m
+[32m+[m[32m    array_push($errorMessages, "Please enter your email.");[m[41m[m
+[32m+[m[32m    } else{[m[41m[m
+[32m+[m[32m        $email = $_POST["email"];[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m    [m
+[32m+[m[32m    if(empty($_POST["password"])){[m[41m[m
+[32m+[m[32m        array_push($errorMessages, "Please enter your password.");[m[41m[m
+[32m+[m[32m    } else{[m[41m[m
+[32m+[m[32m        $password = $_POST["password"];[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m    [m
+[32m+[m[32m    if(empty($errorMessages)){[m[41m[m
+[32m+[m[32m        $login = $pdo->prepare("[m[41m[m
+[32m+[m[32m            SELECT * FROM users WHERE email = :email"[m[41m[m
+[32m+[m[32m         );[m[41m[m
+[32m+[m[32m            $login->execute([[m[41m[m
+[32m+[m[32m            'email' => $email[m[41m[m
+[32m+[m[32m        ]);[m[41m[m
+[32m+[m[32m        $user = $login->fetchAll()[0];[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        if (password_verify($password, $user['password'])) {[m[41m[m
+[32m+[m[32m            $_SESSION['email'] = $user['email'];[m[41m[m
+[32m+[m[32m            $_SESSION['user_id'] = $user['user_id'];[m[41m[m
+[32m+[m[32m            header('Location: index.php');   }[m[41m[m
+[32m+[m[32m        else {[m[41m[m
+[32m+[m[32m            $errors['password'] = 'Wrong user or password! Try again.';[m[41m[m
+[32m+[m[32m        }[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m}[m[41m[m
+[32m+[m[32m?>[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<br></br><br></br>[m[41m[m
+[32m+[m[32m<main class="container">[m[41m[m
+[32m+[m[32m    <h3>Login</h3>[m[41m[m
+[32m+[m[32m    <?php foreach ($errorMessages as $message) : ?>[m[41m[m
+[32m+[m[32m        <p style="color:red;"><?php echo $message; ?></p>[m[41m[m
+[32m+[m[32m    <?php endforeach; ?>[m[41m[m
+[32m+[m[32m    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">[m[41m[m
+[32m+[m[32m    <form class="login-form" method="POST">[m[41m[m
+[32m+[m[32m        <div class="form-group">[m[41m[m
+[32m+[m[32m            <label for="password">Email</label>[m[41m[m
+[32m+[m[32m            <input class="form-control<?php echo isset($errors['email']) ? ' is-invalid' : ''; ?>" value="<?php echo @$_POST['email']; ?>" placeholder="Enter your email address" name="email" id="email">[m[41m[m
+[32m+[m[32m            <?php if(isset($errors['email'])): ?>[m[41m[m
+[32m+[m[32m                <small class="error">[m[41m[m
+[32m+[m[32m                    <i class="fas fa-exclamation-circle"></i>[m[41m[m
+[32m+[m[32m                    <?php echo $errors['email']?>[m[41m[m
+[32m+[m[32m                </small>[m[41m[m
+[32m+[m[32m            <?php endif; ?>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m        <div class="form-group">[m[41m[m
+[32m+[m[32m            <label for="password">Password</label>[m[41m[m
+[32m+[m[32m            <input class="form-control <?php echo isset($errors['password']) ? ' is-invalid' : ''; ?>" placeholder="Enter password" name="password" id="password" type="password">[m[41m[m
+[32m+[m[32m            <?php if(isset($errors['password'])): ?>[m[41m[m
+[32m+[m[32m                <small class="error">[m[41m[m
+[32m+[m[32m                    <i class="fas fa-exclamation-circle"></i>[m[41m[m
+[32m+[m[32m                    <?php echo $errors['password']?>[m[41m[m
+[32m+[m[32m                </small>[m[41m[m
+[32m+[m[32m            <?php endif; ?>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[32m        <div class="row justify-content-center">[m[41m[m
+[32m+[m[32m            <button class="btn btn-light px-5  shadow-sm" type="submit">Log In</button>[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </form>[m[41m[m
+[32m+[m[32m    <div style="margin-bottom: 600px"></div>[m[41m[m
+[32m+[m[32m</main>[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/footer.php'; ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/pricing.php b/semestralni_prace/coworking/pricing.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b329124[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/pricing.php[m
+[36m@@ -0,0 +1,57 @@[m
+[32m+[m[32m<?php include __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<br></br>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<section class="pricing py-5">[m[41m[m
+[32m+[m[32m    <div class="container">[m[41m[m
+[32m+[m[32m    <h3>Pricing</h3>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        <div class="row">[m[41m[m
+[32m+[m[32m            <!-- Free Tier -->[m[41m[m
+[32m+[m[32m            <div class="col-lg-6">[m[41m[m
+[32m+[m[32m                <div class="card mb-5 mb-lg-0">[m[41m[m
+[32m+[m[32m                    <div class="card-body">[m[41m[m
+[32m+[m[32m                        <h5 class="card-title text-muted text-uppercase text-center">Free</h5>[m[41m[m
+[32m+[m[32m                        <h6 class="card-price text-center">$0<span class="period">/month</span></h6>[m[41m[m
+[32m+[m[32m                        <hr>[m[41m[m
+[32m+[m[32m                        <ul class="fa-ul">[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Single User</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>5GB Storage</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>[m[41m[m
+[32m+[m[32m                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Private Projects</li>[m[41m[m
+[32m+[m[32m                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated Phone Support</li>[m[41m[m
+[32m+[m[32m                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Subdomain</li>[m[41m[m
+[32m+[m[32m                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>[m[41m[m
+[32m+[m[32m                        </ul>[m[41m[m
+[32m+[m[32m                        <a href="register.php" class="btn btn-light px-5  shadow-sm">Sign up</a>[m[41m[m
+[32m+[m[32m                    </div>[m[41m[m
+[32m+[m[32m                </div>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[32m            <!-- Plus Tier -->[m[41m[m
+[32m+[m[32m            <div class="col-lg-6">[m[41m[m
+[32m+[m[32m                <div class="card mb-5 mb-lg-0">[m[41m[m
+[32m+[m[32m                    <div class="card-body">[m[41m[m
+[32m+[m[32m                        <h5 class="card-title text-muted text-uppercase text-center">Plus</h5>[m[41m[m
+[32m+[m[32m                        <h6 class="card-price text-center">$9<span class="period">/month</span></h6>[m[41m[m
+[32m+[m[32m                        <hr>[m[41m[m
+[32m+[m[32m                        <ul class="fa-ul">[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>5 Users</strong></li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>[m[41m[m
+[32m+[m[32m                            <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>[m[41m[m
+[32m+[m[32m                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>[m[41m[m
+[32m+[m[32m                        </ul>[m[41m[m
+[32m+[m[32m                        <a href="register.php" class="btn btn-light px-5  shadow-sm">Sign up</a>[m[41m[m
+[32m+[m[32m                    </div>[m[41m[m
+[32m+[m[32m                </div>[m[41m[m
+[32m+[m[32m            </div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m</section>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php include __DIR__ . '/includes/footer.php'; ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/register.php b/semestralni_prace/coworking/register.php[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f8d7d90[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/register.php[m
+[36m@@ -0,0 +1,91 @@[m
+[32m+[m[32m<?php[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32msession_start();[m[41m[m
+[32m+[m[32mrequire __DIR__ . '/db.php';[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mif (!empty($_POST)) {[m[41m[m
+[32m+[m[32m    $email = $_POST['email'];[m[41m[m
+[32m+[m[32m    $password = $_POST['password'];[m[41m[m
+[32m+[m[32m    $confirmPassword = $_POST['password_confirm'];[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {[m[41m[m
+[32m+[m[32m        $errors['email'] = 'Please enter valid email address';[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if ($password != $confirmPassword) {[m[41m[m
+[32m+[m[32m        $errors['password'] = 'Your passwords do not match.';[m[41m[m
+[32m+[m[32m        $errors['confirmPassword'] = 'Your passwords do not match.';[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[32m    else if (strlen($password) < 5) {[m[41m[m
+[32m+[m[32m        $errors['password'] = 'Your password must be at least 5 characters long.';[m[41m[m
+[32m+[m[32m    }[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    if (empty($errors)) {[m[41m[m
+[32m+[m[32m        $hashPassword = password_hash($password, PASSWORD_DEFAULT);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        $register = $pdo->prepare("[m[41m[m
+[32m+[m[32m            INSERT INTO users (email, password)[m[41m[m
+[32m+[m[32m            VALUES (:email, :password);[m[41m[m
+[32m+[m[32m            ");[m[41m[m
+[32m+[m[32m        $register->execute([[m[41m[m
+[32m+[m[32m            "email" => $email,[m[41m[m
+[32m+[m[32m            "password" => $hashPassword[m[41m[m
+[32m+[m[32m        ]);[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        $login = $pdo->prepare("[m[41m[m
+[32m+[m[32m            SELECT * FROM users WHERE email = :email"[m[41m[m
+[32m+[m[32m         );[m[41m[m
+[32m+[m[32m            $login->execute([[m[41m[m
+[32m+[m[32m            'email' => $email[m[41m[m
+[32m+[m[32m        ]);[m[41m[m
+[32m+[m[32m        $user = $login->fetchAll()[0];[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m        if (password_verify($password, $user['password'])) {[m[41m[m
+[32m+[m[32m            $_SESSION['email'] = $user['email'];[m[41m[m
+[32m+[m[32m            $_SESSION['user_id'] = $user['id'];[m[41m[m
+[32m+[m[32m            $_SESSION['user_privilege'] = $user['privilege'];[m[41m[m
+[32m+[m[32m            header('Location: index.php');        }[m[41m[m
+[32m+[m[32m    }}[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php require __DIR__ . '/includes/header.php'; ?>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<main class="container">[m[41m[m
+[32m+[m[32m<br></br> <br></br>[m[41m[m
+[32m+[m[32m<h2>Registration</h2>[m[41m[m
+[32m+[m[32m  <form action="register.php" method="POST">[m[41m[m
+[32m+[m[32m  <fieldset>[m[41m[m
+[32m+[m[32m    <div class="control-group">[m[41m[m
+[32m+[m[32m      <label class="control-label"  for="username">Email</label>[m[41m[m
+[32m+[m[32m      <div class="controls">[m[41m[m
+[32m+[m[32m        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[41m [m
+[32m+[m[32m    <div class="control-group">[m[41m[m
+[32m+[m[32m      <label class="control-label" for="password">Password</label>[m[41m[m
+[32m+[m[32m      <div class="controls">[m[41m[m
+[32m+[m[32m        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">[m[41m[m
+[32m+[m[32m        <p class="help-block">Password should be at least 5 characters</p>[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    <div class="control-group">[m[41m[m
+[32m+[m[32m      <label class="control-label"  for="password_confirm">Password (Confirm)</label>[m[41m[m
+[32m+[m[32m      <div class="controls">[m[41m[m
+[32m+[m[32m        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">[m[41m[m
+[32m+[m[32m        <p class="help-block">Please confirm password</p>[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[41m [m
+[32m+[m[32m    <div class="control-group">[m[41m[m
+[32m+[m[32m      <div class="controls">[m[41m[m
+[32m+[m[32m        <button class="btn btn-light px-5  shadow-sm">Register</button>[m[41m[m
+[32m+[m[32m      </div>[m[41m[m
+[32m+[m[32m    </div>[m[41m[m
+[32m+[m[32m  </fieldset>[m[41m[m
+[32m+[m[32m  </form>[m[41m[m
+[32m+[m[32m</main>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<?php require __DIR__ . '/includes/footer.php'; ?>[m[41m[m
+[1mdiff --git a/semestralni_prace/coworking/styles/styles.css b/semestralni_prace/coworking/styles/styles.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..dc4feb2[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/styles/styles.css[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32m.carousel-inner > .item > img {[m[41m[m
+[32m+[m[32m    height: 400px;[m[41m[m
+[32m+[m[32m  }[m
+\ No newline at end of file[m
+[1mdiff --git a/semestralni_prace/coworking/tasks.txt b/semestralni_prace/coworking/tasks.txt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2702f33[m
+[1m--- /dev/null[m
+[1m+++ b/semestralni_prace/coworking/tasks.txt[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32mo create database Coworking[m[41m[m
+[32m+[m[32mo create class structure[m[41m[m
+[32m+[m[32mo create home page[m[41m[m
+[32m+[m[32m    o navbar with Pricing, About us, Contact us, Login[m[41m[m
+[32m+[m[32m    o slideshow[m[41m[m
+[32m+[m[32m    o login and sign up buttons[m[41m[m
+[32m+[m[32mo create Registration page[m[41m[m
+[32m+[m[32m    o craete table Users[m[41m[m
+[32m+[m[32m    o registration form[m[41m[m
+[32m+[m[32m    o submitting registration logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)[m[41m[m
+[32m+[m[32m    o after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout[m[41m[m
+[32m+[m[32mo create Login page[m[41m[m
+[32m+[m[32m    o login form[m[41m[m
+[32m+[m[32m    o submitting login logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)[m[41m[m
+[32m+[m[32m    o after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout[m[41m[m
+[32m+[m[32mo create My reservations page[m[41m[m
+[32m+[m[32m    o create Add reservation button -> takes you to New reservation page[m[41m[m
+[32m+[m[32m    o craete Active reservations table with edit and delete buttons[m[41m [m
+[32m+[m[32m    o create Previous reservations table[m[41m [m
+[32m+[m[32mo create New reservation - client page[m[41m[m
+[32m+[m[32m    o craete new reservation form with dates and Submit button[m[41m [m
+[32m+[m[32mo create Reservations page[m[41m[m
+[32m+[m[32mo create New reservation - admin page[m[41m[m
+[32m+[m[32mo create Workplaces page[m[41m[m
+[32m+[m[32mo create About us page[m[41m[m
+[32m+[m[32mo create Contact us page[m[41m[m
