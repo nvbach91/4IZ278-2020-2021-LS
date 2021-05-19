@@ -7,17 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kjepii</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap');
+
         body {
             display: flex;
             flex-direction: column;
             margin: 0px;
             height: 100vh;
             width: 100vw;
-            font-family: sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
+            border-color: black;
+            color: rgb(218, 197, 17);
+
         }
 
         .gray {
-            background-color: rgb(201, 201, 201);
+            background-color: rgb(61, 61, 61);
         }
 
         .active {
@@ -28,6 +33,7 @@
         .border {
             border: 1px;
             border-style: solid;
+            border-color: black;
         }
 
         header {
@@ -38,6 +44,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 50px;
+            border-color: black;
+            background-color: rgb(36, 36, 36);
         }
 
         .headerSubElement {
@@ -71,8 +79,8 @@
         }
 
         .hoverable:hover {
-            background-color: rgb(163, 163, 163);
-            color: black;
+            background-color: rgb(75, 75, 75);
+            color: rgb(218, 197, 17);
         }
 
         #mid {
@@ -80,11 +88,13 @@
             flex-direction: row;
             height: 90%;
             width: 100%;
+            border-color: black;
         }
 
         aside {
             width: 15%;
             height: 100%;
+            border-color: black;
         }
 
         .leftAsideItem {
@@ -95,6 +105,7 @@
             border-bottom-style: solid;
             border-width: 1px;
             font-size: 20px;
+            border-color: black;
         }
 
         main {
@@ -104,6 +115,8 @@
             overflow: scroll;
             border-bottom-style: solid;
             border-width: 1px;
+            color: black;
+            background-color: rgb(250, 247, 242);
         }
 
         .noTopBorder {
@@ -119,7 +132,7 @@
 </head>
 
 <body>
-    <header class="gray border">
+    <header class="border">
         <div id="headerLeft" class="headerSubElement">{{ $LoggedUser }}</div>
         <div id="headerMid" class="headerSubElement"><a href="/">MySongs</a></div>
         <div id="headerRight" class="headerSubElement">
