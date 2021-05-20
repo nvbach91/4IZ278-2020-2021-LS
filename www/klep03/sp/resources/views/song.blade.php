@@ -128,6 +128,34 @@
             text-decoration: none;
         }
 
+        .font9 {
+            font-size: 9px;
+        }
+
+        .font13 {
+            font-size: 12px;
+        }
+
+        .font15 {
+            font-size: 15px;
+        }
+
+        .font18 {
+            font-size: 18px;
+        }
+
+        .font21 {
+            font-size: 21px;
+        }
+
+        .font24 {
+            font-size: 21px;
+        }
+
+        .textWrap {
+            word-wrap: break-all;
+        }
+
     </style>
 </head>
 
@@ -151,7 +179,7 @@
         <main>
             @foreach ($songArray as $song)
             <h1>{{ $song->name }} – {{ $song->artist }}</h1>
-            <div class="users">
+            <div class="textWrap font24">
                 <pre><?php echo $song->lyrics_w_chords ?></pre>
             </div>
             @endforeach
