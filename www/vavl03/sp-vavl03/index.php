@@ -13,7 +13,7 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="<?php echo $slides[0]->img?>" class="d-block w-100" alt="<?php echo $slides[0]->name?>">
+                        <img src="<?php echo $slides[0]->img ?>" class="d-block w-100" alt="<?php echo $slides[0]->name ?>">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Buy best graphics cards here on <span class="g">G</span>-SHOP!</h5>
                             <p>
@@ -23,19 +23,19 @@
                             </p>
                         </div>
                     </div>
-                    <?php foreach(array_slice($slides,1) as $slide) :?>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <img src="<?php echo $slide->img?>" class="d-block w-100" alt="<?php echo $slide->name?>">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Buy best graphics cards here on <span class="g">G</span>-SHOP!</h5>
-                            <p>
-                                <a class="btn btn-lg btn-primary" href="#shop">
-                                    Start shopping
-                                </a>
-                            </p>
+                    <?php foreach (array_slice($slides, 1) as $slide) : ?>
+                        <div class="carousel-item" data-bs-interval="5000">
+                            <img src="<?php echo $slide->img ?>" class="d-block w-100" alt="<?php echo $slide->name ?>">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Buy best graphics cards here on <span class="g">G</span>-SHOP!</h5>
+                                <p>
+                                    <a class="btn btn-lg btn-primary" href="#shop">
+                                        Start shopping
+                                    </a>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -57,9 +57,4 @@
         </div>
     </div>
 </main>
-
 <?php require __DIR__ . '/incl/footer.php'; ?>
-
-<script>
-console.log(<?php echo json_encode('sad')?>);
-</script>

@@ -3,7 +3,6 @@
 <?php
 session_start();
 require 'components/userRequired.php';
-//session_destroy();
 
 $ids = @$_SESSION['cart'];
 
@@ -15,7 +14,6 @@ if (is_array($ids) && count($ids)) {
     $question_marks = str_repeat('?,', count($idsForSql) - 1) . '?';
     $productsDB = new ProductsDB();
     $productsFromDb = $productsDB->fetchCartProducts($question_marks, $idsForSql);
-    //$sum = $productsDB->fetchCartProductsPrice($question_marks,$idsForSql);
     $productsToShow = [];
     foreach ($productsFromDb as $product) {
         if (isset($ids[$product['product_id']])) {
@@ -28,27 +26,12 @@ if (is_array($ids) && count($ids)) {
         $productSum = $product['product_price'] * (int)$product['product_pcs'];
         array_push($productSums, $productSum);
     }
-    var_dump($productSums);
     $sum = array_sum($productSums);
-    # retezec s otazniky pro predani seznamu ids
-    # pocet otazniku = pocet prvku v poli ids
-    # pokud mam treba v ids 1,2,3, vrati mi ?,?,?
-
-    /* var_dump(array_values($idsForSql));
-   $stmt = $db->prepare("SELECT * FROM product WHERE product_id IN ($question_marks) ORDER BY product_name");
-    # array values - setrepeme pole aby bylo indexovane od 0, jen kvuli dotazu, jinak neprojde
-    $stmt->execute(array_values($idsForSql));
-    $products = $stmt->fetchAll();
-
-    $stmt_sum = $db->prepare("SELECT SUM(product_price) FROM product WHERE product_id IN ($question_marks)");
-    # array values - setrepeme pole aby bylo indexovane od 0, jen kvuli dotazu, jinak neprojde
-    $stmt_sum->execute(array_values($idsForSql));
-    $sum = $stmt_sum->fetchColumn();*/
 } else {
     $sum = 0;
 }
 
-# pocet jedontilich produktu v db
+# amount of product in db
 $productsDB = new ProductsDB();
 function getProductPcs($productName)
 {
@@ -62,9 +45,6 @@ function getProductPrice($productPrice, $productPcs)
     return $productPrice * (int)$productPcs;
 }
 ?>
-
-
-
 
 <?php include './incl/header.php' ?>
 <?php include './incl/navbar.php' ?>
@@ -114,13 +94,7 @@ function getProductPrice($productPrice, $productPcs)
 <?php require './incl/footer.php'; ?>
 
 <script>
-    console.log(<?php echo json_encode($_SESSION); ?>);
-    console.log(<?php echo json_encode($ids); ?>);
-    console.log(<?php echo json_encode($idsForSql); ?>);
-    console.log(<?php echo json_encode($question_marks); ?>);
-    const products = <?php echo json_encode($productsToShow) ?>;
-    console.log(products);
-    // prevent pasting any values in Pieces input
+    // prevent pasting any values in pieces input
     $("[type='number']").keypress(function(evt) {
         evt.preventDefault();
     });
@@ -130,14 +104,15 @@ function getProductPrice($productPrice, $productPcs)
         if (max == 1) {
             $(e).prop('disabled', true);
         }
-    })
+    });
     // Update live prices on page
+    const products = <?php echo json_encode($productsToShow) ?>;
     $(".pcs-input").bind('keyup mouseup', async function() {
         //update individual product price
         const pcs = $(this).val();
         const name = $(this).siblings("h5").text();
         const productData = await jQuery.ajax({
-            url: 'https://eso.vse.cz/4IZ278-2020-2021-LS/www/vavl03/sp-vavl03/components/getProduct.php', //CHANGE TO ESO VSE
+            url: 'https://eso.vse.cz/~vavl03/sp-vavl03/components/getProduct.php',
             type: 'GET',
             data: {
                 productName: name,
@@ -164,29 +139,4 @@ function getProductPrice($productPrice, $productPcs)
         $('.total-price-number').text(newTotalPrice);
 
     })
-
-    // create 'order' in php session with product names+quantity
-    /*function buy() { 
-     
-        let order = {};
-        $(".pcs-input").each(function() {
-            order[$(this).attr("name")] = $(this).val();
-        });
-        console.log(order);
-        jQuery.ajax({
-            url: 'https://vcap.me/4IZ270-2020-2021-LS/www/vavl03/sp-vavl03/components/storeOrderItems.php', //CHANGE TO ESO VSE
-            type: 'POST',
-            data: {
-                order: order,
-            },
-            dataType: 'json',
-            success: function(data, textStatus, xhr) {
-                console.log(data); // do with data e.g success message
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.log(textStatus.reponseText);
-            }
-        });
-
-    }*/
 </script>

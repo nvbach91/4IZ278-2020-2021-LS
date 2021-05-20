@@ -1,9 +1,7 @@
 <?php
 session_start();
-# zrusime id zbozi ze session
-# nekontrolujeme, jestli tam je
+//remove product id from cart session
 $id = @$_POST['id'];
-#var_dump($_SESSION['cart']);
 foreach ($_SESSION['cart'] as $key => $value){
     if ($key == $id) {
         unset($_SESSION['cart'][$key]);
@@ -11,4 +9,3 @@ foreach ($_SESSION['cart'] as $key => $value){
 }
 header('Location: ../cart.php');
 exit();
-?>

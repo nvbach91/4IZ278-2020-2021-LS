@@ -1,12 +1,12 @@
 <?php
-if(session_status() != 2){
+if (session_status() != 2) {
     session_start();
 }
-
-if(isset($_SESSION['fb_access_token'])){
+// get user data from fb
+if (isset($_SESSION['fb_access_token'])) {
     require_once __DIR__ . '/../vendor/autoload.php';
     require_once __DIR__ . '/../facebook-login/config.php';
-    
+
     $fb = new \Facebook\Facebook(array_merge(CONFIG_FACEBOOK, ['default_access_token' => $_SESSION['fb_access_token']]));
     try {
         $me = $fb->get('/me')->getGraphUser();
@@ -45,8 +45,8 @@ if(isset($_SESSION['fb_access_token'])){
                 <?php if (isset($_SESSION['fb_access_token']) && isset($_SESSION['access_token_expiries'])) : ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo strpos($_SERVER['REQUEST_URI'], 'my_orders') || strpos($_SERVER['REQUEST_URI'], 'account_details') ? ' active' : '' ?>" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?php echo $picture['url']; ?>" alt="" class="nav-profile-image"/>
-                            <?php echo htmlspecialchars($me->getName(),ENT_QUOTES, 'UTF-8'); ?>
+                            <img src="<?php echo $picture['url']; ?>" alt="" class="nav-profile-image" />
+                            <?php echo htmlspecialchars($me->getName(), ENT_QUOTES, 'UTF-8'); ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><a class="dropdown-item" href="my_orders.php">My Orders</a></li>

@@ -1,12 +1,10 @@
 <?php require __DIR__ . '/../db/ProductsDB.php'; ?>
 <?php
-//https://shareurcodes.com/blog/creating%20a%20simple%20rest%20api%20in%20php
 header("Content-Type:application/json");
-
 // first update pieces of product in session cart
 session_start();
-foreach($_GET['productsInCart'] as $product){
-    if($_GET['productName'] === $product['product_name']){
+foreach ($_GET['productsInCart'] as $product) {
+    if ($_GET['productName'] === $product['product_name']) {
         $productIdToUpdate = $product['product_id'];
     }
 }
@@ -18,15 +16,13 @@ if (!empty($_GET['productName'])) {
     $productName = $_GET['productName'];
     $productsDB = new ProductsDB();
     $price = $productsDB->fetchProductPrice($productName);
-    if(empty($price)){
-        response(200,"Price Not Found",NULL);
-    }else{
+    if (empty($price)) {
+        response(200, "Price Not Found", NULL);
+    } else {
         return response(200, "Price found", $price);
     }
-    
-}else
-{
-	response(400,"Invalid Request",NULL);
+} else {
+    response(400, "Invalid Request", NULL);
 }
 
 function response($status, $status_message, $data)

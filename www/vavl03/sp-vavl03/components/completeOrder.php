@@ -8,7 +8,6 @@ foreach ($_SESSION['cart'] as $key => $value) {
     array_push($boughtProducts, (int) $value);
 }
 $numberOfBoughtProducts = array_sum($boughtProducts);
-
 $productsDB = new ProductsDB();
 $helperArr = [];
 foreach ($_SESSION['cart'] as $key => $value) {
@@ -40,55 +39,44 @@ if ($numberOfBoughtProducts != count($productIds)) {
     header('Location: ../products_gone.php');
     exit();
 } else {
+    require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../facebook-login/config.php';
+    require_once __DIR__ . '/../email/utils.php';
+    $fb = new \Facebook\Facebook(array_merge(CONFIG_FACEBOOK, ['default_access_token' => $_SESSION['fb_access_token']]));
+    try {
+        $me = $fb->get('/me')->getGraphUser();
+    } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+        echo 'Graph returned an error: ' . $e->getMessage();
+        exit;
+    } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+        echo 'Facebook SDK returned an error: ' . $e->getMessage();
+        exit;
+    }
     // send email
-    // AŽ JAKO POSLEDNÍ VĚC to udělej!! NEJDE POSÍLAT MAILY Z LOCALHOSTU, JELIKOŽ TO BUDE NA ESO.VSE.CZ TAK PŮJDE POSÍLAT MAILY JEN NA @VSE, SOUBORY READY VE FOLDERU email
+    $email = $fb->get('/me?locale=en_US&fields=email')->getGraphUser();
+    sendEmail($email['email'], 'Order confirmation');
 
-    
-
-require_once __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../facebook-login/config.php';
-$fb = new \Facebook\Facebook(array_merge(CONFIG_FACEBOOK, ['default_access_token' => $_SESSION['fb_access_token']]));
-try {
-    $me = $fb->get('/me')->getGraphUser();
-} catch (\Facebook\Exceptions\FacebookResponseException $e) {
-    echo 'Graph returned an error: ' . $e->getMessage();
-    exit;
-} catch (\Facebook\Exceptions\FacebookSDKException $e) {
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    exit;
-}
-$date = date("Y-m-d");
-// create order in db
-$ordersDB = new OrdersDB();
-$order = $ordersDB->createOrder($_SESSION['orderValue'],$me->getId(),$date,$_SESSION['delivery'],$_SESSION['payment'],$productIds);
-// destroy session except fb token
-unset($_SESSION['cart']);
-unset($_SESSION['delivery']);
-unset($_SESSION['orderValue']);
-unset($_SESSION['payment']);
-unset($_SESSION['userCity']);
-unset($_SESSION['userDescNumber']);
-unset($_SESSION['userEmail']);
-unset($_SESSION['userName']);
-unset($_SESSION['userNumber']);
-unset($_SESSION['userState']);
-unset($_SESSION['userStreet']);
-unset($_SESSION['userZip']);
-/* prevent user from coming back into the order process, force him to start new order by redirecting him to index.php
+    // create order in db
+    $date = date("Y-m-d");
+    $ordersDB = new OrdersDB();
+    $order = $ordersDB->createOrder($_SESSION['orderValue'], $me->getId(), $date, $_SESSION['delivery'], $_SESSION['payment'], $productIds);
+    // destroy session except fb token
+    unset($_SESSION['cart']);
+    unset($_SESSION['delivery']);
+    unset($_SESSION['orderValue']);
+    unset($_SESSION['payment']);
+    unset($_SESSION['userCity']);
+    unset($_SESSION['userDescNumber']);
+    unset($_SESSION['userEmail']);
+    unset($_SESSION['userName']);
+    unset($_SESSION['userNumber']);
+    unset($_SESSION['userState']);
+    unset($_SESSION['userStreet']);
+    unset($_SESSION['userZip']);
+    /* prevent user from coming back into the order process, force him to start new order by redirecting him to index.php
  in each order process page, $_SESSION['orderSent'] is unset in startNewOrder.php*/
-$_SESSION['orderSent'] = true;
-header('Location: ../thanks.php');
-exit();
+    $_SESSION['orderSent'] = true;
+    header('Location: ../thanks.php');
+    exit();
 }
-
-
-
 ?>
-<script>
-    console.log(<?php echo (json_encode($_SESSION)) ?>);
-    console.log(<?php echo (json_encode($numberOfBoughtProducts)) ?>);
-    console.log(<?php echo (json_encode(count($productIds))) ?>);
-</script>
-
-<div><?php //var_dump($me->getId())
-        ?></div>

@@ -3,7 +3,7 @@
 <?php require __DIR__ . '/db/UsersDB.php' ?>
 <?php require __DIR__ . '/components/global.php'; ?>
 <?php
-require 'components/userRequired.php'; // pristup jen pro prihlaseneho uzivatele
+require 'components/userRequired.php'; 
 // check if user just sent order, if yes, redirect him to home page to start new order
 if (isset($_SESSION['orderSent'])) {
     echo ($_SESSION['orderSent']);
@@ -23,21 +23,20 @@ if ($submittedForm) {
     $userName = test_input($_POST["userName"]);
     $email = test_input($_POST['userEmail']);
     // check if e-mail address is well-formed
-    var_dump($email);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email']= "Invalid email format";
+        $errors['email'] = "Invalid email format";
     }
     $street = test_input($_POST['userStreet']);
     $descNumber = test_input($_POST['userDescNumber']);
-    $userCity= test_input($_POST['userCity']);
-    $userState= $_POST['userState'];
-    $userZip= test_input($_POST['userZip']);
-    if (!preg_match("/^(0|[1-9][0-9]*)$/",$userZip)) {
+    $userCity = test_input($_POST['userCity']);
+    $userState = $_POST['userState'];
+    $userZip = test_input($_POST['userZip']);
+    if (!preg_match("/^(0|[1-9][0-9]*)$/", $userZip)) {
         $errors['zip'] = "Only numbers allowed for ZIP code";
-      }
-    $userNumber= test_input($_POST['userNumber']);
+    }
+    $userNumber = test_input($_POST['userNumber']);
     // if no errors continue to summary
-    if(empty($errors)){
+    if (empty($errors)) {
         $_SESSION['userName'] = $userName;
         $_SESSION['userEmail'] = $email;
         $_SESSION['userStreet'] = $street;
@@ -48,25 +47,20 @@ if ($submittedForm) {
         $_SESSION['userNumber'] = $userNumber;
         header('Location: order_summary.php');
         exit();
-    } 
+    }
 }
 ?>
-<script>
-    console.log(<?php echo (json_encode($_SESSION)) ?>);
-    console.log(<?php echo (json_encode($userData)) ?>);
-</script>
-
 <div class="order-methods delivery-details">
     <h1>Delivery details:</h1>
-    <?php if ($submittedForm && !empty($errors)): ?>
-                <div class="alert alert-danger">
-                    <?php echo implode('<br>', array_values($errors)); ?>
-                </div>
+    <?php if ($submittedForm && !empty($errors)) : ?>
+        <div class="alert alert-danger">
+            <?php echo implode('<br>', array_values($errors)); ?>
+        </div>
     <?php endif; ?>
-    <form class="row g-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-        <div class="col-md-6">  
+    <form class="row g-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <div class="col-md-6">
             <label for="inputName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="inputName" name="userName" <?=  isset($_SESSION['userName']) ? ' value="' . $_SESSION['userName'] . '"' : 'value="' . $userData[0]['user_name'] . '"'; ?> required>
+            <input type="text" class="form-control" id="inputName" name="userName" <?= isset($_SESSION['userName']) ? ' value="' . $_SESSION['userName'] . '"' : 'value="' . $userData[0]['user_name'] . '"'; ?> required>
             <small class="text-muted">Example: Dan Bilzerian</small>
         </div>
         <div class="col-md-6">

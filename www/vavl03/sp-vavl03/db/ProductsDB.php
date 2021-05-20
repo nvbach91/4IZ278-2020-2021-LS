@@ -29,7 +29,6 @@ class ProductsDB extends Database
     }
     public function fetchProdcutsByPagination($nItemsPerPagination, $offset)
     {
-        //SELECT * FROM product WHERE order_order_id IS NULL GROUP BY product_name ORDER BY product_id DESC LIMIT 3 OFFSET 0;
         // load only unreserved products
         $statement = $this->pdo->prepare("SELECT * FROM product WHERE order_order_id IS NULL GROUP BY product_name ORDER BY product_id
         DESC LIMIT $nItemsPerPagination OFFSET ? ");
@@ -67,8 +66,6 @@ class ProductsDB extends Database
     }
     public function fetchProductIds($productId, $pcs)
     {
-        /*SELECT `product_id` FROM `product` WHERE `product_name` = :productName 
-        AND `order_order_id` IS NULL LIMIT :pcs";*/
         $sql = "SELECT `product_id` FROM `product` WHERE `product_name` = (SELECT product_name FROM product WHERE product_id = :productId)
         AND `order_order_id` IS NULL LIMIT :pcs";
         $stmt = $this->pdo->prepare($sql);
@@ -97,7 +94,6 @@ class ProductsDB extends Database
         ORDER BY u.product_id
         DESC LIMIT :nItemsPerPage 
         OFFSET :offset");
-        //$statement->bindValue(1, $offset, PDO::PARAM_INT);
         $statement->execute(['category' => $categoryName, 'nItemsPerPage' => $nItemsPerPagination, 'offset' => $offset]);
         return $statement->fetchAll();
     }

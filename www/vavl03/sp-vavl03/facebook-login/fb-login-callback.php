@@ -9,20 +9,17 @@ $fb = new \Facebook\Facebook(CONFIG_FACEBOOK);
 $helper = $fb->getRedirectLoginHelper();
 
 if (isset($_GET['state'])) {
-    $helper->getPersistentDataHandler()->set('state', $_GET['state']); 
+    $helper->getPersistentDataHandler()->set('state', $_GET['state']);
 }
 ?>
-
-<h3>Code</h3>
-<p><?php echo $_GET['code']; ?></p>
 
 <?php
 try {
     $accessToken = $helper->getAccessToken();
-} catch(\Facebook\Exceptions\FacebookResponseException $e) {
+} catch (\Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
     exit;
-} catch(\Facebook\Exceptions\FacebookSDKException $e) {
+} catch (\Facebook\Exceptions\FacebookSDKException $e) {
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
 }
@@ -41,8 +38,6 @@ if (!isset($accessToken)) {
     exit;
 }
 ?>
-<h3>Access Token</h3>
-<pre> <?php var_dump($accessToken->getValue()); ?> </pre>
 
 <?php
 // The OAuth 2.0 client handler helps us manage access tokens
@@ -50,27 +45,11 @@ $oAuth2Client = $fb->getOAuth2Client();
 // Get the access token metadata from /debug_token
 $tokenMetadata = $oAuth2Client->debugToken($accessToken);
 ?>
-<h3>Metadata</h3>
-<pre> <?php var_dump($tokenMetadata); ?> </pre>
-
-<?php
-/*
-$myAccessToken = file_get_contents('https://graph.facebook.com/oauth/access_token?' .
-    'client_id=' . CONFIG_FACEBOOK['app_id'] .
-    '&redirect_uri=' . CONFIG_PROTOCOL . CONFIG_DOMAIN . CONFIG_PATH . '/fb-login-callback.php' .
-    '&client_secret=' . CONFIG_FACEBOOK['app_secret'] .
-    '&code=' . $_GET['code']);
-*/
-?>
-
-<pre> <?php /* echo $myAccessToken; */ ?> </pre>
-
 <?php
 require_once __DIR__ . '/../db/UsersDB.php';
 // Validation (these will throw FacebookSDKException's when they fail)
 $tokenMetadata->validateAppId(CONFIG_FACEBOOK['app_id']);
 // If you know the user ID this access token belongs to, you can validate it here
-//$tokenMetadata->validateUserId('123');
 $tokenMetadata->validateExpiration();
 if (!$accessToken->isLongLived()) {
     // Exchanges a short-lived access token for a long-lived one
@@ -84,10 +63,8 @@ if (!$accessToken->isLongLived()) {
     var_dump($accessToken->getValue());
 }
 // User is logged in with a long-lived access token.
-
-
 $_SESSION['fb_access_token'] = (string) $accessToken;
 $_SESSION['access_token_expiries'] = time() + 3600; // expire login after 1 hour
 
-require 'registration.php';
+require 'registration.php'; // check if user is registered
 ?>

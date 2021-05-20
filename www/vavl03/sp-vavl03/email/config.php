@@ -31,6 +31,12 @@ $emailTemplates = [
             "<p><a href='mailto:$recipient'>$recipient</a></p>"
         );
     },
-];
+    'Order confirmation' => function () {
+        return (
+            "<h2>Order confirmation</h2>" .
+            "<p>Thank you for your order!</p>" .
+            "<h4>You can see your orders in My orders section!</h4>"
+        );
+    },
 
-?>
+];

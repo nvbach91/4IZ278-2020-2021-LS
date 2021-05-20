@@ -1,16 +1,13 @@
 <?php require __DIR__ . '/incl/header.php' ?>
 <?php require __DIR__ . '/incl/navbar.php' ?>
 <?php
-require 'components/userRequired.php'; // pristup jen pro prihlaseneho uzivatele
+require 'components/userRequired.php';
 // check if user just sent order, if yes, redirect him to home page to start new order
 if (isset($_SESSION['orderSent'])) {
     echo ($_SESSION['orderSent']);
     header('Location: ../sp-vavl03/index.php');
     exit();
 }
-
-
-
 ?>
 <div class="container order-methods">
     <form action="components/storeOrderMethods.php" method="POST">
@@ -27,7 +24,7 @@ if (isset($_SESSION['orderSent'])) {
             <div class="col-12">
                 <h2>Payment method:</h2>
                 <div class="select-box">
-                    <select class="form-select form-select-lg mb-3" name="payment">
+                    <select class="form-select form-select-lg mb-3" name="payment" id="payment-method">
                         <option value="bankTransfer" <?= isset($_SESSION['payment']) && $_SESSION['payment'] == 'bankTransfer' ? ' selected="selected"' : ''; ?>>Bank transfer</option>
                         <option value="cashOnHomeDelivery" <?= isset($_SESSION['payment']) && $_SESSION['payment'] == 'cashOnHomeDelivery' ? ' selected="selected"' : ''; ?>>Cash on delivery (+$1)</option>
                         <option value="cashOnPersonalCollection" <?= isset($_SESSION['payment']) && $_SESSION['payment'] == 'cashOnPersonalCollection' ? ' selected="selected"' : ''; ?>>Cash on personal collection</option>
@@ -46,7 +43,6 @@ if (isset($_SESSION['orderSent'])) {
 <?php require __DIR__ . '/incl/footer.php' ?>
 
 <script>
-    console.log(<?php echo (json_encode($_SESSION)) ?>);
     // enable/disable options
     if ($('#delivery-method').val() === 'homeDelivery') {
         $("option[value='cashOnPersonalCollection']").attr("disabled", "disabled");
@@ -58,9 +54,11 @@ if (isset($_SESSION['orderSent'])) {
     $('#delivery-method').on('change', function() {
         console.log($(this).val());
         if ($(this).val() === 'personalCollection') {
+            $('#payment-method').val('bankTransfer');
             $("option[value='cashOnHomeDelivery']")
                 .attr("disabled", "disabled").siblings().removeAttr("disabled");
         } else if ($(this).val() === 'homeDelivery') {
+            $('#payment-method').val('bankTransfer');
             $("option[value='cashOnPersonalCollection']")
                 .attr("disabled", "disabled").siblings().removeAttr("disabled");
         }
