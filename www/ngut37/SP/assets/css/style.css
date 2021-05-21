@@ -1,0 +1,61 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  height: 6vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.navbar .ramenifyLogo {
+  font-size: 30px;
+}
+
+.navbar .controls {
+  display: flex;
+  justify-content: end;
+}
+
+.navbar .controls * {
+  margin: 0 5px;
+}
+
+.navbar .icons .icon {
+  width: 20px;
+}
+
+/* FOOTER */
+.footer {
+  height: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+/* LANDING */
+.landing {
+  height: 85vh;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.landing .section {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing .ramenImage {
+  width: 500px;
+}
+
+.introText {
+  text-align: center;
+  width: 60%;
+}
