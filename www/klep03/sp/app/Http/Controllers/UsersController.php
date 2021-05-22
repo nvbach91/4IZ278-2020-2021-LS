@@ -83,9 +83,36 @@ class UsersController extends Controller
         //
     }
 
-    public function getCurrentUser() {
+    public function getCurrentUser()
+    {
         return [
             'username' => 'Not Logged in'
         ];
+    }
+
+    private function createUser($email, $password) {
+        
+    }
+
+    function getSignUpFormData(Request $request)
+    {
+        // return $request->input();
+        // return "ahoj";
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required | min:8',
+            'confirmPassword' => 'required | same:password',
+        ]);
+        $data = $request->input();
+
+        //ulozeni do db
+
+        $email = $data['email'];
+        // return $request->input();
+        return redirect('signin?email=' . $email);
+    }
+
+    public function getEmailFromURL(Request $r) {
+        return $r->input('email');
     }
 }
