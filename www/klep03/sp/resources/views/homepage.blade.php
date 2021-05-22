@@ -11,17 +11,17 @@
 
 <body>
     <header class="gray border">
-        <div id="headerLeft" class="headerSubElement">{{$LoggedUser}}</div>
+        <div id="headerLeft" class="headerSubElement">{{ $LoggedUser }}</div>
         <div id="headerMid" class="headerSubElement"><a href="/">MySongs</a></div>
         <div id="headerRight" class="headerSubElement">
-            <div id="divSignup" class="active hoverable">{{$Button1}}</div>
-            <div id="divLogout" class="active hoverable">{{$Button2}}</div>
+            <div id="divSignup" class="active hoverable">{{ $Button1 }}</div>
+            <div id="divLogout" class="active hoverable">{{ $Button2 }}</div>
         </div>
     </header>
     <div id="mid">
         <aside class="gray border noTopBorder">
             @foreach ($asideItems as $key => $value)
-            <a href="<?= $value ?>">
+                <a href="<?= $value ?>">
             <div class="leftAsideItem hoverable">{{ $key }}</div>
         </a>
         @endforeach
@@ -39,12 +39,28 @@
                 </p>
                 <div id="searchDiv">
                     <textarea id="searchTextArea"></textarea>
-                    <a href="/search"><div id="search" class="innerAreaButton">Search</div></a> 
+                    <div id="search" class="innerAreaButton" rows="1">Search</div>
+                </div>
+                <div id="results">
+                    <?php if (isset($results)) {
+                        foreach ($results as $result) {
+                            echo "<div>$result->name</div>";
+                        }
+                    } ?>
                 </div>
             </div>
         </main>
         <aside class="gray border noTopBorder"></aside>
     </div>
+    <script>
+        let textarea = document.querySelector('#searchTextArea');
+        function redirect() {
+            console.log('kliknuto');
+            window.location.href = '/search/' + textarea.value;
+        };
+        document.querySelector('#search').addEventListener('click', redirect);
+        // document.addEventListener('keydown', checkKey);
+        </script>
 </body>
 
 </html>

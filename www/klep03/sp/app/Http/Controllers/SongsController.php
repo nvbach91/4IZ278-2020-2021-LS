@@ -7,7 +7,7 @@ use App\Models\Song;
 
 class SongsController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -82,4 +82,34 @@ class SongsController extends Controller
     {
         //
     }
+
+    private function searchByQueryWord($word){
+        return Song::query()
+            ->where('artist', 'LIKE', "%{$word}%")
+            ->orWhere('name', 'LIKE', "%{$word}%")
+            ->get();
+        // return Song::query()->get();
+    }
+
+    private function transformNestedArrays($nestedArray) {
+        foreach ($nestedArray as $array) {}
+    }
+
+    public function searchByQuery($query)
+    {
+        $queryWords = explode(' ', $query);
+        $results = [];
+        foreach($queryWords as $queryWord) {
+            $foundSongs = $this->searchByQueryWord($queryWord);
+            foreach ($foundSongs as $song) {
+                if(!in_array($song, $results)){
+                    array_push($results, $song);
+                }
+            }
+        }
+        // $results = array_uni
+        return $results;
+    }
+
+    
 }
