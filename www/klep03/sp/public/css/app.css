@@ -59,11 +59,11 @@ header {
     font-size: 22px;
 }
 
-#divLogout {
+#divButton2 {
     padding: 8px;
 }
 
-#divSignup {
+#divButton1 {
     padding: 8px;
     margin-right: 20px;
 }

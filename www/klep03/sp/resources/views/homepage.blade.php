@@ -13,6 +13,7 @@
                     <textarea id="searchTextArea"></textarea>
                     <div id="search" class="innerAreaButton" rows="1">Search</div>
                 </div>
+                <div><h2>Results:</h2></div>
                 <div id="results">
                     <?php if (isset($results)) {
                         foreach ($results as $result) {
@@ -31,7 +32,12 @@
                     window.location.href = '/search/' + textarea.value;
                 };
                 document.querySelector('#search').addEventListener('click', redirect);
-                // document.addEventListener('keydown', checkKey);
+                document.addEventListener('keydown', function(e) {
+                    if (e.code === "Enter") {
+                        // console.log(e.code);
+                        redirect();
+                    }
+                });
                 </script>
 
 @include('includes.element-foot')
