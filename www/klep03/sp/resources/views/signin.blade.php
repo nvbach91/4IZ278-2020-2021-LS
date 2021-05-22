@@ -6,7 +6,10 @@
     <h1>Sign In!</h1>
     <div class="mb-3" style="margin-top: 20px;">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp">
+        <input type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp" value="<?php
+        echo (isset($email)) ?
+      htmlspecialchars($email) : '';
+        ?>">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
 

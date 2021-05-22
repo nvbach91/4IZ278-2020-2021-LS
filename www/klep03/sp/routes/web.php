@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SongsController;
 use App\Http\Controllers\ButtonsController;
@@ -23,8 +24,8 @@ Route::get('/', function () {
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
 
-    return view('homepage') ->with('pageItems', $pageItems)
-                            ->with('title', 'MySongs');
+    return view('homepage')->with('pageItems', $pageItems)
+        ->with('title', 'MySongs');
 });
 
 // Route::get('/dbtest', function () {
@@ -108,7 +109,7 @@ Route::get('/search/{query}', function ($query) {
 
 Route::redirect('/search', '/');
 
-Route::get('/signup', function() {
+Route::get('/signup', function () {
 
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
@@ -117,11 +118,28 @@ Route::get('/signup', function() {
         ->with('title', 'Sign up');
 });
 
-Route::get('/signin', function() {
+Route::get('/signin', function (Request $request) {
+    $email = $request->input('email');
 
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
 
     return view('signin')->with('pageItems', $pageItems)
-        ->with('title', 'Sign in');
+        ->with('title', 'Sign in')
+        ->with('email', $email);
 });
+
+// Route::post('/signup/submit', function ($post) {
+//     $email = $post["signUpEmail"];
+//     $pageItemsController    = new PageItemsController;
+//     $pageItems              = $pageItemsController->fetch();
+
+//     return $email;
+//     // return view('/signin')
+//     //     ->with('pageItems', $pageItems)
+//     //     ->with('title', 'Sign up')
+//     //     ->with('email', $email);
+        
+// });
+
+Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
