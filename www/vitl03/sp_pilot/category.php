@@ -1,23 +1,25 @@
-<?php require __DIR__ . '/../class/ProductsDB.php'; ?>
-
-
+<?php require __DIR__ . '/class/CategoriesDB.php'; ?>
+<?php require __DIR__ . '/class/ProductsDB.php'; ?>
 <?php
+session_start();
 
 $productsDB = new ProductsDB();
-$products = $productsDB->fetchAll();
+$products = $productsDB->showProductInCat();
 
-$nItemsInDatabase = $productsDB->fetchNumberOfProducts();
-$nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
-
+$categoriesDB = new CategoriesDB();
+$category_names = $categoriesDB->fetchAll();
 
 
 
 ?>
+<?php include __DIR__ . '/includes/header.php' ?>
+<?php include __DIR__ . '/includes/navigationCategories.php' ?>
+
 <div class="section">
     <div class="container">
         <div class="col-md-12">
             <div class="section-title">
-                <h3 class="title">New Products</h3>
+                <h3 class="title"><?php echo $category_names["name"]; ?></h3>
             </div>
         </div>
 
@@ -28,7 +30,9 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
                     <form method="post" action="index.php?page=cart">
                         <div class="product">
                             <div class="product-img">
-                                <a href="index.php?page=product&id=<?= $product['product_id'] ?>"><img src="img/<?php echo $product['name']; ?>.png" width="250" height="250" alt="img"></a>
+
+
+                                <a href="index.php?page=product&id=<?= $product['product_id'] ?>"><img src="img/<?= $product['name']; ?>.png" width="250" height="250" alt="img"></a>
                                 <div class="product-label">
                                     <span class="sale">
                                         <?php if (($product['discount']) != 0) : ?>
@@ -38,7 +42,8 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
                                 </div>
                             </div>
                             <div class="product-body">
-
+                                <p class="product-category">
+                                </p>
                                 <h3 class="product-name"><a href="index.php?page=product&id=<?= $product['product_id'] ?>"><?php echo $product['name']; ?></a></h3>
                                 <h4 class="product-price"><?php echo (($product['price'])) . ' ' . CURRENCY; ?><del class="product-old-price">
 
@@ -62,8 +67,6 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
 
 
                             </div>
-
-
                         </div>
                     </form>
                 </div>
@@ -72,6 +75,7 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
 
 
         </div>
+
         <div class="row">
 
 
@@ -87,7 +91,10 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
         </div>
 
     </div>
-    <script type="text/javascript">
-        document.getElementById('quantity_default').value = '1';
-    </script>
 </div>
+<script type="text/javascript">
+    document.getElementById('quantity_default').value = '1';
+</script>
+
+<?php include __DIR__ . '/includes/newsletter.php' ?>
+<?php include __DIR__ . '/includes/footer.php' ?>

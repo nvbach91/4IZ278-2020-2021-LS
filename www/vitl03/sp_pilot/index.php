@@ -1,20 +1,12 @@
+<?php
+session_start();
+    
 
+$page = isset($_GET['page']) && file_exists($_GET['page'] . '.php') ? htmlspecialchars($_GET['page']) : 'home';
+// Include and show the requested page
+include $page . '.php';
+?>
 
-<?php session_start(); ?>
-
-<?php include __DIR__ . '/includes/header.php' ?>
-
-
-
-
-<?php include __DIR__ . '/includes/categories.php' ?>
-<?php include __DIR__ . '/includes/productDisplay.php' ?>
-
-
-
-
-
-<?php include __DIR__ . '/includes/footer.php' ?>
 
 
 

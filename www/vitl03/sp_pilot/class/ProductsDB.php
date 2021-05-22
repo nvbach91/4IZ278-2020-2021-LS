@@ -9,11 +9,9 @@ class ProductsDB extends Database
     {
         $offset = 0;
 
-        if (!empty($_GET)) {
-            $offset = $_GET['offset'];
-        }
+
         $nItemsInDatabase = $this->pdo->query('SELECT COUNT(product_id) FROM ' . $this->tableName)->fetchColumn();
-    
+
 
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE 1 LIMIT ' . ITEMS_PER_PAGINATION . ' OFFSET ?;';
         $statement = $this->pdo->prepare($sql);
@@ -23,13 +21,50 @@ class ProductsDB extends Database
         return $statement->fetchAll();
     }
 
+    public function fetchByProd()
+    {
+
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
+        $statement->execute(([$_GET['id']]));
+        return $statement->fetch();
+    }
+    public function fetchById($id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
+        $statement->execute([$id]);
+        return $statement->fetch();
+    }
+
+
+
+    public function fetchByArray($array)
+    {
+        $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id IN (' . $array . ')');
+        $statement->execute(array_keys($products_in_cart));
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function fetchColumn($value, $id)
+    {
+        $statement = $this->pdo->prepare('SELECT ' . $value . ' FROM ' . $this->tableName . ' WHERE product_id =?');
+        $statement->execute([$id]);
+        return $statement->fetchColumn();
+    }
+
+    public function fetchByProdPost()
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
+        $statement->execute(htmlspecialchars([$_POST['id']]));
+        return $statement->fetch();
+    }
+
     public function fetchNumberOfProducts()
     {
         return $this->pdo->query('SELECT COUNT(product_id) FROM ' . $this->tableName)->fetchColumn();
     }
     public function create()
     {
-        $new_item = $_POST;
+        $new_item = htmlspecialchars($_POST);
         $isSubmitted = !empty($_POST);
         $success = false;
 
@@ -40,49 +75,46 @@ class ProductsDB extends Database
             }
 
             foreach ($new_item as $key => $value) {
-                if (empty($value)) {
-                    array_push($errors, "$key is empty");
+
+                if ($key == 'name' || $key == 'price') {
+                    if (empty($value)) {
+                        array_push($errors, "$key is empty");
+                    }
                 }
             }
         }
 
+
+
         if ($isSubmitted and empty($errors)) {
             // insert into database
             $statement = $this->pdo->prepare("
-                        INSERT INTO `products`(`name`, `price`, `img`) VALUES 
+                        INSERT INTO `products`(`name`, `price`, `discount`, `desc` ) VALUES 
                          (
-                          ? , ? ,?
+                          ? , ? , ? , ?
                          )                                           
                          ");
-            $statement->execute(array($new_item['name'], $new_item['price'], $new_item['img']));
+
+            if (empty($new_item['discount'])) {
+                $new_item['discount'] = 0;
+            }
+            $statement->execute(array($new_item['name'], $new_item['price'], $new_item['discount'], $new_item['description']));
             $success = true;
         }
         return $success;
     }
     public function update()
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
-        $statement->execute(array($_GET['id']));
-        $client = $statement->fetch();
-
-        if (!$client) {
-            die("Unable to find a client");
-        }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            $id = $_GET['id'];
-            $name = $_POST['name'];
-            $price = $_POST['price'];
-            $img = $_POST['img'];
-
-
-            $statement = $this->pdo->prepare('UPDATE ' . $this->tableName . ' SET name=?, price=?, img=? WHERE product_id=?');
-            $statement->execute(array($name, $price, $img, $id));
-
-            header('Location: index.php');
-        }
+        $statement = $this->pdo->prepare('UPDATE ' . $this->tableName . ' SET `name`= :name, `price` =:price,`discount`=:discount,`desc`=:desc,`last_updated_at`=now() WHERE `product_id`=:product_id');
+        $statement->execute([
+            'product_id' => htmlspecialchars($_POST['product_id']),
+            'name' => htmlspecialchars($_POST['name']),
+            'price' => htmlspecialchars($_POST['price']),
+            'discount' => htmlspecialchars($_POST['discount']),
+            'desc' => htmlspecialchars($_POST['desc'])
+        ]);
     }
+
     public function delete()
     {
         $id = @$_GET['id'];
@@ -98,12 +130,12 @@ class ProductsDB extends Database
     public function getClientInfo()
     {
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
-        $statement->execute(array($_GET['id']));
+        $statement->execute(array(htmlspecialchars($_POST['product_id'])));
         return $statement->fetch();
-     
     }
-    public function getErrors(){
-        $new_item = $_POST;
+    public function getErrors()
+    {
+        $new_item = htmlspecialchars($_POST);
         $errors = [];
         if (!empty($new_item)) {
             if (!is_numeric($new_item['price'])) {
@@ -111,32 +143,19 @@ class ProductsDB extends Database
             }
 
             foreach ($new_item as $key => $value) {
-                if (empty($value)) {
-                    array_push($errors, "$key is empty");
 
+                if ($key == 'name' || $key == 'price') {
+                    if (empty($value)) {
+                        array_push($errors, "$key is empty");
+                    }
                 }
             }
         }
+
+
         return $errors;
     }
-    public function buy(){
-        
-        session_start();
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE product_id = :id';
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute(['id' => $_GET['id']]);
-        $products = $statement->fetch();
-        if (!$products){
-            exit("Unable to find products!");
-        }
-        
-        $_SESSION['cart'][] = $products["product_id"];
-        header('Location: cart.php');
-        exit();
-    }
+
     public function getSumOfProducts()
     {
         $ids = @$_SESSION['cart'];
@@ -144,29 +163,25 @@ class ProductsDB extends Database
 
             $question_marks = str_repeat('?,', count($ids) - 1) . '?';
 
-        $products_sum = $this->pdo->prepare("SELECT SUM(price) FROM products WHERE product_id IN ($question_marks)");
-       
-        $products_sum->execute(array_values($ids));
-        return $products_sum->fetchColumn();
+            $products_sum = $this->pdo->prepare('SELECT SUM(price) FROM ' . $this->tableName . ' WHERE product_id IN ($question_marks)');
+
+            $products_sum->execute(array_values($ids));
+            return $products_sum->fetchColumn();
         }
     }
-
-
-    public function cart()
+    public function showProductInCat()
     {
 
-        session_start();
-        $ids = @$_SESSION['cart'];
-        if (is_array($ids) && count($ids)) {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' JOIN product_category ON products.product_id=product_category.product_id WHERE product_category.category_id=?');
+        $statement->execute(array(htmlspecialchars($_GET['category'])));
+        return $statement->fetchAll();
+    }
 
-            $question_marks = str_repeat('?,', count($ids) - 1) . '?';
-
-            $statement = $this->pdo->prepare("SELECT * FROM products WHERE product_id IN ($question_marks)");
-
-            $statement->execute(array_values($ids));
-            return $statement->fetchAll();
-      
-        }
+    public function searchProduct($search)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE name LIKE "%' . $search . '%" OR "desc" LIKE "%' . $search . '%"');
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }
 

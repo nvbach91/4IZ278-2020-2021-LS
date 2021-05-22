@@ -6,5 +6,3 @@ interface DatabaseOperations {
     public function create();
     public function delete();
 }
-
-?> 

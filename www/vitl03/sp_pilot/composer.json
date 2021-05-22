@@ -1,0 +1,13 @@
+{
+    "name": "dev/facebook",
+    "authors": [
+        {
+            "name": "Lukas Vit",
+            "email": "vitl03@vse.cz"
+        }
+    ],
+    "require": {
+        "facebook/graph-sdk": "^5.1",
+        "google/apiclient": "^2.0"
+    }
+}

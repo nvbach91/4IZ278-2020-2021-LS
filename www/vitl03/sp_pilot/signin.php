@@ -1,6 +1,24 @@
-<?php require __DIR__ . '/config.php'; ?>
+<?php require_once __DIR__ . '/class/UsersDB.php'; ?>
 <?php
-session_start();
+
+require_once __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/config.php'; ?>
+
+<?php
+
+if (isset($_SESSION['access_token'])) {
+    header('Location: index.php?page=profile');
+}
+
+
+
+$fb = new \Facebook\Facebook([
+    'app_id' => APP_ID,
+    'app_secret' => APP_SECRET,
+    'default_graph_version' => 'v2.10',
+]);
+
+$loginUrl = $fb->getRedirectLoginHelper()->getLoginUrl(LOGIN_CALLBACK_URL, ['email']);
 
 
 $invalidInputs = [];
@@ -8,27 +26,40 @@ $msg = '';
 $msgClass = '';
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['password']);
 
-    $statement = $pdo -> prepare('SELECT * FROM users WHERE email = :email LIMIT 1');
-    $statement->execute([
-        'email' => $email
-    ]);
-    $existing_user = @$statement->fetchAll()[0];
+    $usersDB = new UsersDB();
+    $existing_user = $usersDB->fetchUserByEmail($email);
+
 
     if (@password_verify($password, $existing_user['password'])) {
         $_SESSION['user_id'] = $existing_user['id'];
         $_SESSION['user_email'] = $existing_user['email'];
         $_SESSION['user_privillage'] = $existing_user['privillage'];
- 
 
-        header('Location: index.php');
+        if ($_SESSION['user_privillage'] == 3) {
+            header('Location: index.php?page=admin');
+        } else {
+            header('Location: index.php?page=profile');
+        }
     } else {
         $msg = 'Combination of email and password is incorrect';
         $msgClass = 'alert-danger';
     }
 }
+
+
+
+
+
+if (!isset($_SESSION['access_token'])) {
+    $login_button = '<a href="' . $google_client->createAuthUrl() . '"class="google btn">
+    <i class="fa fa-google fa-fw"></i> Login with Google
+</a>';
+}
+
+
 ?>
 
 <?php include __DIR__ . '/includes/header.php' ?>
@@ -37,31 +68,52 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
 
 
-    <body>
+<body>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <div class="container">
-    <br>
-     
+        <div class="row">
+            <div class="col-md-8">
+                <br>
 
-    <h2>Sign in</h2>
+                <h2>Sign in</h2>
+                <br>
+                <?php if ($msg != '') : ?>
+                    <div class="alert <?php echo $msgClass; ?>"><?php echo $msg; ?></div>
+                <?php endif; ?>
 
-    <?php if ($msg != '') : ?>
-        <div class="alert <?php echo $msgClass; ?>"><?php echo $msg; ?></div>
-    <?php endif; ?>
+                <form class="form-signin" method="POST">
+                    <div class="form-label-group">
+                        <label for="email">Email address</label>
+                        <input type="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
+                    </div>
 
-    <form class="form-signin" method="POST">
-        <div class="form-label-group">
-            <label for="email">Email address</label>
-            <input type="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <div class="form-label-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                    </div>
+                    <br>
+                    <button class="button-red text-uppercase" type="submit">Sign in</button>
+                </form>
+
+                <a href="signup.php">Don't have an account yet? Go to sign up!</a>
+            </div>
+
+            <div class="col-md-4">
+                <br>
+                <br>
+                <a href="<?php echo $loginUrl; ?>" class="fb btn">
+                    <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                </a>
+
+                <?php echo $login_button; ?>
+
+
+
+
+            </div>
         </div>
 
-        <div class="form-label-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" placeholder="Password" required="">
-        </div>
-        <br>
-        <button class="button-red text-uppercase" type="submit">Sign in</button>
-    </form>
-    <a href="signup.php">Don't have an account yet? Go to sign up!</a>
     </div>
+
     <div style="margin-bottom: 600px"></div>
-<?php include __DIR__ . '/includes/footer.php' ?>
+    <?php include __DIR__ . '/includes/footer.php' ?>
