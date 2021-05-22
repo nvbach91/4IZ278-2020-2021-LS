@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SongsController;
 use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,17 @@ use App\Http\Controllers\AsideItemsController;
 Route::get('/', function () {
     $buttonsController      = new ButtonsController;
     $asideItemsController   = new AsideItemsController;
+    $usersController        = new UsersController;
 
     $buttons                = $buttonsController->getButtons();
     $asideItems             = $asideItemsController->getAsideItems();
+    $loggedUser             = $usersController->getCurrentUser();
 
-    return view('homepage')->with('LoggedUser', 'Logged User: Peta Default')
+    return view('homepage')->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 Route::get('/dbtest', function () {
@@ -47,7 +51,8 @@ Route::get('/users', function () {
         ->with('LoggedUser', 'Logged User: Peta Default')
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 Route::get('/songs/{song_id}', function ($song_id) {
@@ -55,16 +60,19 @@ Route::get('/songs/{song_id}', function ($song_id) {
     $asideItemsController   = new AsideItemsController;
     $songsController        = new SongsController;
     $buttonsController      = new ButtonsController;
+    $usersController        = new UsersController;
 
     $asideItems             = $asideItemsController->getAsideItems();
     $song                   = $songsController->show($song_id);
     $buttons                = $buttonsController->getButtons();
+    $loggedUser             = $usersController->getCurrentUser();
 
     return view('song')->with('songArray', $song)
-        ->with('LoggedUser', 'Logged User: Peta Default')
+        ->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
@@ -73,59 +81,88 @@ Route::get('/profile', function () {
 
     $asideItemsController   = new AsideItemsController;
     $buttonsController      = new ButtonsController;
+    $usersController        = new UsersController;
 
     $asideItems             = $asideItemsController->getAsideItems();
     $buttons                = $buttonsController->getButtons();
+    $loggedUser             = $usersController->getCurrentUser();
 
-    return view('profile')->with('LoggedUser', 'Logged User: Peta Default')
+    return view('profile')->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 Route::get('/savedChords', function () {
 
     $asideItemsController   = new AsideItemsController;
     $buttonsController      = new ButtonsController;
+    $usersController        = new UsersController;
 
     $asideItems             = $asideItemsController->getAsideItems();
     $buttons                = $buttonsController->getButtons();
+    $loggedUser             = $usersController->getCurrentUser();
 
-    return view('savedChords')->with('LoggedUser', 'Logged User: Peta Default')
+    return view('savedChords')->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 Route::get('/createdByMe', function () {
 
     $asideItemsController   = new AsideItemsController;
     $buttonsController      = new ButtonsController;
+    $usersController        = new UsersController;
 
     $asideItems             = $asideItemsController->getAsideItems();
     $buttons                = $buttonsController->getButtons();
+    $loggedUser             = $usersController->getCurrentUser();
 
-    return view('createdByMe')->with('LoggedUser', 'Logged User: Peta Default')
+    return view('createdByMe')->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
 });
 
 Route::get('/search/{query}', function ($query) {
     $songsController        = new SongsController;
-
     $buttonsController      = new ButtonsController;
     $asideItemsController   = new AsideItemsController;
+    $usersController        = new UsersController;
 
     $buttons                = $buttonsController->getButtons();
     $asideItems             = $asideItemsController->getAsideItems();
-
-    $results = $songsController->searchByQuery($query);
+    $results                = $songsController->searchByQuery($query);
+    $loggedUser             = $usersController->getCurrentUser();
 
     return view('homepage')
         ->with('results', $results)
-        ->with('LoggedUser', 'Logged User: Peta Default')
+        ->with('LoggedUser', $loggedUser['username'])
         ->with('Button1', $buttons['button1'])
         ->with('Button2', $buttons['button2'])
-        ->with('asideItems', $asideItems);;;
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
+});
+
+Route::redirect('/search', '/');
+
+Route::get('/signup', function() {
+    $asideItemsController   = new AsideItemsController;
+    $buttonsController      = new ButtonsController;
+    $usersController        = new UsersController;
+
+    $asideItems             = $asideItemsController->getAsideItems();
+    $buttons                = $buttonsController->getButtons();
+    $loggedUser             = $usersController->getCurrentUser();
+
+    return view('signup')->with('LoggedUser', $loggedUser['username'])
+        ->with('Button1', $buttons['button1'])
+        ->with('Button2', $buttons['button2'])
+        ->with('asideItems', $asideItems)
+        ->with('title', 'Kjepii');
+    
 });

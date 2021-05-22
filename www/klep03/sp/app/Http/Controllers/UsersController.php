@@ -82,4 +82,10 @@ class UsersController extends Controller
     {
         //
     }
+
+    public function getCurrentUser() {
+        return [
+            'username' => 'Not Logged in'
+        ];
+    }
 }
