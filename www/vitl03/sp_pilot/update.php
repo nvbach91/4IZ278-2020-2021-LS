@@ -1,13 +1,16 @@
 <?php require_once __DIR__ . '/class/ProductsDB.php'; ?>
 <?php
-// OPTIMISTIC UPDATE LOCK
-$msg = '';
-$msgClass = '';
+session_start();
 
-if (!(isset($_SESSION['user_id']) || !($_SESSION['user_privillage'] > 2))) {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_privillage'] != 3) {
     header('Location: index.php');
     die();
 }
+
+
+$msg = '';
+$msgClass = '';
+
 
 $productsDB = new ProductsDB();
 

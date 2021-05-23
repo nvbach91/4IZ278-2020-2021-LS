@@ -4,10 +4,21 @@
 <?php
 
 $productsDB = new ProductsDB();
-$products = $productsDB->fetchAll();
+
+
+$nItemsPerPagination = 6;
 
 $nItemsInDatabase = $productsDB->fetchNumberOfProducts();
-$nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
+$nPaginations = ceil($nItemsInDatabase / $nItemsPerPagination);
+
+if (isset($_GET['offset'])) {
+    $offset = (int)$_GET['offset'];
+} else {
+    $offset = 0;
+}
+
+
+$products = $productsDB->fetchAllPagination($nItemsPerPagination,$offset);
 
 
 
@@ -75,13 +86,14 @@ $nPaginations = ceil($nItemsInDatabase / ITEMS_PER_PAGINATION);
         <div class="row">
 
 
-            <div class="paginations">
-                <?php for ($i = 1; $i <= $nPaginations; $i++) { ?>
-                    <a class="pagination pagination<?php echo ($offset / ITEMS_PER_PAGINATION) + 1 == $i ? ' active ' : ''; ?>" href="index.php?offset=<?php echo ($i - 1) * ITEMS_PER_PAGINATION; ?>">
-                        <?php echo $i; ?>
-                    </a>
 
-                <?php } ?>
+
+            <div class="paginations">
+                    <?php for ($i = 1; $i <= $nPaginations; $i++) { ?>
+                <a class="pagination pagination<?php echo $offset / $nItemsPerPagination + 1 == $i ? " active " : ""; ?>" href="home.php?offset=<?php echo ($i - 1) * $nItemsPerPagination; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php } ?>
 
             </div>
         </div>

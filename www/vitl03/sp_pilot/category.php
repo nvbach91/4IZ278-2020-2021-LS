@@ -76,20 +76,7 @@ $category_names = $categoriesDB->fetchAll();
 
         </div>
 
-        <div class="row">
-
-
-            <div class="paginations">
-                <?php for ($i = 1; $i <= $nPaginations; $i++) { ?>
-                    <a class="pagination pagination<?php echo ($offset / ITEMS_PER_PAGINATION) + 1 == $i ? ' active ' : ''; ?>" href="index.php?offset=<?php echo ($i - 1) * ITEMS_PER_PAGINATION; ?>">
-                        <?php echo $i; ?>
-                    </a>
-
-                <?php } ?>
-
-            </div>
-        </div>
-
+      
     </div>
 </div>
 <script type="text/javascript">

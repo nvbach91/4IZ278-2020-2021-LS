@@ -5,18 +5,13 @@ class ProductsDB extends Database
 {
 
     protected $tableName = 'products';
-    public function fetchAll()
+    public function fetchAll(){
+        // fetch all
+    }
+    public function fetchAllPagination($nItemsPerPagination,$offset)
     {
-        $offset = 0;
-
-
-        $nItemsInDatabase = $this->pdo->query('SELECT COUNT(product_id) FROM ' . $this->tableName)->fetchColumn();
-
-
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE 1 LIMIT ' . ITEMS_PER_PAGINATION . ' OFFSET ?;';
-        $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(1, $offset, PDO::PARAM_INT);
-        $statement->execute();
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE 1 LIMIT '.$nItemsPerPagination.' OFFSET ?;');
+        $statement->execute([$offset]);
 
         return $statement->fetchAll();
     }
@@ -64,7 +59,7 @@ class ProductsDB extends Database
     }
     public function create()
     {
-        $new_item = htmlspecialchars($_POST);
+        $new_item = $_POST;
         $isSubmitted = !empty($_POST);
         $success = false;
 
@@ -135,7 +130,7 @@ class ProductsDB extends Database
     }
     public function getErrors()
     {
-        $new_item = htmlspecialchars($_POST);
+        $new_item = $_POST;
         $errors = [];
         if (!empty($new_item)) {
             if (!is_numeric($new_item['price'])) {
