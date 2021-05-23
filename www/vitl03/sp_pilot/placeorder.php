@@ -21,33 +21,47 @@ if ($products_in_cart) {
     }
 }
 
-if (isset($_POST['payment'])) {
+if (isset($_SESSION['payment'])) {
     $paymentDB = new PaymentDB();
-    $payment = $paymentDB->fetchById(htmlspecialchars($_POST['payment']));
+    $payment = $paymentDB->fetchById(($_SESSION['payment']));
 }
-if (isset($_POST['shipping'])) {
+if (isset($_SESSION['shipping'])) {
     $shippingDB = new ShippingDB();
-    $shipping = $shippingDB->fetchById(htmlspecialchars($_POST['shipping']));
+    $shipping = $shippingDB->fetchById(($_SESSION['shipping']));
 }
-if (isset($_POST['email'])) {
+if (isset($_SESSION['email'])) {
     $usersDB = new UsersDB();
 
 
-    if (isset($_POST['password'])) {
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars(trim(($_POST['password'])));
+    if (isset($_SESSION['password'])) {
+        $email = htmlspecialchars($_SESSION['email']);
+        $password = htmlspecialchars(trim(($_SESSION['password'])));
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $isExistingUser = false;
 
-        $usersDB->insert($email, $hashedPassword);
+        $userRecords =  $usersDB->fetchAll();
+
+        foreach ($userRecords as $userRecord) {
+            if (!$userRecord) {
+                continue;
+            }
+            if ($userRecord['email'] == $email) {
+                $isExistingUser = true;
+                break;
+            }
+        }
+        if (!$isExistingUser) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $usersDB->insert($email, $hashedPassword);
+        }
     }
-
-    $user = $usersDB->fetchByEmail(htmlspecialchars($_POST['email']));
+    $user = $usersDB->fetchByEmail($_SESSION['email']);
 
     if ($user) {
         $userEmail = $user['email'];
     } else {
-        $userEmail = htmlspecialchars($_POST['email']);
+        $userEmail = $_SESSION['email'];
     }
     if (!($userEmail)) {
         if (isset($_SESSION['userData']['email'])) {
@@ -58,48 +72,47 @@ if (isset($_POST['email'])) {
     }
 }
 
-if (isset($_POST['detail'])) {
-    $detail = htmlspecialchars($_POST['detail']);
+if (isset($_SESSION['detail'])) {
+    $detail = ($_SESSION['detail']);
 } else {
     $detail = '';
 }
 
 $ordersDB = new OrdersDB();
 
-if (!empty($_POST)) {
-    if (!empty($products)) {
-        $total = $subtotal + $shipping['price'] + $payment['price'];
-        if (isset($_POST['first-name'])  && isset($_POST['last-name']) && isset($_POST['address']) && isset($_POST['city']) && isset($_POST['country']) && isset($_POST['zip-code']) && isset($_POST['tel'])) {
-            $firstName = htmlspecialchars($_POST['first-name']);
-            $lastName = htmlspecialchars($_POST['last-name']);
-            $address = htmlspecialchars($_POST['address']);
-            $city = htmlspecialchars($_POST['city']);
-            $country = htmlspecialchars($_POST['country']);
-            $zipcode = htmlspecialchars($_POST['zip-code']);
-            $tel = htmlspecialchars($_POST['tel']);
+
+if (!empty($products)) {
+    $total = $subtotal + $shipping['price'] + $payment['price'];
+    if (isset($_SESSION['firstName'])  && isset($_SESSION['lastName']) && isset($_SESSION['address']) && isset($_SESSION['city']) && isset($_SESSION['country']) && isset($_SESSION['zip']) && isset($_SESSION['phone'])) {
+        $firstName = $_SESSION['firstName'];
+        $lastName = $_SESSION['lastName'];
+        $address = $_SESSION['address'];
+        $city = $_SESSION['city'];
+        $country = $_SESSION['country'];
+        $zipcode = $_SESSION['zip'];
+        $tel = ($_SESSION['phone']);
 
 
-            $ordersDB->insert($userEmail, $total, $user['id'], $payment['payment_id'], $shipping['shipping_id'], $detail, $firstName, $lastName, $address, $city, $country, $zipcode, $tel);
+        $ordersDB->insert($userEmail, $total, $user['id'], $payment['payment_id'], $shipping['shipping_id'], $detail, $firstName, $lastName, $address, $city, $country, $zipcode, $tel);
 
-            $orderId = $ordersDB->fetchByEmail($userEmail);
-        }
+        $orderId = $ordersDB->fetchByEmail($userEmail);
+
         $to = $userEmail;
 
-        $subject = 'Your order';
+        $subject = 'Your order #' . $orderId['order_id'];
         $message = '
-        <html>
-        <head>
-        <title>Thank you for your order. Your order was successfully accepted and we are working on it.</title>
-        </head>
-        <body>
-        <p>Here are the order details!</p>
-        <a href="index.php?page=order&id=' . $orderId['order_id'] . '></a>
-        <p>Have a nice day,</p>
-        <br>
-        <p>Your Active Team</p>
-        </body>
-        </html>
-        ';
+    <html>
+    <head>
+      <title>Thank you for your order. Your order was successfully accepted and we are working on it.</title>
+    </head>
+    <body>
+      <p>Here are the order details!</p>
+      <a href="https://eso.vse.cz/~vitl03/sp_pilot/index.php?page=order&id=' . $orderId['order_id'] . '">Click here to show the order details!</a>
+      <p>Have a nice day,</p>
+      <p>Your Active Team</p>
+    </body>
+    </html>
+    ';
 
         // To send HTML mail, the Content-type header must be set
         $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -113,6 +126,7 @@ if (!empty($_POST)) {
         mail($to, $subject, $message, $headers);
     }
 }
+
 $order = $ordersDB->fetchByEmail($userEmail);
 
 if (!empty($products)) {
@@ -187,7 +201,7 @@ if (!empty($products)) {
 
 
                         <td class="table-row">Total</td>
-                        <td style="text-align:center; font-weight:600;"><?php echo $total; ?></td>
+                        <td style="text-align:center; font-weight:600;"><?php echo $total; ?> CZK</td>
                     </tr>
                 <?php endif; ?>
             </table>

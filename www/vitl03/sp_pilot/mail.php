@@ -11,7 +11,7 @@ $message = '
   <title>Thank You For Your Subscription</title>
 </head>
 <body>
-  <p>Here are the news from US!</p>
+  <p>Here are the news from ACTIVE!</p>
   <table>
     <tr>
       <th>Subject</th><th>Day</th><th>Month</th><th>Year</th>
@@ -24,7 +24,6 @@ $message = '
     </tr>
   </table>
   <p>Have a nice day,</p>
-  <br>
   <p>Your Active Team</p>
 </body>
 </html>
@@ -35,7 +34,7 @@ $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
 // Additional headers
-$headers .= 'To: '. $_POST['mail'] . "\r\n";
+$headers .= 'To: ' . $_POST['mail'] . '' . "\r\n";
 $headers .= 'From: Active Team <admin@active.com>' . "\r\n";
 
 // Mail it
