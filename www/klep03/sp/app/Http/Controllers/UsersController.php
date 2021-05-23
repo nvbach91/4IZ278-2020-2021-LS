@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -35,7 +36,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::insert('insert into users INSERT INTO `users`(`id`, `name`, `email`, `email_verified_at`, `password`, `Instruments`, `user_info`, `remember_token`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     }
 
     /**
@@ -91,7 +92,7 @@ class UsersController extends Controller
     }
 
     private function createUser($email, $password) {
-        
+
     }
 
     function getSignUpFormData(Request $request)
