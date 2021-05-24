@@ -143,3 +143,10 @@ Route::get('/signin', function (Request $request) {
 // });
 
 Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
+
+Route::get('/test/{data}', function($data) {
+    $usersController = new UsersController;
+
+    
+    return $usersController->searchByEmail($data);
+});

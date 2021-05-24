@@ -36,7 +36,13 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        DB::insert('insert into users INSERT INTO `users`(`id`, `name`, `email`, `email_verified_at`, `password`, `Instruments`, `user_info`, `remember_token`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        // DB::insert('insert into users INSERT INTO `users`(`email`, `password`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?), ');
+        DB::table('users')-> insert([$request]);
+    }
+
+    public function storeDefault($request)
+    {
+        DB::table('users')-> insert([$request]);
     }
 
     /**
@@ -92,13 +98,23 @@ class UsersController extends Controller
     }
 
     private function createUser($email, $password) {
+        $hashedPassword = $this->hashPassword($password);
+        $dbData = [
+            'email' => $email,
+            'password' => $hashedPassword,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $this->storeDefault($dbData);
+    }
 
+    function hashPassword($password) {
+        //TO be implemented
+        return $password;
     }
 
     function getSignUpFormData(Request $request)
     {
-        // return $request->input();
-        // return "ahoj";
         $request->validate([
             'email' => 'required',
             'password' => 'required | min:8',
@@ -107,6 +123,7 @@ class UsersController extends Controller
         $data = $request->input();
 
         //ulozeni do db
+        $this->createUser($data['email'], $data['password']);
 
         $email = $data['email'];
         // return $request->input();
@@ -115,5 +132,12 @@ class UsersController extends Controller
 
     public function getEmailFromURL(Request $r) {
         return $r->input('email');
+    }
+
+    public function searchByEmail($email) {
+        return DB::table('users')
+            ->select('id')
+            ->where('email', '=', $email)
+            ->get();
     }
 }
