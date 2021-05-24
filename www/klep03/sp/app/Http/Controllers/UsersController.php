@@ -37,12 +37,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         // DB::insert('insert into users INSERT INTO `users`(`email`, `password`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?), ');
-        DB::table('users')-> insert([$request]);
+        DB::table('users')->insert([$request]);
     }
 
     public function storeDefault($request)
     {
-        DB::table('users')-> insert([$request]);
+        DB::table('users')->insert([$request]);
     }
 
     /**
@@ -53,7 +53,12 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        // return DB::table('users')->where('id', $id)->first();
+    }
+
+    function getById($id) {
+       $user =  DB::table('users')->find($id);  
+       return $user;
     }
 
     /**
@@ -97,7 +102,8 @@ class UsersController extends Controller
         ];
     }
 
-    private function createUser($email, $password) {
+    private function createUser($email, $password)
+    {
         $hashedPassword = $this->hashPassword($password);
         $dbData = [
             'email' => $email,
@@ -108,9 +114,20 @@ class UsersController extends Controller
         $this->storeDefault($dbData);
     }
 
-    function hashPassword($password) {
+    function hashPassword($password)
+    {
         //TO be implemented
-        return $password;
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    function isUsedEmail($email)
+    {
+        $results = $this->searchByEmail($email);
+        if (count($results) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function getSignUpFormData(Request $request)
@@ -120,24 +137,65 @@ class UsersController extends Controller
             'password' => 'required | min:8',
             'confirmPassword' => 'required | same:password',
         ]);
+
         $data = $request->input();
+        $email = $data['email'];
+
+        if ($this->isUsedEmail($email)) {
+            return redirect('signup?e=usedEmail');
+        }
 
         //ulozeni do db
         $this->createUser($data['email'], $data['password']);
 
-        $email = $data['email'];
+
         // return $request->input();
         return redirect('signin?email=' . $email);
     }
 
-    public function getEmailFromURL(Request $r) {
-        return $r->input('email');
-    }
+    // public function getEmailFromURL(Request $r)
+    // {
+    //     return $r->input('email');
+    // }
 
-    public function searchByEmail($email) {
+    public function searchByEmail($email)
+    {
         return DB::table('users')
             ->select('id')
             ->where('email', '=', $email)
-            ->get();
+            ->value('id');
+            // ->get();
+    }
+
+    public function getSignInFormData(Request $request) {
+        // return $request;
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $request = $request->input();
+       $email = $request['email'];
+       $password = $request['password'];
+       
+       $id = $this->searchByEmail($email);
+
+    //    if (count($id) != 1) {
+    //        //TODO error
+    //    }
+    //    $id = $id[0]['id'];
+
+       $user = $this->getById($id);
+
+       if(!password_verify($password, $user->password)){
+            return redirect('/signin?email=' . $email . '&error=badPassword');
+       }
+
+       $this->logUserIn();
+       return redirect('/?info=loginSuccessful');
+
+    }
+
+    private function logUserIn (){
+        // TODO
     }
 }

@@ -19,6 +19,11 @@
         @error('email')
           <div class="redText">{{$message}}</div>  
         @enderror
+        <?php 
+          if(isset($customErrorMessage)){
+            echo "<div class=\"redText\">The email you provided already exists. </div>";
+          }
+        ?>
     </div>
 
     <div class="mb-3">

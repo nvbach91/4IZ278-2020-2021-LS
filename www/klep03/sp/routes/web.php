@@ -109,12 +109,15 @@ Route::get('/search/{query}', function ($query) {
 
 Route::redirect('/search', '/');
 
-Route::get('/signup', function () {
+Route::get('/signup', function (Request $request) {
+    $customErrorMessage = $request->input('e');
+    
 
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
 
     return view('signup')->with('pageItems', $pageItems)
+        ->with('customErrorMessage', $customErrorMessage)
         ->with('title', 'Sign up');
 });
 
@@ -144,9 +147,12 @@ Route::get('/signin', function (Request $request) {
 
 Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
 
-Route::get('/test/{data}', function($data) {
+Route::post('/signin/submit', [UsersController::class, 'getSignInFormData']);
+
+Route::get('/test', function() {
     $usersController = new UsersController;
 
     
-    return $usersController->searchByEmail($data);
+     $response = $usersController->searchByEmail('klepetkope@gmail.com');
+     return json_encode($response);
 });
