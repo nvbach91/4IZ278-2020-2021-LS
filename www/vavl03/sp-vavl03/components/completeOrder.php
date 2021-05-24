@@ -36,6 +36,7 @@ if ($numberOfBoughtProducts != count($productIds)) {
     unset($_SESSION['userState']);
     unset($_SESSION['userStreet']);
     unset($_SESSION['userZip']);
+    unset($_SESSION['productsToShow']);
     header('Location: ../products_gone.php');
     exit();
 } else {
@@ -52,7 +53,7 @@ if ($numberOfBoughtProducts != count($productIds)) {
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
         exit;
     }
-    // send email
+    // send email 
     $email = $fb->get('/me?locale=en_US&fields=email')->getGraphUser();
     sendEmail($email['email'], 'Order confirmation');
 
@@ -73,6 +74,7 @@ if ($numberOfBoughtProducts != count($productIds)) {
     unset($_SESSION['userState']);
     unset($_SESSION['userStreet']);
     unset($_SESSION['userZip']);
+    unset($_SESSION['productsToShow']);
     /* prevent user from coming back into the order process, force him to start new order by redirecting him to index.php
  in each order process page, $_SESSION['orderSent'] is unset in startNewOrder.php*/
     $_SESSION['orderSent'] = true;

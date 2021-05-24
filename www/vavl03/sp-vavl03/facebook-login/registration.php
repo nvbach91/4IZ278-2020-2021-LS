@@ -19,7 +19,7 @@ $usersDB = new UsersDB();
 $user = $usersDB->fetchUserbyFbId($userFbId);
 if (!$user) {
     //create new user
-    $usersDB->createUser($userFbId, $userName, $email['email']);
+    $usersDB->createUser($userFbId, $userName, $email['email']); 
     //send registration email
     sendEmail($email['email'], 'Registration confirmation');
     header('Location: ../cart.php');

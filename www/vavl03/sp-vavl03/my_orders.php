@@ -83,7 +83,7 @@ function getPaymentMethod($method)
             </div>
         <?php endforeach; ?>
     <?php else : ?>
-        <h5 class="color-white">No orders :(</h5>
+        <h5 class="color-white no-orders">No orders :(</h5>
     <?php endif; ?>
 </div>
 <?php require __DIR__ . '/incl/footer.php' ?>

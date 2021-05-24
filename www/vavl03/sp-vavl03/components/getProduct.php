@@ -3,13 +3,13 @@
 header("Content-Type:application/json");
 // first update pieces of product in session cart
 session_start();
-foreach ($_GET['productsInCart'] as $product) {
+foreach ($_SESSION['productsToShow'] as $product) {
     if ($_GET['productName'] === $product['product_name']) {
         $productIdToUpdate = $product['product_id'];
     }
 }
 $newPcs = $_GET['productPcs'];
-$_SESSION['cart'][$productIdToUpdate] = $newPcs;
+$_SESSION['cart'][$productIdToUpdate] = $newPcs; // update pcs for corresponding product id in cart
 
 // then return updated product price
 if (!empty($_GET['productName'])) {
