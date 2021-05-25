@@ -68,7 +68,7 @@ Route::get('/songs/{song_id}', function ($song_id) {
     $ratings = $user_ratingsController->ratingsForSong($song_id);
 
     $commentsController = new CommentsController;
-    $comments           = $commentsController->renderComments();
+    $comments           = $commentsController->renderComments($song_id);
 
     return view('song')->with('song', $song)
         ->with('pageItems', $pageItems)
@@ -407,7 +407,7 @@ Route::get('/test', function (Request $request) {
     // echo $specificRating[0]->id;
 
     $commentsController = new CommentsController;
-    echo $commentsController->renderComments();
+    echo $commentsController->renderComments(3);
 });
 
 Route::get('/deleteSession', function (Request $request) {

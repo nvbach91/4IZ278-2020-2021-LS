@@ -83,9 +83,9 @@ class CommentsController extends Controller
         //
     }
 
-    public function renderComments()
+    public function renderComments($song_id)
     {
-        $topLevelComments = $this->getTopLevelComments();
+        $topLevelComments = $this->getTopLevelComments($song_id);
         $usersController = new UsersController;
 
         $result = null;
@@ -103,9 +103,10 @@ class CommentsController extends Controller
         return $result;
     }
 
-    public function getTopLevelComments()
+    public function getTopLevelComments($song_id)
     {
         return DB::table('comments')
+            ->where('song', '=', $song_id)
             ->where('response_to', '=', null)
             ->get();
     }
@@ -132,5 +133,9 @@ class CommentsController extends Controller
             }
         }
         return $result;
+    }
+
+    public function createNew($song)
+    {
     }
 }
