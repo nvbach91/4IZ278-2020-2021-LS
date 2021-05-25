@@ -6,8 +6,10 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SongsController;
 use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PageItemsController;
 use App\Http\Controllers\SavedSongsController;
+use App\Http\Controllers\User_ratingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\DB;
 
@@ -54,18 +56,36 @@ Route::get('/songs/{song_id}', function ($song_id) {
 
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
-    
-    if(!$pageItems['anonymous']) {
+
+    if (!$pageItems['anonymous']) {
         $savedSongsController = new SavedSongsController;
         $addedToSaved = $savedSongsController->isAlreadySaved(session('user_id'), $song_id);
     } else {
         $addedToSaved = false;
     }
 
-    return view('song')->with('song', $song[0])
+    $user_ratingsController = new User_ratingsController;
+    $ratings = $user_ratingsController->ratingsForSong($song_id);
+
+    $commentsController = new CommentsController;
+    $comments           = $commentsController->renderComments();
+
+    return view('song')->with('song', $song)
         ->with('pageItems', $pageItems)
         ->with('addedToSaved', $addedToSaved)
-        ->with('title', 'Song – ' . $song[0]->name);
+        ->with('ratings', $ratings)
+        ->with('commentsFormatted', $comments)
+        ->with('title', 'Song – ' . $song->name);
+});
+
+Route::get('/songs/{song_id}/rate', function ($song_id, Request $request) {
+    $user_ratingsController = new User_ratingsController;
+
+    if (null !== $request->input('rating')) {
+        $rating = $request->input('rating');
+        $user_ratingsController->writeRating($song_id, $rating);
+    }
+    return redirect('/songs/' . $song_id);
 });
 
 /*
@@ -174,16 +194,15 @@ Route::get('/savedChords', function () {
 
     $pageItems              = $pageItemsController->fetch();
 
-    $songs              = $savedSongsController->getSongsFromUser(session('user_id'));
-    foreach($songs as $song) {
-        
-    }
     $songs                  = [];
-    
-    
-    // array_push($songs, $songsController->show($song_id);
+    $userSaves              = $savedSongsController->getSongsFromUser(session('user_id'));
+    foreach ($userSaves as $userSave) {
+        $song = $songsController->show($userSave->song_id);
+        array_push($songs, $song);
+    }
 
     return view('savedChords')->with('pageItems', $pageItems)
+        ->with('songs', $songs)
         ->with('title', 'SavedChords');
 });
 
@@ -276,6 +295,7 @@ Route::get('/signin', function (Request $request) {
         $pageItems              = $pageItemsController->fetch();
 
         return view('signin')->with('pageItems', $pageItems)
+            ->with('error', $request->input('error'))
             ->with('title', 'Sign in')
             ->with('email', $email);
     }
@@ -362,11 +382,11 @@ Route::get('/test', function (Request $request) {
     // }
 
     $savedSongsController = new SavedSongsController;
-    
+
     $user_id = 2;
     $song_id = 3;
 
-//    var_dump($savedSongsController->isAlreadySaved($user_id, $song_id)); 
+    //    var_dump($savedSongsController->isAlreadySaved($user_id, $song_id)); 
 
     $results = DB::table('user_saved_songs')
         ->where('user_id', $user_id)
@@ -374,7 +394,20 @@ Route::get('/test', function (Request $request) {
         ->get();
 
     // return $savedSongsController->isAlreadySaved($user_id, $song_id);
-    return $savedSongsController->getSongsFromUser($user_id);
+    // return $savedSongsController->getSongsFromUser($user_id);
+
+    $user_ratingsController = new User_ratingsController;
+    // // echo 
+    // echo DB::table('user_ratings')
+    // ->where('song', 1)
+    // // ->avg('stars');
+    // echo 'Rating is ' . $user_ratingsController->getRating(1);
+    // echo 'How many people voted: ' . $user_ratingsController->countRatings(1);
+    // $specificRating = $user_ratingsController->findSpecificRating(1, 2);
+    // echo $specificRating[0]->id;
+
+    $commentsController = new CommentsController;
+    echo $commentsController->renderComments();
 });
 
 Route::get('/deleteSession', function (Request $request) {

@@ -1,15 +1,17 @@
 @include('includes.element-head')
-@if (isset($results))
-    <div>
-        <h2>Your saved chords:</h2>
-    </div>
+<div>
+    <h1>Your saved chords:</h2>
+</div>
+@if (isset($songs))
     <div id="results">
         @foreach ($songs as $song)
-            <a href="/songs/{{ $result->id }}">
-                <div class="searchResult">{{ $result->artist }} – {{ $result->name }}</div>
+            <a href="/songs/{{ $song->id }}">
+                <div class="searchResult">{{ $song->artist }} – {{ $song->name }}</div>
             </a>
         @endforeach
     </div>
+@else
+
 @endif
 
 @include('includes.element-foot')

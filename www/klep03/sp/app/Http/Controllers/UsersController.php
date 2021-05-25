@@ -246,7 +246,6 @@ class UsersController extends Controller
         ]);
         $data = $request->input();
 
-       
 
         DB::table('users')
             ->where('id', session('user_id'))

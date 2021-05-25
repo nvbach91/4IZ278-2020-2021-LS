@@ -47,7 +47,7 @@ class SongsController extends Controller
      */
     public function show($id)
     {
-        return Song::query()->where("id", $id)->get();
+        return DB::table('songs')->find($id);;
     }
 
     /**

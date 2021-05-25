@@ -8,16 +8,17 @@
 
     <div class="mb-3" style="margin-top: 20px;">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input name="email" type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp" value="<?php
-        echo (isset($email)) ?
-      htmlspecialchars($email) : '';
-        ?>">
+        <input name="email" type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp"
+            value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
 
     <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input name="password" type="password" class="form-control" id="signInPassword">
+        @if (isset($error) and $error = 'badPassword')
+            <div class="redText">Sorry, your password is incorrect.</div>
+        @endif
     </div>
 
     <button type="submit" class="btn btn-primary">Login</button>

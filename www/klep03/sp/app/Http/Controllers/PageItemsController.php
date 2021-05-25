@@ -35,6 +35,7 @@ class PageItemsController extends Controller
                 $username = $user->email;
             }
             $asideItems = [
+                'Search' => '/',
                 'My Profile' => '/profile',
                 'Saved Chords' => '/savedChords',
                 'Created By Me' => '/createdByMe',

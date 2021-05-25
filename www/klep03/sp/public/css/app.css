@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap');
-
 body {
     display: flex;
     flex-direction: column;
@@ -28,7 +27,7 @@ h1 {
     overflow: hidden;
 }
 
-#profile-edit > * > textarea {
+#profile-edit>*>textarea {
     width: 80%;
     height: 400px;
     resize: none;
@@ -96,7 +95,7 @@ h3 {
     justify-content: flex-end;
 }
 
-.miniNavBar > .item {
+.miniNavBar>.item {
     margin-right: 20px;
     display: flex;
     flex-direction: row;
@@ -105,8 +104,57 @@ h3 {
     border-radius: 6px;
 }
 
-.miniNavBar > .item > .item {
+.miniNavBar>.item>.item {
     margin-left: 5px;
+}
+
+#commentSection {
+    border-top: black solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.commentDiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.commentDiv>h4 {
+    display: flex;
+    align-items: flex-end
+}
+
+.time {
+    font-weight: 100;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.commentResponseDiv {
+    margin-left: 30px;
+}
+
+#newComment {
+    border-top: black solid;
+    padding-top: 10px;
+}
+
+#newComment > * > textarea {
+    resize: none;
+    height: 150px;
+    width: 80%;
+}
+
+#postCommentForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 20px 0;
+}
+
+.centralizeMargarin {
+    margin: auto;
 }
 
 .gray {
@@ -149,7 +197,6 @@ header {
 #headerLeft {
     justify-content: flex-start;
     font-size: 22px;
-
 }
 
 #headerMid {
@@ -182,7 +229,8 @@ header {
     height: 90%;
     width: 100%;
     border-color: black;
-    margin: 0px;}
+    margin: 0px;
+}
 
 aside {
     width: 15%;
@@ -214,8 +262,8 @@ main {
 }
 
 #searchDiv {
-   display: flex;
-   flex-direction: row; 
+    display: flex;
+    flex-direction: row;
 }
 
 #searchTextArea {
@@ -239,7 +287,7 @@ main {
 .innerAreaButton {
     cursor: pointer;
     background-color: black;
-    color: rgb(250, 247, 242); 
+    color: rgb(250, 247, 242);
 }
 
 .noTopBorder {
