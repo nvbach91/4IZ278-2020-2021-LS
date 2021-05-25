@@ -149,10 +149,12 @@ Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
 
 Route::post('/signin/submit', [UsersController::class, 'getSignInFormData']);
 
-Route::get('/test', function() {
-    $usersController = new UsersController;
+Route::get('/test2', function() {
+    // $usersController = new UsersController;
+    // $response = $usersController->searchByEmail('klepetkope@gmail.com');
+    // return json_encode($response);
+    // $request->session()->put('user_id', 2);
 
-    
-     $response = $usersController->searchByEmail('klepetkope@gmail.com');
-     return json_encode($response);
+    session(['user_id' => '123456789']);
+    return "ahoj";
 });

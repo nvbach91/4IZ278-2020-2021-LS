@@ -123,7 +123,7 @@ class UsersController extends Controller
     function isUsedEmail($email)
     {
         $results = $this->searchByEmail($email);
-        if (count($results) > 0) {
+        if (isset($results)) {
             return true;
         } else {
             return false;
@@ -173,9 +173,9 @@ class UsersController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-        $request = $request->input();
-       $email = $request['email'];
-       $password = $request['password'];
+        $requestInput = $request->input();
+       $email = $requestInput['email'];
+       $password = $requestInput['password'];
        
        $id = $this->searchByEmail($email);
 
@@ -190,7 +190,8 @@ class UsersController extends Controller
             return redirect('/signin?email=' . $email . '&error=badPassword');
        }
 
-       $this->logUserIn();
+    //    $this->logUserIn();
+       $request->session()->put('user_id', $id);
        return redirect('/?info=loginSuccessful');
 
     }

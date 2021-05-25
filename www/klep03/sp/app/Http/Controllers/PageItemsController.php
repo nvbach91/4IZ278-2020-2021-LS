@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class PageItemsController extends Controller
 {
@@ -22,10 +23,23 @@ class PageItemsController extends Controller
         // array_push($items, ['button2' => $button2]);
         // array_push($items, $asideitems);
 
+        
+
+
+        if(session()->has('Loggeduser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            
+            $button1 = ['label' => '', 'href' => ''];
+            $button2 = ['label' => 'logout', 'href' => '/logout'];
+        }
+
         $items['button1'] = $button1;
         $items['button2'] = $button2;
         $items['asideItems'] = $asideItems;
         $items['loggedUser'] = 'Peta';
+
         return $items;
     }
 }
+
+
