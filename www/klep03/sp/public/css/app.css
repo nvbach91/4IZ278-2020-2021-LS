@@ -84,6 +84,31 @@ h3 {
     background-color: rgb(240, 235, 228);
 }
 
+.miniNavBar {
+    background-color: rgb(61, 61, 61);
+    height: 40px;
+    border-radius: 30px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.miniNavBar > .item {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 5px;
+    border-radius: 6px;
+}
+
+.miniNavBar > .item > .item {
+    margin-left: 5px;
+}
+
 .gray {
     background-color: rgb(61, 61, 61);
 }

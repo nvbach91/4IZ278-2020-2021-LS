@@ -7,6 +7,7 @@ use App\Http\Controllers\SongsController;
 use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
 use App\Http\Controllers\PageItemsController;
+use App\Http\Controllers\SavedSongsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\DB;
 
@@ -53,10 +54,50 @@ Route::get('/songs/{song_id}', function ($song_id) {
 
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
+    
+    if(!$pageItems['anonymous']) {
+        $savedSongsController = new SavedSongsController;
+        $addedToSaved = $savedSongsController->isAlreadySaved(session('user_id'), $song_id);
+    } else {
+        $addedToSaved = false;
+    }
 
-    return view('song')->with('songArray', $song)
+    return view('song')->with('song', $song[0])
         ->with('pageItems', $pageItems)
+        ->with('addedToSaved', $addedToSaved)
         ->with('title', 'Song – ' . $song[0]->name);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Specific Song View 
+--------------------------------------------------------------------------
+|
+| 
+|
+*/
+Route::get('/songs/{song_id}/save', function ($song_id) {
+    $savedSongsController = new SavedSongsController;
+
+    $savedSongsController->saveSong($song_id);
+
+    return redirect('/songs/' . $song_id);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Specific Song View 
+--------------------------------------------------------------------------
+|
+| 
+|
+*/
+Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
+    $savedSongsController = new SavedSongsController;
+
+    $savedSongsController->removeSong($song_id);
+
+    return redirect('/songs/' . $song_id);
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
@@ -128,7 +169,19 @@ Route::post('/profile/edit/submit', [UsersController::class, 'updateProfile']);
 Route::get('/savedChords', function () {
 
     $pageItemsController    = new PageItemsController;
+    $songsController        = new SongsController;
+    $savedSongsController   = new SavedSongsController;
+
     $pageItems              = $pageItemsController->fetch();
+
+    $songs              = $savedSongsController->getSongsFromUser(session('user_id'));
+    foreach($songs as $song) {
+        
+    }
+    $songs                  = [];
+    
+    
+    // array_push($songs, $songsController->show($song_id);
 
     return view('savedChords')->with('pageItems', $pageItems)
         ->with('title', 'SavedChords');
@@ -293,20 +346,35 @@ Route::get('/test', function (Request $request) {
     // $results = DB::table('songs')->where('created_by', 1)->get();
     // var_dump($result
 
-    $usersController = new UsersController;
-    $songsController = new SongsController;
+    // $usersController = new UsersController;
+    // $songsController = new SongsController;
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+    // $pageItemsController    = new PageItemsController;
+    // $pageItems              = $pageItemsController->fetch();
 
-    if ($usersController->isLoggedIn()) {
-        $user = $usersController->getById(session('user_id'));
-        $songs = $songsController->searchByUserId(session('user_id'));
-        // var_dump($user);
-        echo $songs[0]->name;
-    } else {
-        return redirect('/signin');
-    }
+    // if ($usersController->isLoggedIn()) {
+    //     $user = $usersController->getById(session('user_id'));
+    //     $songs = $songsController->searchByUserId(session('user_id'));
+    //     // var_dump($user);
+    //     echo $songs[0]->name;
+    // } else {
+    //     return redirect('/signin');
+    // }
+
+    $savedSongsController = new SavedSongsController;
+    
+    $user_id = 2;
+    $song_id = 3;
+
+//    var_dump($savedSongsController->isAlreadySaved($user_id, $song_id)); 
+
+    $results = DB::table('user_saved_songs')
+        ->where('user_id', $user_id)
+        ->where('song_id', $song_id)
+        ->get();
+
+    // return $savedSongsController->isAlreadySaved($user_id, $song_id);
+    return $savedSongsController->getSongsFromUser($user_id);
 });
 
 Route::get('/deleteSession', function (Request $request) {

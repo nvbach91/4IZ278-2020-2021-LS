@@ -12,6 +12,7 @@ class PageItemsController extends Controller
     {
         $asideItemscontroller   = new AsideItemscontroller;
         $usersController        = new UsersController;
+        $savedSongsController   = new SavedSongsController;
 
         $items = [];
         // array_push($items, ['button1' => $button1]);
@@ -38,6 +39,8 @@ class PageItemsController extends Controller
                 'Saved Chords' => '/savedChords',
                 'Created By Me' => '/createdByMe',
             ];
+            $anonymous = false;
+            
         } else {
             $asideItems = [
                 'Search' => '/',
@@ -45,6 +48,7 @@ class PageItemsController extends Controller
             $username = 'Not logged in';
             $button1 = ['label' => 'sign up', 'href' => '/signup'];
             $button2 = ['label' => 'sign in', 'href' => '/signin'];
+            $anonymous = true;
         }
 
 
@@ -52,6 +56,7 @@ class PageItemsController extends Controller
         $items['button2'] = $button2;
         $items['asideItems'] = $asideItems;
         $items['loggedUser'] = $username;
+        $items['anonymous'] = $anonymous;
 
         return $items;
     }
