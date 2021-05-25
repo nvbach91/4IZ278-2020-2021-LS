@@ -13,18 +13,19 @@
         <textarea id="searchTextArea"></textarea>
         <div id="search" class="innerAreaButton" rows="1">Search</div>
     </div>
-    <div>
-        <h2>Results:</h2>
-    </div>
-    <div id="results">
-        <?php if (isset($results)) {
-        foreach ($results as $result) {
-        echo "<a href=\"/songs/$result->id\">";
-            echo "<div class=\"searchResult\">$result->artist – $result->name</div>";
-            echo '</a>';
-        }
-        } ?>
-    </div>
+    @if (isset($results))
+        <div>
+            <h2>Results:</h2>
+        </div>
+        <div id="results">
+            @foreach ($results as $result)
+                <a href="/songs/{{ $result->id }}">
+                    <div class="searchResult">{{ $result->artist }} – {{ $result->name }}</div>
+                </a>
+            @endforeach
+        </div>
+    @endif
+
 </div>
 
 <script>

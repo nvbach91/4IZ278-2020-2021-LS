@@ -15,6 +15,75 @@ h1 {
     margin-top: 20px;
 }
 
+#profile-edit>h1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#profile-edit>h1>textarea {
+    margin-left: 10px;
+    height: 50px;
+    resize: none;
+    overflow: hidden;
+}
+
+#profile-edit > * > textarea {
+    width: 80%;
+    height: 400px;
+    resize: none;
+}
+
+.divForButton {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.customProfileText>pre {
+    background-color: rgb(233, 230, 225);
+    padding: 10px;
+}
+
+.customProfileText>h3 {
+    margin-top: 20px;
+}
+
+#results>h3 {
+    margin-top: 20px;
+}
+
+h3 {
+    margin: 20px 0;
+}
+
+#userSongsToBeEdited {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#userSongsToBeEdited>h3 {
+    margin: 20px 0;
+}
+
+.userSongToBeEdited {
+    height: 200px;
+    width: 200px;
+    background-color: rgb(226, 221, 212);
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userSongToBeEdited:hover {
+    background-color: rgb(240, 235, 228);
+}
+
 .gray {
     background-color: rgb(61, 61, 61);
 }

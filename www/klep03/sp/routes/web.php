@@ -21,6 +21,15 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Homepage
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+
 Route::get('/', function () {
     $pageItemsController    = new PageItemsController;
     $pageItems              = $pageItemsController->fetch();
@@ -29,30 +38,14 @@ Route::get('/', function () {
         ->with('title', 'MySongs');
 });
 
-// Route::get('/dbtest', function () {
-//     return view('dbtest');
-// });
-
-// Route::get('/users', function () {
-//     $usersController        = new UsersController;
-//     $buttonsController      = new ButtonsController;
-//     $asideItemsController   = new AsideItemsController;
-
-//     $users                  = $usersController->index();
-//     //$buttons                = $buttonsController->getButtons();
-//     $asideItems             = $asideItemsController->getAsideItems();
-
-//     $pageItemsController    = new PageItemsController;
-//     $pageItems              = $pageItemsController->fetch();
-
-//     return view('users')->with('users', $users)
-//         ->with('LoggedUser', 'Logged User: Peta Default')
-//         ->with('Button1', $buttons['button1'])
-//         ->with('Button2', $buttons['button2'])
-//         ->with('asideItems', $asideItems)
-//         ->with('title', 'Kjepii');
-// });
-
+/*
+|--------------------------------------------------------------------------
+| Specific Song View 
+--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/songs/{song_id}', function ($song_id) {
 
     $songsController        = new SongsController;
@@ -68,15 +61,70 @@ Route::get('/songs/{song_id}', function ($song_id) {
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
 
+/*
+|--------------------------------------------------------------------------
+| User's Profile
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/profile', function () {
-
+    $usersController = new UsersController;
+    $songsController = new SongsController;
     $pageItemsController    = new PageItemsController;
+
     $pageItems              = $pageItemsController->fetch();
 
-    return view('profile')->with('pageItems', $pageItems)
-        ->with('title', 'Kjepii');
+    if ($usersController->isLoggedIn()) {
+        $user = $usersController->getById(session('user_id'));
+        $songs = $songsController->searchByUserId(session('user_id'));
+        return view('profile')->with('pageItems', $pageItems)
+            ->with('user', $user)
+            ->with('songs', $songs)
+            ->with('title', 'Profile');
+    } else {
+        return redirect('/signin');
+    }
 });
 
+/*
+|--------------------------------------------------------------------------
+| User's Profile – EDIT FORM
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
+Route::get('/profile/edit', function () {
+    $usersController        = new UsersController;
+    $songsController        = new SongsController;
+    $pageItemsController    = new PageItemsController;
+
+    $pageItems              = $pageItemsController->fetch();
+
+    if ($usersController->isLoggedIn()) {
+        $user = $usersController->getById(session('user_id'));
+        $songs = $songsController->searchByUserId(session('user_id'));
+        return view('profile-edit')->with('pageItems', $pageItems)
+            ->with('user', $user)
+            ->with('songs', $songs)
+            ->with('title', 'Profile');
+    } else {
+        return redirect('/signin');
+    }
+});
+
+Route::post('/profile/edit/submit', [UsersController::class, 'updateProfile']);
+
+/*
+|--------------------------------------------------------------------------
+| User's Saved Chords
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/savedChords', function () {
 
     $pageItemsController    = new PageItemsController;
@@ -86,15 +134,39 @@ Route::get('/savedChords', function () {
         ->with('title', 'SavedChords');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Users' Created Chords
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/createdByMe', function () {
-
+    $songsController        = new SongsController;
+    $usersController        = new UsersController;
     $pageItemsController    = new PageItemsController;
+
     $pageItems              = $pageItemsController->fetch();
 
-    return view('createdByMe')->with('pageItems', $pageItems)
-        ->with('title', 'Kjepii');
+    if ($usersController->isLoggedIn()) {
+        $songs = $songsController->searchByUserId(session('user_id'));
+        return view('createdByMe')->with('pageItems', $pageItems)
+            ->with('songs', $songs)
+            ->with('title', 'Created By Me');
+    } else {
+        return redirect('/signin');
+    }
 });
 
+/*
+|--------------------------------------------------------------------------
+| Search results
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/search/{query}', function ($query) {
     $songsController        = new SongsController;
     $results                = $songsController->searchByQuery($query);
@@ -110,6 +182,14 @@ Route::get('/search/{query}', function ($query) {
 
 Route::redirect('/search', '/');
 
+/*
+|--------------------------------------------------------------------------
+| Sign Up Form
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/signup', function (Request $request) {
     $usersController = new UsersController;
     if (!$usersController->isLoggedIn()) {
@@ -126,6 +206,14 @@ Route::get('/signup', function (Request $request) {
     }
 });
 
+/*
+|--------------------------------------------------------------------------
+| Sign In Form
+|--------------------------------------------------------------------------
+|
+| 
+|
+*/
 Route::get('/signin', function (Request $request) {
     $usersController = new UsersController;
     if (!$usersController->isLoggedIn()) {
@@ -141,22 +229,42 @@ Route::get('/signin', function (Request $request) {
     return "You are logged in, try reload the page";
 });
 
-// Route::post('/signup/submit', function ($post) {
-//     $email = $post["signUpEmail"];
-//     $pageItemsController    = new PageItemsController;
-//     $pageItems              = $pageItemsController->fetch();
-
-//     return $email;
-//     // return view('/signin')
-//     //     ->with('pageItems', $pageItems)
-//     //     ->with('title', 'Sign up')
-//     //     ->with('email', $email);
-
-// });
-
+/*
+|--------------------------------------------------------------------------
+| Submitted Sign Up Form
+|--------------------------------------------------------------------------
+|
+*/
 Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
 
+/*
+|--------------------------------------------------------------------------
+| Submitted Sign In Form
+|--------------------------------------------------------------------------
+|
+*/
 Route::post('/signin/submit', [UsersController::class, 'getSignInFormData']);
+
+/*
+|--------------------------------------------------------------------------
+| Logout Route
+|-------------------------------------------------------------------------- 
+|
+*/
+Route::get('/logout', function () {
+    $usersController = new UsersController;
+    if ($usersController->isLoggedIn()) {
+        $usersController->logOut();
+    }
+    return redirect('/');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Routes For Testing
+|--------------------------------------------------------------------------| 
+|
+*/
 
 Route::get('/test', function (Request $request) {
     $usersController = new UsersController;
@@ -171,24 +279,34 @@ Route::get('/test', function (Request $request) {
     // "time() = " . time() .
     // (strtotime(session('last_activity')) - time())   ."";
 
-    $last_activity  = intval(session('last_activity'));
-    $time           = intval(time());
-    $difference     = $time - $last_activity;
-    echo $difference;
+    // $last_activity  = intval(session('last_activity'));
+    // $time           = intval(time());
+    // $difference     = $time - $last_activity;
+    // echo $difference;
 
     // $usersController->searchByEmail('kjepii@kjepii.cz');
     // $id = $usersController->searchByEmail('ahoj@ahoj.ahoj');
     // echo 'id: ' . $id; 
     // $password =  DB::table('users')->find($id)->password;
     // echo 'password: ' . $password;
-});
 
-Route::get('/logout', function () {
+    // $results = DB::table('songs')->where('created_by', 1)->get();
+    // var_dump($result
+
     $usersController = new UsersController;
+    $songsController = new SongsController;
+
+    $pageItemsController    = new PageItemsController;
+    $pageItems              = $pageItemsController->fetch();
+
     if ($usersController->isLoggedIn()) {
-        $usersController->logOut();
+        $user = $usersController->getById(session('user_id'));
+        $songs = $songsController->searchByUserId(session('user_id'));
+        // var_dump($user);
+        echo $songs[0]->name;
+    } else {
+        return redirect('/signin');
     }
-    return redirect('/');
 });
 
 Route::get('/deleteSession', function (Request $request) {

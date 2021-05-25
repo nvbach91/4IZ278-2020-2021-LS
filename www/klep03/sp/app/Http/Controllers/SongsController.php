@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Song;
+use Illuminate\Support\Facades\DB;
 
 class SongsController extends Controller
 {
@@ -111,5 +112,8 @@ class SongsController extends Controller
         return $results;
     }
 
+    public function searchByUserId($id) {
+        return DB::table('songs')->where('created_by', $id)->get();
+    }
     
 }

@@ -218,6 +218,7 @@ class UsersController extends Controller
             $difference     = $time - $last_activity;
 
             if ($difference <= $timeout) {
+                session(['last_activity' => time()]);
                 return true;
             } else {
                 return false;
@@ -235,6 +236,26 @@ class UsersController extends Controller
                 'last_activity' => null
             ]
         );
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'min:3 | max:30',
+            'instruments' => 'max:250'
+        ]);
+        $data = $request->input();
+
+       
+
+        DB::table('users')
+            ->where('id', session('user_id'))
+            ->update([
+                'name' => $data['name'],
+                'user_info' => $data['userInfo'],
+                'instruments' => $data['instruments']
+            ]);
         
+            return redirect('/profile');
     }
 }
