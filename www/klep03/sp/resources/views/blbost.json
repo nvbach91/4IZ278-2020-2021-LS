@@ -1,0 +1,30 @@
+[
+    [
+        {
+            "id": 1,
+            "name": "love ",
+            "lyrics_w_chords": "asdfasdf \r\nasdfa s\r\n\r\nasdfas\r\ndf\r\nas\r\ndf\r\nas\r\ndf\r\nas\r\ndfasdfsdfasdf\r\nasdfasdfasd\r\nfasd\r\nfas\r\ndf\r\nasd\r\nf\r\nasdfasdfasdfasdfasdfasdfasdf",
+            "artist": "artist name",
+            "difficulty": "beginner",
+            "created_by": 1,
+            "style": 1,
+            "created_at": null,
+            "updated_at": null,
+            "stars": null
+        }
+    ],
+    [
+        {
+            "id": 3,
+            "name": "Love yourself",
+            "lyrics_w_chords": "---------------------------------------------------------------\r\n CAPO ON 4th FRET\r\n---------------------------------------------------------------\r\n \r\n---------------------------------------------------------------\r\n TRANSPOSE UP +4 TO PLAY SONG WITHOUT CAPO\r\n---------------------------------------------------------------\r\n \r\n \r\n[Verse 1]\r\n \r\n C G\/B Am\r\nFor all the times that you rain on my parade\r\n Dm C G\/B\r\nAnd all the clubs you get in using my name\r\n C G\/B Am\r\nYou think you broke my heart, oh girl for goodness sake\r\n Dm C G\/B\r\nYou think I'm crying, on my own, well I ain't\r\n C G\/B Am\r\nAnd I didn't wanna write a song cause I didn't want anyone thinking I still care\r\n Dm C G\/B\r\nI don't but, you still hit my phone up\r\n C G\/B Am\r\nAnd baby I'll be movin' on and I think you should be somethin'\r\n Dm C G\/B\r\nI don't wanna hold back, maybe you should know that\r\n \r\n \r\n[Pre-Chorus]\r\n \r\n Am F C\r\nMy mama don't like you and she likes everyone\r\n Am F C\r\nAnd I never like to admit that I was wrong\r\n Am F C G\r\nAnd I've been so caught up in my job, didn't see what's going on\r\n Am F G\r\nAnd now I know, I'm better sleeping on my own\r\n \r\n \r\n[Chorus]\r\n \r\n C G Am F\r\nCause if you like the way you look that much\r\n C G C\r\nOh baby you should go and love yourself\r\n C G Am F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC G C\r\nYou should go and love yourself\r\n \r\n \r\n[Verse 2]\r\n \r\n C G\/B Am\r\nBut when you told me that you hated my friends\r\n Dm C G\/B\r\nThe only problem was with you and not them\r\n C G\/B Am\r\nAnd every time you told me my opinion was wrong\r\n Dm C G\/B\r\nAnd tried to make me forget where I came from\r\n C G\/B Am\r\nAnd I didn't wanna write a song cause I didn't want anyone thinking I still care\r\n Dm C G\/B\r\nI don't but, you still hit my phone up\r\n C G\/B Am\r\nAnd baby I'll be movin' on and I think you should be somethin'\r\n Dm C G\/B\r\nI don't wanna hold back, maybe you should know that\r\n \r\n \r\n[Pre-Chorus]\r\n \r\n Am F C\r\nMy mama don't like you and she likes everyone\r\n Am F C\r\nAnd I never like to admit that I was wrong\r\n Am F C G\r\nAnd I've been so caught up in my job, didn't see what's going on\r\n Am F G\r\nAnd now I know, I'm better sleeping on my own\r\n \r\n \r\n[Chorus]\r\n \r\n C G Am F\r\nCause if you like the way you look that much\r\n C G C\r\nOh baby you should go and love yourself\r\n C G Am F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC G C\r\nYou should go and love yourself\r\n \r\n \r\n[Instrumental]\r\n \r\nC G Am F\r\nC G C\r\nC G Am F\r\nC G C\r\n \r\n \r\n[Verse 3]\r\n \r\n C G\/B Am\r\nFor all the times that you made me feel small\r\n Dm C G\/B\r\nI fell in love, now I feel nothin' at all\r\n C G\/B Am\r\nI never felt so low when I was vulnerable\r\n Dm C G\/B\r\nWas I a fool to let you break down my walls?\r\n \r\n \r\n[Chorus]\r\n \r\n C G Am F\r\nCause if you like the way you look that much\r\n C G C\r\nOh baby you should go and love yourself\r\n C G Am F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC G C\r\nYou should go and love yourself\r\n C G Am F\r\nCause if you like the way you look that much\r\n C G C\r\nOh baby you should go and love yourself\r\n C G Am F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC G C\r\nYou should go and love yourself",
+            "artist": "Justin Bieber",
+            "difficulty": "hard",
+            "created_by": 2,
+            "style": 1,
+            "created_at": null,
+            "updated_at": null,
+            "stars": null
+        }
+    ]
+]
