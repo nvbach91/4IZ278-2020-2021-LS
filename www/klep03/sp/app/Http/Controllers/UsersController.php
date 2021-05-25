@@ -56,9 +56,10 @@ class UsersController extends Controller
         // return DB::table('users')->where('id', $id)->first();
     }
 
-    function getById($id) {
-       $user =  DB::table('users')->find($id);  
-       return $user;
+    function getById($id)
+    {
+        $user =  DB::table('users')->find($id);
+        return $user;
     }
 
     /**
@@ -164,39 +165,76 @@ class UsersController extends Controller
             ->select('id')
             ->where('email', '=', $email)
             ->value('id');
-            // ->get();
+        // ->get();
     }
 
-    public function getSignInFormData(Request $request) {
+    public function getSignInFormData(Request $request)
+    {
         // return $request;
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
         $requestInput = $request->input();
-       $email = $requestInput['email'];
-       $password = $requestInput['password'];
-       
-       $id = $this->searchByEmail($email);
+        $email = $requestInput['email'];
+        $password = $requestInput['password'];
 
-    //    if (count($id) != 1) {
-    //        //TODO error
-    //    }
-    //    $id = $id[0]['id'];
 
-       $user = $this->getById($id);
 
-       if(!password_verify($password, $user->password)){
+        $id = $this->searchByEmail($email);
+
+        //    if (count($id) != 1) {
+        //        //TODO error
+        //    }
+        //    $id = $id[0]['id'];
+
+        $user = $this->getById($id);
+
+        if (!$user) {
+            return redirect('/signin?email=' . $email . '&error=badEmail');
+        }
+
+        // return redirect('?' . $user->password);
+
+        if (!password_verify($password, $user->password)) {
             return redirect('/signin?email=' . $email . '&error=badPassword');
-       }
+        }
 
-    //    $this->logUserIn();
-       $request->session()->put('user_id', $id);
-       return redirect('/?info=loginSuccessful');
-
+        //    $this->logUserIn();
+        // $request->session('user_id', $id);
+        session(['user_id' => $id]);
+        session(['last_activity' => time()]);
+        return redirect('/?info=loginSuccessful');
     }
 
-    private function logUserIn (){
-        // TODO
+    public function isLoggedIn()
+    {
+        $timeout = 10 * 60;
+
+        if (session()->has('user_id') and session()->has('last_activity')) {
+
+            $last_activity  = intval(session('last_activity'));
+            $time           = intval(time());
+            $difference     = $time - $last_activity;
+
+            if ($difference <= $timeout) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function logOut()
+    {
+        session(
+            [
+                'user_id' => null,
+                'last_activity' => null
+            ]
+        );
+        
     }
 }

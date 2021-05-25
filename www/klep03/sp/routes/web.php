@@ -8,6 +8,7 @@ use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
 use App\Http\Controllers\PageItemsController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,26 +111,34 @@ Route::get('/search/{query}', function ($query) {
 Route::redirect('/search', '/');
 
 Route::get('/signup', function (Request $request) {
-    $customErrorMessage = $request->input('e');
-    
+    $usersController = new UsersController;
+    if (!$usersController->isLoggedIn()) {
+        $customErrorMessage = $request->input('e');
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+        $pageItemsController    = new PageItemsController;
+        $pageItems              = $pageItemsController->fetch();
 
-    return view('signup')->with('pageItems', $pageItems)
-        ->with('customErrorMessage', $customErrorMessage)
-        ->with('title', 'Sign up');
+        return view('signup')->with('pageItems', $pageItems)
+            ->with('customErrorMessage', $customErrorMessage)
+            ->with('title', 'Sign up');
+    } else {
+        return "You are logged in, try reloading the page or signing out.";
+    }
 });
 
 Route::get('/signin', function (Request $request) {
-    $email = $request->input('email');
+    $usersController = new UsersController;
+    if (!$usersController->isLoggedIn()) {
+        $email = $request->input('email');
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+        $pageItemsController    = new PageItemsController;
+        $pageItems              = $pageItemsController->fetch();
 
-    return view('signin')->with('pageItems', $pageItems)
-        ->with('title', 'Sign in')
-        ->with('email', $email);
+        return view('signin')->with('pageItems', $pageItems)
+            ->with('title', 'Sign in')
+            ->with('email', $email);
+    }
+    return "You are logged in, try reload the page";
 });
 
 // Route::post('/signup/submit', function ($post) {
@@ -142,19 +151,46 @@ Route::get('/signin', function (Request $request) {
 //     //     ->with('pageItems', $pageItems)
 //     //     ->with('title', 'Sign up')
 //     //     ->with('email', $email);
-        
+
 // });
 
 Route::post('/signup/submit', [UsersController::class, 'getSignUpFormData']);
 
 Route::post('/signin/submit', [UsersController::class, 'getSignInFormData']);
 
-Route::get('/test2', function() {
-    // $usersController = new UsersController;
+Route::get('/test', function (Request $request) {
+    $usersController = new UsersController;
     // $response = $usersController->searchByEmail('klepetkope@gmail.com');
     // return json_encode($response);
     // $request->session()->put('user_id', 2);
 
-    session(['user_id' => '123456789']);
-    return "ahoj";
+    // $data = $request->session()->all();
+
+    // session(['last_activity' => now()]);
+    // return "last_activity = " . strtotime(session('last_activity')) . 
+    // "time() = " . time() .
+    // (strtotime(session('last_activity')) - time())   ."";
+
+    $last_activity  = intval(session('last_activity'));
+    $time           = intval(time());
+    $difference     = $time - $last_activity;
+    echo $difference;
+
+    // $usersController->searchByEmail('kjepii@kjepii.cz');
+    // $id = $usersController->searchByEmail('ahoj@ahoj.ahoj');
+    // echo 'id: ' . $id; 
+    // $password =  DB::table('users')->find($id)->password;
+    // echo 'password: ' . $password;
+});
+
+Route::get('/logout', function () {
+    $usersController = new UsersController;
+    if ($usersController->isLoggedIn()) {
+        $usersController->logOut();
+    }
+    return redirect('/');
+});
+
+Route::get('/deleteSession', function (Request $request) {
+    session(['user_id' => null]);
 });

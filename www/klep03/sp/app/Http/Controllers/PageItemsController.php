@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PageItemsController extends Controller
 {
@@ -13,33 +14,43 @@ class PageItemsController extends Controller
         $usersController        = new UsersController;
 
         $items = [];
-
-        $button1 = ['label' => 'sign up', 'href' => '/signup'];
-        $button2 = ['label' => 'sign in', 'href' => '/signin'];
-
-        $asideItems = $asideItemscontroller->getasideitems();
-
         // array_push($items, ['button1' => $button1]);
         // array_push($items, ['button2' => $button2]);
         // array_push($items, $asideitems);
 
-        
 
 
-        if(session()->has('Loggeduser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            
-            $button1 = ['label' => '', 'href' => ''];
+
+        if ($usersController->isLoggedIn()) {
+
+            $user = DB::table('users')->find(session('user_id'));
+
+            $button1 = ['label' => 'edit profile', 'href' => '/profile/edit'];
             $button2 = ['label' => 'logout', 'href' => '/logout'];
+
+
+            $username = $user->email;
+
+            $asideItems = [
+                'My Profile' => '/profile',
+                'Saved Chords' => '/savedChords',
+                'Created By Me' => '/createdByMe',
+            ];
+        } else {
+            $asideItems = [
+                'Search' => '/',
+            ];
+            $username = 'Not logged in';
+            $button1 = ['label' => 'sign up', 'href' => '/signup'];
+            $button2 = ['label' => 'sign in', 'href' => '/signin'];
         }
+
 
         $items['button1'] = $button1;
         $items['button2'] = $button2;
         $items['asideItems'] = $asideItems;
-        $items['loggedUser'] = 'Peta';
+        $items['loggedUser'] = $username;
 
         return $items;
     }
 }
-
-
