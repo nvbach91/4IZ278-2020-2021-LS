@@ -32,7 +32,7 @@ if (is_array($ids) && count($ids)) {
     $sum = 0;
 }
 
-# amount of product in db
+// amount of product in db
 $productsDB = new ProductsDB();
 function getProductPcs($productName)
 {

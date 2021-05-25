@@ -2,7 +2,7 @@
 <?php require __DIR__ . '/../db/ProductCategoryDB.php'; ?>
 <?php
 require 'global.php';
-# offset for pagaination
+
 $nItemsPerPagination = 6;
 if (isset($_GET['offset'])) {
   $offset = (int)$_GET['offset'];
@@ -21,7 +21,7 @@ if (isset($_GET['category'])) {
   # total amount of products from category for pagination
   $count = count($productsDB->fetchCountedCategoryProducts($category));
 } else {
-  $products = $productsDB->fetchProdcutsByPagination($nItemsPerPagination, $offset); // loads only 1 product from each name
+  $products = $productsDB->fetchProdcutsByPagination($nItemsPerPagination, $offset);
   # total amount of products for pagination
   $count = count($productsDB->fetchCountedProducts());
   $category = null;

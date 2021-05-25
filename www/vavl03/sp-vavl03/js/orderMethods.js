@@ -6,7 +6,7 @@ if ($('#delivery-method').val() === 'personalCollection') {
     $("option[value='cashOnHomeDelivery']").attr("disabled", "disabled");
 }
 
-$('#delivery-method').on('change', function() {
+$('#delivery-method').on('change', function () {
     if ($(this).val() === 'personalCollection') {
         $('#payment-method').val('bankTransfer');
         $("option[value='cashOnHomeDelivery']")

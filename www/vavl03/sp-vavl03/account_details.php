@@ -3,8 +3,8 @@
 <?php require __DIR__ . '/db/UsersDB.php' ?>
 <?php require __DIR__ . '/components/global.php'; ?>
 <?php
-require 'components/userRequired.php'; 
-// fb data already defined in navbar
+require 'components/userRequired.php';
+
 $usersDB = new UsersDB();
 $userData = $usersDB->fetchUserbyFbId($me->getId());
 

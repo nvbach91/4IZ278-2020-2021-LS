@@ -3,10 +3,9 @@
 <?php require __DIR__ . '/db/UsersDB.php' ?>
 <?php require __DIR__ . '/components/global.php'; ?>
 <?php
-require 'components/userRequired.php'; 
-// check if user just sent order, if yes, redirect him to home page to start new order
+require 'components/userRequired.php';
+
 if (isset($_SESSION['orderSent'])) {
-    echo ($_SESSION['orderSent']);
     header('Location: ../sp-vavl03/index.php');
     exit();
 }

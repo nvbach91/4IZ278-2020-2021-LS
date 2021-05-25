@@ -2,7 +2,7 @@
 <?php require __DIR__ . '/../db/ProductsDB.php'; ?>
 <?php
 session_start();
-// check if someone else haven't already bought users items
+
 $boughtProducts = [];
 foreach ($_SESSION['cart'] as $key => $value) {
     array_push($boughtProducts, (int) $value);
@@ -14,7 +14,7 @@ foreach ($_SESSION['cart'] as $key => $value) {
     $ids = $productsDB->fetchProductIds($key, $value);
     array_push($helperArr, $ids);
 }
-$productIds = []; // ID's of all products that are bought and are not already bought by someone else
+$productIds = [];
 foreach ($helperArr as $product) {
     foreach ($product as $a) {
         foreach ($a as $key => $value) {
@@ -75,8 +75,7 @@ if ($numberOfBoughtProducts != count($productIds)) {
     unset($_SESSION['userStreet']);
     unset($_SESSION['userZip']);
     unset($_SESSION['productsToShow']);
-    /* prevent user from coming back into the order process, force him to start new order by redirecting him to index.php
- in each order process page, $_SESSION['orderSent'] is unset in startNewOrder.php*/
+
     $_SESSION['orderSent'] = true;
     header('Location: ../thanks.php');
     exit();
