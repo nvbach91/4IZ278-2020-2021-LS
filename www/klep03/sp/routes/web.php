@@ -122,14 +122,20 @@ Route::post('/songs/{song_id}/edit', function ($song_id, Request $request) {
     }
 
     DB::table('songs')
+        ->where('id', '=', $song_id)
         ->update([
             'name'              => $request->input('name'),
             'artist'            => $request->input('artist'),
             'lyrics_w_chords'   => $request->input('lyrics_w_chords'),
+            'updated_at'        => now(),
         ]);
 
     return redirect('/createdByMe');
 });
+
+Route::get('/newSong', [SongsController::class, 'createNew']);
+
+Route::get('/songs/{song_id}/delete', [SongsController::class, 'delete']);
 
 Route::get('/songs/{song_id}/rate', function ($song_id, Request $request) {
     $user_ratingsController = new User_ratingsController;

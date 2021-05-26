@@ -188,6 +188,18 @@ h3 {
 
 }
 
+.bigPlus {
+    font-size: 50px;
+}
+
+.marginLR {
+    margin: 0 10px;
+}
+
+.redButton {
+    background-color: red;
+}
+
 .gray {
     background-color: rgb(61, 61, 61);
 }

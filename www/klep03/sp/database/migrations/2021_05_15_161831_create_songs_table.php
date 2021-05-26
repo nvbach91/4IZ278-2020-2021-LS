@@ -20,9 +20,9 @@ class CreateSongsTable extends Migration
             $table->string('artist');
             $table->enum('difficulty', array('beginner', 'easy', 'medium', 'hard'));
             // $table->unsignedBigInteger('created_by');
-            $table->foreignId('created_by')->references('id')->on('users');
+            $table->foreignId('created_by')->references('id')->on('users')->onDelete('cascade');
             // $table->unsignedBigInteger('style');
-            $table->foreignId('style')->references('id')->on('styles');
+            $table->foreignId('style')->nullable()->references('id')->on('styles');
             $table->timestamps();
         });
     }

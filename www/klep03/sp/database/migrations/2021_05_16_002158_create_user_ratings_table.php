@@ -17,9 +17,9 @@ class CreateUserRatingsTable extends Migration
             $table->id();
             $table->integer('stars')->unsigned;
             // $table->unsignedBigInteger('user');
-            $table->foreignId('user')->references('id')->on('users');
+            $table->foreignId('user')->references('id')->on('users')->onDelete('cascade');
             // $table->unsignedBigInteger('song');
-            $table->foreignId('song')->references('id')->on('songs');
+            $table->foreignId('song')->references('id')->on('songs')->onDelete('cascade');
             $table->timestamps();
         });
     }

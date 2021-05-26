@@ -11,5 +11,8 @@
     @else
         <div class="searchresult">Seems lonely here :/</div>
     @endif
+    <a href="/newSong">
+        <div class="userSongToBeEdited bigPlus">+</div>
+    </a>
 </div>
 @include('includes.element-foot')

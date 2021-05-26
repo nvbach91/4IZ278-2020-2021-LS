@@ -19,10 +19,10 @@ class CreateCommentsTable extends Migration
             // $table->unsignedBigInteger('song');
             $table->foreignId('song')->references('id')->on('songs');
             // $table->unsignedBigInteger('response_to');
-            $table->foreignId('response_to')->references('id')->on('comments')->nullable();
+            $table->foreignId('response_to')->references('id')->on('comments')->nullable()->onDelete('cascade');
             $table->longText('content');
             // $table->unsignedBigInteger('author');
-            $table->foreignId('author')->references('id')->on('users');
+            $table->foreignId('author')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

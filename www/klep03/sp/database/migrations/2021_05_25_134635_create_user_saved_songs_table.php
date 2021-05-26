@@ -15,8 +15,8 @@ class CreateUserSavedSongsTable extends Migration
     {
         Schema::create('user_saved_songs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('song_id')->references('id')->on('songs');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('song_id')->references('id')->on('songs')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -84,7 +84,8 @@ class SongsController extends Controller
         //
     }
 
-    private function searchByQueryWord($word){
+    private function searchByQueryWord($word)
+    {
         return Song::query()
             ->where('artist', 'LIKE', "%{$word}%")
             ->orWhere('name', 'LIKE', "%{$word}%")
@@ -92,18 +93,20 @@ class SongsController extends Controller
         // return Song::query()->get();
     }
 
-    private function transformNestedArrays($nestedArray) {
-        foreach ($nestedArray as $array) {}
+    private function transformNestedArrays($nestedArray)
+    {
+        foreach ($nestedArray as $array) {
+        }
     }
 
     public function searchByQuery($query)
     {
         $queryWords = explode(' ', $query);
         $results = [];
-        foreach($queryWords as $queryWord) {
+        foreach ($queryWords as $queryWord) {
             $foundSongs = $this->searchByQueryWord($queryWord);
             foreach ($foundSongs as $song) {
-                if(!in_array($song, $results)){
+                if (!in_array($song, $results)) {
                     array_push($results, $song);
                 }
             }
@@ -112,9 +115,49 @@ class SongsController extends Controller
         return $results;
     }
 
-    public function searchByUserId($id) {
+    public function searchByUserId($id)
+    {
         return DB::table('songs')->where('created_by', $id)->get();
     }
 
+    public function createNew()
+    {
+        $usersController = new UsersController;
+        if ($usersController->isLoggedIn()) {
+            DB::table('songs')->insert([
+                'name'              => 'default Name',
+                'lyrics_w_chords'   => 'default Lyri',
+                'artist'            => 'default Artist',
+                'difficulty'        => 'easy',
+                'created_by'        => session('user_id'),
+                'style'             => 1,
+                'created_at'        => now(),
+                'updated_at'        => now(),
+            ]);
 
+            $newRecord = DB::table('songs')
+                ->where('created_by', '=', session('user_id'))
+                ->where('name', '=', 'default Name')
+                ->whereRaw('created_at = updated_at')
+                ->first();
+
+            return redirect('/songs/' . $newRecord->id . '/edit');
+        } else {
+            return redirect('/signin');
+        }
+    }
+
+    public function delete($song_id)
+    {
+        $song = DB::table('songs')->find($song_id);
+
+        // echo $song->created_by;
+        // echo session('user_id');
+        if ($song->created_by == session('user_id')) {
+            DB::table('songs')->delete($song_id);
+            return redirect('/createdByMe');
+        } else {
+            return redirect('/songs/' . $song_id);
+        }
+    }
 }
