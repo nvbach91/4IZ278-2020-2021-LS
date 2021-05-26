@@ -157,6 +157,37 @@ h3 {
     margin: auto;
 }
 
+#songEditForm {
+    height: 95%;
+    overflow: scroll;
+}
+
+#songEditForm > h1 > textarea {
+    resize: none;
+    height: 60px;
+}
+
+#lyrics_w_chords {
+    width: 90%;
+    height: 100%;
+    resize: none;
+}
+
+#songEditForm > h1 {
+    display: flex;
+    align-items: center;
+}
+
+#songEditForm > div {
+    height: 85%;
+}
+
+#songEditForm >  .divForButton {
+    height: 40px;
+    margin: 10px;
+
+}
+
 .gray {
     background-color: rgb(61, 61, 61);
 }

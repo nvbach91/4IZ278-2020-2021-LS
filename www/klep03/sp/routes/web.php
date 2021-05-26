@@ -73,7 +73,7 @@ Route::get('/songs/{song_id}', function ($song_id, Request $request) {
     $responding         = $request->input('responding');
     if ($responding) {
         $responseTo     = $request->input('responseTo');
-        $previousComment= $commentsController->getById($responseTo);
+        $previousComment = $commentsController->getById($responseTo);
         $response       = [
             'responding' => $responding,
             'responseTo' => $responseTo,
@@ -93,6 +93,42 @@ Route::get('/songs/{song_id}', function ($song_id, Request $request) {
         ->with('commentsFormatted', $comments)
         ->with('response', $response)
         ->with('title', 'Song – ' . $song->name);
+});
+
+Route::get('/songs/{song_id}/edit', function ($song_id) {
+    $songsController        = new SongsController;
+    $song                   = $songsController->show($song_id);
+
+    if ($song->created_by !== session('user_id')) {
+        return redirect('/songs/$song_id');
+    }
+
+    $pageItemsController    = new PageItemsController;
+    $pageItems              = $pageItemsController->fetch();
+
+    return view('songEdit')
+        ->with('song', $song)
+        ->with('pageItems', $pageItems)
+        ->with('title', 'Edit – ' . $song->name);
+});
+
+Route::post('/songs/{song_id}/edit', function ($song_id, Request $request) {
+    // return $request;
+    $songsController        = new SongsController;
+    $song                   = $songsController->show($song_id);
+
+    if ($song->created_by !== session('user_id')) {
+        return redirect('/songs/$song_id');
+    }
+
+    DB::table('songs')
+        ->update([
+            'name'              => $request->input('name'),
+            'artist'            => $request->input('artist'),
+            'lyrics_w_chords'   => $request->input('lyrics_w_chords'),
+        ]);
+
+    return redirect('/createdByMe');
 });
 
 Route::get('/songs/{song_id}/rate', function ($song_id, Request $request) {

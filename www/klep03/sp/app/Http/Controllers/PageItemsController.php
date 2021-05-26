@@ -29,9 +29,10 @@ class PageItemsController extends Controller
             $button1 = ['label' => 'edit profile', 'href' => '/profile/edit'];
             $button2 = ['label' => 'logout', 'href' => '/logout'];
 
-            if (isset($user->name)) {
+            if (strlen($user->name) != 0) {
                 $username = $user->name;
             } else {
+                
                 $username = $user->email;
             }
             $asideItems = [
