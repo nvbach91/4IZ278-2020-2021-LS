@@ -49,7 +49,7 @@ Route::get('/', function () {
 | 
 |
 */
-Route::get('/songs/{song_id}', function ($song_id) {
+Route::get('/songs/{song_id}', function ($song_id, Request $request) {
 
     $songsController        = new SongsController;
     $song                   = $songsController->show($song_id);
@@ -70,11 +70,28 @@ Route::get('/songs/{song_id}', function ($song_id) {
     $commentsController = new CommentsController;
     $comments           = $commentsController->renderComments($song_id);
 
+    $responding         = $request->input('responding');
+    if ($responding) {
+        $responseTo     = $request->input('responseTo');
+        $previousComment= $commentsController->getById($responseTo);
+        $response       = [
+            'responding' => $responding,
+            'responseTo' => $responseTo,
+            'authorName' => $request->input('previousAuthor'),
+            'previousContent' => $previousComment->content,
+        ];
+    } else {
+        $response       = [
+            'responding' => $responding,
+        ];
+    }
+
     return view('song')->with('song', $song)
         ->with('pageItems', $pageItems)
         ->with('addedToSaved', $addedToSaved)
         ->with('ratings', $ratings)
         ->with('commentsFormatted', $comments)
+        ->with('response', $response)
         ->with('title', 'Song – ' . $song->name);
 });
 
@@ -87,6 +104,8 @@ Route::get('/songs/{song_id}/rate', function ($song_id, Request $request) {
     }
     return redirect('/songs/' . $song_id);
 });
+
+Route::post('/songs/{song_id}/comments/post', [CommentsController::class, 'createNew']);
 
 /*
 |--------------------------------------------------------------------------

@@ -44,13 +44,23 @@
 
     <?= $commentsFormatted ?>
     <div id="newComment">
-        <h4>New comment:</h4>
-        <form id="postCommentForm">
-            @csrf
-            <textarea name="content"></textarea>
+        @if (!$response['responding'])
+            <h4>New comment:</h4>
+            <form id="postCommentForm" action="/songs/<?= $song->id ?>/comments/post" method="post">
+                @csrf
+                <textarea name="content"></textarea>
 
-            <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
-        </form>
+                <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
+            </form>
+        @else
+            <h4>Response: <span class="time">{{ $response['authorName'] }} – {{ $response['previousContent'] }}</span></h4>
+            <form id="postCommentForm" action="/songs/<?= $song->id ?>/comments/post" method="post">
+                @csrf
+                <textarea name="content"></textarea>
+                <input type="hidden" name="responseTo" value="<?= $response['responseTo'] ?>">
+                <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
+            </form>
+        @endif
     </div>
 </div>
 @include('includes.element-foot')
