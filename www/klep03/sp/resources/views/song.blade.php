@@ -52,8 +52,8 @@
 
                 <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
             </form>
-        @else
-            <h4>Response: <span class="time">{{ $response['authorName'] }} – {{ $response['previousContent'] }}</span></h4>
+@else
+            <h4>Response: <span class="time">{{ $response['authorName'] }}: <em>{{ $response['previousContent'] }}</em></span></h4>
             <form id="postCommentForm" action="/songs/<?= $song->id ?>/comments/post" method="post">
                 @csrf
                 <textarea name="content"></textarea>
