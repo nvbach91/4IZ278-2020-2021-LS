@@ -91,7 +91,12 @@ class CommentsController extends Controller
         $result = null;
 
         foreach ($topLevelComments as $topLevelComment) {
-            $author = $usersController->getById($topLevelComment->author)->name;
+            $authorObject = $usersController->getById($topLevelComment->author);
+            $author = $authorObject->name;
+            if($author == null) {
+                $author = $authorObject->email;
+            }
+
             $time = $topLevelComment->date_posted;
 
             $result = "$result<div class=\"commentDiv\">";
@@ -124,7 +129,11 @@ class CommentsController extends Controller
         if (count($responses) > 0) {
             $usersController = new UsersController;
             foreach ($responses as $response) {
-                $author = $usersController->getById($response->author)->name;
+                $authorObject = $usersController->getById($response->author);
+                $author = $authorObject->name;
+                if($author == null) {
+                    $author = $authorObject->email;
+                }
                 $time   = $response->date_posted;
 
                 $result = "$result<div class=\"commentResponseDiv\">";
