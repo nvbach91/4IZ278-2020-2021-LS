@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/config.php'; ?>
 <?php require_once __DIR__ . '/vendor/autoload.php'; ?>
 <?php
-include('config.php');
+
 
 session_start();
 

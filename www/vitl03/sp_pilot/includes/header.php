@@ -10,6 +10,7 @@
 	<title>Active</title>
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 
@@ -67,7 +68,7 @@
 
 										<div class="row">
 											<?php if (isset($_SESSION['user_id'])) : ?>
-												<?php if ($_SESSION['user_privillage'] > 2) : ?>
+												<?php if ($_SESSION['user_privilege'] > 2) : ?>
 													<a class="profile-dropdown-btn" href="index.php?page=admin">Profile details</a>
 												<?php else : ?>
 													<a class="profile-dropdown-btn" href="index.php?page=profile">Profile details</a>

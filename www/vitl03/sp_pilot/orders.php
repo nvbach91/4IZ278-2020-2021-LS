@@ -16,7 +16,7 @@ if (isset($_SESSION['userData']['email'])) {
 
 
 $ordersDB = new OrdersDB();
-$orders = $ordersDB->fetchByEmail2($userEmail);
+$orders = $ordersDB->fetchAllByEmail($userEmail);
 
 
 

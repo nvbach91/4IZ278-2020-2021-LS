@@ -16,7 +16,7 @@ if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {
 	$quantity = (int) htmlspecialchars($_POST['quantity']);
 
 
-	$product = $productsDB->fetchByProdPost();
+	$product = $productsDB->fetchByProd(htmlspecialchars($_POST['id']));
 
 	if ($product && $quantity > 0) {
 		// Product exists in database, now we can create/update the session variable for the cart

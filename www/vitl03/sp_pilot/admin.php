@@ -1,6 +1,6 @@
 				<?php
 
-				if ((!($_SESSION['user_id'])) || (!$_SESSION['user_privillage'] > 2)) {
+				if ((!($_SESSION['user_id'])) || (!$_SESSION['user_privilege'] > 2)) {
 					header('Location: index.php');
 					die();
 				}

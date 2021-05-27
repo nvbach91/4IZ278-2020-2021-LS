@@ -13,6 +13,13 @@ $google_client->setRedirectUri('https://eso.vse.cz/~vitl03/sp_pilot/google-login
 $google_client->addScope('email');
 $google_client->addScope('profile');
 
+const DB_HOST = 'localhost';
+const DB_DATABASE = 'vitl03';
+const DB_USERNAME = 'vitl03';
+const DB_PASSWORD = 'eigheeLae4Aith9aiH';
+const CURRENCY = 'CZK';
+
+
 
 
 ?>

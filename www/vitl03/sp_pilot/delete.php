@@ -2,7 +2,7 @@
 <?php
 session_start();
 $productsDB = new ProductsDB();
-$productsDB->delete();
+$productsDB->deleteProduct(htmlspecialchars($_GET['id']));
 
 
 ?>

@@ -26,24 +26,12 @@ class OrdersDB extends Database
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function fetchByEmail2($email)
+    public function fetchAllByEmail($email)
     {
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE email LIKE ? ORDER BY date desc');
         $statement->execute([$email]);
 
         return $statement->fetchAll();
-    }
-    public function create()
-    {
-        // create
-    }
-    public function update()
-    {
-        // update
-    }
-    public function delete()
-    {
-        // delete category
     }
     public function insert($userEmail, $total, $user, $payment, $shipping, $detail, $firstName, $lastName, $address, $city, $country, $zipcode, $phone)
     {

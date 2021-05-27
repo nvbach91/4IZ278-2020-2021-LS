@@ -2,7 +2,7 @@
 <?php
 
 $categoriesDB = new CategoriesDB();
-$categories = $categoriesDB->fetchAll2();
+$categories = $categoriesDB->fetchAll();
 ?>
 <footer id="footer">
 	<div class="section">
@@ -75,8 +75,6 @@ $categories = $categoriesDB->fetchAll2();
 
 
 
-
-<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 

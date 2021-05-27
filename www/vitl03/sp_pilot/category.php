@@ -7,7 +7,7 @@ $productsDB = new ProductsDB();
 $products = $productsDB->showProductInCat();
 
 $categoriesDB = new CategoriesDB();
-$category_names = $categoriesDB->fetchAll();
+$category_names = $categoriesDB->fetchNameById(htmlspecialchars($_GET['category']));
 
 
 

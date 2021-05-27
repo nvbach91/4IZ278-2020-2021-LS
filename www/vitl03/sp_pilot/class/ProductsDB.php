@@ -10,17 +10,17 @@ class ProductsDB extends Database
     }
     public function fetchAllPagination($nItemsPerPagination,$offset)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE 1 LIMIT '.$nItemsPerPagination.' OFFSET ?;');
-        $statement->execute([$offset]);
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE 1 LIMIT ? OFFSET ?;');
+        $statement->execute([$nItemsPerPagination,$offset]);
 
         return $statement->fetchAll();
     }
 
-    public function fetchByProd()
+    public function fetchByProd($id)
     {
 
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
-        $statement->execute(([$_GET['id']]));
+        $statement->execute(([$id]));
         return $statement->fetch();
     }
     public function fetchById($id)
@@ -37,20 +37,13 @@ class ProductsDB extends Database
         $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id IN (' . $array . ')');
         $statement->execute(array_keys($products_in_cart));
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll();
     }
     public function fetchColumn($value, $id)
     {
         $statement = $this->pdo->prepare('SELECT ' . $value . ' FROM ' . $this->tableName . ' WHERE product_id =?');
         $statement->execute([$id]);
         return $statement->fetchColumn();
-    }
-
-    public function fetchByProdPost()
-    {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE product_id=?');
-        $statement->execute(htmlspecialchars([$_POST['id']]));
-        return $statement->fetch();
     }
 
     public function fetchNumberOfProducts()
@@ -110,10 +103,8 @@ class ProductsDB extends Database
         ]);
     }
 
-    public function delete()
+    public function deleteProduct($id)
     {
-        $id = @$_GET['id'];
-
         $sql = 'DELETE FROM ' . $this->tableName . ' WHERE product_id=:id;';
         $statement = $this->pdo->prepare($sql);
         $statement->execute([

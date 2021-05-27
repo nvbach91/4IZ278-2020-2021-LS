@@ -2,7 +2,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['user_privillage'] != 3) {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_privilege'] != 3) {
     header('Location: index.php');
     die();
 }

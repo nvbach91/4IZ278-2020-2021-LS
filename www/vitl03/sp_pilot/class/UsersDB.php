@@ -26,19 +26,13 @@ class UsersDB extends Database
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-    public function create()
-    {
-        // create
-    }
+
     public function update($value, $key)
     {
-        $statement = $this->pdo->prepare('UPDATE ' . $this->tableName . ' SET privillage=? WHERE id=?');
+        $statement = $this->pdo->prepare('UPDATE ' . $this->tableName . ' SET privilege=? WHERE id=?');
         $statement->execute(array($value, $key));
     }
-    public function delete()
-    {
-        // delete category
-    }
+
 
     public function fetchUserByEmail($email)
     {

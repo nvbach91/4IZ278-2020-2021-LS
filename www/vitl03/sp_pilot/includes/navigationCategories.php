@@ -2,7 +2,7 @@
 <?php
 
 $categoriesDB = new CategoriesDB();
-$categories = $categoriesDB->fetchAll2();
+$categories = $categoriesDB->fetchAll();
 
 ?>
 <nav id="navigation">

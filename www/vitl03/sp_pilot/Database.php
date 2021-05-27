@@ -1,8 +1,7 @@
-<?php require __DIR__ . '/database_connection.php'; ?>
-<?php require __DIR__ . '/DatabaseOperations.php'; ?>
+<?php require __DIR__ . '/config.php'; ?>
 <?php
 
-abstract class Database implements DatabaseOperations
+abstract class Database
 {
     protected $pdo;
     public function __construct()
@@ -24,20 +23,6 @@ abstract class Database implements DatabaseOperations
         }
     }
 
-
-    public function fetchBy($field, $value)
-    {
-
-        // PREPARED STATEMENT: NAMED PARAMS
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE ' . $field . ' = :value';
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute(['value' => $value]);
-
-        // ROW COUNT
-        $rowCount = $statement->rowCount();
-
-        return $statement->fetchAll();
-    }
 
 
     public function getPassword($password, $email)

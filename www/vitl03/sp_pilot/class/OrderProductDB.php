@@ -10,18 +10,6 @@ class OrderProductDB extends Database
         $statement->execute();
         return $statement->fetchAll();
     }
-    public function create()
-    {
-        // create
-    }
-    public function update()
-    {
-        // update
-    }
-    public function delete()
-    {
-        // delete category
-    }
 
     public function fetchAllById($id, $orderId)
     {

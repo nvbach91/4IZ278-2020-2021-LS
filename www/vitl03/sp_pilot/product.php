@@ -2,7 +2,7 @@
 
 <?php
 $productsDB = new ProductsDB();
-$product = $productsDB->fetchByProd();
+$product = $productsDB->fetchByProd(htmlspecialchars($_GET['id']));
 
 
 
@@ -40,7 +40,7 @@ $product = $productsDB->fetchByProd();
                     </div>
                     <input class="secondary-btn" type="submit" value="Add To Cart">
                 </form>
-                <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_privillage'] > 2)) : ?>
+                <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_privilege'] > 2)) : ?>
                     <a style="text-align:center; text-transform:uppercase;" class="button-red" href="update.php?id=<?php echo $product['product_id']; ?>">Edit</a>
                     <a style="text-align:center; text-transform:uppercase; margin-top:5px;" class="button-red" href="delete.php?id=<?php echo $product['product_id']; ?>">Delete</a>
 

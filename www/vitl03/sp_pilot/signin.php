@@ -2,8 +2,8 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/config.php'; ?>
 
+?>
 <?php
 
 if (isset($_SESSION['access_token'])) {
@@ -36,9 +36,9 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     if (@password_verify($password, $existing_user['password'])) {
         $_SESSION['user_id'] = $existing_user['id'];
         $_SESSION['user_email'] = $existing_user['email'];
-        $_SESSION['user_privillage'] = $existing_user['privillage'];
+        $_SESSION['user_privilege'] = $existing_user['privilege'];
 
-        if ($_SESSION['user_privillage'] == 3) {
+        if ($_SESSION['user_privilege'] == 3) {
             header('Location: index.php?page=admin');
         } else {
             header('Location: index.php?page=profile');

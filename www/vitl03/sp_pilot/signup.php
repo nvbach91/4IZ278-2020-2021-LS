@@ -3,7 +3,7 @@
 
 
 require_once __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/config.php'; ?>
+?>
 <?php
 
 if (isset($_SESSION['access_token']) || isset($_SESSION['user_id'])) {

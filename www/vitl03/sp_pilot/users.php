@@ -5,7 +5,7 @@
 $msg = '';
 $msgClass = '';
 
-if ((int) $current_user['privillage'] < 3) {
+if ((int) $current_user['privilege'] < 3) {
 
     exit('Unauthorized');
 }
@@ -13,11 +13,11 @@ if ((int) $current_user['privillage'] < 3) {
 $usersDB = new UsersDB();
 
 if ((!empty($_POST))) {
-    foreach (htmlspecialchars($_POST) as  $key => $value) {
+    foreach ($_POST as  $key => $value) {
 
         $usersDB->update($value, $key);
 
-        $msg = "Privillages were changed";
+        $msg = "Privileges were changed";
         $msgClass = 'alert-success';
     }
 }
@@ -43,7 +43,7 @@ $users = $usersDB->fetchAll();
                     <table>
                         <tr>
                             <th>Email</th>
-                            <th>Privillage</th>
+                            <th>Privilege</th>
                         </tr>
                         <?php foreach ($users as $user) : ?>
                             <tr>
@@ -52,9 +52,9 @@ $users = $usersDB->fetchAll();
                                 </td>
                                 <td>
                                     <select form="theForm" name="<?php echo $user['id'] ?>">
-                                        <option value="1" <?php echo $user['privillage'] == '1' ? ' selected' : '' ?>>User</option>
-                                        <option value="2" <?php echo $user['privillage'] == '2' ? ' selected' : '' ?>>Manager</option>
-                                        <option value="3" <?php echo $user['privillage'] == '3' ? ' selected' : '' ?>>Admin</option>
+                                        <option value="1" <?php echo $user['privilege'] == '1' ? ' selected' : '' ?>>User</option>
+                                        <option value="2" <?php echo $user['privilege'] == '2' ? ' selected' : '' ?>>Manager</option>
+                                        <option value="3" <?php echo $user['privilege'] == '3' ? ' selected' : '' ?>>Admin</option>
                                     </select>
                                 </td>
                             </tr>

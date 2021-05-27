@@ -17,18 +17,7 @@ class ShippingDB extends Database
         // Fetch the product from the database and return the result as an Array
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-    public function create()
-    {
-        // create
-    }
-    public function update()
-    {
-        // update
-    }
-    public function delete()
-    {
-        // delete category
-    }
+
 }
 
 ?> 
