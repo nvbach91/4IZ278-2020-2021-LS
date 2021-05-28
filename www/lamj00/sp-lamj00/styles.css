@@ -5,10 +5,27 @@ body{
     background-color: #fdbb2d;
     font-family: 'Roboto Mono', monospace;
 }
+body{
+    display: flex;
+    flex-direction: column;
+}
+td{
+    vertical-align: middle;
+}
+th{
+    vertical-align: middle;
+}
 a{
     color: black;
     text-decoration: none;
 }
+.content {
+    flex: 1 0 auto;
+}
+.footer {
+    flex-shrink: 0;
+}
+
 footer{
     background-color: #22c1c3;
     font-size:  1rem;

@@ -1,43 +1,77 @@
 <?php
 require "incl/header.php";
 require "incl/navbar.php";
-?>
-<?php
+require_once "db/ProductsDB.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $i = (array_key_first($_POST));
+    unset($_SESSION["cart"][$i]);
+    $_SESSION["cart"] = array_values($_SESSION["cart"]);
+}
+$prodDB = new productsDB;
+$products = $prodDB ->fetchAll();
+@$cart = $_SESSION["cart"];
+$cart2 =[];
+$total = 0;
 
-$products = [
-    ['name' => 'Intel Core i7-9700KF', 'price' => 49.9, 'img' => 'https://cdn.alza.cz/ImgW.ashx?fd=f16&cd=BO533e7a'],
-    ['name' => 'Intel Core i9-10900X', 'price' => 60.9, 'img' => 'https://cdn.alza.cz/ImgW.ashx?fd=f16&cd=BO535x2c'],
-    ['name' => 'AMD Ryzen 9 3950X', 'price' => 47.9, 'img' => 'https://cdn.alza.cz/ImgW.ashx?fd=f16&cd=BD750j3'],
-];
+foreach (@$cart as $item){
+
+    $new = ["id"=>$item["id"],
+        "amount"=> $item["amount"],
+        "product_name" => $products[(int)$item["id"] -1]["product_name"],
+        "price" => $products[(int)$item["id"] -1]["price"]
+    ];
+    array_push($cart2,$new);
+    $total += (int)$new["price"]*(int)$new["amount"];
+}
 
 ?>
+
+
 <main class="container">
     <H1>Cart</H1>
     <div>
-        <?php foreach($products as $product): ?>
-            <div class="card mb-3" style="min-width: 500px;">
-                <div class="row g-">
-                    <div class="col align-self-center">
-                        <img style="width: 50px" src="<?php echo $product['img'] ?>" alt="...">
-                    </div>
-                    <div class="col align-self-center">
-                        <h5 class="card-title"><?php echo $product['name'] ?></h5>
-                    </div>
-                    <div class="col align-self-center">
-                        <button type="button" class="btn btn-danger">Remove</button>
-                    </div>
-                    <div class="col align-self-center">
-                        <h5 class="card-title">$<?php echo $product['price'] ?></h5>
-                    </div>
+        <table class="table table-light">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Product name</th>
+                <th scope="col">Amount</th>
+                <th scope="col" style="text-align: right; padding-right: 80px;">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <form action="" method="POST" name="theForm" id="theForm">
+            <?php foreach($cart2 as $index => $item): ?>
+                <tr>
+                    <td style="width: 80px">
+                            <button form="theForm" class="btn btn-danger" name="<?php echo $index; ?>" type="submit" >Delete item</button>
+                    </td>
+                    <td style="text-align: center">
+                        <img class="card-img "
+                             style="height: 80px; width: 80px;"
+                             src="<?php echo "img/products/" . $item['product_name'] . ".jpg"; ?>"
+                             alt="<?php echo $item['product_name']; ?>">
+                    </td>
+                    <td><?php echo $item['product_name']; ?></td>
+                    <td><?php echo $item['amount']; ?></td>
+                    <td style="text-align: right; padding-right: 80px;"><?php echo number_format($item['price'], 2), ' ', "$"; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </form>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: right; padding-right: 80px;">Total: <?php echo number_format($total, 2), ' ', "$"; ?></td>
+            </tr>
+            </tbody>
+        </table>
 
-                </div>
-
-            </div>
-        <?php endforeach; ?>
     </div>
-    <h3 style="text-align: right; margin-right: 100px">Total: $$$</h3>
     <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button" style="font-size:  2rem;">Send order</button>
+        <button class="btn btn-primary" type="button" style="font-size:  2rem;"><a href="createOrder.php">Confirm order</a></button>
 
     </div>
 </main>

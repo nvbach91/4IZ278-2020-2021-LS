@@ -1,6 +1,6 @@
 <?php
 $root = realpath($_SERVER["DOCUMENT_ROOT"]);
-require_once "db/categoriesDB.php";
+require_once "db/CategoriesDB.php";
 //
 //$categories = [
 //    ['number' => 0, 'name' => 'Processors'],
@@ -20,6 +20,6 @@ $categories = $catDB->fetchAll();
 ?>
 <div class="list-group">
     <?php foreach($categories as $category): ?>
-    <a href="eshop.php?category=<?php echo $category['ID']?>" class="list-group-item"><?php echo  $category['category_name']; ?></a>
+    <a href="eshop.php?category=<?php echo $category['ID']?>" class="list-group-item <?php echo @$_GET["category"] == $category['ID'] ? ' active' : '' ?>"><?php echo  $category['category_name']; ?></a>
     <?php endforeach; ?>
 </div>

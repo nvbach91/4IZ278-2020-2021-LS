@@ -16,7 +16,7 @@ require "incl/navbar.php";
 </header>
 <div class="container ">
     <div class="col-md-6 ">
-        <h2>Browse by your favorite manufacturer</h2>
+        <h2>We have components from your favorite company</h2>
     </div>
     <div class="scrolling-wrapper-flexbox">
         <img class="icon shad" src="img/intel_icon.png">
@@ -34,13 +34,13 @@ require "incl/navbar.php";
         <h2>Browse by component type</h2>
     </div>
     <div class="scrolling-wrapper-flexbox">
-        <img class="icon" src="img/cpu_icon.png">
-        <img class="icon" src="img/RAM_icon.png">
-        <img class="icon" src="img/MB_icon.png">
-        <img class="icon" src="img/HDD_icon.png">
-        <img class="icon" src="img/graphic_card_icon_2.png">
-        <img class="icon" src="img/SSD_icon.png">
-        <img class="icon" src="img/cooler_icon.png">
+        <a href="eshop.php?category=Processors"> <img class="icon" src="img/cpu_icon.png"> </a>
+        <a href="eshop.php?category=RAM"><img class="icon" src="img/RAM_icon.png"> </a>
+        <a href="eshop.php?category=Motherboards"><img class="icon" src="img/MB_icon.png"> </a>
+        <a href="eshop.php?category=HDD"><img class="icon" src="img/HDD_icon.png"> </a>
+        <a href="eshop.php?category=Graphics cards"><img class="icon" src="img/graphic_card_icon_2.png"> </a>
+        <a href="eshop.php?category=SSD"><img class="icon" src="img/SSD_icon.png"> </a>
+        <a href="eshop.php?category=Coolers"><img class="icon" src="img/cooler_icon.png"> </a>
     </div>
 </div>
 

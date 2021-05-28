@@ -1,6 +1,1 @@
-<?php
-require "db/categoriesDB.php";
-
-$catDB = new categoriesDB();
-$categories = $catDB->fetchAll();
-
+<a href="logout.php?RC=true">Log out</a>
