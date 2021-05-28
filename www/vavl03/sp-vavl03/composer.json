@@ -1,0 +1,12 @@
+{
+    "name": "lukyv/sp-vavl03",
+    "require": {
+        "facebook/graph-sdk": "^5.1"
+    },
+    "authors": [
+        {
+            "name": "Lukáš Vávra",
+            "email": "vavl03@vse.cz"
+        }
+    ]
+}
