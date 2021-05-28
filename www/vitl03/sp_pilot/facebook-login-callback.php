@@ -1,7 +1,10 @@
-<?php require __DIR__ . '/config.php'; ?>
+
 <?php require_once __DIR__ . '/vendor/autoload.php'; ?>
+<?php require_once __DIR__ . '/class/UsersDB.php'; ?>
 <?php
 session_start();
+$usersDB = new UsersDB();
+
 
 $fb = new \Facebook\Facebook([
     'app_id' => APP_ID,
@@ -32,6 +35,16 @@ $response = $fb->get("/me?fields=id, first_name, last_name, email, picture.type(
 $userData = $response->getGraphNode()->asArray();
 $_SESSION['userData'] = $userData;
 $_SESSION['access_token'] = $accessToken->getValue();
+
+if(isset($_SESSION['userData'])){
+
+    $user = $usersDB->fetchUserByEmail($_SESSION['userData']['email']);
+
+    if (!$user) {
+        $usersDB->insertUser($_SESSION['userData']['first_name'],$_SESSION['userData']['last_name'], $_SESSION['userData']['email']);
+    }
+}
+
 
 header('Location: index.php?page=profile');
 exit();

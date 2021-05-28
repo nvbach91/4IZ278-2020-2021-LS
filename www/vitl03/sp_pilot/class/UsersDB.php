@@ -12,7 +12,7 @@ class UsersDB extends Database
     }
     public function fetchById($id)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE user_id = ?');
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE id = ?');
         $statement->execute([$id]);
         // Fetch the product from the database and return the result as an Array
         return $statement->fetch(PDO::FETCH_ASSOC);
@@ -52,6 +52,7 @@ class UsersDB extends Database
         ]);
     }
 
+
     public function fetchUserById($id)
     {
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->tableName . ' WHERE id = ? LIMIT 1');
@@ -60,6 +61,34 @@ class UsersDB extends Database
         ]);
         return $statement->fetchAll()[0];
     }
+
+
+    public function updateInfo($email,$firstName,$lastName, $address, $city,$country,$zip,$phone){
+        $statement = $this->pdo->prepare('UPDATE ' . $this->tableName . ' SET firstName=?, lastName=?, address=?,city=?,country=?,zip=?,phone=? WHERE email=?');
+        $statement->execute([
+            $firstName,
+            $lastName,
+            $address,
+            $city,
+            $country,
+            $zip,
+            $phone,
+            $email
+        ]);
+    }
+
+
+    public function insertUser($firstName,$lastName,$email)
+    {
+        $statement = $this->pdo->prepare('INSERT INTO ' . $this->tableName . '(firstName,lastName,email) VALUES (?,?,?)');
+        $statement->execute([
+            $firstName,
+            $lastName,
+            $email
+            
+        ]);
+    }
+
 }
 
 ?> 

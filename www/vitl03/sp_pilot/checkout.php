@@ -1,6 +1,7 @@
 <?php require_once __DIR__ . '/class/PaymentDB.php'; ?>
 <?php require_once __DIR__ . '/class/ShippingDB.php'; ?>
 <?php require_once __DIR__ . '/class/ProductsDB.php'; ?>
+<?php require_once __DIR__ . '/class/UsersDB.php'; ?>
 <?php
 
 $paymentsDB = new PaymentDB();
@@ -9,6 +10,7 @@ $payments = $paymentsDB->fetchAll();
 $shippingsDB = new ShippingDB();
 $shippings = $shippingsDB->fetchAll();
 $productsDB = new ProductsDB();
+$usersDB = new UsersDB();
 
 if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {
 
@@ -63,8 +65,17 @@ $total = $subtotal;
 $msg = '';
 $msgClass = '';
 
+
+if (isset($_SESSION['user_id'])) {
+	$loadUser = $usersDB->fetchById($_SESSION['user_id']);
+} elseif (isset($_SESSION['userData'])) {
+	$loadUser = $usersDB->fetchByEmail($_SESSION['userData']['email']);
+	
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-	$valid = false; 
+	$valid = false;
 
 	if (filter_has_var(INPUT_POST, 'submit')) {
 		$firstName = htmlspecialchars(trim($_POST['first-name']));
@@ -76,14 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$zip = htmlspecialchars(trim($_POST['zip-code']));
 		$phone = htmlspecialchars(trim($_POST['tel']));
 
-		$_SESSION['shipping']=htmlspecialchars(trim($_POST['shipping']));
-		$_SESSION['payment']=htmlspecialchars(trim($_POST['shipping']));
-		if(!empty($_POST['detail'])){
-			$_SESSION['detail']=htmlspecialchars(trim($_POST['detail']));
+		$_SESSION['shipping'] = htmlspecialchars(trim($_POST['shipping']));
+		$_SESSION['payment'] = htmlspecialchars(trim($_POST['shipping']));
+		if (!empty($_POST['detail'])) {
+			$_SESSION['detail'] = htmlspecialchars(trim($_POST['detail']));
 		}
-	
-		
-		
+
+
+
 
 		if (!empty($firstName) && !empty($lastName) && !empty($email) && !empty($address) && !empty($city) && !empty($country) && !empty($zip) &&  !empty($phone)) {
 			if (filter_var($email, FILTER_VALIDATE_EMAIL) === false ||  !preg_match('"\A\S+@\S+\Z"', $email)) {
@@ -112,12 +123,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				$_SESSION['country'] = $country;
 				$_SESSION['zip'] = $zip;
 				$_SESSION['phone'] = $phone;
-				if($_POST['password']){
-					$_SESSION['password']=htmlspecialchars(trim($_POST['password']));
-				}
-		
-				header('Location: index.php?page=placeorder');
 
+				$user = $usersDB->fetchUserByEmail($email);
+
+			
+				if ($user) {
+					$usersDB->updateInfo($user['email'], $firstName, $lastName, $address, $city, $country, $zip, $phone);
+				}
+				
+				if ($_POST['password']) {
+					$_SESSION['password'] = htmlspecialchars(trim($_POST['password']));
+				}
+
+				header('Location: index.php?page=placeorder');
 			}
 		} else {
 			$valid = false;
@@ -137,59 +155,93 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 				<div class="alert <?php echo $msgClass; ?>"><?php echo $msg; ?></div>
 
 			<?php endif; ?>
-			<form  method="POST">
+			<form method="POST">
 				<div class="col-md-7">
 					<div class="billing-details">
 						<div class="section-title">
 							<h3 class="title">Billing address</h3>
+					
+						</div>
+						<?php if (isset($_SESSION['user_id']) || isset($_SESSION['access_token'])) : ?>
+							<div class="form-group">
+							<input class="input" type="text" name="first-name" placeholder="First Name*" value="<?php echo $loadUser['firstName']?>" required>
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="first-name" placeholder="First Name*" value="<?php echo isset($_POST['first-name']) ? $firstName : ''; ?>" required>
+							<input class="input" type="text" name="last-name" placeholder="Last Name*" value="<?php echo $loadUser['lastName']?>" required>
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="last-name" placeholder="Last Name*" value="<?php echo isset($_POST['last-name']) ? $lastName : ''; ?>" required>
-						</div>
-						<div class="form-group">
-							<?php if (isset($_SESSION['user_email']) || isset($_SESSION['access_token'])) : ?>
-								<input class="input" type="hidden" name="email" placeholder="Email*" required value="<?php echo $_SESSION['user_email']; ?>">
-							<?php elseif (isset($_SESSION['user_data'])) : ?>
-								<input class="input" type="hidden" name="email" placeholder="Email*" required value="<?php echo $_SESSION['userData']['email']; ?>">
-							<?php else : ?>
-								<input class="input" type="email" name="email" placeholder="Email*" required value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
-							<?php endif; ?>
+						
+								<input class="input" type="email" name="email" placeholder="Email*" required value="<?php echo $loadUser['email'] ?>">
+
 
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="address" placeholder="Address*" required value="<?php echo isset($_POST['address']) ? $address : ''; ?>">
+							<input class="input" type="text" name="address" placeholder="Address*" required value="<?php echo $loadUser['address'] ?>">
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="city" placeholder="City*" required value="<?php echo isset($_POST['city']) ? $city : ''; ?>">
+							<input class="input" type="text" name="city" placeholder="City*" required value="<?php echo $loadUser['city'] ?>">
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="country" placeholder="Country*" required value="<?php echo isset($_POST['country']) ? $country : ''; ?>">
+							<input class="input" type="text" name="country" placeholder="Country*" required value="<?php echo $loadUser['country']  ?>">
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="zip-code" placeholder="ZIP Code*" required value="<?php echo isset($_POST['zip-code']) ? $zip : ''; ?>">
+							<input class="input" type="text" name="zip-code" placeholder="ZIP Code*" required value="<?php echo $loadUser['zip'] ?>">
 						</div>
 						<div class="form-group">
-							<input class="input" type="tel" name="tel" placeholder="Telephone*" required value="<?php echo isset($_POST['tel']) ? $phone : ''; ?>">
+							<input class="input" type="tel" name="tel" placeholder="Telephone*" required value="<?php echo $loadUser['phone'] ?>">
 						</div>
-						<div class="form-group">
-							<?php if (isset($_SESSION['user_id']) || isset($_SESSION['access_token'])) : ?>
-							<?php else : ?>
-								<div class="input-checkbox">
-									<input type="checkbox" id="create-account">
-									<label for="create-account">
-										<span></span>
-										Create Account?
-									</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-										<input class="input" type="password" name="password" placeholder="Enter Your Password">
+
+
+
+						<?php else : ?>
+							<div class="form-group">
+								<input class="input" type="text" name="first-name" placeholder="First Name*" value="<?php echo isset($_POST['first-name']) ? $firstName : ''; ?>" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="last-name" placeholder="Last Name*" value="<?php echo isset($_POST['last-name']) ? $lastName : ''; ?>" required>
+							</div>
+							<div class="form-group">
+								<?php if (isset($_SESSION['user_email']) || isset($_SESSION['access_token'])) : ?>
+									<input class="input" type="email" name="email" placeholder="Email*" required value="<?php echo $_SESSION['user_email']; ?>">
+								<?php elseif (isset($_SESSION['user_data'])) : ?>
+									<input class="input" type="email" name="email" placeholder="Email*" required value="<?php echo $_SESSION['userData']['email']; ?>">
+								<?php else : ?>
+									<input class="input" type="email" name="email" placeholder="Email*" required value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
+								<?php endif; ?>
+
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address*" required value="<?php echo isset($_POST['address']) ? $address : ''; ?>">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City*" required value="<?php echo isset($_POST['city']) ? $city : ''; ?>">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="country" placeholder="Country*" required value="<?php echo isset($_POST['country']) ? $country : ''; ?>">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="zip-code" placeholder="ZIP Code*" required value="<?php echo isset($_POST['zip-code']) ? $zip : ''; ?>">
+							</div>
+							<div class="form-group">
+								<input class="input" type="tel" name="tel" placeholder="Telephone*" required value="<?php echo isset($_POST['tel']) ? $phone : ''; ?>">
+							</div>
+							<div class="form-group">
+								
+									<div class="input-checkbox">
+										<input type="checkbox" id="create-account">
+										<label for="create-account">
+											<span></span>
+											Create Account?
+										</label>
+										<div class="caption">
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+											<input class="input" type="password" name="password" placeholder="Enter Your Password">
+										</div>
 									</div>
-								</div>
-							<?php endif; ?>
-						</div>
+				
+							</div>
+						<?php endif; ?>
+
 					</div>
 
 					<div class="shiping-details">
