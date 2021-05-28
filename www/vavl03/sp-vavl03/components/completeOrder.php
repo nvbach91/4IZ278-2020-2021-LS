@@ -1,5 +1,6 @@
 <?php require __DIR__ . '/../db/OrderDB.php'; ?>
 <?php require __DIR__ . '/../db/ProductsDB.php'; ?>
+<?php require __DIR__ . '/../db/UsersDB.php'; ?>
 <?php
 session_start();
 
@@ -54,13 +55,27 @@ if ($numberOfBoughtProducts != count($productIds)) {
         exit;
     }
     // send email 
-    $email = $fb->get('/me?locale=en_US&fields=email')->getGraphUser();
-    sendEmail($email['email'], 'Order confirmation');
+    sendEmail($_SESSION['userEmail'], 'Order confirmation');
 
     // create order in db
     $date = date("Y-m-d");
     $ordersDB = new OrdersDB();
     $order = $ordersDB->createOrder($_SESSION['orderValue'], $me->getId(), $date, $_SESSION['delivery'], $_SESSION['payment'], $productIds);
+
+    // update user info
+    $usersDB = new UsersDB();
+    $user = $usersDB->updateUser(
+        $_SESSION['userEmail'],
+        $_SESSION['userName'],
+        $_SESSION['userNumber'],
+        $_SESSION['userStreet'],
+        $_SESSION['userDescNumber'],
+        $_SESSION['userCity'],
+        $_SESSION['userZip'],
+        $_SESSION['userState'],
+        $me->getId()
+    );
+    
     // destroy session except fb token
     unset($_SESSION['cart']);
     unset($_SESSION['delivery']);

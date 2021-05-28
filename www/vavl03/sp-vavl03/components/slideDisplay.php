@@ -1,17 +1,37 @@
+<?php require __DIR__ . '/../db/SlideDB.php'; ?>
 <?php
 
-class Slide
-{
-    public  $img;
-    public  $name;
-    public function __construct(string $img, string $name)
-    {
-        $this->img = $img;
-        $this->name = $name;
-    }
-}
+$slidesDB = new SlideDB();
+$slides = $slidesDB->fetchAll();
+?>
 
-$slide1 = new Slide('./img/rtx2080.jpg', 'RTX_2080');
-$slide2 = new Slide('./img/rtx.jpg', 'GTX_1080');
-$slide3 = new Slide('./img/aorus.jpg', 'AORUS');
-$slides = array($slide1, $slide2, $slide3);
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <?php foreach ($slides as $index => $slide) : ?>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index == 0 ? 'active' : ''; ?>"></button>
+        <?php endforeach; ?>
+    </div>
+    <div class="carousel-inner">
+        <?php foreach ($slides as $index => $slide) : ?>
+            <div class="carousel-item  <?php echo $index == 0 ? 'active' : ''; ?>" data-bs-interval="5000">
+                <img src="<?php echo $slide['img'] ?>" class="d-block w-100" alt="<?php echo $slide['name'] ?>">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Buy best graphics cards here on <span class="g">G</span>-SHOP!</h5>
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="#shop">
+                            Start shopping
+                        </a>
+                    </p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

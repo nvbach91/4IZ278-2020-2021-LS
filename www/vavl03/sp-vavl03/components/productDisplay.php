@@ -21,7 +21,7 @@ if (isset($_GET['category'])) {
   # total amount of products from category for pagination
   $count = count($productsDB->fetchCountedCategoryProducts($category));
 } else {
-  $products = $productsDB->fetchProdcutsByPagination($nItemsPerPagination, $offset);
+  $products = $productsDB->fetchProductsByPagination($nItemsPerPagination, $offset);
   # total amount of products for pagination
   $count = count($productsDB->fetchCountedProducts());
   $category = null;

@@ -27,7 +27,7 @@ class ProductsDB extends Database
         $sum = $stmt->fetchColumn();
         return $sum;
     }
-    public function fetchProdcutsByPagination($nItemsPerPagination, $offset)
+    public function fetchProductsByPagination($nItemsPerPagination, $offset)
     {
         // load only unreserved products
         $statement = $this->pdo->prepare("SELECT * FROM product WHERE order_order_id IS NULL GROUP BY product_name ORDER BY product_id
