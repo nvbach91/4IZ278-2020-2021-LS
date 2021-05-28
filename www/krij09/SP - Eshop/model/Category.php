@@ -7,17 +7,35 @@ class Category
     private $categoryId;
     private $name;
     private $description;
+    private $img;
 
     /**
      * Category constructor.
      * @param $categoryId
      * @param $name
      */
-    public function __construct($categoryId, $name, $description)
+    public function __construct($categoryId, $name, $description, $img)
     {
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->description = $description;
+        $this->img = $img;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * @param mixed $img
+     */
+    public function setImg($img): void
+    {
+        $this->img = $img;
     }
 
     /**

@@ -1,8 +1,11 @@
 <?php
+/** @noinspection ALL */
 require("./model/User.php");
 require("./model/Permission.php");
 require("./model/Order.php");
 require("./model/Category.php");
+require("./model/Product.php");
+require("./model/Checkout.php");
 
 
 class Dao
@@ -130,10 +133,20 @@ class Dao
         $result = $statement->fetchAll();
 
         foreach ($result as $category)
-            array_push($categories, new Category($category["categoryId"],$category["name"], $category["description"]));
+            array_push($categories, new Category($category["categoryId"],$category["name"], $category["description"],$category["img"]));
 
         return $categories;
 
+    }
+
+    public function getCategoryById($id)
+    {
+        $statement = $this->conn->prepare("SELECT * FROM categories WHERE categoryId = ?");
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_OBJ);
+
+        return new Category($result->categoryId, $result->name, $result->description, $result->img);
     }
 
     /**
@@ -144,10 +157,12 @@ class Dao
     {
         $name = $category->getName();
         $description = $category->getDescription();
+        $img = $category->getImg();
 
-        $statement = $this->conn->prepare("INSERT INTO categories (name, description) VALUES (?, ?)");
+        $statement = $this->conn->prepare("INSERT INTO categories (name, description) VALUES (?, ?, ?)");
         $statement->bindParam(1,$name,PDO::PARAM_STR);
         $statement->bindParam(2,$description,PDO::PARAM_STR);
+        $statement->bindParam(3,$img, PDO::PARAM_STR);
 
         return (bool)$statement->execute();
     }
@@ -160,6 +175,157 @@ class Dao
         $statement->bindParam(1, $id, PDO::PARAM_INT);
 
         return (bool)$statement->execute();
+    }
+
+    public function insertProduct(Product $product)
+    {
+        $name = $product->getTitle();
+        $description = $product->getDescription();
+        $price = $product->getPrice();
+        $disc = $product->getDiscount();
+        $category = $product->getCategory();
+        $img = $product->getImg();
+
+        $statement = $this->conn->prepare("INSERT INTO game (title, price, category, description, discount, img) VALUES (?, ?, ?, ?, ?, ?)");
+        $statement->bindParam(1,$name,PDO::PARAM_STR);
+        $statement->bindParam(2,$price,PDO::PARAM_STR);
+        $statement->bindParam(3,$category,PDO::PARAM_INT);
+        $statement->bindParam(4,$description,PDO::PARAM_STR);
+        $statement->bindParam(5,$disc,PDO::PARAM_INT);
+        $statement->bindParam(6,$img,PDO::PARAM_STR);
+
+        return (bool)$statement->execute();
+    }
+
+    public function insertCheckout(Checkout $checkout)
+    {
+        $gameId = $checkout->getGameId();
+        $userId = $checkout->getUserId();
+        $count = $checkout->getCount();
+
+        $statement = $this->conn->prepare("INSERT INTO checkout (gameId, userId, count) VALUES (?, ?, ?)");
+        $statement->bindParam(1,$gameId,PDO::PARAM_INT);
+        $statement->bindParam(2,$userId,PDO::PARAM_INT);
+        $statement->bindParam(3,$count,PDO::PARAM_INT);
+        return (bool)$statement->execute();
+    }
+
+    public function deleteProduct(Product $product)
+    {
+        $id = $product->getGameId();
+
+        $statement = $this->conn->prepare("DELETE FROM game WHERE gameId = ?");
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
+
+        return (bool)$statement->execute();
+    }
+
+    public function deleteCheckout(Checkout $checkout)
+    {
+        $id = $checkout->getUserId();
+
+        $statement = $this->conn->prepare("DELETE FROM checkout WHERE userId = ?");
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
+
+        return (bool)$statement->execute();
+    }
+
+    public function updateCheckout(Checkout $checkout, $value)
+    {
+        $statement = $this->conn->prepare("UPDATE checkout SET count = ? WHERE checkoutId = ?");
+        if($value == "up")
+        {
+            $count = $checkout->getCount() + 1;
+            $statement->bindParam(1,$count,PDO::PARAM_INT);
+        }
+        elseif($value == "down")
+        {
+            $count = $checkout->getCount() - 1;
+            $statement->bindParam(1,$count,PDO::PARAM_INT);
+        }
+        $id = $checkout->getCheckoutId();
+        $statement->bindParam(2,$id,PDO::PARAM_INT);
+
+        $statement->execute();
+    }
+
+    public function fetchCheckoutById($id)
+    {
+        $statement = $this->conn->prepare("SELECT * FROM checkout WHERE checkoutId = ?");
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_OBJ);
+
+        return new Checkout($result->checkoutId,$result->gameId,$result->userId,$result->count);
+    }
+
+    public function fetchCheckoutByUserId($id)
+    {
+        $checkouts = [];
+        $statement = $this->conn->prepare("SELECT * FROM checkout");
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+        foreach ($result as $checkout)
+            array_push($checkouts, new Checkout($checkout['checkoutId'],$checkout['gameId'],$checkout['userId'],$checkout['count']));
+
+        return $checkouts;
+    }
+
+    public function fetchProduct()
+    {
+        $products = [];
+        $statement = $this->conn->prepare("SELECT * FROM game");
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+        foreach ($result as $product)
+            array_push($products, new Product($product["gameId"],$product["title"], $product["price"],$product["category"],$product["description"],$product["discount"],$product["img"]));
+
+        return $products;
+
+    }
+
+    public function fetchProductById($id)
+    {
+        $statement = $this->conn->prepare("SELECT * FROM game WHERE gameId = ?");
+        $statement->bindParam(1,$id,PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_OBJ);
+
+        return new Product($result->gameId,$result->title,$result->price,$result->category,$result->description,$result->discount,$result->img);
+
+
+    }
+
+    public function fetchProductByQuery($q)
+    {
+        $products = [];
+        $statement = $this->conn->prepare("SELECT * FROM game WHERE title LIKE ?");
+        $statement->bindParam(1,$q,PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+        foreach ($result as $product)
+            array_push($products, new Product($product["gameId"],$product["title"], $product["price"],$product["category"],$product["description"],$product["discount"],$product["img"]));
+
+        return $products;
+
+    }
+
+    public function fetchProductByCategory($categoryId)
+    {
+        $products = [];
+        $statement = $this->conn->prepare("SELECT * FROM game WHERE category = ?");
+        $statement->bindParam(1, $categoryId, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+        foreach ($result as $product)
+            array_push($products, new Product($product["gameId"],$product["title"], $product["price"],$product["category"],$product["description"],$product["discount"],$product["img"]));
+
+        return $products;
+
     }
 
 

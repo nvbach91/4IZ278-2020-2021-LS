@@ -9,19 +9,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>
-                    Novinky
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="index.php?p=cat&c=sale">
                     <span data-feather="dollar-sign"></span>
                     Zlevněné produkty
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="index.php?p=cat&c=all">
                     <span data-feather="list"></span>
                     Všechny produkty
                 </a>
@@ -38,7 +32,7 @@
             $dao = new Dao($conn->getConn());
              foreach($dao->fetchCategories() as $category): ?>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="index.php?p=cat&c=<?= $category->getCategoryId(); ?>"?>
                     <span data-feather="file-text"></span>
                     <?= $category->getName(); ?>
                 </a>

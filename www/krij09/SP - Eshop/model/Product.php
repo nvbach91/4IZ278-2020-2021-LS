@@ -9,6 +9,7 @@ class Product
     private $category;
     private $description;
     private $discount;
+    private $img;
 
     /**
      * Product constructor.
@@ -18,8 +19,9 @@ class Product
      * @param $category
      * @param $description
      * @param $discount
+     * @param $img
      */
-    public function __construct($gameId, $title, $price, $category, $description, $discount)
+    public function __construct($gameId, $title, $price, $category, $description, $discount,$img)
     {
         $this->gameId = $gameId;
         $this->title = $title;
@@ -27,6 +29,7 @@ class Product
         $this->category = $category;
         $this->description = $description;
         $this->discount = $discount;
+        $this->img = $img;
     }
 
     /**
@@ -35,6 +38,22 @@ class Product
     public function getGameId()
     {
         return $this->gameId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * @param mixed $img
+     */
+    public function setImg($img): void
+    {
+        $this->img = $img;
     }
 
     /**

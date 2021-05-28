@@ -14,14 +14,33 @@ if(!empty($_POST))
     if(isset($_POST['delCat']))
     {
         $id = $_POST['id'];
-        $dao->deleteCategory(new Category($id, "",""));
+        $dao->deleteCategory(new Category($id, "","",""));
         $success = "Kategorie úspěšně odebrána";
+    }
+    if(isset($_POST['delProduct']))
+    {
+        $id = $_POST['id'];
+        $dao->deleteProduct(new Product($id, "","","","","",""));
+        $success = "Kategorie úspěšně odebrána";
+    }
+    if(isset($_POST['addProduct']))
+    {
+        $name = $_POST['name'];
+        $desc = $_POST['desc'];
+        $disc = $_POST['discount'];
+        $cat = $_POST['category'];
+        $price = $_POST['price'];
+        $img = $_POST['img'];
+
+        $dao->insertProduct(new Product(0, $name, $price, $cat, $desc, $disc, $img));
+        $success = "Produkt úspěšně přidán";
     }
     if(isset($_POST['addCategory']))
     {
         $name = $_POST['name'];
         $desc = $_POST['desc'];
-        $dao->insertCategory(new Category(0, $name, $desc));
+        $img = $_POST['img'];
+        $dao->insertCategory(new Category(0, $name, $desc, $img));
         $success = "Kategorie úspěšně přidána";
     }
     if(isset($_POST['submit']))
@@ -68,21 +87,145 @@ if(!empty($_POST))
                 </div>
 
             </div>
-            <?php if(!isset($_GET['p']) || $_GET["p"] == 1): ?>
+            <?php if(!isset($_GET['p']) || $_GET["p"] == 1 && !isset($_GET["x"])): ?>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h2>Produkty</h2>
 
             </div>
             <div class="container">
                 <div class="row mt-5">
-                     <a href="" class="btn btn-dark text-justify">Přidat produkt</a>
+                     <a href="?p=1&x=1" class="btn btn-dark text-justify">Přidat produkt</a>
                 </div>
                 <div class="row mt-3">
-                     <a href="" class="btn btn-dark text-justify">Odebrat produkt</a>
+                     <a href="?p=1&x=2" class="btn btn-dark text-justify">Odebrat produkt</a>
                 </div>
                 <div class="row mt-3">
-                     <a href="" class="btn btn-dark text-justify">Prohlížet produkty</a>
+                     <a href="?p=1&x=3" class="btn btn-dark text-justify">Prohlížet produkty</a>
                 </div>
+            </div>
+            <?php elseif($_GET["p"] == 1 && $_GET["x"] == 1): ?>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2>Přidat produkt</h2>
+            </div>
+
+            <div class="container">
+                <div class="alert-success text-center mb-4"><?=$success;?></div>
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Název produktu" name="name" required>
+                        <textarea type="text" class="form-control mt-2" placeholder="Popis produktu" name="desc" required></textarea>
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Kč </span>
+                            </div>
+                            <input type="number" min="0" class="form-control" placeholder="Cena produktu" name="price" required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Kategorie</label>
+                            </div>
+                            <select class="form-control" id="inputGroupSelect01" name="category" required>
+                                <option selected>Vyber</option>
+                                <?php foreach ($dao->fetchCategories() as $category): ?>
+                                <option value="<?= $category->getCategoryId(); ?>"><?= $category->getName(); ?> </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">% </span>
+                            </div>
+                            <input type="number" max="100" min="0" class="form-control" placeholder="Sleva" name="discount" required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">URL </span>
+                            </div>
+                            <input type="url" class="form-control" placeholder="link na obrázek produktu" name="img" required>
+                        </div>
+                        <input type="submit" name="addProduct" class="btn btn-dark mt-4" style="width: 100%">
+
+                    </div>
+
+                </form>
+            </div>
+
+            <?php elseif($_GET["p"] == 1 && $_GET["x"] == 2): ?>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2>Odebrat produkt</h2>
+            </div>
+
+            <div class="container">
+                <div class="alert-success text-center mb-4"><?=$success;?></div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Název</th>
+                        <th>Popisek</th>
+                        <th>Kategorie</th>
+                        <th>Cena</th>
+                        <th>Sleva</th>
+                        <th>Cena po slevě</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php foreach ($dao->fetchProduct() as $product): ?>
+                        <tr>
+                            <form method="post">
+                                <td><input type="hidden" name="id" value="<?= $product->getGameId(); ?>"><?= $product->getGameId(); ?></td>
+                                <td><?= $product->getTitle(); ?></td>
+                                <td><?= $product->getDescription(); ?></td>
+                                <td><?= $dao->getCategoryById($product->getCategory())->getName(); ?></td>
+                                <td><?= $product->getPrice(); ?></td>
+                                <td><?= $product->getDiscount(); ?></td>
+                                <td><?= $product->getPrice() / 100 * (100 - $product->getDiscount()); ?></td>
+
+                                <td><input type="submit" name="delProduct" value="Odebrat"></td>
+                            </form>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <?php elseif($_GET["p"] == 1 && $_GET["x"] == 3): ?>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2>Zobrazit produkty</h2>
+            </div>
+
+            <div class="container">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Obrázek</th>
+                        <th>Název</th>
+                        <th>Popisek</th>
+                        <th>Kategorie</th>
+                        <th>Cena</th>
+                        <th>Sleva</th>
+                        <th>Cena po slevě</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php foreach ($dao->fetchProduct() as $product): ?>
+                        <tr>
+                            <form method="post">
+                                <td><img class="img-thumbnail img-fluid" width="100" src="<?= $product->getImg(); ?>"></td>
+                                <td><?= $product->getTitle(); ?></td>
+                                <td><?= $product->getDescription(); ?></td>
+                                <td><?= $dao->getCategoryById($product->getCategory())->getName(); ?></td>
+                                <td><?= $product->getPrice(); ?></td>
+                                <td><?= $product->getDiscount(); ?></td>
+                                <td><?= $product->getPrice() / 100 * (100 - $product->getDiscount()); ?></td>
+                            </form>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
 
             <?php elseif($_GET["p"] == 2 && !isset($_GET["x"])): ?>
@@ -112,6 +255,12 @@ if(!empty($_POST))
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Název kategorie" name="name">
                             <textarea type="text" class="form-control mt-2" placeholder="Popis kategorie" name="desc"></textarea>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">URL </span>
+                                </div>
+                                <input type="url" class="form-control" placeholder="link na obrázek produktu" name="img" required>
+                            </div>
                             <input type="submit" name="addCategory" class="btn btn-dark mt-4" style="width: 100%">
 
                         </div>
@@ -176,18 +325,35 @@ if(!empty($_POST))
                     </table>
                 </div>
 
-            <?php elseif($_GET["p"] == 3): ?>
+            <?php elseif($_GET["p"] == 3 && !isset($_GET['x'])): ?>
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h2>Objednávky</h2>
 
                 </div>
                 <div class="container">
                     <div class="row mt-5">
-                        <a href="" class="btn btn-dark text-justify">Čekající objednávky</a>
+                        <a href="?p=3&x=1" class="btn btn-dark text-justify">Čekající objednávky</a>
                     </div>
                     <div class="row mt-3">
-                        <a href="" class="btn btn-dark text-justify">Vyřízené objednávky</a>
+                        <a href="?p=3&x=2" class="btn btn-dark text-justify">Vyřízené objednávky</a>
                     </div>
+                </div>
+            <?php elseif($_GET["p"] == 3 && $_GET["x"] == 1): ?>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Čekající objednávky</h2>
+                </div>
+
+                <div class="container">
+
+                </div>
+
+            <?php elseif($_GET["p"] == 3 && $_GET["x"] == 2): ?>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Vyřízené objednávky</h2>
+                </div>
+
+                <div class="container">
+
                 </div>
             <?php elseif($_GET["p"] == 4): ?>
             <?php
