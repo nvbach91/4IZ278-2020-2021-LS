@@ -3,36 +3,28 @@
 <?php require __DIR__ . '/database/repositories/CoachRepository.php' ?>
 <?php
 
-$db = new CoachRepository();
-
-$response = $db->fetchAll();
-var_dump($response);
-
-/*
-$nItemsPerPagination = 4;
-
-# offset pro strankovani
-if (isset($_GET['offset'])) {
-    $offset = (int)$_GET['offset'];
-} else {
-    $offset = 0;
-}
-
-# celkovy pocet zbozi pro strankovani
-//$count = $db->query("SELECT COUNT(id) FROM goods")->fetchColumn();
-
-$users = new UsersRepository();
-
-//$users->create("");
-
-$stmt = $db->prepare("SELECT * FROM goods ORDER BY id DESC LIMIT $nItemsPerPagination OFFSET ?");
-$stmt->bindValue(1, $offset, PDO::PARAM_INT);
-$stmt->execute();
-$goods = $stmt->fetchAll(); */
-
 ?>
-<main class="container">
-
-</main>
+    <main class="container-fluid" id="mainHome">
+        <div class="row justify-content-md-center formHeight">
+            <div class="row text-center">
+                <div class="wrapper">
+                    <div class="welcomeText">
+                        <h1>
+                            Vítejte na stránkách Fictive Fitness!
+                        </h1>
+                        <h3>
+                            Jsme firma, která nabízí rezervační systém do Vašich oblíbených gymů.
+                            Vyberte si!
+                        </h3>
+                        <div class="row text-center welcomeRow">
+                            <button class="btn btn-outline-primary text-white buttonRadius"><a
+                                        class="gymList" href="gym">Seznam
+                                    dostupných gymů <i class="fas fa-compress-arrows-alt"></i></a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
 <?php include __DIR__ . '/includes/foot.php' ?>

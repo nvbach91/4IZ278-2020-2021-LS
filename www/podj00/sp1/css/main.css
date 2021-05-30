@@ -2,17 +2,22 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.logo {
+    height: 60px;
+    width: 75px;
+}
+
 body {
     font-size: medium;
 }
 
-.logo {
-    height: 100px;
-    width: 125px;
-}
-
-h1 {
-    color: black !important;
+h1,h2,h4,h5,p,span,.btn{
+    font-family: 'Roboto', sans-serif;
 }
 
 .navbar-collapse{
@@ -22,27 +27,206 @@ h1 {
 }
 
 .nav-item{
-    margin-right: 40px;
+    margin-right: 1rem;
+}
+
+.active {
+    color: black !important;
+    box-shadow: 0px 0px 8px black !important;
 }
 
 .nav-item:hover{
-    color: white;
-    background-color: rgba(0,0,0,.55);
+    box-shadow: 0px 1px 8px black !important;
 }
 
 .my-bg {
     background-image: url(https://wallpaperaccess.com/full/1087589.jpg);
-    height: 100vh;"
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-/**
-* FontAWESOME
- */
-
-.fa:hover {
-    opacity: 0.7;
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
 }
 
-.fa-facebook {
-    color: black; !important;
+.fb {
+    background-color: #3B5998;
+    color: white;
 }
+
+.fb:hover {
+    opacity: 0.8;
+    color: white;
+}
+
+
+.profilePicture {
+    width: 40px;
+}
+
+.gymLogo {
+    width: 70px;
+}
+
+li {
+    list-style-type: none;
+}
+
+
+footer>.container {
+    max-width: 100% !important;
+}
+
+.dropdownLeft {
+    right: 0 !important;
+    left: auto !important;
+}
+
+main {
+    margin-top: 4.5rem;
+}
+
+.my-form {
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 30px;
+    z-index: 10;
+}
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 720px;
+    color: white;
+}
+
+.coachPicture {
+    width: 200px;
+}
+
+
+.bottom_border {
+    padding-bottom:1em !important;
+}
+
+.social_footer_ul {
+    display:table;
+    margin:15px auto 0 auto;
+    list-style-type:none;
+}
+.social_footer_ul li {
+    padding-left:20px;
+    padding-top:10px;
+    float:left;
+}
+.social_footer_ul a {
+    color:#CCC;
+    border:2px solid #CCC;
+    padding:8px;border-radius:50%;
+}
+.social_footer_ul li i {
+    width:20px;
+    height:20px;
+    text-align:center;
+}
+
+footer {
+    color: white;
+}
+
+.mt-10 {
+    margin-top: 10px
+}
+
+.errorColor{
+    color: #dc3545
+}
+
+.formCard {
+    margin-top: 5rem;
+    padding: 40px;
+    text-align: center
+}
+
+.formHeight {
+    height: 81vh
+}
+
+.mylecturesCard {
+    margin: 1em auto
+}
+
+.lessonName {
+    background-color: #ffc107;
+    border-radius: 3px
+}
+
+.floatLeft {
+    float: left
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.gymLogoImg {
+    height: 45px;
+    width: 50px;
+    background-color: #000;
+    border-radius: 3px
+}
+
+.welcomeText {
+    position: relative;
+    top: 40%
+}
+
+.welcomeRow {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.gymList {
+    color: white;
+    text-decoration: none
+}
+
+.buttonRadius {
+    border-radius: 20px
+}
+
+.gymGref {
+    text-decoration: none;
+    color: black
+}
+
+.availableLessons {
+    right: 1em;
+    bottom: 3em;
+    position:absolute;
+    border: 1px solid black
+}
+
+.colorBlack {
+    color: black
+}
+
+.marginRightFacebook {
+    margin-right: 2em
+}
+
+
+

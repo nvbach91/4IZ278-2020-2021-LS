@@ -1,90 +1,124 @@
-<?php 
+<?php
 
-require __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../database/repositories/UsersRepository.php';
 
-function sendEmail($recipient, $subject) {
-    // access variables from outside using keyword global
+
+function sendEmail($recipient, $subject)
+{
     global $emailTemplates;
     $headers = implode("\r\n", $emailTemplates['headers']);
     $message = $emailTemplates[$subject]($recipient);
     return mail($recipient, $subject, $message, $headers);
-};
+}
 
-function fetchUsers() {
-    $users = [];
-    $lines = file(DB_FILE_USERS);
-    foreach ($lines as $line) {
-        $line = trim($line);
-        if (!$line) continue; // skip blank lines
-        $fields = explode(DELIMITER, $line);
-        $users[$fields[1]] = [
-            'name' => $fields[0],
-            'email' => $fields[1],
-            'password' => $fields[2],
-        ];
+function findAllWithSameEmail($objects, $email)
+{
+    return !empty(array_filter($objects, function ($toCheck) use ($email) {
+        return $toCheck["email"] == $email;
+    }));
+}
+
+function findAllWithSameUsername($objects, $username)
+{
+    return !empty(array_filter($objects, function ($toCheck) use ($username) {
+        return $toCheck["username"] == $username;
+    }));
+}
+
+function findAllWithSameFacebookId($objects, $facebookId)
+{
+    return !empty(array_filter($objects, function ($toCheck) use ($facebookId) {
+        return $toCheck["facebook_id"] == $facebookId;
+    }));
+}
+
+
+function registerNewUser($payload, $isFacebook)
+{
+    $userDb = new UsersRepository();
+    $users = $userDb->fetchAll();
+    $password = $payload["password"];
+    $hashed_password = null;
+    if (!$isFacebook) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     }
-    return $users;
-};
+    $userRecord = [
+        "username" => $payload['name'],
+        "email" => $payload['email'],
+        "password" => $hashed_password,
+        "facebook_id" => isset($payload['facebook_id']) ? $payload['facebook_id'] : null
+    ];
 
-function fetchUser($email) {
-    $lines = file(DB_FILE_USERS);
-    foreach ($lines as $line) {
-        $line = trim($line);
-        if (!$line) continue; // skip blank lines
-        $fields = explode(DELIMITER, $line);
-        if ($fields[1] === $email) {
-            return [
-                'name' => $fields[0],
-                'email' => $fields[1],
-                'password' => $fields[2],
-            ];
+    if (!$isFacebook) {
+        if (findAllWithSameEmail($users, $payload['email'])) {
+            return ['success' => false, 'msg' => 'Tento email je již zaregistrován'];
+        }
+        if (findAllWithSameUsername($users, $payload['name'])) {
+            return ['success' => false, 'msg' => 'Uživatelské jméno je již obsazené'];
+        }
+    } else {
+        if (findAllWithSameFacebookId($users, $payload['facebook_id'])) {
+            return;
         }
     }
-    return null;
-};
 
-function registerNewUser($payload) {
-    $users = fetchUsers();
-    if (array_key_exists($payload['email'], $users)) {
-        return ['success' => false, 'msg' => 'Email already registered. Please use another email address.'];
-    }
-    $userRecord = 
-        $payload['name'] . DELIMITER .
-        $payload['email'] . DELIMITER .
-        $payload['password'] . "\r\n";
-    //echo $userRecord;
-    file_put_contents(DB_FILE_USERS, $userRecord, FILE_APPEND);
-    return ['success' => true, 'msg' => 'Registration was successful'];
-};
+    var_dump($userRecord);
+    $userDb->createUser($userRecord);
+    return ['success' => true, 'msg' => 'Registrace proběhla úspešně'];
+}
 
-function generateRandomPassword($length) {
-    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+=';
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-    for ($i = 0; $i < $length; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass); //turn the array into a string
-};
+;
 
-function authenticate($email, $password) {
-    $user = fetchUser($email);
+
+function authenticate($username, $password)
+{
+    $userDb = new UsersRepository();
+    $user = $userDb->getUser($username);
     if (!$user) {
-        return ['success' => false, 'msg' => 'This account does not exist'];
+        return ['success' => false, 'msg' => 'Účet neexistuje'];
     }
-    //var_dump($user);
-    //echo '***' . $password . '***<br>';
-    //echo '***' . $user['password'] . '***<br>';
-    //echo $password === $user['password'] ? 'TRUE' : 'FALSE';
-    if ($user['password'] !== $password) {
-        return ['success' => false, 'msg' => 'Wrong password'];
+    $hashed_password = $user[0]["password"];
+    if (password_verify($password, $hashed_password)) {
+        return ['success' => false, 'msg' => 'Špatné heslo'];
     }
     return ['success' => true, 'msg' => 'Login success'];
-};
+}
 
-function getInputValidClass($key, $errors) {
+;
+
+function getInputValidClass($key, $errors)
+{
     return array_key_exists($key, $errors) ? ' is-invalid' : '';
-};
+}
+
+function getCzechDate($date)
+{
+    $men = [
+        'January', 'February', 'March', 'April', 'May',
+        'Jun', 'July', 'August', 'September', 'October',
+        'November', 'December'
+    ];
+
+    $mcz = [
+        'ledna', 'února', 'března', 'dubna', 'května',
+        'června', 'července', 'srpna', 'září', 'října',
+        'listopadu', 'prosince'
+    ];
+
+    $date = str_replace($men, $mcz, $date);
+
+    $den = [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+        'Friday', 'Saturday', 'Sunday'
+    ];
+
+    $dcz = [
+        'Pondělí', 'Úterý', 'Středa', 'Čtvrtek',
+        'Pátek', 'Sobota', 'Neděle'
+    ];
+
+    return str_replace($den, $dcz, $date);
+}
 
 ?>
