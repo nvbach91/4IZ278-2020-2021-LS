@@ -9,7 +9,7 @@ if(!empty($_POST))
 {
     if(isset($_POST['register']))
     {
-        $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+        $conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
         $conn->createConn();
 
         $pwd = password_hash($_POST['password'], PASSWORD_BCRYPT);

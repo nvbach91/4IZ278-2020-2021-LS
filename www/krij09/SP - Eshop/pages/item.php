@@ -161,10 +161,11 @@
 </style>
 <?php
 
-$conn = new Db("localhost","Hruska","Lisa1959","eshop");
+$conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
 $conn->createConn();
 $dao = new Dao($conn->getConn());
-$success="";
+$message = "";
+$success = (object) array('bool' => true);
 
 $product = $dao->fetchProductById($_GET['i']);
 
@@ -175,14 +176,24 @@ if(!empty($_POST))
         $user = unserialize($_SESSION['user']);
         $userId = $user->getId();
         $gameId = $_GET['i'];
-        $dao->insertCheckout(new Checkout(0,$gameId,$userId,1));
-        $success = "Předmět přidán do košíku!";
+
+        $checkouts = $dao->fetchCheckoutByUserId($userId);
+        $control = false;
+        foreach($checkouts as $checkout)
+            if($checkout->getGameId() == $gameId)
+                $control = true;
+
+        if($control)
+            $success = $dao->updateCheckout($dao->fetchCheckoutById($checkout->getCheckoutId()),"up");
+        else
+            $success = $dao->insertCheckout(new Checkout(0,$gameId,$userId,1));
+        $message = $success->{'message'};
     }
 }
 
 ?>
 <div class="container">
-    <div class="alert-success text-center mb-4"><?=$success;?></div>
+    <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
     <form method="post">
     <div class="card">
         <div class="container-fluid">

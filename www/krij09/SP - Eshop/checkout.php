@@ -3,31 +3,40 @@ session_start();
 require("database/Db.php");
 require("database/Dao.php");
 
-$conn = new Db("localhost","Hruska","Lisa1959","eshop");
+$conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
 $conn->createConn();
 $dao = new Dao($conn->getConn());
 $price = 0;
+$message = "";
+$success = (object) array('bool' => true);
+
 
 if(!empty($_POST))
 {
     if(isset($_POST['delete']))
     {
         $checkoutId = $_POST['checkoutId'];
-        $dao->deleteCheckout(new Checkout($checkoutId,"","",""));
+        $success = $dao->deleteCheckout(new Checkout($checkoutId,"",unserialize($_SESSION['user'])->getId(),""), "delete");
+        $message = $success->{'message'};
     }
     if(isset($_POST['up']))
     {
         $checkoutId = $_POST['checkoutId'];
-        $dao->updateCheckout($dao->fetchCheckoutById($checkoutId),"up");
+        $success = $dao->updateCheckout($dao->fetchCheckoutById($checkoutId),"up");
+        $message = $success->{'message'};
+
     }
     if(isset($_POST['down']))
     {
         $checkoutId = $_POST['checkoutId'];
-        $dao->updateCheckout($dao->fetchCheckoutById($checkoutId),"down");
+        $success = $dao->updateCheckout($dao->fetchCheckoutById($checkoutId),"down");
+        $message = $success->{'message'};
+
     }
     if(isset($_POST['cancel']))
     {
-        $dao->deleteCheckout(new Checkout("","",unserialize($_SESSION['user'])->getId(),""));
+        $success = $dao->deleteCheckout(new Checkout("","",unserialize($_SESSION['user'])->getId(),""), "cancel");
+        $message = $success->{'message'};
     }
 }
 
@@ -42,6 +51,8 @@ if(!empty($_POST))
                 <h2>Košík</h2>
 
             </div>
+            <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
+
             <?php foreach($dao->fetchCheckoutByUserId(unserialize($_SESSION['user'])->getId()) as $item):
                 $price += $item->getCount() * ($dao->fetchProductById($item->getGameId())->getPrice() / 100 * (100 - $dao->fetchProductById($item->getGameId())->getDiscount()));
                 ?>

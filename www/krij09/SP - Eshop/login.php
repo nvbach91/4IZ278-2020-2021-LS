@@ -7,22 +7,26 @@ if(!empty($_POST))
 {
     if(isset($_POST['login']))
     {
-        $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+        $conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
         $conn->createConn();
 
 
         $dao = new Dao($conn->getConn());
         $user = $dao->getUserByUsername($_POST['username']);
 
-        if(password_verify($_POST['password'],$user->password))
-        {
-            $_SESSION['username'] = $user->username;
-            $_SESSION['permission'] = $user->permission;
-            $_SESSION['user'] = serialize($dao->getUser($user));
-            header("Location: ./");
-        }
+
+        if($user)
+            if(password_verify($_POST['password'],$user->password))
+            {
+                $_SESSION['username'] = $user->username;
+                $_SESSION['permission'] = $user->permission;
+                $_SESSION['user'] = serialize($dao->getUser($user));
+                header("Location: ./");
+            }
+            else
+                $error = "Špatné heslo";
         else
-            $error = "Špatné uživatelské jméno nebo heslo";
+            $error = "Uživatel neexistuje";
 
         $conn->closeConn();
     }

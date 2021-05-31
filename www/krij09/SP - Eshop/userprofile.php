@@ -23,7 +23,9 @@
             $user->setLastname($_POST['lastname']);
             $user->setSurname($_POST['surname']);
 
-            $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+
+
+            $conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
             $conn->createConn();
             $dao = new Dao($conn->getConn());
             $dao->saveUser($user);

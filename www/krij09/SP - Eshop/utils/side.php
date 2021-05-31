@@ -1,4 +1,5 @@
 <?php ?>
+
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light min-vh-90 collapse">
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
@@ -27,7 +28,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
             <?php
-            $conn = new Db("localhost","Hruska","Lisa1959","eshop");
+            $conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
             $conn->createConn();
             $dao = new Dao($conn->getConn());
              foreach($dao->fetchCategories() as $category): ?>

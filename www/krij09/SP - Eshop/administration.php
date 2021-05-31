@@ -2,26 +2,26 @@
 session_start();
 require("database/Db.php");
 require("database/Dao.php");
-$error = "";
-$success = "";
+$message = "";
+$success = (object) array('bool' => true);
 
-$conn = new Db("localhost","Hruska","Lisa1959","eshop");
+$conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
 $conn->createConn();
 $dao = new Dao($conn->getConn());
 
 if(!empty($_POST))
 {
-    if(isset($_POST['delCat']))
-    {
+    if(isset($_POST['delCat'])) {
         $id = $_POST['id'];
-        $dao->deleteCategory(new Category($id, "","",""));
-        $success = "Kategorie úspěšně odebrána";
+        $success = $dao->deleteCategory(new Category($id, "", "", ""));
+        $message = $success->{'message'};
+
     }
     if(isset($_POST['delProduct']))
     {
         $id = $_POST['id'];
-        $dao->deleteProduct(new Product($id, "","","","","",""));
-        $success = "Kategorie úspěšně odebrána";
+        $success = $dao->deleteProduct(new Product($id, "","","","","",""));
+        $message = $success->{'message'};
     }
     if(isset($_POST['addProduct']))
     {
@@ -32,16 +32,17 @@ if(!empty($_POST))
         $price = $_POST['price'];
         $img = $_POST['img'];
 
-        $dao->insertProduct(new Product(0, $name, $price, $cat, $desc, $disc, $img));
-        $success = "Produkt úspěšně přidán";
+        $success = $dao->insertProduct(new Product(0, $name, $price, $cat, $desc, $disc, $img));
+        $message = $success->{'message'};
+
     }
     if(isset($_POST['addCategory']))
     {
         $name = $_POST['name'];
         $desc = $_POST['desc'];
         $img = $_POST['img'];
-        $dao->insertCategory(new Category(0, $name, $desc, $img));
-        $success = "Kategorie úspěšně přidána";
+        $success = $dao->insertCategory(new Category(0, $name, $desc, $img));
+        $message = $success->{'message'};
     }
     if(isset($_POST['submit']))
     {
@@ -49,7 +50,6 @@ if(!empty($_POST))
         $users = [];
         foreach ($results as $result)
             array_push($users, new User($result["userId"],$result["username"],$result["password"],$result["surname"],$result["lastname"],$result["permissionId"]));
-
        foreach ($_POST["username"] as $user)
         {
             foreach ($users as $u)
@@ -57,7 +57,8 @@ if(!empty($_POST))
                 if($u->getUsername() == $user)
                 {
                     $u->setPermissionId($_POST['permission'.$user]);
-                    $dao->saveUser($u);
+                    $success = $dao->saveUser($u);
+                    $message = $success->{'message'};
                 }
             }
         }
@@ -109,7 +110,7 @@ if(!empty($_POST))
             </div>
 
             <div class="container">
-                <div class="alert-success text-center mb-4"><?=$success;?></div>
+                <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
                 <form method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Název produktu" name="name" required>
@@ -156,7 +157,7 @@ if(!empty($_POST))
             </div>
 
             <div class="container">
-                <div class="alert-success text-center mb-4"><?=$success;?></div>
+                <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -250,7 +251,7 @@ if(!empty($_POST))
                     <h2>Přidat kategorii</h2>
                 </div>
                 <div class="container">
-                    <div class="alert-success text-center mb-4"><?=$success;?></div>
+                    <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
                     <form method="post">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Název kategorie" name="name">
@@ -274,7 +275,7 @@ if(!empty($_POST))
                 </div>
 
                 <div class="container">
-                    <div class="alert-success text-center mb-4"><?=$success;?></div>
+                    <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
                     <table class="table">
                         <thead>
                         <tr>
@@ -368,6 +369,7 @@ if(!empty($_POST))
 
                 </div>
                 <div class="container" style="width: 70%;">
+                    <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
                     <form method="post">
                     <table class="table">
                       <thead>
@@ -383,9 +385,9 @@ if(!empty($_POST))
                       ?>
                           <tr>
                             <td><?= $user->getId(); ?></td>
-                            <td><input type="hidden" value="<?=$user->getUsername();?>" name="username[]"><?= $user->getUsername(); ?></td>
+                            <td><input <?=$user->getUsername() == unserialize($_SESSION['user'])->getUsername() ? 'disabled' : ''?> type="hidden" value="<?=$user->getUsername();?>" name="username[]"><?= $user->getUsername(); ?></td>
                             <td>
-                                <select class="form-select" aria-label="Default select example" name="permission<?=$user->getUsername();?>">
+                                <select <?=$user->getUsername() == unserialize($_SESSION['user'])->getUsername() ? 'disabled' : ''?> class="form-select" aria-label="Default select example" name="permission<?=$user->getUsername();?>"  >
                                     <option <?= $user->getPermissionId() == 1 ? "selected" : "" ?> value="1">Uživatel</option>
                                     <option <?= $user->getPermissionId() == 2 ? "selected" : "" ?> value="2">Support</option>
                                     <option <?= $user->getPermissionId() == 3 ? "selected" : "" ?> value="3">Admin</option>
