@@ -8,10 +8,11 @@ use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\MailsController;
-use App\Http\Controllers\PageItemsController;
+// use App\Http\Controllers\PageItemsController;
 use App\Http\Controllers\SavedSongsController;
 use App\Http\Controllers\User_ratingsController;
 use App\Http\Controllers\UserController;
+use App\Models\PageItems;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -35,8 +36,8 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems    = new PageItems;
+    $pageItems              = $pageItems->fetch();
 
     return view('homepage')->with('pageItems', $pageItems)
         ->with('title', 'MySongs');
@@ -55,8 +56,8 @@ Route::get('/songs/{song_id}', function ($song_id, Request $request) {
     $songsController        = new SongsController;
     $song                   = $songsController->show($song_id);
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems    = new PageItems;
+    $pageItems              = $pageItems->fetch();
 
     if (!$pageItems['anonymous']) {
         $savedSongsController = new SavedSongsController;
@@ -104,8 +105,8 @@ Route::get('/songs/{song_id}/edit', function ($song_id) {
         return redirect('/songs/$song_id');
     }
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems    = new PageItems;
+    $pageItems              = $pageItems->fetch();
 
     return view('songEdit')
         ->with('song', $song)
@@ -195,9 +196,9 @@ Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
 Route::get('/profile', function () {
     $usersController = new UsersController;
     $songsController = new SongsController;
-    $pageItemsController    = new PageItemsController;
+    $pageItems    = new PageItems;
 
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems              = $pageItems->fetch();
 
     if ($usersController->isLoggedIn()) {
         $user = $usersController->getById(session('user_id'));
@@ -222,9 +223,9 @@ Route::get('/profile', function () {
 Route::get('/profile/edit', function () {
     $usersController        = new UsersController;
     $songsController        = new SongsController;
-    $pageItemsController    = new PageItemsController;
+    $pageItems    = new PageItems;
 
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems              = $pageItems->fetch();
 
     if ($usersController->isLoggedIn()) {
         $user = $usersController->getById(session('user_id'));
@@ -250,11 +251,11 @@ Route::post('/profile/edit/submit', [UsersController::class, 'updateProfile']);
 */
 Route::get('/savedChords', function () {
 
-    $pageItemsController    = new PageItemsController;
+    $pageItems    = new PageItems;
     $songsController        = new SongsController;
     $savedSongsController   = new SavedSongsController;
 
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems              = $pageItems->fetch();
 
     $songs                  = [];
     $userSaves              = $savedSongsController->getSongsFromUser(session('user_id'));
@@ -279,9 +280,9 @@ Route::get('/savedChords', function () {
 Route::get('/createdByMe', function () {
     $songsController        = new SongsController;
     $usersController        = new UsersController;
-    $pageItemsController    = new PageItemsController;
+    $pageItems    = new PageItems;
 
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems              = $pageItems->fetch();
 
     if ($usersController->isLoggedIn()) {
         $songs = $songsController->searchByUserId(session('user_id'));
@@ -305,8 +306,8 @@ Route::get('/search/{query}', function ($query) {
     $songsController        = new SongsController;
     $results                = $songsController->searchByQuery($query);
 
-    $pageItemsController    = new PageItemsController;
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems    = new PageItems;
+    $pageItems              = $pageItems->fetch();
 
     return view('homepage')
         ->with('results', $results)
@@ -329,8 +330,8 @@ Route::get('/signup', function (Request $request) {
     if (!$usersController->isLoggedIn()) {
         $customErrorMessage = $request->input('e');
 
-        $pageItemsController    = new PageItemsController;
-        $pageItems              = $pageItemsController->fetch();
+        $pageItems    = new PageItems;
+        $pageItems              = $pageItems->fetch();
 
         return view('signup')->with('pageItems', $pageItems)
             ->with('customErrorMessage', $customErrorMessage)
@@ -353,8 +354,8 @@ Route::get('/signin', function (Request $request) {
     if (!$usersController->isLoggedIn()) {
         $email = $request->input('email');
 
-        $pageItemsController    = new PageItemsController;
-        $pageItems              = $pageItemsController->fetch();
+        $pageItems    = new PageItems;
+        $pageItems              = $pageItems->fetch();
 
         return view('signin')->with('pageItems', $pageItems)
             ->with('error', $request->input('error'))
@@ -402,84 +403,15 @@ Route::get('/logout', function () {
 */
 
 Route::get('/test', function (Request $request) {
-    // $usersController = new UsersController;
-    // $response = $usersController->searchByEmail('klepetkope@gmail.com');
-    // return json_encode($response);
-    // $request->session()->put('user_id', 2);
-
-    // $data = $request->session()->all();
-
-    // session(['last_activity' => now()]);
-    // return "last_activity = " . strtotime(session('last_activity')) . 
-    // "time() = " . time() .
-    // (strtotime(session('last_activity')) - time())   ."";
-
-    // $last_activity  = intval(session('last_activity'));
-    // $time           = intval(time());
-    // $difference     = $time - $last_activity;
-    // echo $difference;
-
-    // $usersController->searchByEmail('kjepii@kjepii.cz');
-    // $id = $usersController->searchByEmail('ahoj@ahoj.ahoj');
-    // echo 'id: ' . $id; 
-    // $password =  DB::table('users')->find($id)->password;
-    // echo 'password: ' . $password;
-
-    // $results = DB::table('songs')->where('created_by', 1)->get();
-    // var_dump($result
-
-    // $usersController = new UsersController;
-    // $songsController = new SongsController;
-
-    // $pageItemsController    = new PageItemsController;
-    // $pageItems              = $pageItemsController->fetch();
-
-    // if ($usersController->isLoggedIn()) {
-    //     $user = $usersController->getById(session('user_id'));
-    //     $songs = $songsController->searchByUserId(session('user_id'));
-    //     // var_dump($user);
-    //     echo $songs[0]->name;
-    // } else {
-    //     return redirect('/signin');
-    // }
-
-    // $savedSongsController = new SavedSongsController;
-
-    // $user_id = 2;
-    // $song_id = 3;
-
-    //    var_dump($savedSongsController->isAlreadySaved($user_id, $song_id)); 
-
-    // $results = DB::table('user_saved_songs')
-    //     ->where('user_id', $user_id)
-    //     ->where('song_id', $song_id)
-    //     ->get();
-
-    // return $savedSongsController->isAlreadySaved($user_id, $song_id);
-    // return $savedSongsController->getSongsFromUser($user_id);
-
-    // $user_ratingsController = new User_ratingsController;
-    // // echo 
-    // echo DB::table('user_ratings')
-    // ->where('song', 1)
-    // // ->avg('stars');
-    // echo 'Rating is ' . $user_ratingsController->getRating(1);
-    // echo 'How many people voted: ' . $user_ratingsController->countRatings(1);
-    // $specificRating = $user_ratingsController->findSpecificRating(1, 2);
-    // echo $specificRating[0]->id;
-
-    // $commentsController = new CommentsController;
-    // echo $commentsController->renderComments(3);
-
 });
 
 Route::get('/send-email', [MailsController::class, 'sendMail']);
 
 Route::get('/email-confirmation', function (Request $request) {
     $usersController        = new UsersController;
-    $pageItemsController    = new PageItemsController;
+    $pageItems              = new PageItems;
 
-    $pageItems              = $pageItemsController->fetch();
+    $pageItems              = $pageItems->fetch();
     $status = $request->input('status');
 
     if ($usersController->isLoggedIn()) {
