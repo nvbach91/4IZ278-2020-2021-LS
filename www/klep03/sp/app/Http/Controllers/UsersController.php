@@ -103,14 +103,15 @@ class UsersController extends Controller
         ];
     }
 
-    private function createUser($email, $password)
+    private function createUser($email, $password, $activationCode)
     {
         $hashedPassword = $this->hashPassword($password);
         $dbData = [
             'email' => $email,
             'password' => $hashedPassword,
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
+            'activation_code' => $activationCode
         ];
         $this->storeDefault($dbData);
     }
@@ -146,9 +147,13 @@ class UsersController extends Controller
             return redirect('signup?e=usedEmail');
         }
 
-        //ulozeni do db
-        $this->createUser($data['email'], $data['password']);
+        $activationCode = rand(0,1000000);
 
+        //ulozeni do db
+        $this->createUser($data['email'], $data['password'], $activationCode);
+
+        $mailsController = new MailsController;
+        $mailsController->sendEmailConfirmation($data['email'], $activationCode);
 
         // return $request->input();
         return redirect('signin?email=' . $email);
@@ -256,5 +261,25 @@ class UsersController extends Controller
             ]);
         
             return redirect('/profile');
+    }
+
+    public function confirmEmail(Request $request) {
+        $request->validate([
+            'activationCode' => 'required',
+        ]);
+
+        $user = $this->getById(session('user_id'));
+
+        if ($request->input('activationCode') == $user->activation_code) {
+            DB::table('users')
+            ->where('id', session('user_id'))
+            ->update([
+                'email_verified_at' => now(),
+            ]);
+            return redirect('/email-confirmation/?status=success');
+        }
+        else {
+            return redirect('/email-confirmation/?status=fail');
+        }
     }
 }

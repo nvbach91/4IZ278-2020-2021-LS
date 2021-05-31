@@ -1,0 +1,444 @@
+[
+    {
+        "type": "header",
+        "version": "5.0.4",
+        "comment": "Export to JSON plugin for PHPMyAdmin"
+    },
+    {
+        "type": "database",
+        "name": "sp2"
+    },
+    {
+        "type": "table",
+        "name": "comments",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "date_posted": "2021-05-26 13:05:56",
+                "song": "1",
+                "response_to": null,
+                "content": "asdf",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "2",
+                "date_posted": "2021-05-26 13:06:08",
+                "song": "3",
+                "response_to": null,
+                "content": "Ahojaosdfhlaskdf",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "3",
+                "date_posted": "2021-05-26 13:06:23",
+                "song": "3",
+                "response_to": "2",
+                "content": "Co to píšeš",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "4",
+                "date_posted": "2021-05-26 13:06:30",
+                "song": "3",
+                "response_to": "3",
+                "content": "asdfsadfasdf",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "5",
+                "date_posted": "2021-05-26 13:06:51",
+                "song": "3",
+                "response_to": "4",
+                "content": "xycvyxcv",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "6",
+                "date_posted": "2021-05-26 13:07:18",
+                "song": "3",
+                "response_to": "4",
+                "content": "aha",
+                "author": "2",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "7",
+                "date_posted": "2021-05-26 13:07:28",
+                "song": "3",
+                "response_to": "2",
+                "content": "asdfsdf",
+                "author": "2",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "8",
+                "date_posted": "2021-05-26 13:07:42",
+                "song": "3",
+                "response_to": "3",
+                "content": "aaaaaaa",
+                "author": "2",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "9",
+                "date_posted": "2021-05-26 19:55:42",
+                "song": "3",
+                "response_to": null,
+                "content": "čauki",
+                "author": "2",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "10",
+                "date_posted": "2021-05-26 19:55:58",
+                "song": "3",
+                "response_to": "9",
+                "content": "čus",
+                "author": "2",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "11",
+                "date_posted": "2021-05-26 19:57:38",
+                "song": "3",
+                "response_to": "10",
+                "content": "haha",
+                "author": "1",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "12",
+                "date_posted": "2021-05-29 11:20:21",
+                "song": "10",
+                "response_to": null,
+                "content": "Debílku lyrics mi jsou k hovnu",
+                "author": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "13",
+                "date_posted": "2021-05-29 11:20:39",
+                "song": "10",
+                "response_to": "12",
+                "content": "kámo klid si to najdi",
+                "author": "3",
+                "created_at": null,
+                "updated_at": null
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "failed_jobs",
+        "database": "sp2",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "migrations",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "117",
+                "migration": "2014_10_12_000000_create_users_table",
+                "batch": "1"
+            },
+            {
+                "id": "118",
+                "migration": "2014_10_12_100000_create_password_resets_table",
+                "batch": "1"
+            },
+            {
+                "id": "119",
+                "migration": "2019_08_19_000000_create_failed_jobs_table",
+                "batch": "1"
+            },
+            {
+                "id": "120",
+                "migration": "2021_05_15_161656_create_styles_table",
+                "batch": "1"
+            },
+            {
+                "id": "121",
+                "migration": "2021_05_15_161831_create_songs_table",
+                "batch": "1"
+            },
+            {
+                "id": "122",
+                "migration": "2021_05_15_231533_create_comments_table",
+                "batch": "1"
+            },
+            {
+                "id": "123",
+                "migration": "2021_05_16_002158_create_user_ratings_table",
+                "batch": "1"
+            },
+            {
+                "id": "124",
+                "migration": "2021_05_24_211116_create_sessions_table",
+                "batch": "1"
+            },
+            {
+                "id": "125",
+                "migration": "2021_05_25_133606_add_stars_to_songs",
+                "batch": "1"
+            },
+            {
+                "id": "126",
+                "migration": "2021_05_25_134635_create_user_saved_songs_table",
+                "batch": "1"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "password_resets",
+        "database": "sp2",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "sessions",
+        "database": "sp2",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "songs",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "name": "Start Again",
+                "lyrics_w_chords": "I know, I am not perfect\r\nNot who I was meant to be",
+                "artist": "Petr Klepetko",
+                "difficulty": "beginner",
+                "created_by": "1",
+                "style": null,
+                "created_at": null,
+                "updated_at": "2021-05-26 00:40:45",
+                "stars": null
+            },
+            {
+                "id": "3",
+                "name": "Love Yourself",
+                "lyrics_w_chords": "[Verse 1]\r\n \r\n            C              G\/B          Am\r\nFor all the times that you rain on my parade\r\n            Dm               C        G\/B\r\nAnd all the clubs you get in using my name\r\n              C                  G\/B         Am\r\nYou think you broke my heart, oh girl for goodness sake\r\n              Dm            C           G\/B\r\nYou think I'm crying, on my own, well I ain't\r\n                   C           G\/B                  Am\r\nAnd I didn't wanna write a song cause I didn't want anyone thinking I still care\r\n   Dm        C                G\/B\r\nI don't but, you still hit my phone up\r\n                 C        G\/B              Am\r\nAnd baby I'll be movin' on and I think you should be somethin'\r\n              Dm         C                G\/B\r\nI don't wanna hold back, maybe you should know that\r\n \r\n \r\n[Pre-Chorus]\r\n \r\n              Am           F              C\r\nMy mama don't like you and she likes everyone\r\n            Am      F                C\r\nAnd I never like to admit that I was wrong\r\n                 Am          F               C                G\r\nAnd I've been so caught up in my job, didn't see what's going on\r\n          Am  F            G\r\nAnd now I know, I'm better sleeping on my own\r\n \r\n \r\n[Chorus]\r\n \r\n             C        G       Am        F\r\nCause if you like the way you look that much\r\n        C                 G        C\r\nOh baby you should go and love yourself\r\n           C          G         Am      F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC                 G        C\r\nYou should go and love yourself\r\n \r\n \r\n[Verse 2]\r\n \r\n             C                G\/B      Am\r\nBut when you told me that you hated my friends\r\n         Dm               C           G\/B\r\nThe only problem was with you and not them\r\n          C             G\/B            Am\r\nAnd every time you told me my opinion was wrong\r\n             Dm             C            G\/B\r\nAnd tried to make me forget where I came from\r\n                   C           G\/B                  Am\r\nAnd I didn't wanna write a song cause I didn't want anyone thinking I still care\r\n   Dm        C                G\/B\r\nI don't but, you still hit my phone up\r\n                 C        G\/B              Am\r\nAnd baby I'll be movin' on and I think you should be somethin'\r\n              Dm         C                G\/B\r\nI don't wanna hold back, maybe you should know that\r\n \r\n \r\n[Pre-Chorus]\r\n \r\n              Am           F              C\r\nMy mama don't like you and she likes everyone\r\n            Am      F                C\r\nAnd I never like to admit that I was wrong\r\n                 Am          F               C                G\r\nAnd I've been so caught up in my job, didn't see what's going on\r\n          Am  F            G\r\nAnd now I know, I'm better sleeping on my own\r\n \r\n \r\n[Chorus]\r\n \r\n             C        G       Am        F\r\nCause if you like the way you look that much\r\n        C                 G        C\r\nOh baby you should go and love yourself\r\n           C          G         Am      F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC                 G        C\r\nYou should go and love yourself\r\n \r\n \r\n[Instrumental]\r\n \r\nC G Am F\r\nC G C\r\nC G Am F\r\nC G C\r\n \r\n \r\n[Verse 3]\r\n \r\n            C              G\/B          Am\r\nFor all the times that you made me feel small\r\n          Dm               C          G\/B\r\nI fell in love, now I feel nothin' at all\r\n        C                G\/B          Am\r\nI never felt so low when I was vulnerable\r\n        Dm              C             G\/B\r\nWas I a fool to let you break down my walls?\r\n \r\n \r\n[Chorus]\r\n \r\n             C        G       Am        F\r\nCause if you like the way you look that much\r\n        C                 G        C\r\nOh baby you should go and love yourself\r\n           C          G         Am      F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC                 G        C\r\nYou should go and love yourself\r\n             C        G       Am        F\r\nCause if you like the way you look that much\r\n        C                 G        C\r\nOh baby you should go and love yourself\r\n           C          G         Am      F\r\nAnd if you think that I'm still holdin' on to somethin'\r\nC                 G        C\r\nYou should go and love yourself",
+                "artist": "Justin Bieber",
+                "difficulty": "hard",
+                "created_by": "1",
+                "style": null,
+                "created_at": null,
+                "updated_at": "2021-05-26 00:46:32",
+                "stars": null
+            },
+            {
+                "id": "7",
+                "name": "Start Again",
+                "lyrics_w_chords": "I know, I am not perfect\r\nNot who I was meant to be",
+                "artist": "Petr Klepetko",
+                "difficulty": "easy",
+                "created_by": "1",
+                "style": null,
+                "created_at": "2021-05-26 00:40:20",
+                "updated_at": "2021-05-26 00:40:45",
+                "stars": null
+            },
+            {
+                "id": "8",
+                "name": "Song",
+                "lyrics_w_chords": "Ahoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj Ahoj ahoj ahoj ahoj Ahoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj \r\nAhoj ahoj ahoj ahoj",
+                "artist": "Peta",
+                "difficulty": "easy",
+                "created_by": "2",
+                "style": "1",
+                "created_at": "2021-05-26 13:08:13",
+                "updated_at": "2021-05-26 13:08:32",
+                "stars": null
+            },
+            {
+                "id": "10",
+                "name": "Julie",
+                "lyrics_w_chords": "Tak se podívej\r\nZákon mluví jasně\r\nAni nedýchej\r\nA neskládej básně\r\n\r\nS tebou cítil jsem se\r\nMoc dobře ty blázne\r\nVšak spolu, nemůžem být\r\nMěj se krásně\r\n\r\nRef:\r\n[Musíš být statečná, Jůlie\r\nKdyž měsíc slunce zakryje\r\nA až když stín mysl tvou překryje\r\nŘekni, cos dělala včera\r\n\r\nMusíš být statečná, Jůlie\r\nTenhle ten kolotoč, tě zabije\r\nTak doufej že se rozbije\r\nA doufej v to zas a znova]\r\n\r\nByla jsi mou a já byl tvým\r\nTak co se stalo?\r\nVolal jsem do tmy a neslyšel zpět\r\njediné tvé haló\r\n\r\nZato já se ozval vždy\r\nKdyž ty sis pískla\r\nTuhle křivdu nenapraví\r\nSklenka vína\r\n\r\nŘíkám si jaký svět by byl\r\nKdybychom spolu zůstali,\r\nMožná potom mohli bychom\r\nLežet celé dny v posteli\r\n\r\nKaždou noc říkam si\r\nJaké by to bylo\r\nDali jsme tomu šanci\r\nA máme co zbylo\r\n\r\nRef:\r\n\/\/:[Musíš být statečná, Jůlie\r\nKdyž měsíc slunce zakryje\r\nA až když stín mysl tvou překryje\r\nŘekni, cos dělala včera\r\n\r\nMusíš být statečná, Jůlie\r\nTenhle ten kolotoč, tě zabije\r\nTak doufej že se rozbije\r\nA doufej v to zas a znova]:\/\/",
+                "artist": "Youlie",
+                "difficulty": "easy",
+                "created_by": "3",
+                "style": "1",
+                "created_at": "2021-05-29 11:17:36",
+                "updated_at": "2021-05-29 11:19:32",
+                "stars": null
+            },
+            {
+                "id": "11",
+                "name": "default Name",
+                "lyrics_w_chords": "default Lyri",
+                "artist": "default Artist",
+                "difficulty": "easy",
+                "created_by": "1",
+                "style": "1",
+                "created_at": "2021-05-29 11:31:21",
+                "updated_at": "2021-05-29 11:31:21",
+                "stars": null
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "styles",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "name": "pop",
+                "created_at": null,
+                "updated_at": null
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "users",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "name": "Petr Klepetko",
+                "email": "klepetkope@gmail.com",
+                "email_verified_at": null,
+                "password": "$2y$10$xBFXBAXgWH1m.EOY7LTQfuAGIx5ojVmHdDCGAjFsXHmXQTf359ejG",
+                "instruments": "Piano, guitar and singing",
+                "user_info": "I am the best author of this website.\r\n\r\nDo not need to look it up!\r\n\r\nStay safe :)",
+                "remember_token": null,
+                "created_at": "2021-05-25 11:51:09",
+                "updated_at": "2021-05-25 11:51:09"
+            },
+            {
+                "id": "2",
+                "name": "Kristýna Hrubarová",
+                "email": "kristyna.hrubarova@seznam.cz",
+                "email_verified_at": null,
+                "password": "$2y$10$yN8.5tiVCNzKJf3X75chFuJQtalNKxFnGcP5hdry4\/wrr0Gom6UUq",
+                "instruments": "negraju",
+                "user_info": "Já je tajneka redhart",
+                "remember_token": null,
+                "created_at": "2021-05-25 14:11:49",
+                "updated_at": "2021-05-25 14:11:49"
+            },
+            {
+                "id": "3",
+                "name": "Klepi jr.",
+                "email": "pavel.klepi@gmail.com",
+                "email_verified_at": null,
+                "password": "$2y$10$t1oBImZ4YzvoeiAEd\/HAJO\/O0XwYoLfZPMXqm2\/NGbh31yAcwLIcO",
+                "instruments": "Multi",
+                "user_info": "Frajer a první oficiální uživatel",
+                "remember_token": null,
+                "created_at": "2021-05-29 11:16:22",
+                "updated_at": "2021-05-29 11:16:22"
+            },
+            {
+                "id": "5",
+                "name": null,
+                "email": "klepipeta@gmail.com",
+                "email_verified_at": null,
+                "password": "$2y$10$BAizq2U8CX0IcwPodiR8Au5uvR3gTpBgH63OmlTklxWGu5leBjgeS",
+                "instruments": null,
+                "user_info": null,
+                "remember_token": null,
+                "created_at": "2021-05-31 17:29:35",
+                "updated_at": "2021-05-31 17:29:35"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "user_ratings",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "stars": "5",
+                "user": "2",
+                "song": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "2",
+                "stars": "5",
+                "user": "1",
+                "song": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "4",
+                "stars": "5",
+                "user": "3",
+                "song": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "5",
+                "stars": "5",
+                "user": "3",
+                "song": "10",
+                "created_at": null,
+                "updated_at": null
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "user_saved_songs",
+        "database": "sp2",
+        "data": [
+            {
+                "id": "1",
+                "user_id": "2",
+                "song_id": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "2",
+                "user_id": "1",
+                "song_id": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "3",
+                "user_id": "3",
+                "song_id": "3",
+                "created_at": null,
+                "updated_at": null
+            },
+            {
+                "id": "4",
+                "user_id": "3",
+                "song_id": "10",
+                "created_at": null,
+                "updated_at": null
+            }
+        ]
+    }
+]

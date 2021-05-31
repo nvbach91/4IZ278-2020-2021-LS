@@ -7,6 +7,7 @@ use App\Http\Controllers\SongsController;
 use App\Http\Controllers\ButtonsController;
 use App\Http\Controllers\AsideItemsController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\MailsController;
 use App\Http\Controllers\PageItemsController;
 use App\Http\Controllers\SavedSongsController;
 use App\Http\Controllers\User_ratingsController;
@@ -401,7 +402,7 @@ Route::get('/logout', function () {
 */
 
 Route::get('/test', function (Request $request) {
-    $usersController = new UsersController;
+    // $usersController = new UsersController;
     // $response = $usersController->searchByEmail('klepetkope@gmail.com');
     // return json_encode($response);
     // $request->session()->put('user_id', 2);
@@ -442,22 +443,22 @@ Route::get('/test', function (Request $request) {
     //     return redirect('/signin');
     // }
 
-    $savedSongsController = new SavedSongsController;
+    // $savedSongsController = new SavedSongsController;
 
-    $user_id = 2;
-    $song_id = 3;
+    // $user_id = 2;
+    // $song_id = 3;
 
     //    var_dump($savedSongsController->isAlreadySaved($user_id, $song_id)); 
 
-    $results = DB::table('user_saved_songs')
-        ->where('user_id', $user_id)
-        ->where('song_id', $song_id)
-        ->get();
+    // $results = DB::table('user_saved_songs')
+    //     ->where('user_id', $user_id)
+    //     ->where('song_id', $song_id)
+    //     ->get();
 
     // return $savedSongsController->isAlreadySaved($user_id, $song_id);
     // return $savedSongsController->getSongsFromUser($user_id);
 
-    $user_ratingsController = new User_ratingsController;
+    // $user_ratingsController = new User_ratingsController;
     // // echo 
     // echo DB::table('user_ratings')
     // ->where('song', 1)
@@ -467,9 +468,30 @@ Route::get('/test', function (Request $request) {
     // $specificRating = $user_ratingsController->findSpecificRating(1, 2);
     // echo $specificRating[0]->id;
 
-    $commentsController = new CommentsController;
-    echo $commentsController->renderComments(3);
+    // $commentsController = new CommentsController;
+    // echo $commentsController->renderComments(3);
+
 });
+
+Route::get('/send-email', [MailsController::class, 'sendMail']);
+
+Route::get('/email-confirmation', function (Request $request) {
+    $usersController        = new UsersController;
+    $pageItemsController    = new PageItemsController;
+
+    $pageItems              = $pageItemsController->fetch();
+    $status = $request->input('status');
+
+    if ($usersController->isLoggedIn()) {
+        return view('confirmAccount')->with('pageItems', $pageItems)
+            ->with('status', $status)
+            ->with('title', 'Confirm E-mail');
+    } else {
+        return redirect('/signin');
+    }
+});
+
+Route::post('/email-confirmation/submit', [UsersController::class, 'confirmEmail']);
 
 Route::get('/deleteSession', function (Request $request) {
     session(['user_id' => null]);
