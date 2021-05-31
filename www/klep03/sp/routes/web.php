@@ -403,6 +403,9 @@ Route::get('/logout', function () {
 */
 
 Route::get('/test', function (Request $request) {
+    $usersController = new UsersController;
+    var_dump($usersController->hasConfirmedEmail(1));
+    echo 'ahoj';
 });
 
 Route::get('/send-email', [MailsController::class, 'sendMail']);

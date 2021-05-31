@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UsersController extends Controller
 {
     /**
@@ -19,90 +21,27 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Inserts a new user into the DB
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // DB::insert('insert into users INSERT INTO `users`(`email`, `password`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?), ');
-        DB::table('users')->insert([$request]);
-    }
-
     public function storeDefault($request)
     {
         DB::table('users')->insert([$request]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Returns a user with ID given
      */
-    public function show($id)
-    {
-        // return DB::table('users')->where('id', $id)->first();
-    }
-
     function getById($id)
     {
-        $user =  DB::table('users')->find($id);
-        return $user;
+        return DB::table('users')->find($id);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Hashes passsword
+     * Prepares the values for the database
+     * 
+     * calls the storeDefault method
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function getCurrentUser()
-    {
-        return [
-            'username' => 'Not Logged in'
-        ];
-    }
-
     private function createUser($email, $password, $activationCode)
     {
         $hashedPassword = $this->hashPassword($password);
@@ -116,12 +55,18 @@ class UsersController extends Controller
         $this->storeDefault($dbData);
     }
 
+    /**
+     * Performs the exact hashing function
+     */
     function hashPassword($password)
     {
-        //TO be implemented
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
+    /**
+     * Returns true or false
+     * based on whether given email exists in the databse
+     */
     function isUsedEmail($email)
     {
         $results = $this->searchByEmail($email);
@@ -132,6 +77,13 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Gets data from the Sign Up form
+     *  - validation
+     *  - generates activation code
+     *  - sends activation e-mail
+     *  - redirects to sign in form
+     */
     function getSignUpFormData(Request $request)
     {
         $request->validate([
@@ -149,49 +101,40 @@ class UsersController extends Controller
 
         $activationCode = rand(0,1000000);
 
-        //ulozeni do db
         $this->createUser($data['email'], $data['password'], $activationCode);
 
         $mailsController = new MailsController;
         $mailsController->sendEmailConfirmation($data['email'], $activationCode);
 
-        // return $request->input();
         return redirect('signin?email=' . $email);
     }
 
-    // public function getEmailFromURL(Request $r)
-    // {
-    //     return $r->input('email');
-    // }
-
+    /**
+     * Search for user with an email given
+     */
     public function searchByEmail($email)
     {
         return DB::table('users')
             ->select('id')
             ->where('email', '=', $email)
             ->value('id');
-        // ->get();
     }
 
+    /**
+     * Gets data form the Sign In form, performs signin in
+     */
     public function getSignInFormData(Request $request)
     {
-        // return $request;
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
+
         $requestInput = $request->input();
         $email = $requestInput['email'];
         $password = $requestInput['password'];
 
-
-
         $id = $this->searchByEmail($email);
-
-        //    if (count($id) != 1) {
-        //        //TODO error
-        //    }
-        //    $id = $id[0]['id'];
 
         $user = $this->getById($id);
 
@@ -199,19 +142,19 @@ class UsersController extends Controller
             return redirect('/signin?email=' . $email . '&error=badEmail');
         }
 
-        // return redirect('?' . $user->password);
-
         if (!password_verify($password, $user->password)) {
             return redirect('/signin?email=' . $email . '&error=badPassword');
         }
 
-        //    $this->logUserIn();
-        // $request->session('user_id', $id);
         session(['user_id' => $id]);
         session(['last_activity' => time()]);
         return redirect('/?info=loginSuccessful');
     }
 
+    /**
+     * Returns true or false 
+     * Decides whether is somebody currently logged in
+     */
     public function isLoggedIn()
     {
         $timeout = 10 * 60;
@@ -251,7 +194,6 @@ class UsersController extends Controller
         ]);
         $data = $request->input();
 
-
         DB::table('users')
             ->where('id', session('user_id'))
             ->update([
@@ -280,6 +222,16 @@ class UsersController extends Controller
         }
         else {
             return redirect('/email-confirmation/?status=fail');
+        }
+    }
+
+    public function hasConfirmedEmail($id) {
+        $user = $this->getById($id);
+        
+        if (null === $user->email_verified_at) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

@@ -46,6 +46,10 @@ class PageItems extends Model
                 'Created By Me' => '/createdByMe',
             ];
             $anonymous = false;
+
+            if(!$usersController->hasConfirmedEmail(session('user_id'))) {
+               $asideItems['Confirm E–mail'] = '/email-confirmation';
+            }
         } else {
             $asideItems = [
                 'Search' => '/',
