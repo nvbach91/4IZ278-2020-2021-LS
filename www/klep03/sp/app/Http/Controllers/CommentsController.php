@@ -7,104 +7,28 @@ use Illuminate\Support\Facades\DB;
 
 class CommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function renderComments($song_id)
     {
-        $topLevelComments = $this->getTopLevelComments($song_id);
-        $usersController = new UsersController;
+        $topLevelComments   = $this->getTopLevelComments($song_id);
+        $usersController    = new UsersController;
 
-        $result = null;
+        $result             = null;
 
         foreach ($topLevelComments as $topLevelComment) {
-            $authorObject = $usersController->getById($topLevelComment->author);
-            $author = $authorObject->name;
+            $authorObject   = $usersController->getById($topLevelComment->author);
+            $author         = $authorObject->name;
             if($author == null) {
-                $author = $authorObject->email;
+                $author     = $authorObject->email;
             }
 
-            $time = $topLevelComment->date_posted;
+            $time           = $topLevelComment->date_posted;
 
-            $result = "$result<div class=\"commentDiv\">";
-            $result = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
-            $result = "$result<p>$topLevelComment->content <a href=\"/songs/$song_id?responding=true&responseTo=$topLevelComment->id&previousAuthor=$author\"><strong>&#x21a9; Reply</strong></a></p>";
+            $result         = "$result<div class=\"commentDiv\">";
+            $result         = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
+            $result         = "$result<p>$topLevelComment->content <a href=\"/songs/$song_id?responding=true&responseTo=$topLevelComment->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
             /** Start of the recursion */
-            $result = $result . $this->findResponses($topLevelComment->id, $song_id);
-            $result = "$result</div>";
+            $result         = $result . $this->findResponses($topLevelComment->id, $song_id);
+            $result         = "$result</div>";
         }
         return $result;
     }
@@ -119,29 +43,29 @@ class CommentsController extends Controller
 
     public function findResponses($comment_id, $song_id)
     {
-        $responses = DB::table('comments')
+        $responses          = DB::table('comments')
             ->where('response_to', '=', $comment_id)
             ->get();
 
-        $result = null;
+        $result             = null;
 
         /** if no more responses, recursion ends here  */
         if (count($responses) > 0) {
-            $usersController = new UsersController;
+            $usersController    = new UsersController;
             foreach ($responses as $response) {
-                $authorObject = $usersController->getById($response->author);
-                $author = $authorObject->name;
+                $authorObject   = $usersController->getById($response->author);
+                $author         = $authorObject->name;
                 if($author == null) {
-                    $author = $authorObject->email;
+                    $author     = $authorObject->email;
                 }
-                $time   = $response->date_posted;
+                $time       = $response->date_posted;
 
-                $result = "$result<div class=\"commentResponseDiv\">";
-                $result = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
-                $result = "$result<p>$response->content <a href=\"/songs/$song_id/?responding=true&responseTo=$response->id&previousAuthor=$author\"><strong>&#x21a9; Reply</strong></a></p>";
+                $result     = "$result<div class=\"commentResponseDiv\">";
+                $result     = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
+                $result     = "$result<p>$response->content <a href=\"/songs/$song_id/?responding=true&responseTo=$response->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
                 /** Here goes the recursion loop */
-                $result = "$result" . $this->findResponses($response->id, $song_id);
-                $result = "$result</div>";
+                $result     = "$result" . $this->findResponses($response->id, $song_id);
+                $result     = "$result</div>";
             }
         }
         return $result;
@@ -150,7 +74,7 @@ class CommentsController extends Controller
     public function createNew($song_id, Request $request)
     {
         $request->validate([
-            'content' => 'min:1'
+            'content'           => 'min:1'
         ]);
 
         if (null !== $request->input('responseTo')) {
@@ -170,7 +94,7 @@ class CommentsController extends Controller
             ]);
         }
 
-        return redirect('/songs/' . $song_id);
+        return redirect('/songs/' . $song_id . '#newComment');
     }
 
     public function getById($comment_id) {

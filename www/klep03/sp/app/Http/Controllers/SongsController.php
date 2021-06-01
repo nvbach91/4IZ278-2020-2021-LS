@@ -2,43 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PageItems;
 use Illuminate\Http\Request;
 use App\Models\Song;
 use Illuminate\Support\Facades\DB;
 
 class SongsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -50,53 +20,12 @@ class SongsController extends Controller
         return DB::table('songs')->find($id);;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     private function searchByQueryWord($word)
     {
         return Song::query()
             ->where('artist', 'LIKE', "%{$word}%")
             ->orWhere('name', 'LIKE', "%{$word}%")
             ->get();
-        // return Song::query()->get();
-    }
-
-    private function transformNestedArrays($nestedArray)
-    {
-        foreach ($nestedArray as $array) {
-        }
     }
 
     public function searchByQuery($query)
@@ -111,7 +40,6 @@ class SongsController extends Controller
                 }
             }
         }
-        // $results = array_uni
         return $results;
     }
 
@@ -159,5 +87,92 @@ class SongsController extends Controller
         } else {
             return redirect('/songs/' . $song_id);
         }
+    }
+
+    public function getSongDetail($song_id, Request $request)
+    {
+
+        $songsController        = new SongsController;
+        $song                   = $songsController->show($song_id);
+
+        $pageItems              = new PageItems;
+        $pageItems              = $pageItems->fetch();
+
+        if (!$pageItems['anonymous']) {
+            $savedSongsController = new SavedSongsController;
+            $addedToSaved       = $savedSongsController->isAlreadySaved(session('user_id'), $song_id);
+        } else {
+            $addedToSaved       = false;
+        }
+
+        $user_ratingsController = new User_ratingsController;
+        $ratings = $user_ratingsController->ratingsForSong($song_id);
+
+        $commentsController     = new CommentsController;
+        $comments               = $commentsController->renderComments($song_id);
+
+        $responding             = $request->input('responding');
+        if ($responding) {
+            $responseTo         = $request->input('responseTo');
+            $previousComment    = $commentsController->getById($responseTo);
+            $response           = [
+                'responding'    => $responding,
+                'responseTo'    => $responseTo,
+                'authorName'    => $request->input('previousAuthor'),
+                'previousContent' => $previousComment->content,
+            ];
+        } else {
+            $response           = [
+                'responding'    => $responding,
+            ];
+        }
+
+        return view('song')->with('song', $song)
+            ->with('pageItems', $pageItems)
+            ->with('addedToSaved', $addedToSaved)
+            ->with('ratings', $ratings)
+            ->with('commentsFormatted', $comments)
+            ->with('response', $response)
+            ->with('title', 'Song – ' . $song->name);
+    }
+
+    public function editSong($song_id)
+    {
+        $songsController        = new SongsController;
+        $song                   = $songsController->show($song_id);
+
+        if ($song->created_by !== session('user_id')) {
+            return redirect('/songs/$song_id');
+        }
+
+        $pageItems    = new PageItems;
+        $pageItems              = $pageItems->fetch();
+
+        return view('songEdit')
+            ->with('song', $song)
+            ->with('pageItems', $pageItems)
+            ->with('title', 'Edit – ' . $song->name);
+    }
+
+    public function editSongDataFromForm($song_id, Request $request)
+    {
+        // return $request;
+        $songsController        = new SongsController;
+        $song                   = $songsController->show($song_id);
+
+        if ($song->created_by !== session('user_id')) {
+            return redirect('/songs/$song_id');
+        }
+
+        DB::table('songs')
+            ->where('id', '=', $song_id)
+            ->update([
+                'name'              => $request->input('name'),
+                'artist'            => $request->input('artist'),
+                'lyrics_w_chords'   => $request->input('lyrics_w_chords'),
+                'updated_at'        => now(),
+            ]);
+
+        return redirect('/createdByMe');
     }
 }

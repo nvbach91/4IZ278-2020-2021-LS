@@ -7,82 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class User_ratingsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function averageRating($song_id)
     {
         if ($this->countRatings($song_id) > 0) {
@@ -152,4 +76,15 @@ class User_ratingsController extends Controller
             'song'      => $song_id,
         ]); 
     }
+
+    public function rate($song_id, Request $request) {
+        // $user_ratingsController = new User_ratingsController;
+    
+        if (null !== $request->input('rating')) {
+            $rating = $request->input('rating');
+            $this->writeRating($song_id, $rating);
+        }
+        return redirect('/songs/' . $song_id);
+    }
+
 }

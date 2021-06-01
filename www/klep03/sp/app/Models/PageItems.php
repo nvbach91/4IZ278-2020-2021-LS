@@ -17,6 +17,9 @@ class PageItems extends Model
         $asideItemscontroller   = new AsideItemsController;
         $usersController        = new UsersController;
         $savedSongsController   = new SavedSongsController;
+        $urlPrefix = null;
+        // $urlPrefix = "/~klep03/public";
+        
 
         $items = [];
         // array_push($items, ['button1' => $button1]);
@@ -30,8 +33,8 @@ class PageItems extends Model
 
             $user = DB::table('users')->find(session('user_id'));
 
-            $button1 = ['label' => 'edit profile', 'href' => '/profile/edit'];
-            $button2 = ['label' => 'logout', 'href' => '/logout'];
+            $button1 = ['label' => 'edit profile', 'href' => 'profile/edit'];
+            $button2 = ['label' => 'logout', 'href' => 'logout'];
 
             if (strlen($user->name) != 0) {
                 $username = $user->name;
@@ -40,23 +43,23 @@ class PageItems extends Model
                 $username = $user->email;
             }
             $asideItems = [
-                'Search' => '/',
-                'My Profile' => '/profile',
-                'Saved Chords' => '/savedChords',
-                'Created By Me' => '/createdByMe',
+                'Search' => '.',
+                'My Profile' => 'profile',
+                'Saved Chords' => 'savedChords',
+                'Created By Me' => 'createdByMe',
             ];
             $anonymous = false;
 
             if(!$usersController->hasConfirmedEmail(session('user_id'))) {
-               $asideItems['Confirm E–mail'] = '/email-confirmation';
+               $asideItems['Confirm E–mail'] = 'email-confirmation';
             }
         } else {
             $asideItems = [
-                'Search' => '/',
+                'Search' => '',
             ];
             $username = 'Not logged in';
-            $button1 = ['label' => 'sign up', 'href' => '/signup'];
-            $button2 = ['label' => 'sign in', 'href' => '/signin'];
+            $button1 = ['label' => 'sign up', 'href' => 'signup'];
+            $button2 = ['label' => 'sign in', 'href' => 'signin'];
             $anonymous = true;
         }
 
@@ -66,6 +69,7 @@ class PageItems extends Model
         $items['asideItems'] = $asideItems;
         $items['loggedUser'] = $username;
         $items['anonymous'] = $anonymous;
+        $items['urlPrefix'] = $urlPrefix;
 
         return $items;
     }
