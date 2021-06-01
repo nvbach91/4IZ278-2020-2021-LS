@@ -10,7 +10,7 @@
     </div>
     <div class="divForButton">
         <button type="submit" class="btn btn-primary marginLR">Save</button>
-        <button onclick="location.href='/songs/<?= $song->id ?>/delete'" type="button"" class="btn btn-primary marginLR redButton">Delete</button>
+        <button onclick="location.href='<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/delete'" type="button" class="btn btn-primary marginLR redButton">Delete</button>
     </div>
 </form>
 @include('includes.element-foot')

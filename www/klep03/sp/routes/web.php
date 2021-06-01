@@ -75,11 +75,14 @@ Route::post('/songs/{song_id}/comments/post', [CommentsController::class, 'creat
 |
 */
 Route::get('/songs/{song_id}/save', function ($song_id) {
+    $pageItems = new PageItems();
+    $urlPrefix = $pageItems->getUrlPrefix();
+
     $savedSongsController = new SavedSongsController;
 
     $savedSongsController->saveSong($song_id);
 
-    return redirect('/songs/' . $song_id);
+    return redirect($urlPrefix . '/songs/' . $song_id);
 });
 
 /*
@@ -91,11 +94,14 @@ Route::get('/songs/{song_id}/save', function ($song_id) {
 |
 */
 Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
+    $pageItems = new PageItems();
+    $urlPrefix = $pageItems->getUrlPrefix();
+
     $savedSongsController = new SavedSongsController;
 
     $savedSongsController->removeSong($song_id);
 
-    return redirect('/songs/' . $song_id);
+    return redirect($urlPrefix . '/songs/' . $song_id);
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
@@ -123,7 +129,7 @@ Route::get('/profile', function () {
             ->with('songs', $songs)
             ->with('title', 'Profile');
     } else {
-        return redirect('/signin');
+        return redirect($pageItems['urlPrefix'] . '/signin');
     }
 });
 
@@ -150,7 +156,7 @@ Route::get('/profile/edit', function () {
             ->with('songs', $songs)
             ->with('title', 'Profile');
     } else {
-        return redirect('/signin');
+        return redirect($pageItems['urlPrefix'] . '/signin');
     }
 });
 
@@ -205,7 +211,7 @@ Route::get('/createdByMe', function () {
                             ->with('songs', $songs)
                             ->with('title', 'Created By Me');
     } else {
-        return redirect('/signin');
+        return redirect($pageItems['urlPrefix'] .'/signin');
     }
 });
 
@@ -230,7 +236,12 @@ Route::get('/search/{query}', function ($query) {
         ->with('title', 'Kjepii');
 });
 
-Route::redirect('/search', '/');
+Route::get('/search', function() {
+    $pageItems = new PageItems();
+    $urlPrefix = $pageItems->getUrlPrefix();
+
+    return redirect($urlPrefix . '/');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -303,11 +314,14 @@ Route::post('/signin/submit', [UsersController::class, 'getSignInFormData']);
 |
 */
 Route::get('/logout', function () {
+    $pageItems = new PageItems();
+    $urlPrefix = $pageItems->getUrlPrefix();
+
     $usersController = new UsersController;
     if ($usersController->isLoggedIn()) {
         $usersController->logOut();
     }
-    return redirect('/');
+    return redirect($urlPrefix . '/');
 });
 
 /*
@@ -337,7 +351,7 @@ Route::get('/email-confirmation', function (Request $request) {
             ->with('status', $status)
             ->with('title', 'Confirm E-mail');
     } else {
-        return redirect('/signin');
+        return redirect($pageItems['urlPrefix'] . '/signin');
     }
 });
 

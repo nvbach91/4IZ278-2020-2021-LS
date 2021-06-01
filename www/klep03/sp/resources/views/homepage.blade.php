@@ -19,7 +19,7 @@
         </div>
         <div id="results">
             @foreach ($results as $result)
-                <a href="/songs/{{ $result->id }}">
+                <a href="<?= $pageItems['urlPrefix'] ?>/songs/{{ $result->id }}">
                     <div class="searchResult">{{ $result->artist }} – {{ $result->name }}</div>
                 </a>
             @endforeach
@@ -33,7 +33,7 @@
 
     function redirect() {
         console.log('kliknuto');
-        window.location.href = '/search/' + textarea.value;
+        window.location.href = $pageItems['urlPrefix'] + '/search/' + textarea.value;
     };
     document.querySelector('#search').addEventListener('click', redirect);
     document.addEventListener('keydown', function(e) {

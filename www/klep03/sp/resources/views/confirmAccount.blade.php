@@ -1,5 +1,5 @@
 @include('includes.element-head')
-<form id="signInForm" class="signForm" action="/email-confirmation/submit" method="POST">
+<form id="signInForm" class="signForm" action="<?= $pageItems['urlPrefix'] ?>/email-confirmation/submit" method="POST">
     <h1>Confirm your e-mail with your activation code!</h1>
     @csrf
 

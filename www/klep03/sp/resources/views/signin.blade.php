@@ -2,7 +2,7 @@
 
 
 
-<form id="signInForm" class="signForm" action="/signin/submit" method="POST">
+<form id="signInForm" class="signForm" action="<?= $pageItems['urlPrefix'] ?>/signin/submit" method="POST">
     <h1>Sign In!</h1>
     @csrf
 
@@ -16,7 +16,7 @@
     <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input name="password" type="password" class="form-control" id="signInPassword">
-        @if (isset($error) and $error = 'badPassword')
+        @if (isset($error) and ($error = 'badPassword'))
             <div class="redText">Sorry, your password is incorrect.</div>
         @endif
     </div>

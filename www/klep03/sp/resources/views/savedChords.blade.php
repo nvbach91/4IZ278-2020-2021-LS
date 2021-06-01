@@ -5,7 +5,7 @@
 @if (isset($songs))
     <div id="results">
         @foreach ($songs as $song)
-            <a href="/songs/{{ $song->id }}">
+            <a href="<?= $pageItems['urlPrefix'] ?>/songs/{{ $song->id }}">
                 <div class="searchResult">{{ $song->artist }} – {{ $song->name }}</div>
             </a>
         @endforeach

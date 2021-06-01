@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PageItems;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,9 @@ class UsersController extends Controller
      */
     function getSignUpFormData(Request $request)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $request->validate([
             'email' => 'required',
             'password' => 'required | min:8',
@@ -96,7 +100,7 @@ class UsersController extends Controller
         $email = $data['email'];
 
         if ($this->isUsedEmail($email)) {
-            return redirect('signup?e=usedEmail');
+            return redirect($urlPrefix . 'signup?e=usedEmail');
         }
 
         $activationCode = rand(0,1000000);
@@ -106,7 +110,7 @@ class UsersController extends Controller
         $mailsController = new MailsController;
         $mailsController->sendEmailConfirmation($data['email'], $activationCode);
 
-        return redirect('signin?email=' . $email);
+        return redirect($urlPrefix . 'signin?email=' . $email);
     }
 
     /**
@@ -125,6 +129,9 @@ class UsersController extends Controller
      */
     public function getSignInFormData(Request $request)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -139,16 +146,16 @@ class UsersController extends Controller
         $user = $this->getById($id);
 
         if (!$user) {
-            return redirect('/signin?email=' . $email . '&error=badEmail');
+            return redirect($urlPrefix . '/signin?email=' . $email . '&error=badEmail');
         }
 
         if (!password_verify($password, $user->password)) {
-            return redirect('/signin?email=' . $email . '&error=badPassword');
+            return redirect($urlPrefix . '/signin?email=' . $email . '&error=badPassword');
         }
 
         session(['user_id' => $id]);
         session(['last_activity' => time()]);
-        return redirect('/?info=loginSuccessful');
+        return redirect($urlPrefix . '/?info=loginSuccessful');
     }
 
     /**
@@ -188,6 +195,9 @@ class UsersController extends Controller
 
     public function updateProfile(Request $request)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $request->validate([
             'name' => 'min:3 | max:30',
             'instruments' => 'max:250'
@@ -202,10 +212,13 @@ class UsersController extends Controller
                 'instruments' => $data['instruments']
             ]);
         
-            return redirect('/profile');
+            return redirect($urlPrefix . '/profile');
     }
 
     public function confirmEmail(Request $request) {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $request->validate([
             'activationCode' => 'required',
         ]);
@@ -218,10 +231,10 @@ class UsersController extends Controller
             ->update([
                 'email_verified_at' => now(),
             ]);
-            return redirect('/email-confirmation/?status=success');
+            return redirect($urlPrefix . '/email-confirmation/?status=success');
         }
         else {
-            return redirect('/email-confirmation/?status=fail');
+            return redirect($urlPrefix . '/email-confirmation/?status=fail');
         }
     }
 

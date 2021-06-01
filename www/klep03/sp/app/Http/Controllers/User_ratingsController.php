@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PageItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,13 +79,14 @@ class User_ratingsController extends Controller
     }
 
     public function rate($song_id, Request $request) {
-        // $user_ratingsController = new User_ratingsController;
-    
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         if (null !== $request->input('rating')) {
             $rating = $request->input('rating');
             $this->writeRating($song_id, $rating);
         }
-        return redirect('/songs/' . $song_id);
+        return redirect($urlPrefix . '/songs/' . $song_id);
     }
 
 }

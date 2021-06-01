@@ -17,24 +17,16 @@ class PageItems extends Model
         $asideItemscontroller   = new AsideItemsController;
         $usersController        = new UsersController;
         $savedSongsController   = new SavedSongsController;
-        $urlPrefix = null;
-        // $urlPrefix = "/~klep03/public";
-        
+        $urlPrefix = $this->getUrlPrefix();
 
         $items = [];
-        // array_push($items, ['button1' => $button1]);
-        // array_push($items, ['button2' => $button2]);
-        // array_push($items, $asideitems);
-
-
-
 
         if ($usersController->isLoggedIn()) {
 
             $user = DB::table('users')->find(session('user_id'));
 
-            $button1 = ['label' => 'edit profile', 'href' => 'profile/edit'];
-            $button2 = ['label' => 'logout', 'href' => 'logout'];
+            $button1 = ['label' => 'edit profile', 'href' => $urlPrefix . '/profile/edit'];
+            $button2 = ['label' => 'logout', 'href' => $urlPrefix . 'logout'];
 
             if (strlen($user->name) != 0) {
                 $username = $user->name;
@@ -43,23 +35,23 @@ class PageItems extends Model
                 $username = $user->email;
             }
             $asideItems = [
-                'Search' => '.',
-                'My Profile' => 'profile',
-                'Saved Chords' => 'savedChords',
-                'Created By Me' => 'createdByMe',
+                'Search'        => $urlPrefix . '/',
+                'My Profile'    => $urlPrefix . '/profile',
+                'Saved Chords'  => $urlPrefix . '/savedChords',
+                'Created By Me' => $urlPrefix . '/createdByMe',
             ];
             $anonymous = false;
 
             if(!$usersController->hasConfirmedEmail(session('user_id'))) {
-               $asideItems['Confirm E–mail'] = 'email-confirmation';
+               $asideItems['Confirm E–mail'] = $urlPrefix . '/email-confirmation';
             }
         } else {
             $asideItems = [
-                'Search' => '',
+                'Search' => $urlPrefix . '/',
             ];
             $username = 'Not logged in';
-            $button1 = ['label' => 'sign up', 'href' => 'signup'];
-            $button2 = ['label' => 'sign in', 'href' => 'signin'];
+            $button1 = ['label' => 'sign up', 'href' => $urlPrefix . '/signup'];
+            $button2 = ['label' => 'sign in', 'href' => $urlPrefix . '/signin'];
             $anonymous = true;
         }
 
@@ -72,5 +64,10 @@ class PageItems extends Model
         $items['urlPrefix'] = $urlPrefix;
 
         return $items;
+    }
+
+    public function getUrlPrefix() {
+        // return "/~klep03/public";
+        return null;
     }
 }

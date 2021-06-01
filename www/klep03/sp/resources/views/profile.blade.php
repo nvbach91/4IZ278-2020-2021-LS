@@ -12,7 +12,7 @@ Email: {{ $user->email }}
 <div id="results">
     <h3>User's added Chords</h3>
     @foreach ($songs as $song)
-        <a href="/songs/{{ $song->id }}">
+        <a href="<?= $pageItems['urlPrefix'] ?>/songs/{{ $song->id }}">
             <div class="searchResult">{{ $song->artist }} – {{ $song->name }}</div>
         </a>
     @endforeach

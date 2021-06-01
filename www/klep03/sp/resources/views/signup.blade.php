@@ -2,7 +2,7 @@
 
 
 
-<form id="signUpForm" class="signForm" action="/signup/submit" method="POST">
+<form id="signUpForm" class="signForm" action="<?= $pageItems['urlPrefix'] ?>/signup/submit" method="POST">
     <h1>Sign Up!</h1>
     @csrf
     {{-- @if($errors->any())

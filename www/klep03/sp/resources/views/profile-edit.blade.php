@@ -1,5 +1,5 @@
 @include('includes.element-head')
-<form id="profile-edit" action="/profile/edit/submit" method="post">
+<form id="profile-edit" action="<?= $pageItems['urlPrefix'] ?>/profile/edit/submit" method="post">
     @csrf
     <h1>Name: <textarea name="name">{{ $user->name }}</textarea></h1>
     Email: {{ $user->email }}

@@ -50,11 +50,14 @@ class SongsController extends Controller
 
     public function createNew()
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $usersController = new UsersController;
         if ($usersController->isLoggedIn()) {
             DB::table('songs')->insert([
                 'name'              => 'default Name',
-                'lyrics_w_chords'   => 'default Lyri',
+                'lyrics_w_chords'   => 'default Lyrics',
                 'artist'            => 'default Artist',
                 'difficulty'        => 'easy',
                 'created_by'        => session('user_id'),
@@ -69,23 +72,26 @@ class SongsController extends Controller
                 ->whereRaw('created_at = updated_at')
                 ->first();
 
-            return redirect('/songs/' . $newRecord->id . '/edit');
+            return redirect($urlPrefix . '/songs/' . $newRecord->id . '/edit');
         } else {
-            return redirect('/signin');
+            return redirect($urlPrefix . '/signin');
         }
     }
 
     public function delete($song_id)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $song = DB::table('songs')->find($song_id);
 
         // echo $song->created_by;
         // echo session('user_id');
         if ($song->created_by == session('user_id')) {
             DB::table('songs')->delete($song_id);
-            return redirect('/createdByMe');
+            return redirect($urlPrefix . '/createdByMe');
         } else {
-            return redirect('/songs/' . $song_id);
+            return redirect($urlPrefix . '/songs/' . $song_id);
         }
     }
 
@@ -138,11 +144,14 @@ class SongsController extends Controller
 
     public function editSong($song_id)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $songsController        = new SongsController;
         $song                   = $songsController->show($song_id);
 
         if ($song->created_by !== session('user_id')) {
-            return redirect('/songs/$song_id');
+            return redirect($urlPrefix . '/songs/$song_id');
         }
 
         $pageItems    = new PageItems;
@@ -156,12 +165,14 @@ class SongsController extends Controller
 
     public function editSongDataFromForm($song_id, Request $request)
     {
-        // return $request;
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $songsController        = new SongsController;
         $song                   = $songsController->show($song_id);
 
         if ($song->created_by !== session('user_id')) {
-            return redirect('/songs/$song_id');
+            return redirect($urlPrefix . '/songs/$song_id');
         }
 
         DB::table('songs')
@@ -173,6 +184,6 @@ class SongsController extends Controller
                 'updated_at'        => now(),
             ]);
 
-        return redirect('/createdByMe');
+        return redirect($urlPrefix . '/createdByMe');
     }
 }

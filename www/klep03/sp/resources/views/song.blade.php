@@ -10,7 +10,7 @@
         @endif
     <div class="item">
         @for ($i = 1; $i <= 5; $i++)
-        <a href="/songs/<?= $song->id ?>/rate?rating=<?= $i ?>"><img height="35" src="/img/star.png" alt="star"></a>    
+        <a href="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/rate?rating=<?= $i ?>"><img height="35" src="/img/star.png" alt="star"></a>    
         @endfor
         <span class="item">{{ $ratings['average'] }} ({{ $ratings['count'] }}x)</span>
     </div>
@@ -46,7 +46,7 @@
     <div id="newComment">
         @if (!$response['responding'])
             <h4>New comment:</h4>
-            <form id="postCommentForm" action="/songs/<?= $song->id ?>/comments/post" method="post">
+            <form id="postCommentForm" action="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/comments/post" method="post">
                 @csrf
                 <textarea name="content"></textarea>
 
@@ -54,7 +54,7 @@
             </form>
 @else
             <h4>Response: <span class="time">{{ $response['authorName'] }}: <em>{{ $response['previousContent'] }}</em></span></h4>
-            <form id="postCommentForm" action="/songs/<?= $song->id ?>/comments/post" method="post">
+            <form id="postCommentForm" action="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/comments/post" method="post">
                 @csrf
                 <textarea name="content"></textarea>
                 <input type="hidden" name="responseTo" value="<?= $response['responseTo'] ?>">

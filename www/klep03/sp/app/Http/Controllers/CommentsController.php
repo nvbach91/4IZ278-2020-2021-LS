@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PageItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,9 @@ class CommentsController extends Controller
 
         $result             = null;
 
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         foreach ($topLevelComments as $topLevelComment) {
             $authorObject   = $usersController->getById($topLevelComment->author);
             $author         = $authorObject->name;
@@ -25,7 +29,7 @@ class CommentsController extends Controller
 
             $result         = "$result<div class=\"commentDiv\">";
             $result         = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
-            $result         = "$result<p>$topLevelComment->content <a href=\"/songs/$song_id?responding=true&responseTo=$topLevelComment->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
+            $result         = "$result<p>$topLevelComment->content <a href=\"$urlPrefix/songs/$song_id?responding=true&responseTo=$topLevelComment->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
             /** Start of the recursion */
             $result         = $result . $this->findResponses($topLevelComment->id, $song_id);
             $result         = "$result</div>";
@@ -48,6 +52,9 @@ class CommentsController extends Controller
             ->get();
 
         $result             = null;
+        
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
 
         /** if no more responses, recursion ends here  */
         if (count($responses) > 0) {
@@ -62,7 +69,7 @@ class CommentsController extends Controller
 
                 $result     = "$result<div class=\"commentResponseDiv\">";
                 $result     = "$result<h4>$author<span class=\"time\"> – $time</span></h4>";
-                $result     = "$result<p>$response->content <a href=\"/songs/$song_id/?responding=true&responseTo=$response->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
+                $result     = "$result<p>$response->content <a href=\"$urlPrefix/songs/$song_id/?responding=true&responseTo=$response->id&previousAuthor=$author#newComment\"><strong>&#x21a9; Reply</strong></a></p>";
                 /** Here goes the recursion loop */
                 $result     = "$result" . $this->findResponses($response->id, $song_id);
                 $result     = "$result</div>";
@@ -73,6 +80,9 @@ class CommentsController extends Controller
 
     public function createNew($song_id, Request $request)
     {
+        $pageItems = new PageItems();
+        $urlPrefix = $pageItems->getUrlPrefix();
+
         $request->validate([
             'content'           => 'min:1'
         ]);
@@ -94,7 +104,7 @@ class CommentsController extends Controller
             ]);
         }
 
-        return redirect('/songs/' . $song_id . '#newComment');
+        return redirect($urlPrefix . '/songs/' . $song_id . '#newComment');
     }
 
     public function getById($comment_id) {
