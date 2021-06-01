@@ -10,7 +10,7 @@
         @endif
     <div class="item">
         @for ($i = 1; $i <= 5; $i++)
-        <a href="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/rate?rating=<?= $i ?>"><img height="35" src="/img/star.png" alt="star"></a>    
+        <a href="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/rate?rating=<?= $i ?>"><img height="35" src="<?= $pageItems['urlPrefix'] ?>/img/star.png" alt="star"></a>    
         @endfor
         <span class="item">{{ $ratings['average'] }} ({{ $ratings['count'] }}x)</span>
     </div>
@@ -43,7 +43,7 @@
     </div> --}}
 
     <?= $commentsFormatted ?>
-    <div id="newComment">
+    @if (null !== session('user_id')) <div id="newComment">
         @if (!$response['responding'])
             <h4>New comment:</h4>
             <form id="postCommentForm" action="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/comments/post" method="post">
@@ -52,15 +52,15 @@
 
                 <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
             </form>
-@else
+    @else
             <h4>Response: <span class="time">{{ $response['authorName'] }}: <em>{{ $response['previousContent'] }}</em></span></h4>
             <form id="postCommentForm" action="<?= $pageItems['urlPrefix'] ?>/songs/<?= $song->id ?>/comments/post" method="post">
                 @csrf
                 <textarea name="content"></textarea>
                 <input type="hidden" name="responseTo" value="<?= $response['responseTo'] ?>">
                 <button class="btn btn-primary centralizeMargarin" type="submit">Post</button>
-            </form>
-        @endif
-    </div>
+            </form> @endif
+    </div> 
+    @endif
 </div>
 @include('includes.element-foot')

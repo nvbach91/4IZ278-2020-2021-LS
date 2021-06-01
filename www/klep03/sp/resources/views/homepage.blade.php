@@ -9,10 +9,10 @@
     <p>
         You can start by signing up, signing in or start searching for your desired song right away!
     </p>
-    <div id="searchDiv">
-        <textarea id="searchTextArea"></textarea>
-        <div id="search" class="innerAreaButton" rows="1">Search</div>
-    </div>
+    <form id="searchDiv" action="<?= $pageItems['urlPrefix'] ?>/search/" method="GET">
+        <textarea name="q" id="searchTextArea"></textarea>
+        <button type="submit" id="search" class="innerAreaButton" rows="1">Search</button>
+    </form>
     @if (isset($results))
         <div>
             <h2>Results:</h2>
@@ -28,12 +28,12 @@
 
 </div>
 
-<script>
+{{-- <script>
     let textarea = document.querySelector('#searchTextArea');
 
     function redirect() {
         console.log('kliknuto');
-        window.location.href = $pageItems['urlPrefix'] + '/search/' + textarea.value;
+        window.location.href = 'search/' + textarea.value;
     };
     document.querySelector('#search').addEventListener('click', redirect);
     document.addEventListener('keydown', function(e) {
@@ -43,6 +43,6 @@
         }
     });
 
-</script>
+</script> --}}
 
 @include('includes.element-foot')

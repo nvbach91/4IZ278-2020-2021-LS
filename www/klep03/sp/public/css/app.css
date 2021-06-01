@@ -41,6 +41,10 @@ h1 {
     margin: 30px 0;
 }
 
+.buttonTopMargin{
+    margin-top: 20px;
+}
+
 .customProfileText>pre {
     background-color: rgb(233, 230, 225);
     padding: 10px;

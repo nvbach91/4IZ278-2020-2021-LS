@@ -82,7 +82,7 @@ Route::get('/songs/{song_id}/save', function ($song_id) {
 
     $savedSongsController->saveSong($song_id);
 
-    return redirect($urlPrefix . '/songs/' . $song_id);
+    return redirect('/songs/' . $song_id);
 });
 
 /*
@@ -101,7 +101,7 @@ Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
 
     $savedSongsController->removeSong($song_id);
 
-    return redirect($urlPrefix . '/songs/' . $song_id);
+    return redirect('/songs/' . $song_id);
 });
 
 // Route::resource('users', 'App\Http\Controllers\UsersController');
@@ -129,7 +129,7 @@ Route::get('/profile', function () {
             ->with('songs', $songs)
             ->with('title', 'Profile');
     } else {
-        return redirect($pageItems['urlPrefix'] . '/signin');
+        return redirect('/signin');
     }
 });
 
@@ -156,7 +156,7 @@ Route::get('/profile/edit', function () {
             ->with('songs', $songs)
             ->with('title', 'Profile');
     } else {
-        return redirect($pageItems['urlPrefix'] . '/signin');
+        return redirect('/signin');
     }
 });
 
@@ -208,10 +208,10 @@ Route::get('/createdByMe', function () {
     if ($usersController->isLoggedIn()) {
         $songs              = $songsController->searchByUserId(session('user_id'));
         return view('createdByMe')->with('pageItems', $pageItems)
-                            ->with('songs', $songs)
-                            ->with('title', 'Created By Me');
+            ->with('songs', $songs)
+            ->with('title', 'Created By Me');
     } else {
-        return redirect($pageItems['urlPrefix'] .'/signin');
+        return redirect($pageItems['urlPrefix'] . '/signin');
     }
 });
 
@@ -236,11 +236,23 @@ Route::get('/search/{query}', function ($query) {
         ->with('title', 'Kjepii');
 });
 
-Route::get('/search', function() {
-    $pageItems = new PageItems();
-    $urlPrefix = $pageItems->getUrlPrefix();
+Route::get('/search', function (Request $request) {
+    $songsController        = new SongsController;
+    $query                  = $request->input('q');
+    if (isset($query)) {
+        $songsController    = new SongsController;
+        $results            = $songsController->searchByQuery($query);
 
-    return redirect($urlPrefix . '/');
+        $pageItems          = new PageItems;
+        $pageItems          = $pageItems->fetch();
+
+        return view('homepage')
+            ->with('results', $results)
+            ->with('pageItems', $pageItems)
+            ->with('title', 'Kjepii');
+    } else {
+        return redirect('/');
+    }
 });
 
 /*
@@ -321,7 +333,7 @@ Route::get('/logout', function () {
     if ($usersController->isLoggedIn()) {
         $usersController->logOut();
     }
-    return redirect($urlPrefix . '/');
+    return redirect('/');
 });
 
 /*
@@ -351,7 +363,7 @@ Route::get('/email-confirmation', function (Request $request) {
             ->with('status', $status)
             ->with('title', 'Confirm E-mail');
     } else {
-        return redirect($pageItems['urlPrefix'] . '/signin');
+        return redirect('/signin');
     }
 });
 

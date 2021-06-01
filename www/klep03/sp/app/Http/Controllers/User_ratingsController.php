@@ -86,7 +86,7 @@ class User_ratingsController extends Controller
             $rating = $request->input('rating');
             $this->writeRating($song_id, $rating);
         }
-        return redirect($urlPrefix . '/songs/' . $song_id);
+        return redirect('/songs/' . $song_id);
     }
 
 }

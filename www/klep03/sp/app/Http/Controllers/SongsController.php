@@ -61,7 +61,6 @@ class SongsController extends Controller
                 'artist'            => 'default Artist',
                 'difficulty'        => 'easy',
                 'created_by'        => session('user_id'),
-                'style'             => 1,
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ]);
@@ -72,9 +71,9 @@ class SongsController extends Controller
                 ->whereRaw('created_at = updated_at')
                 ->first();
 
-            return redirect($urlPrefix . '/songs/' . $newRecord->id . '/edit');
+            return redirect('/songs/' . $newRecord->id . '/edit');
         } else {
-            return redirect($urlPrefix . '/signin');
+            return redirect('/signin');
         }
     }
 
@@ -89,9 +88,9 @@ class SongsController extends Controller
         // echo session('user_id');
         if ($song->created_by == session('user_id')) {
             DB::table('songs')->delete($song_id);
-            return redirect($urlPrefix . '/createdByMe');
+            return redirect('/createdByMe');
         } else {
-            return redirect($urlPrefix . '/songs/' . $song_id);
+            return redirect('/songs/' . $song_id);
         }
     }
 
@@ -151,7 +150,7 @@ class SongsController extends Controller
         $song                   = $songsController->show($song_id);
 
         if ($song->created_by !== session('user_id')) {
-            return redirect($urlPrefix . '/songs/$song_id');
+            return redirect('/songs/$song_id');
         }
 
         $pageItems    = new PageItems;
@@ -172,7 +171,7 @@ class SongsController extends Controller
         $song                   = $songsController->show($song_id);
 
         if ($song->created_by !== session('user_id')) {
-            return redirect($urlPrefix . '/songs/$song_id');
+            return redirect('/songs/$song_id');
         }
 
         DB::table('songs')
@@ -184,6 +183,6 @@ class SongsController extends Controller
                 'updated_at'        => now(),
             ]);
 
-        return redirect($urlPrefix . '/createdByMe');
+        return redirect('/createdByMe');
     }
 }

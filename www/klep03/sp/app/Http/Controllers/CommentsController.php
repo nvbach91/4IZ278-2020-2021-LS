@@ -87,24 +87,30 @@ class CommentsController extends Controller
             'content'           => 'min:1'
         ]);
 
+        if(null !== session('user_id')) {
+            $author = session('user_id');
+        } else {
+            $author = '1';
+        }
+
         if (null !== $request->input('responseTo')) {
             DB::table('comments')->insert([
                 'date_posted'   => now(),
                 'song'          => $song_id,
                 'response_to'   => $request->input('responseTo'),
                 'content'       => $request->input('content'),
-                'author'        => session('user_id'),
+                'author'        => $author,
             ]);
         } else {
             DB::table('comments')->insert([
                 'date_posted'   => now(),
                 'song'          => $song_id,
                 'content'       => $request->input('content'),
-                'author'        => session('user_id'),
+                'author'        => $author,
             ]);
         }
 
-        return redirect($urlPrefix . '/songs/' . $song_id . '#newComment');
+        return redirect('/songs/' . $song_id . '#newComment');
     }
 
     public function getById($comment_id) {

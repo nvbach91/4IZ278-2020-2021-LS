@@ -26,7 +26,7 @@ class PageItems extends Model
             $user = DB::table('users')->find(session('user_id'));
 
             $button1 = ['label' => 'edit profile', 'href' => $urlPrefix . '/profile/edit'];
-            $button2 = ['label' => 'logout', 'href' => $urlPrefix . 'logout'];
+            $button2 = ['label' => 'logout', 'href' => $urlPrefix . '/logout'];
 
             if (strlen($user->name) != 0) {
                 $username = $user->name;
