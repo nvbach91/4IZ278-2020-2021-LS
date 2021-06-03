@@ -12,22 +12,32 @@
     </form>
     <script>
         const forms = document.getElementsByTagName("form");
-        function handleForm(event) {event.preventDefault()}
+
+        function handleForm(event) {
+            event.preventDefault()
+        }
+
         forms[0].addEventListener('submit', handleForm)
         forms[1].addEventListener('submit', handleForm)
 
-        function submitForm () {
+        function submitForm() {
+            if (dates.length === 0) {
+                alert("Please add event dates");
+                return;
+            }
+
             $.ajax({
                 url: '/events',
                 type: 'POST',
                 dataType: "json",
-                data : {
+                data: {
                     "_token": "{{ csrf_token() }}",
                     "title": document.getElementById("tbx_eventName").value,
+                    "length": document.getElementById("tbx_length").value,
                     "description": document.getElementById("tbx_eventDescription").value,
                     "dates": JSON.stringify(dates, null, 2)
                 },
-                success: window.location.replace("/dashboard")
+                success: window.location.replace("/")
             });
         }
     </script>
@@ -39,7 +49,7 @@
             <div class="form-group mb-0">
                 <label for="tbx_eventName" class="bmd-label-floating">Title</label>
                 <input type="text" required class="form-control" id="tbx_eventName" name="title" maxlength="26"
-                       minlength="3" form="saveForm"/>
+                       minlength="3" form="frm_saveForm"/>
             </div>
         </div>
         <div class="col-auto mt-4">
@@ -132,29 +142,48 @@
     <div class="col pl-0">
         <div class="row">
             <div class="col-2">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" id="date" class="w-100 mt-2" required="true" form="frm_date">
+                <div class="row">
+                    <div class="card w-100 mr-3">
+                        <div class="card-header">
+                            <h3>
+                                Event length
+                            </h3>
                         </div>
-                        <div class="form-group">
-                            <label for="time">Time</label>
-                            <input type="time" id="time" class="w-100 mt-2" required="true" form="frm_date">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="tbx_length">Minutes</label>
+                                <input type="number" id="tbx_length" value="0" min="0" form="frm_saveForm" required="true" class="mt-2 w-100"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary w-100" form="frm_date" type="submit">
-                            <i class="fa fa-plus mr-lg-1" aria-hidden="true"></i>
-                            <span class="d-none d-lg-inline">New date</span>
-                        </button>
+                </div>
+                <div class="row mt-4">
+                    <div class="card w-100 mr-3">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" class="w-100 mt-2" required="true" form="frm_date">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" id="time" class="w-100 mt-2" required="true" form="frm_date">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary w-100" form="frm_date" type="submit">
+                                <i class="fa fa-plus mr-lg-1" aria-hidden="true"></i>
+                                <span class="d-none d-lg-inline">New date</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Dates
+                        <h3>
+                            Dates
+                        </h3>
                     </div>
                     <div class="card-body">
                         <table class="table">

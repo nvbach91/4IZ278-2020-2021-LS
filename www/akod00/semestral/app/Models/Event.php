@@ -10,6 +10,7 @@ use Illuminate\Database\Query\Builder;
 
 /**
  * @property string id
+ * @property int length
  * @property string title
  * @property string description
  * @method static Event create(array $array)
@@ -26,6 +27,7 @@ class Event extends Model
     protected $fillable = [
         "id",
         "title",
+        "length",
         "owner_id",
         "description"
     ];

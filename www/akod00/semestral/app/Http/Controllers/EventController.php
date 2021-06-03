@@ -23,6 +23,10 @@
             $id = $request->input('code');
             $userId = $this->getUser()->id;
 
+            if (Event::where('id', $id)->first() === null) {
+                return redirect("/dashboard");
+            }
+
             if (EventParticipant::where("participant_id", $userId)->where("event_id", $id)->first() === null) {
                 EventParticipant::create([
                     "participant_id" => $userId,
@@ -38,12 +42,14 @@
          */
         public function store(Request $request)
         {
+
             $eventId = $this->newGuid();
             $userId = $this->getUser()->id;
 
             Event::create([
                 'id' => $eventId,
                 'owner_id' => $userId,
+                'length' => $request->input('length'),
                 'title' => $request->input('title'),
                 'description' => $request->input('description') ?? ""
             ])->save();
@@ -94,6 +100,7 @@
             Event::where('id', $eventId)
                 ->update([
                     'title' => $request->input('title'),
+                    'length' => $request->input('length'),
                     'description' => $request->input('description')
                 ]);
 
@@ -151,8 +158,7 @@
         {
             if (!EventParticipant::where("event_id", $id)
                 ->where("participant_id", $this->getUser()->id)
-                ->exists())
-            {
+                ->exists()) {
                 abort(403, 'Unauthorized action.');
             }
 

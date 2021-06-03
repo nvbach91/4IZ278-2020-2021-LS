@@ -15,6 +15,11 @@
 @endsection
 
 @section('contentDesc')
+    <em>
+        Duration: {{ $event->length }} min
+    </em>
+    <br>
+
     {{ $event->description }}
 @endsection
 
@@ -47,47 +52,91 @@
             });
         }
     </script>
-    <div class="col pl-0">
+    <style>
+        table td, table th {
+            background-color: white;
+        }
+
+        table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        table thead th:first-child {
+            white-space: nowrap;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        table tbody td:first-child {
+            white-space: nowrap;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+    </style>
+    <?php
+
+    function getParticipantsHeading($participants): string
+    {
+        $count = $participants->groupBy('name')->count();
+        $result = $count . " participant";
+        if ($count > 1) {
+            return $result . "s";
+        }
+
+        return $result;
+    }
+
+    ?>
+    <div class="col-sm pl-0">
         <div class="card">
             <div class="card-header">
                 <h3>Select dates</h3>
             </div>
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Participant</th>
-                        @foreach($dates as $date)
-                            <th class="text-center">
-                                {{ str_replace("-", "/", explode(" ", $date->datetime)[0]) }}
-                                <br>
-                                {{ explode(" ", $date->datetime)[1] }}
-                            </th>
-                        @endforeach
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($participants->groupBy('name') as $key => $participantGroup)
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td class="row">{{ $key }}</td>
-                            @foreach(from($dates)->groupJoin($participantGroup, function ($d) { return $d->id; }, function ($p) { return $p->date_id; })->toArrayDeep() as $date)
-                                <td class="text-center">
-                                    <input type="checkbox" id="{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}" onclick="ts(this)" {{ $user !== $participantGroup[0]->user_id ? "disabled" : "" }} />
-                                    @if (isset($date[1][0]->state))
-                                        <script>
-                                            @if ($date[1][0]->state === 0)
-                                            $("#{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}").prop("indeterminate", true).submit();
-                                            @elseif ($date[1][0]->state === 1)
-                                            $("#{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}").prop("checked", true).submit();
-                                            @endif
-                                        </script>
-                                    @endif
-                                </td>
+                            <th>{{ getParticipantsHeading($participants) }}</th>
+                            @foreach($dates as $date)
+                                <th class="text-center">
+                                    {{ str_replace("-", "/", explode(" ", $date->datetime)[0]) }}
+                                    <br>
+                                    {{ explode(" ", $date->datetime)[1] }}
+                                </th>
                             @endforeach
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($participants->groupBy('name') as $key => $participantGroup)
+                            <tr>
+                                <td>{{ $key }}</td>
+                                @foreach(from($dates)->groupJoin($participantGroup, function ($d) { return $d->id; }, function ($p) { return $p->date_id; })->toArrayDeep() as $date)
+                                    <td class="text-center">
+                                        <input type="checkbox"
+                                               id="{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}"
+                                               onclick="ts(this)" {{ $user !== $participantGroup[0]->user_id ? "disabled" : "" }} />
+                                        @if (isset($date[1][0]->state))
+                                            <script>
+                                                @if ($date[1][0]->state === 0)
+                                                $("#{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}").prop("indeterminate", true).submit();
+                                                @elseif ($date[1][0]->state === 1)
+                                                $("#{{ $participantGroup[0]->user_id }}_{{ $date[0]->id }}").prop("checked", true).submit();
+                                                @endif
+                                            </script>
+                                        @endif
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

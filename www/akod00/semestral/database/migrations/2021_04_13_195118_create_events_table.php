@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->bigInteger("owner_id")->unsigned();
             $table->foreign("owner_id")->references("id")->on("users")->onDelete("cascade");
             $table->string("title");
+            $table->bigInteger("length")->unsigned();
             $table->string("description");
             $table->timestamps();
         });
