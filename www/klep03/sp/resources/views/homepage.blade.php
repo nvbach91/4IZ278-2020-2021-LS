@@ -10,7 +10,7 @@
         You can start by signing up, signing in or start searching for your desired song right away!
     </p>
     <form id="searchDiv" action="<?= $pageItems['urlPrefix'] ?>/search/" method="GET">
-        <textarea name="q" id="searchTextArea"></textarea>
+        <input type="text" name="q" id="searchTextArea">
         <button type="submit" id="search" class="innerAreaButton" rows="1">Search</button>
     </form>
     @if (isset($results))
