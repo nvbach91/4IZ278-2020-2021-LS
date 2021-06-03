@@ -407,8 +407,10 @@ class Dao
 
     public function fetchCheckoutByUserId($id)
     {
+
         $checkouts = [];
-        $statement = $this->conn->prepare("SELECT * FROM checkout_");
+        $statement = $this->conn->prepare("SELECT * FROM checkout_ WHERE userId = ?");
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetchAll();
 

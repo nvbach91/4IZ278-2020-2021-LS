@@ -171,24 +171,29 @@ $product = $dao->fetchProductById($_GET['i']);
 
 if(!empty($_POST))
 {
-    if(isset($_POST['addToCart']))
-    {
-        $user = unserialize($_SESSION['user']);
-        $userId = $user->getId();
-        $gameId = $_GET['i'];
+        if(isset($_POST['addToCart']) && isset($_SESSION['user']))
+        {
+            $user = unserialize($_SESSION['user']);
+            $userId = $user->getId();
+            $gameId = $_GET['i'];
 
-        $checkouts = $dao->fetchCheckoutByUserId($userId);
-        $control = false;
-        foreach($checkouts as $checkout)
-            if($checkout->getGameId() == $gameId)
-                $control = true;
+            $checkouts = $dao->fetchCheckoutByUserId($userId);
+            $control = false;
+            foreach($checkouts as $checkout)
+                if($checkout->getGameId() == $gameId)
+                    $control = true;
 
-        if($control)
-            $success = $dao->updateCheckout($dao->fetchCheckoutById($checkout->getCheckoutId()),"up");
-        else
-            $success = $dao->insertCheckout(new Checkout(0,$gameId,$userId,1));
-        $message = $success->{'message'};
-    }
+            if($control)
+                $success = $dao->updateCheckout($dao->fetchCheckoutById($checkout->getCheckoutId()),"up");
+            else
+                $success = $dao->insertCheckout(new Checkout(0,$gameId,$userId,1));
+            $message = $success->{'message'};
+        }
+        elseif(isset($_POST['addToCart']) && !isset($_SESSION['user']))
+        {
+            $success->{'bool'} = false;
+            $message = "Pro tuto akci musíš být přihlášen!";
+        }
 }
 
 ?>
