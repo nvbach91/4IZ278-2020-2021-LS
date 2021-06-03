@@ -49,10 +49,10 @@
         </div>
 
         <div class="mb-5 flex flex-col">
-            <label for="external_resource_link">External resource link <span
+            <label for="link_to_external_resource">External resource link <span
                     class="label__meta">(optional)</span></label>
-            <input type="text" id="external_resource_link" name="external_resource_link" class="input"
-                   value="{{ old("external_resource_link", $question->external_resource_link) }}">
+            <input type="text" id="link_to_external_resource" name="link_to_external_resource" class="input"
+                   value="{{ old("link_to_external_resource", $question->link_to_external_resource) }}">
         </div>
 
         <div>

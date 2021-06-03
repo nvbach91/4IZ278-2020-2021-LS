@@ -3,7 +3,12 @@
 @section("content")
     <div class="flex flex-col justify-between items-start">
         <div>
-            <h1 class="title"><span class="text-gray-700">Flashcard</span> {{ $flashcard->title }}</h1>
+            <h1 class="title">
+                <span class="text-gray-700">Flashcard</span> 
+                <a href="{{ route('collections.flashcards.show', [$flashcard->collection, $flashcard]) }}">
+                    {{ $flashcard->title }}
+                </a>
+            </h1>
         </div>
 
         <div class="my-5 flex flex-row items-center justify-center">
@@ -20,8 +25,15 @@
                     <div class="question--question">
                         {{ $question->question }}
                     </div>
-                    <div class="question--answer">
+                    <div class="question--answer text-center">
                         {{ $question->answer }}
+                        @if (isset($question->link_to_external_resource))
+                        <br>
+                        <div class="mt-5">
+                            <a class="question__control--next button button--action"
+                               href="{{ $question->link_to_external_resource }}" target="_blank">External resource</a>
+                        </div>
+                        @endif
                     </div>
                 </div>
             @endforeach

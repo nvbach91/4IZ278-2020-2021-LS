@@ -29,7 +29,7 @@
     @unless ($favoriteFlashcards()->isEmpty())
         <div class="my-5 border-b border-gray-800"></div>
 
-        <h2 class="font-bold text-gray-500 uppercase tracking-wider text-sm mb-3">Favorite collections</h2>
+        <h2 class="font-bold text-gray-500 uppercase tracking-wider text-sm mb-3">Favorite flashcards</h2>
         <div>
             <div class="flex flex-row flex-wrap">
                 @foreach ($favoriteFlashcards() as $flashcard)

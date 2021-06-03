@@ -46,7 +46,7 @@
     </div>
 
     @unless (empty($flashcard->description))
-        <div class="mt-5 text-2xl text-gray-700">
+        <div class="mt-5 text-2xl text-gray-500">
             <p>{{ $flashcard->description }}</p>
         </div>
     @endif

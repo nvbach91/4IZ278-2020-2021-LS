@@ -37,8 +37,8 @@
         </div>
 
         <div class="mb-5 flex flex-col">
-            <label for="external_resource_link">External resource link <span class="label__meta">(optional)</span></label>
-            <input type="text" id="external_resource_link" name="external_resource_link" class="input">
+            <label for="link_to_external_resource">External resource link <span class="label__meta">(optional)</span></label>
+            <input type="text" id="link_to_external_resource" name="link_to_external_resource" class="input">
         </div>
 
         <div>

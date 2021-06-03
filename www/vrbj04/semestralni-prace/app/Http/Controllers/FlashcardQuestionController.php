@@ -28,6 +28,7 @@ class FlashcardQuestionController extends Controller
         $question = $flashcard->questions()->create([
             "question" => $request->input("question"),
             "answer" => $request->input("answer"),
+            "link_to_external_resource" => $request->input("link_to_external_resource")
         ]);
 
         $question->save();
@@ -59,9 +60,9 @@ class FlashcardQuestionController extends Controller
     {
         $this->authorize("update", $collection);
 
-        $question->update($request->only("answer", "question", "external_resource_link"));
+        $question->update($request->only("answer", "question", "link_to_external_resource"));
 
-        return redirect()->route("collections.flashcards.show", [$question, $flashcard]);
+        return redirect()->route("collections.flashcards.show", [$collection, $flashcard]);
     }
 
     public function destroy(FlashcardCollection $collection, Flashcard $flashcard, FlashcardQuestion $question) {
