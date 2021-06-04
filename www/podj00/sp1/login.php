@@ -11,6 +11,7 @@ if ($isSubmitted) {
     $name = htmlspecialchars(trim($_POST['name']));
     $password = htmlspecialchars(trim($_POST['password']));
 
+    //Name
     if (empty($name)) {
         $invalidInputs["name"] = '*Vyplňte jméno';
     }

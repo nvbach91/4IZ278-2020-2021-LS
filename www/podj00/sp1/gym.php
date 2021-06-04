@@ -7,8 +7,7 @@ $gymDb = new GymRepository();
 
 $allGyms = $gymDb->fetchAll();
 
-function getLecturesHref($row)
-{
+function getLecturesHref($row){
     return "lectures?lectures=" . $row;
 }
 

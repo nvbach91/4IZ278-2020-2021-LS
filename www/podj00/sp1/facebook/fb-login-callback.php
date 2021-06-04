@@ -13,16 +13,16 @@ if (isset($_GET['state'])) {
 }
 ?>
 
-    <h3>Code</h3>
-    <p><?php echo $_GET['code']; ?></p>
+<h3>Code</h3>
+<p><?php echo $_GET['code']; ?></p>
 
 <?php
 try {
     $accessToken = $helper->getAccessToken();
-} catch (\Facebook\Exceptions\FacebookResponseException $e) {
+} catch(\Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
     exit;
-} catch (\Facebook\Exceptions\FacebookSDKException $e) {
+} catch(\Facebook\Exceptions\FacebookSDKException $e) {
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
 }
@@ -41,8 +41,8 @@ if (!isset($accessToken)) {
     exit;
 }
 ?>
-    <h3>Access Token</h3>
-    <pre> <?php var_dump($accessToken->getValue()); ?> </pre>
+<h3>Access Token</h3>
+<pre> <?php var_dump($accessToken->getValue()); ?> </pre>
 
 <?php
 
@@ -50,10 +50,10 @@ $oAuth2Client = $fb->getOAuth2Client();
 
 $tokenMetadata = $oAuth2Client->debugToken($accessToken);
 ?>
-    <h3>Metadata</h3>
-    <pre> <?php var_dump($tokenMetadata); ?> </pre>
+<h3>Metadata</h3>
+<pre> <?php var_dump($tokenMetadata); ?> </pre>
 
-    <pre> <?php /* echo $myAccessToken; */ ?> </pre>
+<pre> <?php /* echo $myAccessToken; */ ?> </pre>
 
 <?php
 require_once __DIR__ . '/../database/repositories/UsersRepository.php';
@@ -77,7 +77,7 @@ if (!$accessToken->isLongLived()) {
     var_dump($accessToken->getValue());
 }
 
-$_SESSION['fb_access_token'] = (string)$accessToken;
+$_SESSION['fb_access_token'] = (string) $accessToken;
 $_SESSION['access_token_expiries'] = time() + 3600; // expire login after 1 hour
 
 require_once './facebookRegistration.php';

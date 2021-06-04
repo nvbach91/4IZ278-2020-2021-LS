@@ -4,7 +4,7 @@
 const DB_HOST = 'localhost';
 const DB_DATABASE = 'podj00';
 const DB_USERNAME = 'podj00';
-const DB_PASSWORD = ''; //nenahrát na git
+const DB_PASSWORD = '';
 
 define('SERVER_USER_NAME', 'podj00');
 $sender = SERVER_USER_NAME . '@vse.cz';

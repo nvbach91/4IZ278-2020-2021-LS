@@ -1,3 +1,5 @@
+<?php require_once __DIR__ . '/../database/repositories/UsersRepository.php' ?>
+
 <?php
 if (session_status() != 2) {
     session_start();
@@ -23,11 +25,19 @@ if (isset($_SESSION['fb_access_token'])) {
     }
 }
 
+$user = null;
+$userDb = new UsersRepository();
+if (isset($_SESSION['fb_access_token'])) {
+    $user = $userDb->getUserByFacebookId($_SESSION['user_facebook_id']);
+} else if (isset($_SESSION['logged_user'])) {
+    $user = $userDb->getUser($_SESSION['logged_user']);
+}
+
 ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" id="nav">
         <div class="container-fluid">
-            <a href="index.php">
+            <a href="index">
                 <img src="img/logo.png" alt="logo" class="logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -50,7 +60,12 @@ if (isset($_SESSION['fb_access_token'])) {
                         <a class="nav-link <?php echo $currentPage == "coaches.php" ? " active" : '' ?>"
                            href="coaches">Trenéři</a>
                     </li>
-
+                    <?php if ($user[0]["privilege"] >= 3) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $currentPage == "userslessons.php" ? " active" : '' ?>"
+                           href="userslessons">Uživatelé</a>
+                    </li>
+                    <?php endif; ?>
                     <?php if (!isset($_SESSION['logged_user']) && !isset($_SESSION['fb_access_token'])) : ?>
                         <li class="nav-item">
                             <a class="nav-link <?php echo $currentPage == "login.php" ? " active" : '' ?>"

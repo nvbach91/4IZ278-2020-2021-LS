@@ -40,4 +40,5 @@ $req = [
 registerNewUser($req, true);
 
 header('Location: ../index');
+exit();
 ?>

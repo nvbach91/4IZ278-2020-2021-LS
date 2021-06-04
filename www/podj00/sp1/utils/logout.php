@@ -12,4 +12,5 @@ if (isset($_SESSION['user_facebook_id'])) {
     unset($_SESSION['user_facebook_id']);
 }
 header('Location: ../index');
+exit();
 ?>

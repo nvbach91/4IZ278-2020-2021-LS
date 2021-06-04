@@ -86,8 +86,7 @@ function isFullCapacity($row)
                             <div class="card mb-3 cart-card mylecturesCard">
                                 <div class="row p-4">
                                     <div class="col-md-2">
-                                        <img src="<?php echo htmlspecialchars($row["gym_logo"]) ?>"
-                                             class="gymLogoImg p-2">
+                                        <img src="<?php echo htmlspecialchars($row["gym_logo"]) ?>" class="gymLogoImg p-2">
                                     </div>
                                     <div class="col-md-10">
                                         <h2>
@@ -135,7 +134,7 @@ function isFullCapacity($row)
                                     <div class="col-md-10">
                                         <?php if (isUserRegistered($row, $userLessons)) : ?>
                                             <a class="btn btn-outline-secondary w-75"
-                                               href='mylectures.php'>Moje lekce <i class="fas fa-check"></i></a>
+                                               href='mylectures'>Moje lekce <i class="fas fa-check"></i></a>
                                         <?php else : ?>
                                             <a class="btn btn-outline-secondary w-75 <?php echo isFullCapacity($row) ? "disabled" : ""; ?>"
                                                onclick="clickAndDisable(this);"

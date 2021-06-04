@@ -13,6 +13,17 @@ class GymRepository extends Database
         return $statement->fetchAll();
     }
 
+    public function getGymWithLectures($gym)
+    {
+        //TODO tady bude nějaký joiník
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE name = :name';
+        $statement = $this->db->prepare($sql);
+        $statement->execute([
+            'name' => $gym
+        ]);
+        return $statement->fetchAll();
+    }
+
 }
 
 ?>

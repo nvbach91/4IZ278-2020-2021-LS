@@ -38,15 +38,14 @@ function registerNewUser($payload, $isFacebook)
 {
     $userDb = new UsersRepository();
     $users = $userDb->fetchAll();
-    $password = $payload["password"];
-    $hashed_password = null;
-    if (!$isFacebook) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $hashedPassword = null;
+    if(!$isFacebook){
+        $hashedPassword = password_hash($payload["password"], PASSWORD_DEFAULT);
     }
     $userRecord = [
         "username" => $payload['name'],
         "email" => $payload['email'],
-        "password" => $hashed_password,
+        "password" => $hashedPassword,
         "facebook_id" => isset($payload['facebook_id']) ? $payload['facebook_id'] : null
     ];
 
@@ -79,7 +78,7 @@ function authenticate($username, $password)
         return ['success' => false, 'msg' => 'Účet neexistuje'];
     }
     $hashed_password = $user[0]["password"];
-    if (password_verify($password, $hashed_password)) {
+    if (!password_verify($password, $hashed_password)) {
         return ['success' => false, 'msg' => 'Špatné heslo'];
     }
     return ['success' => true, 'msg' => 'Login success'];

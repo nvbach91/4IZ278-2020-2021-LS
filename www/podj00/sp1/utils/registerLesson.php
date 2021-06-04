@@ -42,6 +42,6 @@ if (!$response) {
 }
 
 header($uri);
-
+exit();
 
 ?>

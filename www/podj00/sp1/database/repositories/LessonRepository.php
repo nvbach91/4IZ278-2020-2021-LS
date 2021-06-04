@@ -115,6 +115,27 @@ class LessonRepository extends Database
         }
         return $statement->fetchAll();
     }
+
+    public function getLessonsForAllUsers()
+    {
+        $statement = null;
+            $sql = "SELECT * from lesson JOIN gym ON lesson.gym_id = gym.gym_id where lesson.date_from >= NOW()";
+            $statement = $this->db->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll();
+    }
+
+    public function getUsersByLessonId($id)
+    {
+        $statement = null;
+        $sql = "SELECT * from lesson JOIN users_lessons ON lesson.lesson_id=users_lessons.lesson_id JOIN user ON users_lessons.user_id = user.user_id 
+                    where lesson.date_from >= NOW() AND lesson.lesson_id = :lesson_id";
+        $statement = $this->db->prepare($sql);
+        $statement->execute([
+            'lesson_id' => $id
+        ]);
+        return $statement->fetchAll();
+    }
 }
 
 ?>

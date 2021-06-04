@@ -12,9 +12,10 @@ if (session_status() != 2) {
 }
 
 //kdyby to někdo zkusil hardlinkem
-if (!isset($_SESSION["user_facebook_id"]) && !isset($_SESSION['logged_user'])) {
+if(!isset($_SESSION["user_facebook_id"]) && !isset($_SESSION['logged_user'])){
     header('Location: login');
-}
+    exit();
+ }
 
 $id = isset($_SESSION["user_facebook_id"]) ? $_SESSION["user_facebook_id"] : null;
 
