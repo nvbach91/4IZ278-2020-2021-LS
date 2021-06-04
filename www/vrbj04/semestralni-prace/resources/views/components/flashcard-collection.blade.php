@@ -1,6 +1,6 @@
 <div class="inline-block w-1/3 pr-4">
     <a href="{{ route("collections.show", $collection->id) }}"
-       class="pb-4 pt-8 px-10 w-full rounded-lg flex flex-col transition transform shadow-md translate-y-0
+       class="mb-5 pb-4 pt-8 px-10 w-full rounded-lg flex flex-col transition transform shadow-md translate-y-0
        hover:-translate-y-2 hover:shadow-xl bg-gradient-to-br from-gray-700 to-gray-800">
         <div class="flex flex-row items-start justify-between">
             <div class="flex flex-col">

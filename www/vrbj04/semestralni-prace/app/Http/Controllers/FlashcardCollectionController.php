@@ -17,8 +17,16 @@ class FlashcardCollectionController extends Controller
 
     public function index(): Response
     {
-        $owned = $this->user()->collections()->with(["user", "flashcards"])->get();
-        $public = FlashcardCollection::public($this->user()->id)->with(["user", "flashcards"])->get();
+        $owned = $this->user()
+            ->collections()
+            ->with(["user", "flashcards"])
+            ->paginate(3, ['*'], 'owned')
+            ->withQueryString();
+
+        $public = FlashcardCollection::public($this->user()->id)
+            ->with(["user", "flashcards"])
+            ->paginate(3, ['*'], 'public')
+            ->withQueryString();
 
         return response()->view("collections.index", [
             "owned" => $owned,

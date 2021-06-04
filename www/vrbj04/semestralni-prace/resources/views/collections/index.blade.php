@@ -22,6 +22,9 @@
                 </div>
             @endforelse
         </div>
+        @unless($owned->isEmpty()) 
+            {{ $owned->links() }}
+        @endunless
     </div>
 
     <div class="mt-5 mb-10 border-b border-gray-800"></div>
@@ -41,4 +44,7 @@
             </div>
         @endforelse
     </div>
+    @unless($public->isEmpty()) 
+        {{ $public->links() }}
+    @endunless
 @endsection
