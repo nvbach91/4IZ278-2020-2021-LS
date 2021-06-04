@@ -16,7 +16,6 @@ abstract class Database
         $stmt->bindValue(2, $index, PDO::PARAM_INT);
         $stmt->execute();
         $items = $stmt->fetchAll();
-        //var_dump($items);
         return $items;
     }
 

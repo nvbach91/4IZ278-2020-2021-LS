@@ -25,7 +25,7 @@
                     require_once "db/Profile.php";
                     $profile = new Profile($_SESSION["user_id"]);
                     $privilege = $profile->getPrivileges();
-                    if ($privilege ==3):
+                    if ($privilege == 3):
                         ?>
                         <li class="nav-item">
                             <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'users') ? ' active' : '' ?> "
@@ -35,11 +35,27 @@
                             <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'orders') ? ' active' : '' ?> "
                                href="orders.php">Orders</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'addProduct') ? ' active' : '' ?> "
+                               href="addProduct.php">Add product</a>
+                        </li>
                     <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'cart') ? ' active' : '' ?> "
-                           href="cart.php">Cart</a>
-                    </li>
+                    <?php if (isset($_SESSION['cart'])): ?>
+
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'cart') ? ' active' : '' ?> "
+                               href="cart.php">Cart<?php
+                                if (isset($_SESSION["cart"])) {
+                                    $t = 0;
+                                    foreach ($_SESSION["cart"] as $item) {
+                                        $t += $item["amount"];
+                                    }
+                                    echo "(" . $t . ")";
+                                }
+                                ?></a>
+                        </li>
+                    <?php endif; ?>
+
                     <li class="nav-item">
                         <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'profile') ? ' active' : '' ?> "
                            href="profile.php">Profile</a>

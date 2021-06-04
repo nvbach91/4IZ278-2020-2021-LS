@@ -7,10 +7,11 @@ $cart2 =[];
 $total = 0;
 if ($cart)
     foreach (@$cart as $item){
+        $prod = $prodDB -> getItem("ID",$item["id"] );
         $new = ["id"=>$item["id"],
             "amount"=> $item["amount"],
-            "product_name" => $products[(int)$item["id"] -1]["product_name"],
-            "price" => $products[(int)$item["id"] -1]["price"]
+            "product_name" => $prod["product_name"],
+            "price" => $prod["price"]
         ];
         array_push($cart2,$new);
         $total += (int)$new["price"]*(int)$new["amount"];

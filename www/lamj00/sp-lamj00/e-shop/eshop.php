@@ -2,8 +2,8 @@
 require_once "db/ProductsDB.php";
 require_once "db/CategoriesDB.php";
 require "incl/header.php";
-require "incl/navbar.php";
 
+$prodDB = new productsDB();
 if ("POST" == $_SERVER['REQUEST_METHOD']) {
     if (!isset($_SESSION["cart"])) {
         $_SESSION["cart"] = [];
@@ -14,17 +14,25 @@ if ("POST" == $_SERVER['REQUEST_METHOD']) {
             $amount = $_POST["i" . $id];
             break;
         }
-    }
-    $needs_add_new = true;
-    foreach ($_SESSION["cart"] as $key2 => $item) {
-        if ($id == $item["id"]) {
-            (string)$_SESSION["cart"][$key2]["amount"] = (int)$_SESSION["cart"][$key2]["amount"] + (int)$amount;
-            $needs_add_new = false;
+        if ($key[0] === "c") {
+            $id = $key[1];
+            $prodDB->deleteItems("ID", $id);
             break;
         }
     }
-    if ($needs_add_new)
-        array_push($_SESSION["cart"], ["id" => $id, "amount" => $amount]);
+    if (isset($amount)) {
+        $needs_add_new = true;
+        foreach ($_SESSION["cart"] as $key2 => $item) {
+            if ($id == $item["id"]) {
+                (string)$_SESSION["cart"][$key2]["amount"] = (int)$_SESSION["cart"][$key2]["amount"] + (int)$amount;
+                $needs_add_new = false;
+                break;
+            }
+        }
+        if ($needs_add_new)
+            array_push($_SESSION["cart"], ["id" => $id, "amount" => $amount]);
+    }
+
 }
 
 if (isset($_GET['offset'])) {
@@ -38,7 +46,6 @@ if (isset($_GET['category'])) {
     $cat = -1;
 }
 //fetches products
-$prodDB = new productsDB();
 $products = $prodDB->fetchAll();
 $productsPerPage = 6;
 if ($cat != -1) {
@@ -57,7 +64,7 @@ $numberOfPaginations = ceil(sizeOf($products) / $productsPerPage);
 $products = array_slice($products, $productsPerPage * ($currentPagination - 1), $productsPerPage * ($currentPagination));
 
 //gets category name
-
+require "incl/navbar.php";
 ?>
 <main class="container" style="text-align:center">
     <H1>E-shop</H1>

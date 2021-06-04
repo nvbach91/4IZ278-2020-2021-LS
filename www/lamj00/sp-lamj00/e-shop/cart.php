@@ -1,13 +1,13 @@
 <?php
 require "incl/header.php";
-require "incl/navbar.php";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $i = (array_key_first($_POST));
     unset($_SESSION["cart"][$i]);
     $_SESSION["cart"] = array_values($_SESSION["cart"]);
 }
 require "functions/getItems.php";
-
+require "incl/navbar.php";
 ?>
 
 
@@ -40,7 +40,7 @@ require "functions/getItems.php";
                                  alt="<?php echo $item['product_name']; ?>">
                         </td>
                         <td><?php echo $item['product_name']; ?></td>
-                        <td><?php echo number_format($item['amount'], 2), ' ', "$"; ?></td>
+                        <td><?php echo $item['amount']; ?></td>
                         <td style="text-align: right; padding-right: 80px;"><?php echo number_format($item['price'], 2), ' ', "$"; ?></td>
                     </tr>
                 <?php endforeach; ?>

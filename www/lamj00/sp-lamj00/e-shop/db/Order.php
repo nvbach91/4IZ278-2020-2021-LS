@@ -11,7 +11,7 @@ class Order
     private $total;
     private $date;
     private $address;
-    private array $products = [];
+    private $products = [];
     private $userID;
 
     public function gatherData(int $id){
