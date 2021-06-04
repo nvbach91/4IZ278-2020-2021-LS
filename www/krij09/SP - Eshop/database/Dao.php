@@ -178,7 +178,10 @@ class Dao
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_OBJ);
 
-        return new Category($result->categoryId, $result->name, $result->description, $result->img);
+        if($result)
+            return new Category($result->categoryId, $result->name, $result->description, $result->img);
+        else
+            return new Category('','Error','','','');
     }
 
     /**
@@ -440,9 +443,10 @@ class Dao
         $statement->bindParam(1,$id,PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_OBJ);
-
-        return new Product($result->gameId,$result->title,$result->price,$result->category,$result->description,$result->discount,$result->img);
-
+        if($result)
+            return new Product($result->gameId,$result->title,$result->price,$result->category,$result->description,$result->discount,$result->img);
+        else
+            return false;
 
     }
 
@@ -469,9 +473,10 @@ class Dao
         $statement->execute();
         $result = $statement->fetchAll();
 
-        foreach ($result as $product)
-            array_push($products, new Product($product["gameId"],$product["title"], $product["price"],$product["category"],$product["description"],$product["discount"],$product["img"]));
-
+        if($result != []) {
+            foreach ($result as $product)
+                array_push($products, new Product($product["gameId"], $product["title"], $product["price"], $product["category"], $product["description"], $product["discount"], $product["img"]));
+        }
         return $products;
 
     }

@@ -31,6 +31,7 @@ $dao = new Dao($conn->getConn());
 <div class="row">
     <?php
     $products = $_GET['c'] == "all" || $_GET['c'] == "sale" ? $dao->fetchProduct() : $dao->fetchProductByCategory($_GET['c']);
+    if($products != [])
     foreach($products as $product):
         if($_GET['c'] == "sale" && $product->getDiscount() == 0)
         {
@@ -64,6 +65,6 @@ $dao = new Dao($conn->getConn());
                 </div>
             </div>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach; else echo('Kategorie nebyla nalezena.'); ?>
 </div>
 </div>

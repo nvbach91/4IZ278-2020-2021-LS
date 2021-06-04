@@ -9,6 +9,18 @@ $conn = new Db(DB_Server,DB_User,DB_Pass,DB_DB);
 $conn->createConn();
 $dao = new Dao($conn->getConn());
 
+if(!isset($_SESSION['user']))
+{
+    header("Location: ./");
+    die;
+}
+elseif(unserialize($_SESSION['user'])->getPermissionId() != 3)
+{
+    header("Location: ./");
+    die;
+}
+
+
 if(!empty($_POST))
 {
     if(isset($_POST['delCat'])) {

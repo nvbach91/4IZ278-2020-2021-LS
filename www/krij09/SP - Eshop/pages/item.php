@@ -169,6 +169,7 @@ $success = (object) array('bool' => true);
 
 $product = $dao->fetchProductById($_GET['i']);
 
+
 if(!empty($_POST))
 {
         if(isset($_POST['addToCart']) && isset($_SESSION['user']))
@@ -197,6 +198,17 @@ if(!empty($_POST))
 }
 
 ?>
+
+<?php if(!$product): ?>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Error</h1>
+
+    </div>
+    <div class="container">
+        <p>Předmět nenalezen</p>
+    </div>
+
+<?php else: ?>
 <div class="container">
     <div class="alert-<?= $success->{'bool'} ? 'success' : 'danger' ?> text-center mb-4"><?=$message;?></div>
     <form method="post">
@@ -225,3 +237,5 @@ if(!empty($_POST))
         </div>
     </div>
     </form>
+</div>
+<?php endif; ?>

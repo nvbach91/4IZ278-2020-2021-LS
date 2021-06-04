@@ -10,6 +10,11 @@ $price = 0;
 $message = "";
 $success = (object) array('bool' => true);
 
+if(!isset($_SESSION['user']))
+{
+    header("Location: ./login.php");
+    die;
+}
 
 if(!empty($_POST))
 {

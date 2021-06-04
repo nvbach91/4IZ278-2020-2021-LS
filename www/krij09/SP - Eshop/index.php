@@ -22,6 +22,10 @@ require("database/Dao.php");
             {
                 require("pages/item.php");
             }
+            else
+            {
+                require("pages/error.php");
+            }
             ?>
 
         </main>

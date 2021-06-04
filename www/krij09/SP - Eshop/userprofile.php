@@ -3,6 +3,13 @@
     require("database/Db.php");
     require("database/Dao.php");
     $error = "";
+
+    if(!isset($_SESSION['user']))
+    {
+        header("Location: ./login.php");
+        die;
+    }
+
     if(!isset($_SESSION['username']))
         header("Location ./login.php");
 

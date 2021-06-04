@@ -6,19 +6,35 @@
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="./">
                     <span data-feather="home"></span>
+                    <?php if(!isset($_GET["c"])): ?>
+                    <strong>Hlavní stránka</strong>
+                    <?php else: ?>
                     Hlavní stránka
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?p=cat&c=sale">
                     <span data-feather="dollar-sign"></span>
+                    <?php if(isset($_GET["c"])): if($_GET["c"] == "sale"): ?>
+                    <strong>Zlevněné produkty</strong>
+                    <?php else: ?>
                     Zlevněné produkty
+                    <?php endif; else: ?>
+                    Zlevněné produkty
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?p=cat&c=all">
                     <span data-feather="list"></span>
-                    Všechny produkty
+                    <?php if(isset($_GET["c"])): if($_GET["c"] == "all"): ?>
+                        <strong>Všechny produkty</strong>
+                    <?php else: ?>
+                        Všechny produkty
+                    <?php endif; else: ?>
+                        Všechny produkty
+                    <?php endif; ?>
                 </a>
             </li>
         </ul>
@@ -34,8 +50,14 @@
              foreach($dao->fetchCategories() as $category): ?>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?p=cat&c=<?= $category->getCategoryId(); ?>"?>
-                    <span data-feather="file-text"></span>
-                    <?= $category->getName(); ?>
+                    <span data-feather="file-text" ></span>
+                    <?php if(isset($_GET["c"])): if($_GET["c"] == $category->getCategoryId()): ?>
+                    <strong><?= $category->getName(); ?></strong>
+                    <?php else: ?>
+                        <?= $category->getName(); ?>
+                    <?php endif; else: ?>
+                        <?= $category->getName(); ?>
+                    <?php endif; ?>
                 </a>
             </li>
             <?php endforeach; ?>
