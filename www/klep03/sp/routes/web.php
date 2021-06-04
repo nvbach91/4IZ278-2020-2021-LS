@@ -113,11 +113,20 @@ Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
 |
 */
 Route::get('/songs/{song_id}/downloadPDF', function ($song_id) {
-    // $pageItems = new PageItems();
+    $pageItems = new PageItems();
     // $urlPrefix = $pageItems->getUrlPrefix();
+
+    $pageItems              = $pageItems->fetch();
 
     $songsController        = new SongsController;
     $song                   = $songsController->show($song_id);
+
+    if ($song == null) {
+        http_response_code(404);
+        return view('404NotFound')->with('reason', 'The song you tried to download does not exist. ')
+            ->with('pageItems', $pageItems)
+            ->with('title', 'Not Found');
+    }
 
     $mpdf = new \Mpdf\Mpdf();
 
