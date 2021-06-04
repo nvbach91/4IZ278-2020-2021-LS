@@ -15,6 +15,10 @@
 @endsection
 
 @section('contentDesc')
+    @if (isset($event->image) && strlen($event->image) > 0)
+        <img src="{{ $event->image }}" alt="Event image" width="180"/>
+        <br>
+    @endif
     <em>
         Duration: {{ $event->length }} min
     </em>

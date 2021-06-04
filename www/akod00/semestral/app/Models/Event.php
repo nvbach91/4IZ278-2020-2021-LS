@@ -13,6 +13,7 @@ use Illuminate\Database\Query\Builder;
  * @property int length
  * @property string title
  * @property string description
+ * @property string image
  * @method static Event create(array $array)
  * @method static find(string $id)
  * @method static Builder where(string $string, string $id)
@@ -29,7 +30,8 @@ class Event extends Model
         "title",
         "length",
         "owner_id",
-        "description"
+        "description",
+        "image",
     ];
 
     public function owner(): BelongsTo {

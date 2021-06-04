@@ -42,15 +42,20 @@
          */
         public function store(Request $request)
         {
-
             $eventId = $this->newGuid();
             $userId = $this->getUser()->id;
+            $image = $request->input('image');
+
+            if (isset($image) && $image !== '' && (!filter_var($image, FILTER_VALIDATE_URL) || !preg_match("/^(.*)\.(jpg|png|svg|bmp)$/i", $image))) {
+                return redirect("/events/create");
+            }
 
             Event::create([
                 'id' => $eventId,
                 'owner_id' => $userId,
                 'length' => $request->input('length'),
                 'title' => $request->input('title'),
+                'image' => $image ?? "",
                 'description' => $request->input('description') ?? ""
             ])->save();
             EventParticipant::create([
@@ -97,11 +102,18 @@
          */
         public function update(Request $request, string $eventId)
         {
+            $image = $request->input('image');
+
+            if (isset($image) && $image !== '' && (!filter_var($image, FILTER_VALIDATE_URL) || !preg_match("/^(.*)\.(jpg|png|svg|bmp)$/i", $image))) {
+                return redirect("/events/" . $eventId . "/edit");
+            }
+
             Event::where('id', $eventId)
                 ->update([
                     'title' => $request->input('title'),
                     'length' => $request->input('length'),
-                    'description' => $request->input('description')
+                    'image' => $image ?? "",
+                    'description' => $request->input('description') ?? ""
                 ]);
 
             $dates = json_decode($request->input('dates'));

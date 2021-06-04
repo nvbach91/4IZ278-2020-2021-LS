@@ -20,6 +20,7 @@ class CreateEventsTable extends Migration
             $table->string("title");
             $table->bigInteger("length")->unsigned();
             $table->string("description");
+            $table->string("image");
             $table->timestamps();
         });
     }

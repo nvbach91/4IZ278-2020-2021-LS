@@ -20,10 +20,38 @@
         forms[0].addEventListener('submit', handleForm)
         forms[1].addEventListener('submit', handleForm)
 
+        function validURL(url) {
+            const pattern = new RegExp('^(https?:\\/\\/)?'+
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+
+                '((\\d{1,3}\\.){3}\\d{1,3}))'+
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+                '(\\#[-a-z\\d_]*)?$','i');
+            return pattern.test(url);
+        }
+
+        function isImage(url) {
+           const pattern = new RegExp('.*\.(jpg|png|svg|bmp)$', 'i');
+           return pattern.test(url);
+        }
+
         function submitForm() {
             if (dates.length === 0) {
                 alert("Please add event dates");
                 return;
+            }
+
+            const image = document.getElementById("tbx_image").value;
+
+            if (image.length !== 0) {
+                if (!validURL(image)) {
+                    alert("Please provide a valid url for the image");
+                    return;
+                }
+
+                if (!isImage(image)) {
+                    alert("The provided url for the image is of an unsupported format. JPG, PNG, BMP, SVG are accepted.");
+                    return;
+                }
             }
 
             $.ajax({
@@ -35,6 +63,7 @@
                     "title": document.getElementById("tbx_eventName").value,
                     "length": document.getElementById("tbx_length").value,
                     "description": document.getElementById("tbx_eventDescription").value,
+                    "image": image,
                     "dates": JSON.stringify(dates, null, 2)
                 },
                 success: window.location.replace("/")
@@ -143,6 +172,21 @@
         <div class="row">
             <div class="col-2">
                 <div class="row">
+                    <div class="card w-100 mr-3">
+                        <div class="card-header">
+                            <h3>
+                                Image
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="tbx_image">URL</label>
+                                <input type="text" id="tbx_image" form="frm_saveForm" class="mt-2 w-100"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
                     <div class="card w-100 mr-3">
                         <div class="card-header">
                             <h3>
