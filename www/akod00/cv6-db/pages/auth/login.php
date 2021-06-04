@@ -1,7 +1,7 @@
 <?php
   require '../../utils/utils.php';
 
-  $pageTitle = "Login";
+  $title = "Login";
   $invalidInputs = [];
   $alertMessages = [];
   $alertType = 'alert-danger';
@@ -108,7 +108,7 @@
     </form>
 </div>
 <p class="mt-2 pl-0">
-    <a href="/~akod00/cv04/pages/auth/registration.php">
+    <a href="/~akod00/cv06/pages/auth/registration.php">
         New member? Sign up
     </a>
 </p>

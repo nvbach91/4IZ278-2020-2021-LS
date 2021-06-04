@@ -1,6 +1,6 @@
 <?php
   require "../../utils/utils.php";
-  $pageTitle = "Register";
+  $title = "Register";
   $invalidInputs = [];
   $alertMessages = [];
   $alertType = 'alert-danger';
