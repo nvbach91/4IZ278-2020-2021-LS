@@ -18,7 +18,7 @@ class CreateSongsTable extends Migration
             $table->string('name')->unique;
             $table->longText('lyrics_w_chords');
             $table->string('artist');
-            $table->enum('difficulty', array('beginner', 'easy', 'medium', 'hard'));
+            $table->enum('difficulty', array('beginner', 'easy', 'medium', 'hard'))->nullable();
             // $table->unsignedBigInteger('created_by');
             $table->foreignId('created_by')->references('id')->on('users')->onDelete('cascade');
             // $table->unsignedBigInteger('style');

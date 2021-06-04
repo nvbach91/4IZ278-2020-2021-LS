@@ -104,6 +104,46 @@ Route::get('/songs/{song_id}/removeFromSaved', function ($song_id) {
     return redirect('/songs/' . $song_id);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Download PDF
+--------------------------------------------------------------------------
+|
+| 
+|
+*/
+Route::get('/songs/{song_id}/downloadPDF', function ($song_id) {
+    // $pageItems = new PageItems();
+    // $urlPrefix = $pageItems->getUrlPrefix();
+
+    $songsController        = new SongsController;
+    $song                   = $songsController->show($song_id);
+
+    $mpdf = new \Mpdf\Mpdf();
+
+    $mpdf->Bookmark('Start of the document');
+
+    $head = " 
+        <head>
+            <style>
+                h1 {
+                    font-family: verdana;
+                }
+
+                pre {
+                    font-family: consolas;
+                    font-size: 13px;
+                }
+            </style>
+        </head>
+    ";
+    $mpdf->WriteHTML($head);
+    $mpdf->WriteHTML("<h1>$song->artist – $song->name</h1>");
+    $mpdf->WriteHTML("<pre>$song->lyrics_w_chords</pre>");
+
+    $mpdf->Output();
+});
+
 // Route::resource('users', 'App\Http\Controllers\UsersController');
 
 /*

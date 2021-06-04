@@ -2,6 +2,7 @@
 <h1>{{ $song->artist }} – {{ $song->name }}</h1>
 @if (!$pageItems['anonymous'])
     <div class="miniNavBar">
+        <a class="active item" target="_blank" href="<?= $song->id ?>/downloadPDF">Download PDF</a>
         @if ($addedToSaved)
             <a class="active item" href="<?= $song->id ?>/removeFromSaved">Remove from my collection</a> 
 @else
