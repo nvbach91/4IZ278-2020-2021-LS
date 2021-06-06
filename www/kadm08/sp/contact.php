@@ -1,4 +1,5 @@
 <?php
+session_start();
 $errorMessages = [];
 
 function sendMail($name, $email, $message)

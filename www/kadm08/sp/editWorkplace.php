@@ -2,7 +2,7 @@
 session_start();
 
 require __DIR__ . '/db.php';
-require __DIR__ . '/user_required.php';
+require __DIR__ . '/adminRequired.php';
 
 $success = false;
 
@@ -19,8 +19,8 @@ if (!empty($_POST) and empty($errors)) {
                             WHERE ws_id = :ws_id;");
     $statement->execute([
         'ws_id' => $_GET['ws_id'],
-        'name' => $_POST['name'],
-        'price' => $_POST['price']
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => htmlspecialchars($_POST['price'])
     ]);
 
     $success = true;

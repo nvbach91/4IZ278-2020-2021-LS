@@ -13,7 +13,7 @@ o create Registration page
     o check if email already exists
 o My account page 
     o Ico has zero
-    o take user_id from session not from url
+    x take user_id from session not from url
 x create Login page
     x login form
     x submitting login logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
@@ -23,22 +23,24 @@ o create My reservations page
     x create Add reservation button -> takes you to New reservation page
     x craete Active reservations table
     x create Previous reservations table 
-    o remove ID and client collumns, name instead of id for workplace
-    o make reservation_start, end, into date 
-    o add: "contact us to make changes in your reservation"
+    x remove ID and client collumns, name instead of id for workplace
+    x make reservation_start, end, into date 
+    x add: "contact us to make changes in your reservation"
 o create New reservation - client page
     x craete new reservation form with dates and Submit button 
-    o make it work for logged in client
+    x make it work for logged in client
 o create Reservations page
     x fix reservation created to show current datetime
-    o name instead of client_id in table
-    o remove Paid button after reservation is paid
-    o craete Remove reservation instead of Edit
+    x name instead of client_id in table
+    x remove Paid button after reservation is paid
+    x craete Remove reservation instead of Edit
 o create New reservation - admin page
     x name instead of client_id in dropdown
+    x reservation cannot have empty dates
+    x start cannot be before end 
 o create Workplaces page
     x change delete condition on foreign key
-    o error handling (try catch)
+    x error handling (try catch)
     o inplement concurency check for workplace editing
 
 o create About us page
@@ -46,7 +48,7 @@ o create About us page
 o create Contact us page
     o test sending emial on eso server
 o craete login with Facebook
-o https://stackoverflow.com/questions/1996122/how-to-prevent-xss-with-html-php/1996141#1996141
+x https://stackoverflow.com/questions/1996122/how-to-prevent-xss-with-html-php/1996141#1996141
 
 Nice to have:
 x change Edit button to be link

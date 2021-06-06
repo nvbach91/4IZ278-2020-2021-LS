@@ -6,9 +6,9 @@ require __DIR__ . '/db.php';
 $errorMessages = [];
 
 if (!empty($_POST)) {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $confirmPassword = $_POST['password_confirm'];
+  $email =  htmlspecialchars($_POST['email']);
+  $password =  htmlspecialchars($_POST['password']);
+  $confirmPassword =  htmlspecialchars($_POST['password_confirm']);
 
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     array_push($errorMessages,  'Please enter valid email address');
@@ -21,45 +21,59 @@ if (!empty($_POST)) {
   }
 
   if (empty($errorMessages)) {
-    $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+    try {
+      $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $register = $pdo->prepare("
+      $register = $pdo->prepare("
             INSERT INTO user (email, password)
             VALUES ( :email, :password);
             ");
-    $register->execute([
-      "email" => $email,
-      "password" => $hashPassword
-    ]);
-
-    
-    $login = $pdo->prepare(
-      "
+      $register->execute([
+        "email" => $email,
+        "password" => $hashPassword
+      ]);
+    } catch (PDOException $e) {
+      if ($e->errorInfo[1] == 1062) {
+        array_push($errorMessages,   'This email is already registered. Try logging in.');
+      }
+    }
+    if (empty($errorMessages)) {
+      $login = $pdo->prepare(
+        "
             SELECT * FROM user WHERE email = :email"
-    );
-    $login->execute([
-      'email' => $email
-    ]);
-    $user = $login->fetchAll()[0];
+      );
+      $login->execute([
+        'email' => $email
+      ]);
+      $user = $login->fetchAll()[0];
 
-    if (password_verify($password, $user['password'])) {
-      $_SESSION['email'] = $user['email'];
-      $_SESSION['user_id'] = $user['user_id'];
-      $_SESSION['type'] = $user['type'];
+      if (password_verify($password, $user['password'])) {
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['type'] = $user['type'];
 
-      $create_client = $pdo->prepare("
+        $create_client = $pdo->prepare("
       INSERT INTO client (registration_date, user_id)
       VALUES ( :registration_date, :user_id);
       ");
-      $create_client->execute([
-        "registration_date" => $_SERVER['REQUEST_TIME'] ,
-        "user_id" => $user['user_id']
-      ]);
+        $create_client->execute([
+          "registration_date" => $_SERVER['REQUEST_TIME'],
+          "user_id" => $user['user_id']
+        ]);
 
-      header('Location: myAccount.php?user_id=' . $_SESSION['user_id']);
+        $get_client = $pdo->prepare(
+          "
+              SELECT * FROM client WHERE user_id = :user_id"
+        );
+        $get_client->execute([
+          'user_id' => $user['user_id']
+        ]);
+        $client = $get_client->fetchAll()[0];
+        $_SESSION['client_id'] = $client['client_id'];
+
+        header('Location: myAccount.php');
+      }
     }
-
-
   }
 }
 

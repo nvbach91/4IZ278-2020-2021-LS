@@ -3,7 +3,7 @@ session_start();
 
 
 require __DIR__ . '/db.php';
-require __DIR__ . '/user_required.php';
+require __DIR__ . '/adminRequired.php';
 
 $success = false;
 
@@ -15,19 +15,19 @@ if (!empty($_POST)) {
 if (!empty($_POST) and empty($errors)) {
     $statement = $pdo->prepare("
                          INSERT INTO workplace (name, price_per_day, active) 
-                         VALUES (?, ?, ?)                                           
+                         VALUES (:name, :price, :active)                                           
                          ");
     $active = false;
     if (isset($_POST['active'])) {
-        $active = true;}
-        else {
-            $active = false;  
-        }
+        $active = true;
+    } else {
+        $active = false;
+    }
 
     $statement->execute([
-        $_POST['name'],
-        $_POST['price'],
-        $active,
+        "name" => htmlspecialchars($_POST['name']),
+        "price" => htmlspecialchars($_POST['price']),
+        "active" => $active,
     ]);
     $success = true;
 }
@@ -50,11 +50,11 @@ if (!empty($_POST) and empty($errors)) {
     <form method="POST">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="name" name="name" class="form-control" id="name" placeholder="">
+            <input type="text" name="name" class="form-control" id="name" placeholder="">
         </div>
         <div class="form-group">
             <label for="price">Price per day</label>
-            <input type="price" name="price" class="form-control" id="price" placeholder="">
+            <input type="text" name="price" class="form-control" id="price" placeholder="">
         </div>
         <div class="form-check">
             <input type="checkbox" name="active" class="form-check-input" id="active">

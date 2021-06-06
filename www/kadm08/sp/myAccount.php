@@ -2,17 +2,17 @@
 
 session_start();
 require __DIR__ . '/db.php';
-require __DIR__ . '/user_required.php';
+require __DIR__ . '/userRequired.php';
 
 $success = false;
 
 $errorMessages = [];
 
 if (isset($_POST['user_info'])) {
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $phone = $_POST['phone'];
-    $ico = $_POST['ico'];
+    $name = htmlspecialchars($_POST['name']);
+    $surname = htmlspecialchars($_POST['surname']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $ico = htmlspecialchars($_POST['ico']);
 
 
     if (empty($errorMessages)) {
@@ -25,7 +25,7 @@ if (isset($_POST['user_info'])) {
       WHERE user_id = :user_id;
     ");
         $statement->execute([
-            "user_id" => $_GET['user_id'],
+            "user_id" => $_SESSION['user_id'],
             "name" => $name,
             "surname" => $surname,
             "phone" => $phone,
@@ -53,7 +53,7 @@ if (isset($_POST['user_info'])) {
       WHERE user_id = :user_id;
     ");
         $statement->execute([
-            "user_id" => $_GET['user_id'],
+            "user_id" => $_SESSION['user_id'],
             "email" => $email,
         ]);
 
@@ -75,11 +75,11 @@ if (isset($_POST['user_info'])) {
         if (empty($errorMessages)) {
             $statement = $pdo->prepare("
       UPDATE user SET
-      password = :npassword
+      password = :password
       WHERE user_id = :user_id;
     ");
             $statement->execute([
-                "user_id" => $_GET['user_id'],
+                "user_id" => $_SESSION['user_id'],
                 "password" => $hashPassword
             ]);
 
@@ -90,7 +90,7 @@ if (isset($_POST['user_info'])) {
 
 $user = $pdo->prepare("SELECT * FROM user WHERE user_id = :user_id;");
 $user->execute([
-    'user_id' => $_GET['user_id']
+    'user_id' => $_SESSION['user_id']
 ]);
 
 $user = $user->fetchAll()[0];
@@ -98,7 +98,7 @@ $user = $user->fetchAll()[0];
 
 $client = $pdo->prepare("SELECT * FROM client WHERE user_id = :user_id;");
 $client->execute([
-    'user_id' => $_GET['user_id']
+    'user_id' => $_SESSION['user_id']
 ]);
 
 $client = $client->fetchAll()[0];

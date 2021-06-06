@@ -7,16 +7,10 @@ require __DIR__ . '/adminRequired.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $success = false;
-    try {
-        $statement = $pdo->prepare("DELETE FROM workplace WHERE ws_id = :ws_id;");
-        $statement->execute(['ws_id' => $_POST['ws_id']]);
+        $statement = $pdo->prepare("DELETE FROM wp_reservation WHERE reservation_id = :reservation_id;");
+        $statement->execute(['reservation_id' => $_GET['reservation_id']]);
         $success = true;
-    } catch (PDOException $e) {
-        if ($e->errorInfo[1] == 1451) {
-            $errorMessage = 'Cannot remove this worplace. There are active reservations for it.';
-        }
-    }
-}
+ }
 
 ?>
 
@@ -31,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <div>
         <br>
-        <a href="workplaces.php" class="btn btn-primary">Go back to workplaces</a>
+        <a href="reservations.php" class="btn btn-primary">Go back to reservations</a>
     </div>
 </main>
 <?php require __DIR__ . '/includes/footer.php'; ?>

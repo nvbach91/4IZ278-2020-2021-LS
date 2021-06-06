@@ -20,6 +20,9 @@
                             <a class="nav-link" href="myReservations.php?user_id=<?php echo $_SESSION['user_id'] ?>">My reservations</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="contact.php">Contact us</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="logout.php">Logout</a>
                         </li>
                         <?php elseif (isset($_SESSION['email']) && isset($_SESSION['type']) && $_SESSION['type'] == 1) : ?>
