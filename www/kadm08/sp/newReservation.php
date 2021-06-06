@@ -37,27 +37,25 @@ if (!empty($_POST)) {
         'reservation_end' => $_POST['end']
     ]);
     $available_workplace = $stmt->fetchAll()[0];
-}
 
+    if (empty($available_workplace)) {
+        array_push($errorMessages,   'There are no available workspaces in the selected time period.');
+    }
 
-if (empty($available_workplace)) {
-    array_push($errorMessages,   'There are no available workspaces in the selected time period.');
-}
+    if (!empty($available_workplace) and !empty($_POST) and empty($errors)) {
+        $stmt = $pdo->prepare("
+                             INSERT INTO wp_reservation (reservation_created, reservation_start, reservation_end, client_id, ws_id) 
+                             VALUES (NOW(), ?, ?, ?, ?)                                           
+                             ");
 
-if (!empty($available_workplace) and !empty($_POST) and empty($errors)) {
-    $stmt = $pdo->prepare("
-                         INSERT INTO wp_reservation (reservation_created, reservation_start, reservation_end, client_id, ws_id) 
-                         VALUES (?, ?, ?, ?, ?)                                           
-                         ");
-
-    $stmt->execute([
-        $_SERVER['REQUEST_TIME'],
-        $_POST['start'],
-        $_POST['end'],
-        $_POST['client'],
-        $available_workplace['ws_id']
-    ]);
-    $success = true;
+        $stmt->execute([
+            $_POST['start'],
+            $_POST['end'],
+            $_POST['client'],
+            $available_workplace['ws_id']
+        ]);
+        $success = true;
+    }
 }
 ?>
 
@@ -82,27 +80,27 @@ if (!empty($available_workplace) and !empty($_POST) and empty($errors)) {
                 <select name="client" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                     <?php
                     foreach ($available_clients as $client) { ?>
-                        <option><?= $client['client_id'] ?></option>
+                        <option value="<?= $client['client_id'] ?>"><?= $client['name'] ?></option>
                     <?php
                     } ?>
                 </select>
         </div>
         <div class="form-group">
             <label for="start">When would you like your reservation to start?</label>
-            <input type="start" name="start" class="form-control" id="start" placeholder="2020-01-01">
+            <input type="date" name="start" class="form-control" id="start" placeholder="2020-01-01">
         </div>
         <div class="form-group">
             <label for="end">When would you like your reservation to end?</label>
-            <input type="end" name="end" class="form-control" id="end" placeholder="2020-01-01">
+            <input type="date" name="end" class="form-control" id="end" placeholder="2020-01-01">
         </div>
     <?php elseif (isset($_SESSION['type']) && $_SESSION['type'] == 0) : ?>
         <div class="form-group">
             <label for="start">When would you like your reservation to start?</label>
-            <input type="start" name="start" class="form-control" id="start" placeholder="2020-01-01">
+            <input type="date" name="start" class="form-control" id="start" placeholder="2020-01-01">
         </div>
         <div class="form-group">
             <label for="end">When would you like your reservation to end?</label>
-            <input type="end" name="end" class="form-control" id="end" placeholder="2020-01-01">
+            <input type="date" name="end" class="form-control" id="end" placeholder="2020-01-01">
         </div>
     <?php endif; ?>
     <div class="btn-wrapper text-center justify-content-between">
