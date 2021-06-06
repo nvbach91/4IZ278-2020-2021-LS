@@ -12,12 +12,28 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                     <?php if (isset($_SESSION['email'])) : ?>
+                     <?php if (isset($_SESSION['email']) && isset($_SESSION['type']) && $_SESSION['type'] == 0) : ?>
                         <li class="nav-item">
-                        <li><a class="nav-link" href="myAccount.php">My account</a>
+                        <li><a class="nav-link" href="myAccount.php?user_id=<?php echo $_SESSION['user_id'] ?>">My account</a>
                         </li>
                         <li class="nav-item">   
-                            <a class="nav-link" href="logout.php">My reservations</a>
+                            <a class="nav-link" href="myReservations.php?user_id=<?php echo $_SESSION['user_id'] ?>">My reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php">Logout</a>
+                        </li>
+                        <?php elseif (isset($_SESSION['email']) && isset($_SESSION['type']) && $_SESSION['type'] == 1) : ?>
+                        <li class="nav-item">
+                        <li><a class="nav-link" href="myAccount.php?user_id=<?php echo $_SESSION['user_id'] ?>">My account</a>                       
+                        </li>
+                        <li class="nav-item">   
+                            <a class="nav-link" href="reservations.php">Reservations</a>
+                        </li>
+                        <li class="nav-item">   
+                            <a class="nav-link" href="workplaces.php">Workplaces</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php">Logout</a>
                         </li>
                     <?php else : ?>
                         <li class="nav-item">

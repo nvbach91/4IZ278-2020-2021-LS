@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     if(empty($errorMessages)){
         $login = $pdo->prepare("
-            SELECT * FROM users WHERE email = :email"
+            SELECT * FROM user WHERE email = :email"
          );
             $login->execute([
             'email' => $email
@@ -29,6 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if (password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['type'] = $user['type'];
             $_SESSION['user_id'] = $user['user_id'];
             header('Location: index.php');   }
         else {

@@ -1,18 +1,20 @@
 o create database Coworking
 o create class structure
 o create home page
-    o navbar with Pricing, About us, Contact us, Login
-    o slideshow
-    o login and sign up buttons
+    x navbar with Pricing, About us, Contact us, Login
+    x slideshow
+    x login and sign up buttons
+    x create Sign up and Login buttons
 o create Registration page
-    o craete table Users
-    o registration form
-    o submitting registration logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
-    o after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout
+    x craete table Users
+    x registration form
+    x submitting registration logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
+    x after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout
 o create Login page
-    o login form
-    o submitting login logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
-    o after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout
+    x login form
+    x submitting login logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
+    x after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout
+    x after login no buttons on homepage
 o create My reservations page
     o create Add reservation button -> takes you to New reservation page
     o craete Active reservations table with edit and delete buttons 
@@ -24,3 +26,4 @@ o create New reservation - admin page
 o create Workplaces page
 o create About us page
 o create Contact us page
+o make one file with: session_start() -> will be required as a first thing on every page 
