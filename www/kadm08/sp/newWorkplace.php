@@ -4,19 +4,18 @@ session_start();
 
 require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
+require_once __DIR__ . '/lib/WorkplaceDB.php';
+
 
 $success = false;
 
-$errors = [];
+$errormessages = [];
 if (!empty($_POST)) {
-    if (!is_numeric($_POST['price'])) array_push($errors, "Price must be a number");
+    if (!is_numeric($_POST['price'])) array_push($errormessages, "Price must be a number");
 }
 
-if (!empty($_POST) and empty($errors)) {
-    $statement = $pdo->prepare("
-                         INSERT INTO workplace (name, price_per_day, active) 
-                         VALUES (:name, :price, :active)                                           
-                         ");
+if (!empty($_POST) and empty($errormessages)) {
+
     $active = false;
     if (isset($_POST['active'])) {
         $active = true;
@@ -24,12 +23,15 @@ if (!empty($_POST) and empty($errors)) {
         $active = false;
     }
 
-    $statement->execute([
-        "name" => htmlspecialchars($_POST['name']),
-        "price" => htmlspecialchars($_POST['price']),
-        "active" => $active,
-    ]);
-    $success = true;
+    try {
+        $workplaceDB = new WorkplaceDB();
+        $workplace = $workplaceDB->createItem(htmlspecialchars($_POST['name']), htmlspecialchars($_POST['price']), $active);
+        $success = true;
+    } catch (PDOException $e) {
+        if ($e->errorInfo[1] == 1062) {
+            array_push($errormessages,   'This name is already taken. Try a different one.');
+        }
+    }
 }
 ?>
 
@@ -39,7 +41,7 @@ if (!empty($_POST) and empty($errors)) {
     <br /><br /><br /><br />
     <h1>Add new item</h1>
     <ul>
-        <?php foreach ($errors as $message) : ?>
+        <?php foreach ($errormessages as $message) : ?>
             <div class="error"><?php echo  $message; ?></div>
         <?php endforeach; ?>
         <?php if ($success) : ?>
@@ -63,6 +65,7 @@ if (!empty($_POST) and empty($errors)) {
         <div class="btn-wrapper text-center justify-content-between">
             <button type="submit" class="btn btn-primary">Add</button>
             <a href="workplaces.php" class="btn btn-primary">Go to workplaces</a>
+        </div>
     </form>
     <div style="margin-bottom: 600px"></div>
 </main>

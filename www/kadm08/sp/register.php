@@ -80,44 +80,47 @@ if (!empty($_POST)) {
 ?>
 
 <?php require __DIR__ . '/includes/header.php'; ?>
-
+<br></br>
 <main class="container">
-  <br></br> <br></br>
-  <h2>Registration</h2>
-  <?php foreach ($errorMessages as $message) : ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-  <?php endforeach; ?>
-  <form action="register.php" method="POST">
-    <fieldset>
-      <div class="control-group">
-        <label class="control-label" for="email">Email</label>
-        <div class="controls">
-          <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="password">Password</label>
-        <div class="controls">
-          <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-          <p class="form-text text-muted">Password should be at least 5 characters</p>
-        </div>
-      </div>
+<div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign up</h5>
+           <?php foreach ($errorMessages as $message) : ?>
+            <p style="color:red;"><?php echo $message; ?></p>
+          <?php endforeach; ?>
+          <form action="register.php" method="POST">
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                  <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                  <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                  <p class="form-text text-muted">Password should be at least 5 characters</p>
+                </div>
+              </div>
 
-      <div class="control-group">
-        <label class="control-label" for="password_confirm">Password (confirm)</label>
-        <div class="controls">
-          <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-          <p class="form-text text-muted">Please confirm password</p>
-        </div>
-      </div>
+              <div class="control-group">
+                <label class="control-label" for="password_confirm">Password (confirm)</label>
+                <div class="controls">
+                  <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                  <p class="form-text text-muted">Please confirm password</p>
+                </div>
+              </div>
 
-      <div class="control-group">
-        <div class="controls">
-          <button class="btn btn-light px-5  shadow-sm">Register</button>
-        </div>
-      </div>
-    </fieldset>
-  </form>
+              <div class="control-group">
+                <div class="controls">
+                  <button class="btn btn-light px-5  shadow-sm">Register</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
 </main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

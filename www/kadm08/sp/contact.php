@@ -42,6 +42,7 @@ if (!empty($_POST)) {
 <div class="container contact-form">
             <form method="post">
                 <h3>Drop Us a Message</h3>
+                <br><br>
                 <?php foreach ($errorMessages as $message) : ?>
                     <p style="color:red;"><?php echo $message; ?></p>
                     <?php endforeach; ?>

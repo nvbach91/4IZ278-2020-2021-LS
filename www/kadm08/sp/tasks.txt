@@ -10,9 +10,9 @@ o create Registration page
     x registration form
     x submitting registration logs you in and takes you to: client - My reservations, admin - Reservations (use session to store everything)
     x after login new navbar: client - Profile, My reservations, Logout, admin - Reservations, Workplace, Logout
-    o check if email already exists
+    x check if email already exists
 o My account page 
-    o Ico has zero
+    x Ico has zero
     x take user_id from session not from url
 x create Login page
     x login form
@@ -46,7 +46,7 @@ o create Workplaces page
 o create About us page
     o add texts
 o create Contact us page
-    o test sending emial on eso server
+    x test sending emial on eso server
 o craete login with Facebook
 x https://stackoverflow.com/questions/1996122/how-to-prevent-xss-with-html-php/1996141#1996141
 

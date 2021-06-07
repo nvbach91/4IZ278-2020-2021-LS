@@ -7,6 +7,14 @@ class SlidesDB extends Database
     protected $tableName = 'slides';
 
 
+    public function fetchAllItems()
+    {
+        $sql = "SELECT * FROM slides";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public function create($item)
     {
         $sql = 'INSERT INTO ' . $this->tableName . '(img, title) VALUES (:img, :title)';

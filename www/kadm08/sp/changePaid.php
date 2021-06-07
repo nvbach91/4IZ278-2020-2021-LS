@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $statement = $pdo->prepare("UPDATE wp_reservation SET reservation_paid = 1
                             WHERE reservation_id = :reservation_id;");
         $statement->execute(['reservation_id' => $_GET['reservation_id']]);
+    }else {
+        $statement = $pdo->prepare("UPDATE wp_reservation SET reservation_paid = 0
+                                WHERE reservation_id = :reservation_id;");
+        $statement->execute(['reservation_id' => $_GET['reservation_id']]);
     }
 
     header('Location: reservations.php');

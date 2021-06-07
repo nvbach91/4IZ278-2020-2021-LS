@@ -4,15 +4,11 @@ session_start();
 
 require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
+require_once __DIR__ . '/lib/ReservationDB.php';
 
 
-$stmt = $pdo->prepare(<<<EOT
-SELECT * FROM wp_reservation wp 
-JOIN client c ON wp.client_id = c.client_id  
-ORDER BY reservation_id ASC;
-EOT);
-$stmt->execute();
-$reservations = $stmt->fetchAll();
+$reservationDB = new ReservationDB();
+$reservations = $reservationDB->fetchAllItems();
 
 ?>
 
@@ -23,7 +19,7 @@ $reservations = $stmt->fetchAll();
     <br>
     <a class="btn btn-primary" href="newReservation.php">Add new reservation</a>
     <br><br>
-    <?php if (@$reservations) : ?>
+    <?php if (!empty($reservations)) : ?>
     <table class="tbl-cart" cellpadding="10" cellspacing="1" style="border-collapse: separate">
         <tbody>
         <tr class="table-active">

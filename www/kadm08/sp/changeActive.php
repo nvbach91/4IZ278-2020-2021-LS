@@ -2,7 +2,7 @@
 session_start();
 
 require __DIR__ . '/db.php';
-require __DIR__ . '/lib/adminRequired.php';
+require __DIR__ . '/adminRequired.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $workplace = $pdo->prepare("SELECT * FROM workplace WHERE ws_id = :ws_id;");

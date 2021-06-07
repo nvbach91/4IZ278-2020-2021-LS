@@ -34,7 +34,7 @@
                         <i class="fas fa-gem me-3"></i> Coworking Smetana
                     </h6>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        <a href="privacyPolicy.php" class="link-info">Privacy policy</a>
                     </p>
                 </div>
 
