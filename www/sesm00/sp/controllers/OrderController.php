@@ -97,7 +97,7 @@ class OrderController extends BaseController
 
                         foreach (OrderProduct::getProductsByOrderId($order->getId()) as $product) {
                             $baseProduct = $product->getBaseProduct();
-                            $mailContent .= "&nbsp;&nbsp;" . htmlspecialchars($baseProduct->name) . "&nbsp;&nbsp;&nbsp;" . $product->quantity . "x&nbsp;&nbsp;&nbsp;" .
+                            $mailContent .= "  " . htmlspecialchars($baseProduct->name) . "   " . $product->quantity . "x   " .
                                 formatPrice($product->unit_price * $product->quantity) . " " . CURRENCY . "\n";
                         }
 

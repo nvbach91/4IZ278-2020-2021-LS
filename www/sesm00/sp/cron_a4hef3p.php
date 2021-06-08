@@ -29,7 +29,7 @@ $rows = Database::getInstance()->selectQ(
     "LEFT JOIN " . ORDER_PRODUCT_TABLE . " ON order_products_id = " . ORDER_PRODUCT_TABLE . ".id " .
     "LEFT JOIN " . ORDER_TABLE . " ON orders_id = " . ORDER_TABLE . ".id " .
     "LEFT JOIN " . USERS_TABLE . " ON users_id = " . USERS_TABLE . ".id " .
-    "WHERE registration_plate < 2021-06-21",
+    "WHERE registration_plate < :date",
     array('date' => $date));
 
 foreach ($rows as $row) {
