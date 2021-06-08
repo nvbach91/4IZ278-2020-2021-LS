@@ -69,7 +69,7 @@ $user = $userDB->fetchUser($_SESSION['user_id']);
             <p style="color:red;"><?php echo $message; ?></p>
         <?php endforeach; ?>
         <?php if ($success) : ?>
-            <div class="success">You have successfully edited your data.</div>
+            <div class="success" style="color:green">You have successfully edited your data.</div>
         <?php endif; ?>
     </ul>
     <form method="POST">

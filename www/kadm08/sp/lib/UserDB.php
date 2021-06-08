@@ -52,11 +52,14 @@ class UserDB extends Database
         ]);
     }
 
-    public function createClient($user_id)
+    public function createClient($user_id, $name, $surname, $phone)
     {
-        $sql = "INSERT INTO client (registration_date, user_id) VALUES ( NOW(), :user_id)";
+        $sql = "INSERT INTO client (name, surname, phone, registration_date, user_id) VALUES ( :name, :surname, :phone, NOW(), :user_id)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['user_id' => $user_id]);
+        $stmt->execute(['user_id' => $user_id,
+        'name' => $name,
+        'surname' => $surname,
+        'phone' => $phone]);
     }
 
     public function updateClient($user_id, $name, $surname, $phone)

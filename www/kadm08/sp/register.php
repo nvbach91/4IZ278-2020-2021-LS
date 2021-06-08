@@ -40,7 +40,7 @@ if (!empty($_POST)) {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['type'] = $user['type'];
 
-        $create_client = $userDB->createClient($user['user_id']);
+        $create_client = $userDB->createClient($user['user_id'], null, null, null);
         $client = $userDB->fetchUser($user['user_id']);
         $_SESSION['client_id'] = $client['client_id'];
 

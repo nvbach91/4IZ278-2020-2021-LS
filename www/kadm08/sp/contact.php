@@ -40,7 +40,7 @@ if (!empty($_POST)) {
 
 <br><br>
 <div class="container contact-form">
-            <form method="post">
+            <form method="POST">
                 <h3>Drop Us a Message</h3>
                 <?php foreach ($errorMessages as $message) : ?>
                     <p style="color:red;"><?php echo $message; ?></p>
@@ -62,7 +62,7 @@ if (!empty($_POST)) {
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea name="txtMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;"></textarea>
+                            <textarea id="message" name="message" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;"></textarea>
                         </div>
                     </div>
                 </div>
