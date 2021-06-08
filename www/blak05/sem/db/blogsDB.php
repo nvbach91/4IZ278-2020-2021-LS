@@ -13,23 +13,28 @@ class BlogsDB extends Database
     }
     public function create($args)
     {
-        // another function 
+        $sql = "INSERT INTO " . $this->tableName . " (ID_User,date, title, text, thumbnail, description, category) VALUES (1,?,?,?,?,?,?)";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($args); 
     }
     public function fetch($args)
     {
         $sql = 'SELECT b.*, u.name FROM ' . $this->tableName . ' b, Users u WHERE b.ID_Blog ='. $args . ' AND b.ID_User=u.ID_User';
-        // SELECT w.*, u.Forename, u.Surname FROM Wall w, Users u WHERE w.UserID=u.UserID
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
         return $statement->fetch();
     }
     public function update($args)
     {
-        // another function  
+       $sql = "UPDATE " . $this->tableName . " SET date=?, title=?, text=?, thumbnail=?, description=?, category=? WHERE ID_Blog=?";
+       $statement= $this->pdo->prepare($sql);
+       $statement->execute($args);
     }
     public function delete($args)
     {
-        // another function 
+        $sql = "DELETE FROM " . $this->tableName . " WHERE ID_Blog = $args[0]";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(); 
     }
 }
 

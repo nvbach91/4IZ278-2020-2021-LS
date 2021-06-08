@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $_SESSION["location"] = "index";
+?>
 <?php require __DIR__ . '/incl/header.php'; ?>
 <?php require __DIR__ . '/incl/navbar.php'; ?>
 <main>

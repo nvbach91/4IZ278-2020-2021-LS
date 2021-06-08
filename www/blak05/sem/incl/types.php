@@ -2,32 +2,28 @@
       <p class="text-secondary">vybírat dle</p> <h2>Druhů Piva</h2>
       <div class="row justify-content-center">
       <div class="col-lg-3">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
+        <img class="bd-placeholder-img rounded-circle" style="border: 2px solid black;" width="140" height="140" src="./img/craft.png">
         <h2>Ležáky</h2>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-        <p><a class="btn bg-dark text-warning" href="#">Prozkoumat &raquo;</a></p>
+        <p>Klasika klasik. Jste přepití obyčejným lahváčem? Rádi zkoušíte nové chutě? Dejte si ležák!</p>
+        <p><a class="btn bg-dark text-warning" href="beers.php?id_category=2">Dám si ležák &raquo;</a></p>
       </div>
       <div class="col-lg-3">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2>ALE</h2>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-        <p><a class="btn bg-dark text-warning" href="#">Prozkoumat &raquo;</a></p>
+        <img class="bd-placeholder-img rounded-circle" style="border: 2px solid black;" width="140" height="140" src="./img/craft.png"> 
+        <h2>APA</h2>
+        <p>American Pale Ale je svrchně kvašené pivo, vyrobeného z amerického chmele. Ideální pro objevování nových chutí!</p>
+        <p><a class="btn bg-dark text-warning" href="beers.php?id_category=3">Vybrat APu &raquo;</a></p>
       </div><!-- /.col-lg-3 -->
       <div class="col-lg-3">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2>Stouty</h2>
-        <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-        <p><a class="btn bg-dark text-warning" href="#">Prozkoumat &raquo;</a></p>
+        <img class="bd-placeholder-img rounded-circle" style="border: 2px solid black;" width="140" height="140" src="./img/craft.png">
+        <h2>Stout</h2>
+        <p>Máte rádi hustá černá piva Irského typu? Ta to zvolte Stout! Silná chuť i aroma zaručeno.</p>
+        <p><a class="btn bg-dark text-warning" href="beers.php?id_category=5">Zkusím Stout &raquo;</a></p>
       </div><!-- /.col-lg-3 -->
       <div class="col-lg-3">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2>IPY</h2>
-        <p>And lastly this, the third column of representative placeholder content.</p>
-        <p><a class="btn bg-dark text-warning" href="#">Prozkoumat &raquo;</a></p>
+        <img class="bd-placeholder-img rounded-circle" style="border: 2px solid black;" width="140" height="140" src="./img/craft.png">
+        <h2>IPA</h2>
+        <p>Máte chuť na něco silnějšího? Indian Pale Ale jsou přesně pro Vás! Ovocná chuť, silné aroma a velké procento alkoholu.</p>
+        <p><a class="btn bg-dark text-warning" href="beers.php?id_category=1">Chci IPu &raquo;</a></p>
       </div><!-- /.col-lg-3 -->
     </div><!-- /.row -->
     </div>

@@ -8,18 +8,18 @@
       <div class="col-6 col-md">
         <h5>Kategorie</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Ležáky</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">ALE</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">IPY</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Kyselá piva</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stout</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="beers.php?id_category=2">Ležáky</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="beers.php?id_category=3">APA</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="beers.php?id_category=1">IPA</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="beers.php?id_category=4">Kyselá piva</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="beers.php?id_category=5">Stout</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Web</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Obchod s pivy</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Prodej pomůcek k vaření</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="./beers.php">Obchod s pivy</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="./brew.php">Prodej pomůcek k vaření</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="./blog.php">Blog</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="./onas.php">O Pivotéce</a></li>
         </ul>
