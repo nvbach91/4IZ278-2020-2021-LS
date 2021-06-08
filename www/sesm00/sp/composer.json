@@ -9,5 +9,15 @@
             "email": "sesm00@vse.cz"
         }
     ],
-    "require": {}
+    "require": {
+        "google/apiclient": "^2.7"
+    },
+    "scripts": {
+        "post-update-cmd": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Oauth2"
+        ]
+    }
 }

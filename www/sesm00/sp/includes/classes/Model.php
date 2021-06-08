@@ -4,26 +4,24 @@
 abstract class Model
 {
 
-    public static $objectCache = [];
+    public static $objectCache;
     
     protected $id;
     protected $attrMap;
 
-    private $empty;
+    private $loaded;
 
     public function __construct($id)
     {
         $this->id = $id;
+        $this->loaded = false;
 
-        if ($id > -1) {
-            $this->empty = true;
-            $this->load();
-        } else {
-            $this->empty = false;
-        }
     }
 
     public function create() {
+        if ($this->loaded) {
+            return true;
+        }
         if (gettype($this->attrMap) != "array") {
             return false;
         }
@@ -33,6 +31,10 @@ abstract class Model
         }
         $result = Database::getInstance()->insert($this::TABLE_NAME, $attrs);
         if ($result) {
+            $className = get_called_class();
+            $this->id = Database::getInstance()->getInsertId();
+            $className::$objectCache[$this->id] = $this;
+            $this->loaded = true;
             return true;
         }
         trigger_error("Object " . get_class($this) . " creation failed");
@@ -40,6 +42,9 @@ abstract class Model
     }
 
     public function update() {
+        if (!$this->loaded) {
+            return false;
+        }
         if (gettype($this->attrMap) != "array") {
             return false;
         }
@@ -50,6 +55,8 @@ abstract class Model
 
         $result = Database::getInstance()->update($this::TABLE_NAME, $attrs, array('id' => $this->id));
         if ($result) {
+            $className = get_called_class();
+            $className::$objectCache[$this->id] = $this;
             return true;
         }
         trigger_error("Object " . get_class($this) . " update failed");
@@ -57,23 +64,29 @@ abstract class Model
     }
 
     public function load() {
-        if ($this->empty === true) {
+        if ($this->loaded === false) {
+            $className = get_called_class();
             $results = Database::getInstance()->select($this::TABLE_NAME, array('id' => $this->id));
             if ($results != null && count($results) != 0) {
                 foreach ($results[0] as $key => $value) {
                     $this->$key = $value;
                 }
-                $this->empty = false;
+                $this->loaded = true;
+                $className::$objectCache[$this->id] = $this;
                 return true;
             }
             trigger_error("Object " . get_class($this) . " load failed");
             return false;
         }
+        return true;
     }
 
     public function delete() {
+        $className = get_called_class();
         $result = Database::getInstance()->delete($this::TABLE_NAME, array('id' => $this->id));
-        unset(self::$objectCache[$this->id]);
+        if (isset($className::$objectCache[$this->id])) {
+            unset($className::$objectCache[$this->id]);
+        }
         if ($result) {
             return true;
         }
@@ -85,15 +98,30 @@ abstract class Model
         return $this->id;
     }
 
-    public static function getAll() {
+    public static function getInstance($id) {
         $className = get_called_class();
-        $results = Database::getInstance()->selectQ("SELECT id FROM " . $className::TABLE_NAME);
+        if (isset($className::$objectCache[$id])) {
+            return $className::$objectCache[$id];
+        }
+
+        return new $className($id);
+    }
+
+    public static function getAll($where = array()) {
+        $className = get_called_class();
+        $results = Database::getInstance()->selectQ("SELECT id FROM " . $className::TABLE_NAME, array());
         $objects = array();
         foreach ($results as $result) {
-            $objects[] = new $className($result['id']);
+            $object = $className::getInstance($result['id']);
+            if ($object->load()) {
+                $objects[] = $object;
+            }
         }
+
 
         return $objects;
     }
+
+    public abstract function validate();
 
 }

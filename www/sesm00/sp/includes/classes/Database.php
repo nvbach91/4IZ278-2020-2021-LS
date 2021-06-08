@@ -39,9 +39,9 @@ class Database
         return false;
     }
 
-    public function selectQ($query) {
-        $request = $this->pdo->query($query);
-        if ($request->execute()) {
+    public function selectQ($query, $params) {
+        $request = $this->pdo->prepare($query);
+        if ($request->execute($params)) {
             return $request->fetchAll();
         }
         return false;
@@ -114,6 +114,19 @@ class Database
     public function query($query) {
         $request = $this->pdo->query($query);
         return $request->execute();
+    }
+
+    public function getInsertId() {
+        return $this->pdo->lastInsertId();
+    }
+
+    public function getCore() {
+        return $this->pdo;
+    }
+
+    public function __call($function_name, $arguments)
+    {
+        return $this->pdo->$function_name($arguments);
     }
 
     public static function getInstance() {

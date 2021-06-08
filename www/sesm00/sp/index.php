@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/utils/baseHelper.php';
 require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 function custom_autoloader($className) {
     if(file_exists(__DIR__ . "/controllers/" . $className . ".php")){
@@ -16,9 +17,8 @@ function custom_autoloader($className) {
     return false;
 }
 
-spl_autoload_register("custom_autoloader");
 
-Router::installHtaccess();
+spl_autoload_register("custom_autoloader");
 
 Router::performRouting();
 

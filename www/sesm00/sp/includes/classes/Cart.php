@@ -2,6 +2,8 @@
 
 class Cart
 {
+    private static $cartTotal;
+
     private $products;
 
     public function __construct()
@@ -18,10 +20,11 @@ class Cart
     }
 
     public function addToCart($id) {
-        $productsDB = new ProductsDB();
-        $product = $productsDB->fetchBy(array('where' => array('id' => $id)))[0];
-        array_push($this->products, $product);
-        $this->saveCart();
+        $product = Product::getInstance($id);
+        if ($product->load()) {
+            $this->products[] = $product;
+            $this->saveCart();
+        }
     }
 
     public function removeFromCart($productCartId) {
@@ -35,11 +38,20 @@ class Cart
     }
 
     public function getCartTotal() {
-        $total = 0;
-        foreach ($this->getProducts() as $product) {
-            $total += $product['price'];
+        if (self::$cartTotal === null) {
+            $total = 0;
+            foreach ($this->getProducts() as $product) {
+                $total += $product->price;
+            }
+            self::$cartTotal = $total;
         }
-        return $total;
+
+        return self::$cartTotal;
+    }
+
+    public function clear() {
+        $this->products = array();
+        $this->saveCart();
     }
 
 }

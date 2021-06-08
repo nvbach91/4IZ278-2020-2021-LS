@@ -20,6 +20,9 @@ function getURLFile($url = NULL) {
 }
 
 function getBaseUrl() {
+    if (defined("BASE_URL")) {
+        return BASE_URL;
+    }
     $url = $_SERVER['SCRIPT_NAME'];
     $url = removeURLParams($url);
     $file = getURLFile();
@@ -29,8 +32,12 @@ function getBaseUrl() {
     return $url;
 }
 
-function getCurrentUrl() {
-    return $_SERVER['REQUEST_URI'];
+function getCurrentUrl($withUriParams = true) {
+    $uri = $_SERVER['REQUEST_URI'];
+    if (!$withUriParams) {
+        $uri = explode("?", $uri)[0];
+    }
+    return $uri;
 }
 
 function urlMatchPath($pathRoot, $url) {
@@ -41,8 +48,13 @@ function urlMatchPath($pathRoot, $url) {
 }
 
 function getCurrentTimestamp() {
-    $now = new DateTime(null, new DateTimeZone("Europe/Prague"));
+    $now = new DateTime(null, new DateTimeZone(TIME_ZONE));
     return $now->getTimestamp();
+}
+
+function getCurrentFormatedTime() {
+    $now = new DateTime(null, new DateTimeZone(TIME_ZONE));
+    return $now->format('Y-m-d H:i:s');
 }
 
 function getPrintablePrivilege($privilege) {
@@ -56,4 +68,28 @@ function getPrintablePrivilege($privilege) {
         default:
             return "Nedefinováno";
     }
+}
+
+function getCookiePath() {
+    return substr(BASE_URL, 0, (strlen(BASE_URL) - 1));
+}
+
+function formatPrice($number) {
+    return number_format($number, 0, ",", " ");
+}
+
+function getProtocol() {
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        return "https://";
+    }
+    return "http://";
+}
+
+function isPhoneNumber($phone) {
+    $results = array();
+    preg_match('/^(\+\d{3})?\d{3}\d{3}\d{3}$/', $phone, $results);
+    if (count($results) > 0) {
+        return true;
+    }
+    return false;
 }

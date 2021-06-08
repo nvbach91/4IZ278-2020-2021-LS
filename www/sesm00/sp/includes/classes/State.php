@@ -4,11 +4,13 @@
 class State extends Model
 {
 
-    protected const TABLE_NAME = DB_PREFIX . "states";
+    protected const TABLE_NAME = STATES_TABLE;
     protected $attrMap = [
         "name",
         "code",
     ];
+
+    public static $objectCache = [];
 
     public $name;
     public $code;
@@ -18,4 +20,5 @@ class State extends Model
         parent::__construct($id);
     }
 
+    public function validate(){}
 }
