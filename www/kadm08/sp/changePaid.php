@@ -1,24 +1,18 @@
 <?php
 session_start();
 
-require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
+require_once __DIR__ . '/lib/ReservationDB.php';
+
+$reservationDB = new ReservationDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $reservation = $pdo->prepare("SELECT * FROM wp_reservation WHERE reservation_id = :reservation_id;");
-    $reservation->execute([
-        'reservation_id' => $_GET['reservation_id']
-    ]);
-    $reservation = $reservation->fetchAll()[0];
-
+    $reservation = $reservationDB->fetchById($_GET['reservation_id']);
+ 
     if ($reservation['reservation_paid'] == 0) {
-        $statement = $pdo->prepare("UPDATE wp_reservation SET reservation_paid = 1
-                            WHERE reservation_id = :reservation_id;");
-        $statement->execute(['reservation_id' => $_GET['reservation_id']]);
+        $change_paid = $reservationDB->updatePaid($reservation['reservation_id'], 1);
     }else {
-        $statement = $pdo->prepare("UPDATE wp_reservation SET reservation_paid = 0
-                                WHERE reservation_id = :reservation_id;");
-        $statement->execute(['reservation_id' => $_GET['reservation_id']]);
+        $change_paid = $reservationDB->updatePaid($reservation['reservation_id'], 0);
     }
 
     header('Location: reservations.php');

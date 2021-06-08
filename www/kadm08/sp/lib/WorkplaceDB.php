@@ -19,6 +19,14 @@ class WorkplaceDB extends Database
         return $stmt->fetch();
     }
 
+    public function fetchLastUpdated($id)
+    {
+        $sql = "SELECT last_updated_at FROM workplace WHERE ws_id = :ws_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['ws_id' => $id]);
+        return $stmt->fetchColumn();
+    }
+
     public function createItem($name, $price_per_day, $active)
     {
         $sql = "INSERT INTO workplace (name, price_per_day, active, last_updated_at) VALUES (:name, :price_per_day, :active, NOW())";
@@ -47,6 +55,16 @@ class WorkplaceDB extends Database
             'ws_id' => $id,
             'name' => $name,
             'price' => $price_per_day
+        ]);
+    }
+
+    public function updateActive($id, $active)
+    {
+        $sql = "UPDATE workplace SET active = :active WHERE ws_id = :ws_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'ws_id' => $id,
+            'active' => $active
         ]);
     }
 }

@@ -1,24 +1,19 @@
 <?php
 session_start();
 
-require __DIR__ . '/db.php';
+require_once __DIR__ . '/lib/WorkplaceDB.php';
 require __DIR__ . '/adminRequired.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $workplace = $pdo->prepare("SELECT * FROM workplace WHERE ws_id = :ws_id;");
-    $workplace->execute([
-        'ws_id' => $_GET['ws_id']
-    ]);
-    $workplace = $workplace->fetchAll()[0];
+$workplaceDB = new WorkplaceDB();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $workplace = $workplaceDB->fetchById($_GET['ws_id']);
+    
     if ($workplace['active'] == 0) {
-        $statement = $pdo->prepare("UPDATE workplace SET active = 1
-                            WHERE ws_id = :ws_id;");
-        $statement->execute(['ws_id' => $_GET['ws_id']]);
+        $change_active = $workplaceDB->updateActive($workplace['ws_id'], 1);
     } else {
-        $statement = $pdo->prepare("UPDATE workplace SET active = 0
-                                WHERE ws_id = :ws_id;");
-        $statement->execute(['ws_id' => $_GET['ws_id']]);
+        $change_active = $workplaceDB->updateActive($workplace['ws_id'], 0);
+
     }
 
     header('Location: workplaces.php');

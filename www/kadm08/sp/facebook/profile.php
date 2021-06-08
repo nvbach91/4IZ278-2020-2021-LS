@@ -1,7 +1,4 @@
-<?php
-
-use Facebook\Facebook;
-
+<?php 
 session_start();
 if (!$_SESSION['access_token']) {
     header('Location: index.php');
@@ -12,7 +9,7 @@ if (!$_SESSION['access_token']) {
 require_once __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/config.php';
 
-$fb = new Facebook([
+$fb = new \Facebook\Facebook([
     'app_id' => APP_ID,
     'app_secret' => APP_SECRET,
     'default_graph_version' => 'v2.10',
@@ -39,4 +36,3 @@ $picture = $fb->get('/me/picture?redirect=false&height=200')->getGraphUser();
     <img alt="" src="<?php echo $picture['url']; ?>">
 </body>
 </html>
-© 2021 GitHub, Inc.

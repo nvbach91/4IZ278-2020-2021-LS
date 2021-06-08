@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
 require_once __DIR__ . '/lib/ReservationDB.php';
 

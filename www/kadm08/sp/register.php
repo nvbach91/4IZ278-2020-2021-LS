@@ -1,9 +1,10 @@
 <?php
 
 session_start();
-require __DIR__ . '/db.php';
+require_once __DIR__ . '/lib/UserDB.php';
 
 $errorMessages = [];
+$userDB = new UserDB();
 
 if (!empty($_POST)) {
   $email =  htmlspecialchars($_POST['email']);
@@ -24,51 +25,23 @@ if (!empty($_POST)) {
     try {
       $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
-      $register = $pdo->prepare("
-            INSERT INTO user (email, password)
-            VALUES ( :email, :password);
-            ");
-      $register->execute([
-        "email" => $email,
-        "password" => $hashPassword
-      ]);
+      $register = $userDB->createUser($email, $hashPassword);
+
     } catch (PDOException $e) {
       if ($e->errorInfo[1] == 1062) {
         array_push($errorMessages,   'This email is already registered. Try logging in.');
       }
     }
     if (empty($errorMessages)) {
-      $login = $pdo->prepare(
-        "
-            SELECT * FROM user WHERE email = :email"
-      );
-      $login->execute([
-        'email' => $email
-      ]);
-      $user = $login->fetchAll()[0];
+      $user = $userDB->fetchUserByEmail($email);
 
       if (password_verify($password, $user['password'])) {
         $_SESSION['email'] = $user['email'];
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['type'] = $user['type'];
 
-        $create_client = $pdo->prepare("
-      INSERT INTO client (registration_date, user_id)
-      VALUES ( :registration_date, :user_id);
-      ");
-        $create_client->execute([
-          "registration_date" => $_SERVER['REQUEST_TIME'],
-          "user_id" => $user['user_id']
-        ]);
-
-        $get_client = $pdo->prepare(
-          "
-              SELECT * FROM client WHERE user_id = :user_id"
-        );
-        $get_client->execute([
-          'user_id' => $user['user_id']
-        ]);
-        $client = $get_client->fetchAll()[0];
+        $create_client = $userDB->createClient($user['user_id']);
+        $client = $userDB->fetchUser($user['user_id']);
         $_SESSION['client_id'] = $client['client_id'];
 
         header('Location: myAccount.php');
@@ -80,7 +53,6 @@ if (!empty($_POST)) {
 ?>
 
 <?php require __DIR__ . '/includes/header.php'; ?>
-<br></br>
 <main class="container">
 <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">

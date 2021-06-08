@@ -36,11 +36,10 @@ $slides = $slidesDB->fetchAllItems();
     </div>
     <div class="card">
     <div class="card-body">
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-            deserunt mollit anim id est laborum.</p>
+        <p class="card-text">Coworking Smetana is a space for creative work, inspiring meetings and great challenges! 
+        We offer dedicated workspace and services. Some may appreciate new opportunities and contacts while others will 
+        enjoy rental discounts and options for business development. It does not matter whether you only spend here a few hours 
+        a month or show up every day. We will make sure you enjoy your time here.</p>
         <div class="card-footer">
             <?php if (!isset($_SESSION['email'])) : ?>
             <div class="btn-wrapper text-center justify-content-between">

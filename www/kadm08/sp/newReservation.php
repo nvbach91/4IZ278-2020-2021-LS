@@ -2,17 +2,18 @@
 session_start();
 
 
-require __DIR__ . '/db.php';
+require_once __DIR__ . '/lib/ReservationDB.php';
+require_once __DIR__ . '/lib/UserDB.php';
 require __DIR__ . '/userRequired.php';
 
 $success = false;
 
 $errorMessages = [];
 
+$reservationDB = new ReservationDB();
+$userDB = new UserDB();
 
-$stmt = $pdo->prepare("SELECT * FROM client ORDER BY client_id ASC");
-$stmt->execute();
-$available_clients = $stmt->fetchAll();
+$available_clients = $userDB->fetchAllClients(); 
 
 
 if (!empty($_POST)) {
@@ -20,19 +21,7 @@ if (!empty($_POST)) {
         array_push($errorMessages,   'You have to select starting and ending dates.');
     }
 
-    $stmt = $pdo->prepare(<<<EOT
-    SELECT * FROM workplace 
-    WHERE (active = 1) 
-    AND ws_id NOT IN 
-        (SELECT ws_id FROM wp_reservation 
-        WHERE (reservation_start <= :reservation_end) and (reservation_end >= :reservation_start));
-EOT);
-    $stmt->execute([
-        'reservation_start' => htmlspecialchars($_POST['start']),
-        'reservation_end' => htmlspecialchars($_POST['end'])
-    ]);
-
-    $available_workplaces = $stmt->fetchAll();
+    $available_workplaces = $reservationDB->getAvailableWorkplace(htmlspecialchars($_POST['end']), htmlspecialchars($_POST['start']));
 
     if ($_POST['start'] > $_POST['end']) {
         array_push($errorMessages,   'Reservation end cannot be before reservation start.');
@@ -44,40 +33,16 @@ EOT);
         $available_workplace = $available_workplaces[0];
         $start = strtotime($_POST['start']);
         $end = strtotime($_POST['end']);
+        $total_price = $available_workplace['price_per_day'] * (round(abs($end - $start) / (60 * 60 * 24)) + 1);
+        $days_of_reservation = round(abs($end - $start) / (60 * 60 * 24)) + 1;
 
-        if(isset($_SESSION['type']) && $_SESSION['type'] == 1) {
-        $stmt = $pdo->prepare("
-                             INSERT INTO wp_reservation (reservation_created, reservation_start, reservation_end, total_price, client_id, ws_id, days_of_reservation) 
-                             VALUES (NOW(), :start, :end, :total_price, :client, :ws_id, :days_of_reservation)                                           
-                             ");
-
-        $stmt->execute([
-            "start" => htmlspecialchars($_POST['start']),
-            "end" => htmlspecialchars($_POST['end']),
-            "total_price" => $available_workplace['price_per_day'] * (round(abs($end - $start)/ (60 * 60 * 24)) + 1),
-            "client" => htmlspecialchars($_POST['client']),
-            "ws_id" => $available_workplace['ws_id'],
-            "days_of_reservation" => round(abs($end - $start)/ (60 * 60 * 24)) + 1
-        ]);
-        $success = true;
-        }
-        elseif (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
-            $stmt = $pdo->prepare("
-                                 INSERT INTO wp_reservation (reservation_created, reservation_start, reservation_end, total_price, client_id, ws_id, days_of_reservation) 
-                                 VALUES (NOW(), :start, :end, :total_price, :client, :ws_id, :days_of_reservation)                                           
-                                 ");
-    
-            $stmt->execute([
-                "start" => htmlspecialchars($_POST['start']),
-                "end" => htmlspecialchars($_POST['end']),
-                "total_price" => $available_workplace['price_per_day'] * (round(abs($end - $start)/ (60 * 60 * 24)) + 1),
-                "client" =>$_SESSION['client_id'],
-                "ws_id" => $available_workplace['ws_id'],
-                "days_of_reservation" => round(abs($end - $start)/ (60 * 60 * 24)) + 1
-            ]);
+        if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {
+            $create_reservation = $reservationDB->createItem($_POST['start'], $_POST['end'], $total_price, htmlspecialchars($_POST['client']), $available_workplace['ws_id'], $days_of_reservation);
             $success = true;
-            }
-
+        } elseif (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
+            $create_reservation = $reservationDB->createItem($_POST['start'], $_POST['end'], $total_price, $_SESSION['client_id'], $available_workplace['ws_id'], $days_of_reservation);
+            $success = true;
+        }
     }
 }
 ?>
@@ -85,7 +50,6 @@ EOT);
 
 <?php require __DIR__ . '/includes/header.php'; ?>
 <main class="container">
-    <br /><br /><br /><br />
     <h1>Create new reservation</h1>
     <ul>
         <?php foreach ($errorMessages as $message) : ?>

@@ -5,7 +5,7 @@ $errorMessages = [];
 function sendMail($name, $email, $message)
 {
     $recepient = 'kadm08@vse.cz';
-    $subject = $name;
+    $subject = $name . " is sending you a message." ;
     $headers = [
         'MIME-Version: 1.0',
         'Content-type: text/html, charset=utf-8',
@@ -38,11 +38,10 @@ if (!empty($_POST)) {
 
 <?php include __DIR__ . '/includes/header.php'; ?>
 
-<br></br><br></br>
+<br><br>
 <div class="container contact-form">
             <form method="post">
                 <h3>Drop Us a Message</h3>
-                <br><br>
                 <?php foreach ($errorMessages as $message) : ?>
                     <p style="color:red;"><?php echo $message; ?></p>
                     <?php endforeach; ?>

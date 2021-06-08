@@ -1,3 +1,5 @@
+<?php require __DIR__ . '/config.php'; ?>
+
 <?php
 
 abstract class Database
@@ -8,9 +10,9 @@ abstract class Database
     {
         try {
             $this->pdo = new PDO(
-                'mysql:host=localhost;dbname=coworking;charset=utf8mb4',
-                'root',
-                ''
+                'mysql:host=' . DB_HOST . ';dbname=' . DB_DATABASE . ';charset=utf8mb4',
+                DB_USERNAME,
+                DB_PASSWORD
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);

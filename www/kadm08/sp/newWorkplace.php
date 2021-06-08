@@ -2,7 +2,6 @@
 session_start();
 
 
-require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
 require_once __DIR__ . '/lib/WorkplaceDB.php';
 
@@ -38,14 +37,13 @@ if (!empty($_POST) and empty($errormessages)) {
 
 <?php require __DIR__ . '/includes/header.php'; ?>
 <main class="container">
-    <br /><br /><br /><br />
     <h1>Add new item</h1>
     <ul>
         <?php foreach ($errormessages as $message) : ?>
             <div class="error"><?php echo  $message; ?></div>
         <?php endforeach; ?>
         <?php if ($success) : ?>
-            <div class="success">You have successfully added new item</div>
+            <div class="success" style="color:green;">You have successfully added new item</div>
         <?php endif; ?>
     </ul>
 

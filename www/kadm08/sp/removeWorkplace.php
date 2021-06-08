@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
 require_once __DIR__ . '/lib/WorkplaceDB.php';
 
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br><br><br><br>
 <main class="container">
     <?php if ($success) : ?>
-        <div class="success">You have successfully deleted an item.</div>
+        <div class="success" style="color:green;">You have successfully deleted an item.</div>
     <?php else : ?>
         <div class="error"> <?php echo $errorMessage; ?>
         </div>

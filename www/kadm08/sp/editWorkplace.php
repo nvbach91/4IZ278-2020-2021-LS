@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-require __DIR__ . '/db.php';
 require __DIR__ . '/adminRequired.php';
 require_once __DIR__ . '/lib/WorkplaceDB.php';
 
@@ -17,9 +16,7 @@ if (!empty($_POST)) {
 
 if ('POST' == $_SERVER['REQUEST_METHOD'] and empty($errors)) {
 
-    $stmt = $pdo->prepare('SELECT last_updated_at FROM workplace WHERE ws_id = :ws_id');
-    $stmt->execute(['ws_id' => $_GET['ws_id']]);
-    $last_updated_at = $stmt->fetchColumn();
+    $last_updated_at = $workplaceDB->fetchLastUpdated($_GET['ws_id']);
 
     if ($_SESSION[$_GET['ws_id'] . '_last_updated_at'] != $last_updated_at) {
         die(array_push($errors, "The product was updated by someone else in the meantime!"));
@@ -47,7 +44,7 @@ $_SESSION[$workplace['ws_id'] . '_last_updated_at'] = $workplace['last_updated_a
             <div class="error"><?php echo  $message; ?></div>
         <?php endforeach; ?>
         <?php if ($success) : ?>
-            <div class="success">You have successfully edited an workplace</div>
+            <div class="success" style="color:green;">You have successfully edited an workplace</div>
         <?php endif; ?>
     </ul>
     <form method="POST">
