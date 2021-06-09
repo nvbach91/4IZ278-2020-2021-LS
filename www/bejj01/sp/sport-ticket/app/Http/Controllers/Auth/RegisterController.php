@@ -10,6 +10,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class RegisterController - Handles actions related to registering
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
     /*
@@ -53,20 +57,38 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'reg_first_name' => ['required', 'string', 'max:255'],
             'reg_last_name' => ['required', 'string', 'max:255'],
-            'reg_username' => ['required', 'string', 'max:255', 'unique:user'],
-            'reg_email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
+            'reg_username' => ['required', 'string', 'max:255', 'unique:user,username'],
+            'reg_email' => ['required', 'string', 'email', 'max:255', 'unique:user,email'],
             'reg_password' => ['required', 'string', 'min:8', 'confirmed'],
+            'reg_password_confirmation' => ['required', 'string', 'min:8'],
         ]);
     }
 
+    /**
+     * Shows registration page
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index() {
+        return view('pages.register');
+    }
+
+    /**
+     * Handles submitted registration form, either makes registration or returns with errors
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request) {
         $data = $request->post();
-        $this->validator($data);
-        $user = $this->create($data);
 
-        auth()->login($user);
+        if ($this->validator($data)->fails()) {
+            return redirect()->route('register-form')->withErrors($this->validator($data))->withInput();
+        }
+        else {
+            $user = $this->create($data);
 
-        return redirect()->to('/events');
+            auth()->login($user);
+            return redirect()->route('events');
+        }
     }
 
     /**

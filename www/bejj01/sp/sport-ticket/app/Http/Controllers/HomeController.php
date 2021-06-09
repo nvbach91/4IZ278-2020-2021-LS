@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Models\Event;
+use App\Models\Sport;
 
+/**
+ * Class HomeController - handles showing home page
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
@@ -12,6 +16,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home');
+        $eventsNumber = Event::all()->count();
+        $sportsNumber = Sport::all()->count();
+        $homeInfo = [
+            'eventCount' => $eventsNumber,
+            'sportCount' => $sportsNumber];
+
+        return view('pages.home', ['homeInfo' => $homeInfo]);
     }
 }

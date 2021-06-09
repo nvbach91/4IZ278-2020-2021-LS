@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use Decimal\Decimal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Class Event - Event table
+ * @package App\Models
+ */
 class Event extends Model
 {
     use HasFactory;
@@ -28,19 +32,37 @@ class Event extends Model
 
     protected $dates = ['start_date', 'end_date'];
 
-    public function sport() {
+    /**
+     * Which sport event belongs to
+     * @return BelongsTo
+     */
+    public function sport(): BelongsTo {
         return $this->belongsTo(Sport::class, 'sport_id');
     }
 
-    public function place() {
+    /**
+     * Which place event belongs to
+     * @return BelongsTo
+     */
+    public function place(): BelongsTo {
         return $this->belongsTo(Place::class, 'place_id');
     }
 
-    public function formatPrice($price) {
+    /**
+     * Return formatted price value
+     * @param $price
+     * @return string
+     */
+    public function formatPrice($price): string {
         return number_format($price, 2, ',', ' ');
     }
 
-    public function formatDate($date) {
+    /**
+     * Returns formatted date value
+     * @param $date
+     * @return string
+     */
+    public function formatDate($date): string {
         return $date->format('j. n. Y');
     }
 }

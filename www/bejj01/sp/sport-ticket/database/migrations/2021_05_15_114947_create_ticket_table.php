@@ -15,12 +15,10 @@ class CreateTicketTable extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->id('ticket_id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('event_id')->unsigned();
             $table->string('sector')->nullable();
             $table->integer('seat')->unsigned()->nullable();
-            $table->foreign('user_id')->references('user_id')->on('user')->cascadeOnDelete();
-            $table->foreign('event_id')->references('event_id')->on('event')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('user')->references('user_id')->cascadeOnDelete();
+            $table->foreignId('event_id')->constrained('event')->references('event_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

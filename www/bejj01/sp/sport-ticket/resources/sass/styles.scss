@@ -4,6 +4,7 @@ html, body {
 
 html {
     font-size: 18px;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -30,7 +31,7 @@ body {
 }
 
 .event-card .card-upper {
-    min-height: 200px;
+    min-height: 150px;
     flex-wrap: nowrap;
     flex-grow: 1;
 }
@@ -83,13 +84,13 @@ body {
     background-color: #7d7c7c !important;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.spinner input::-webkit-outer-spin-button,
+.spinner input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-input[type=number] {
+.spinner input[type=number] {
     -moz-appearance: textfield;
 }
 
@@ -106,49 +107,12 @@ input[type=number] {
     width: 100%;
 }
 
-.ticket-img {
-    width: 80%;
-}
-
-.sidebar {
-    z-index: 2;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 0;
-    height: 100%;
-    overflow-x: hidden;
-    transition: 0.4s;
-}
-
-.sidebar .form-control {
-    font-size: 0.6rem;
-}
-
-.sidebar label {
-    font-size: 0.8rem;
-    margin-bottom: 0;
-}
-
-.cancel-button {
-    font-size: 1.5rem;
-    color: white;
+.pointer {
     cursor: pointer;
 }
 
-.sidebar-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
-.cancel-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 20px 20px 0 0;
+.ticket-img {
+    width: 80%;
 }
 
 form.login-form, form.register-form {
@@ -176,6 +140,10 @@ form.login-form, form.register-form {
     border-radius: 0 !important;
 }
 
+.profile {
+    min-height: 600px;
+}
+
 .ticket-container {
     width: 450px;
     min-height: 350px;
@@ -184,4 +152,173 @@ form.login-form, form.register-form {
 
 .ticket-container hr {
     width: 85%;
+}
+
+.profile .nav {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.profile .tab-content {
+    background-color: #3d8aca21;
+}
+
+.sport-image {
+    width: 200px;
+}
+
+.top-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 20;
+    padding: 5px 7.5px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(11, 151, 169, 0.7);
+}
+
+.top-button .fa-chevron-up {
+    font-size: 40px;
+}
+
+.top-button:hover {
+    background-color: rgba(11, 151, 169, 1);
+}
+
+.navbar-toggler {
+    border: none;
+    margin-right: 10px;
+}
+
+.navbar-toggler:hover,
+.navbar-toggler:focus-visible {
+    background-color: rgba(0,0,0,.2);
+}
+
+.active-indicator {
+    width: 60%;
+    max-width: 100px;
+    height: 5px;
+    z-index: 5;
+    cursor: pointer;
+    bottom: 5px;
+    border-radius: 10px;
+    position: relative;
+    background-color: transparent;
+    transition: 0.4s linear;
+}
+
+.nav-item.active .active-indicator,
+.nav-item:hover.active .active-indicator {
+    background-color: #fff;
+}
+
+.nav-item:hover .active-indicator {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar .navbar-nav .nav-item.active .nav-link {
+    color: #fff;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar input {
+    border-radius: 5px 0 0 5px;
+}
+
+.search-bar button {
+    border-radius: 0 5px 5px 0;
+}
+
+.br-10 {
+    border-radius: 10px;
+}
+
+.br-0 {
+    border-radius: 0;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.badge {
+    position: relative;
+    bottom: 7px;
+}
+
+.sport-event-number {
+    position: absolute;
+    font-weight: bold;
+    font-size: 2rem;
+    color: white;
+    left: 0;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 0.3s linear;
+}
+
+.sport-image {
+    position: relative;
+}
+
+.sport-image:hover .sport-event-number {
+    display: flex;
+}
+
+.border-r-1 {
+    border-right: 1px solid black;
+}
+
+.border-r-2 {
+    border-right: 2px solid black;
+}
+
+.bottom-line-1 {
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+.bottom-line-2 {
+    border-bottom: 2px solid rgba(0,0,0,0.5);
+}
+
+.change-image-input {
+    display: none;
+    background-color: #5196bf4d;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.4s linear;
+}
+
+.btn-facebook {
+    background-color: #3B5998;
+    color: white;
+}
+
+.btn-google {
+    background-color: #dd4b39;
+    color: white;
+}
+
+.btn-facebook, .btn-google {
+    opacity: 0.85;
+}
+
+.btn-facebook:hover, .btn-google:hover {
+    opacity: 1;
 }
