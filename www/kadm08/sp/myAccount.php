@@ -50,7 +50,7 @@ if (isset($_POST['user_info'])) {
 
         if (empty($errorMessages)) {
 
-            $change_password = $userDB->updatePassword($_SESSION['user_id'], $password);
+            $change_password = $userDB->updatePassword($_SESSION['user_id'], $hashPassword);
 
             $success = true;
         }

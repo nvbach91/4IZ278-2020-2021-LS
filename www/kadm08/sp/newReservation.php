@@ -27,6 +27,10 @@ if (!empty($_POST)) {
         array_push($errorMessages,   'Reservation end cannot be before reservation start.');
     }
 
+    if ($_POST['start'] < date("Y-m-d")) {
+        array_push($errorMessages,   'Reservation cannot be in the past.');
+    }
+
     if (empty($available_workplaces)) {
         array_push($errorMessages,   'There are no available workspaces in the selected time period.');
     } elseif (empty($errorMessages)) {
