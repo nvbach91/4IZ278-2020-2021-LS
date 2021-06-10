@@ -3,6 +3,7 @@
 @section('content')
     <div class="content flex-grow-1">
         <header class="page-header gradient text-white">
+            @include('components.result-messages')
             <div class="container-lg intro-section">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="col-md-6">

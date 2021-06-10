@@ -46,10 +46,14 @@ class TicketController extends Controller
     /**
      * Shows specific ticket
      * @param $id - id of ticket
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed
      */
     public function showTicket($id) {
         $ticket = Ticket::find($id);
+        if (!$ticket) {
+            return redirect()->route('home')->with('error', 'Wrong action! Ticket was not found!');
+        }
+
         return view('pages.ticket-detail', ['ticket' => $ticket]);
     }
 
@@ -60,6 +64,9 @@ class TicketController extends Controller
      */
     public function createPDF($ticket_id) {
         $ticket = Ticket::find($ticket_id);
+        if (!$ticket) {
+            return redirect()->route('home')->with('error', 'Wrong action! Ticket was not found!');
+        }
 
         // share data to view
         view()->share('ticket', $ticket);

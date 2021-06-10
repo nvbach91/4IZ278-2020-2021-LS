@@ -159,3 +159,13 @@ window.showOrHideChangeImageInput = ($sport_id) => {
     element.style.display === 'flex' && element.firstElementChild.firstElementChild.focus();
 }
 
+window.handleSportCheckbox = () => {
+    const selectEl = document.getElementById('select-sport');
+    const inputNameEl = document.getElementById('sport-input');
+    const inputImgEl = document.getElementById('sport-input-img');
+
+    selectEl.disabled = !selectEl.disabled;
+    inputNameEl.disabled = !inputNameEl.disabled;
+    inputImgEl.disabled = !inputImgEl.disabled;
+}
+

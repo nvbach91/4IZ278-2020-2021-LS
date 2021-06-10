@@ -31,11 +31,6 @@ class EventController extends Controller {
      * @return string
      */
     public function fetchData(Request $request) {
-//        $sort_by = $request->get('by');
-//        $order = $request->get('order');
-//        $events = Event::query()->orderBy($sort_by, $order)->paginate(6);
-//        return view('components.events-group', ['events' => $events])->render();
-
         $sort_by = $request->get('by');
         $order = $request->get('order');
         $filterValue = strtolower($request->get('filter'));
@@ -43,8 +38,7 @@ class EventController extends Controller {
             $events = Event::query()->orderBy($sort_by, $order)->paginate(6);
         }
         else if ($filterValue == 'favorites') {
-            $user = User::find(auth()->user()->user_id);
-            $favoriteSports = $user->favoriteSports();
+            $favoriteSports = auth()->user()->favoriteSports;
             $ids = [];
             foreach ($favoriteSports as $favorite) {
                 array_push($ids, $favorite->sport_id);
@@ -62,11 +56,13 @@ class EventController extends Controller {
     /**
      * Shows event detail
      * @param $id - id of event
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed
      */
     public function showDetail($id) {
         $event = Event::find($id);
-        return view('pages.events.event-detail', ['event' => $event]);
+        return !$event
+            ? redirect()->route('home')->with('error', 'Wrong action! Event was not found!')
+            : view('pages.events.event-detail', ['event' => $event]);
     }
 
     /**
@@ -76,6 +72,10 @@ class EventController extends Controller {
      */
     public function deleteEvent($id) {
         $event = Event::find($id);
+        if (!$event) {
+            return redirect()->route('home')->with('error', 'Wrong action! Event was not found!');
+        }
+
         $event->delete();
         return redirect()->route('events');
     }
@@ -85,7 +85,8 @@ class EventController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function createEvent() {
-        return view('pages.events.event-create');
+        $sports = Sport::all();
+        return view('pages.events.event-create', ['sports' => $sports]);
     }
 
     /**
@@ -97,12 +98,13 @@ class EventController extends Controller {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'start' => 'required|date',
-            'end' => 'date',
+            'end' => 'date|nullable',
             'img' => 'required',
             'price' => 'required|numeric',
             'comp' => 'max:255',
             'cap' => 'required|integer|min:1|max:1000',
-            'sport' => 'required',
+            'sport' => 'required_without:new_sport',
+            'new_sport' => 'required_without:sport',
         ]);
 
         if ($validator->fails()) {
@@ -116,12 +118,22 @@ class EventController extends Controller {
         $price = $request->post('price');
         $comp = $request->post('comp');
         $cap = $request->post('cap');
-        $sport_name = strtolower($request->post('sport'));
+        $sport_name = $request->post('sport');
+        $new_sport_name = $request->post('new_sport');
+        $new_sport_img = $request->post('new_sport_img');
         $desc = $request->post('desc');
 
-        $sport = Sport::where('sport_name', $sport_name)->first();
-        if (isNull($sport)) {
-            $sport = Sport::create(['sport_name' => $sport_name, 'img' => 'https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fHNvY2NlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60']);
+        if (isset($end) && strtotime($end) < strtotime($start)) {
+            return redirect()->back()->with('error', 'The event was not created! End date must be later or same date as start date.')->withInput();
+        }
+
+        if (isset($sport_name)) {
+            $sport = Sport::where('sport_name', $sport_name)->first();
+        }
+        else {
+            $sport = isset($new_sport_img)
+                ? Sport::create(['sport_name' => $new_sport_name, 'img' => $new_sport_img])
+                : Sport::create(['sport_name' => $new_sport_name, 'img' => 'https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fHNvY2NlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60']);
         }
 
         $new = [
@@ -133,12 +145,9 @@ class EventController extends Controller {
             'sport_id' => $sport->sport_id
         ];
 
-        if (!isNull($end) && strtotime($end) > strtotime($start)) {
-            $new['end_date'] = $end;
-        }
-
-        !isNull($comp) && $new['competition'] = $comp;
-        !isNull($desc) && $new['description'] = $desc;
+        isset($end) && $new['end_date'] = $end;
+        isset($comp) && $new['competition'] = $comp;
+        isset($desc) && $new['description'] = $desc;
 
         try {
             Event::create($new);
@@ -152,11 +161,14 @@ class EventController extends Controller {
     /**
      * Show edit page
      * @param $id - id of event
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed
      */
     public function editEvent($id) {
         $event = Event::find($id);
-        return view('pages.events.event-edit', ['event' => $event]);
+
+        return !$event
+            ? redirect()->route('home')->with('error', 'Wrong action! Event was not found!')
+            : view('pages.events.event-edit', ['event' => $event]);
     }
 
     /**
@@ -192,8 +204,8 @@ class EventController extends Controller {
             'capacity' => $cap,
         ];
 
-        !isNull($comp) && $updated['competition'] = $comp;
-        !isNull($desc) && $updated['description'] = $desc;
+        isset($comp) && $updated['competition'] = $comp;
+        isset($desc) && $updated['description'] = $desc;
 
         try {
             $event = Event::find($id);
