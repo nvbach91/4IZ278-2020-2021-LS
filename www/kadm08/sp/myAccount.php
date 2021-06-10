@@ -32,7 +32,15 @@ if (isset($_POST['user_info'])) {
         array_push($errorMessages, 'Please enter valid email address');
     }
 
-    $change_email = $userDB->updateEmail($_SESSION['user_id'], $email);
+
+    try {
+        $change_email = $userDB->updateEmail($_SESSION['user_id'], $email);
+  
+      } catch (PDOException $e) {
+        if ($e->errorInfo[1] == 1062) {
+          array_push($errorMessages,   'This email is already registered. Try different one.');
+        }
+      }
 
     $success = true;
 } elseif (isset($_POST['password_change'])) {
