@@ -38,7 +38,7 @@ $workplaces = $workplaceDB->fetchAllItems();
                                                             echo "active";
                                                         } ?></td>
                         <td>
-                            <a class="btn btn-light" href="editWorkplace.php?ws_id=<?php echo $workplace['ws_id'] ?>">Edit</a>
+                            <a class="btn btn-warning" href="editWorkplace.php?ws_id=<?php echo $workplace['ws_id'] ?>">Edit</a>
                         </td>
                         <td>
                             <form action="removeWorkplace.php?ws_id=<?php echo $workplace['ws_id'] ?>" method="POST">

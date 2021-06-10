@@ -7,7 +7,7 @@ class ReservationDB extends Database
     {
         $sql = "SELECT * FROM wp_reservation wp
                 JOIN client c on wp.client_id = c.client_id
-                ORDER BY reservation_id ASC";
+                ORDER BY reservation_start DESC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -15,8 +15,9 @@ class ReservationDB extends Database
 
     public function fetchById($reservation_id)
     {
-        $sql = "SELECT *  
-            FROM wp_reservation  
+        $sql = "SELECT wp.*, c.name, c.surname, w.name as wp_name FROM wp_reservation wp
+            JOIN client c on wp.client_id = c.client_id
+            JOIN workplace w on w.ws_id = wp.ws_id
             WHERE reservation_id = :reservation_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['reservation_id' => $reservation_id]);
@@ -82,6 +83,39 @@ class ReservationDB extends Database
             "reservation_start" => $reservation_start
         ]);
         return $stmt->fetchAll();
+    }
+
+    public function getAvailableWorkplaceForUpdate($reservation_id, $reservation_end, $reservation_start)
+    {
+        $sql = "SELECT * FROM workplace 
+            WHERE (active = 1) 
+            AND ws_id NOT IN 
+            (SELECT ws_id FROM (SELECT * FROM wp_reservation WHERE reservation_id != :reservation_id) as temp_table 
+            WHERE (reservation_start <= :reservation_end) and (reservation_end >= :reservation_start)) 
+            ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "reservation_id" => $reservation_id,
+            "reservation_end" => $reservation_end,
+            "reservation_start" => $reservation_start
+        ]);
+        return $stmt->fetchAll();
+    }
+
+
+    public function updateItem($id, $start, $end, $ws_id, $total_price, $days_of_reservation)
+    {
+        $sql = "UPDATE wp_reservation SET reservation_start = :start, reservation_end = :end, ws_id = :ws_id, total_price = :total_price, days_of_reservation = :days_of_reservation, last_updated = NOW()
+        WHERE reservation_id = :reservation_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "reservation_id" => $id,
+            "start" => $start, 
+            "end" => $end, 
+            "ws_id" => $ws_id, 
+            "total_price" => $total_price, 
+            "days_of_reservation" => $days_of_reservation
+        ]);
     }
 }
 

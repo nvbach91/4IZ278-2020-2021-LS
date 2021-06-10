@@ -37,8 +37,7 @@ $_SESSION[$workplace['ws_id'] . '_last_updated_at'] = $workplace['last_updated_a
 
 <?php require __DIR__ . '/includes/header.php'; ?>
 <main class="container">
-    <br><br><br><br>
-    <h1>Edit an workplace</h1>
+    <h1>Edit a workplace</h1>
     <ul>
         <?php foreach ($errors as $message) : ?>
             <div class="error"><?php echo  $message; ?></div>

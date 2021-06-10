@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require __DIR__ . '/adminRequired.php';
+require __DIR__ . '/userRequired.php';
 require_once __DIR__ . '/lib/ReservationDB.php';
 
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <div>
         <br>
-        <a href="reservations.php" class="btn btn-primary">Go back to reservations</a>
+        <a href="myReservations.php" class="btn btn-primary">Go back to reservations</a>
     </div>
 </main>
 <?php require __DIR__ . '/includes/footer.php'; ?>

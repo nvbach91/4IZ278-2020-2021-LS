@@ -31,10 +31,11 @@ $reservations = $reservationDB->fetchByClient($_SESSION['client_id']);
                     <th style="text-align:right;">Reservation created</th>
                     <th style="text-align:right;">Total price</th>
                     <th style="text-align:center;">Paid</th>
+                    <th style="text-align:right;">Delete</th>
                 </tr>
                 <?php foreach ($reservations as $reservation) : ?>
                     <?php if ($reservation["reservation_start"] >= date("Y-m-d")) { ?>
-                        <tr class="table-success">
+                        <tr class="table-light">
                             <td style="text-align:left;"><?php echo $reservation["name"]; ?></td>
                             <td style="text-align:right;"><?php echo $reservation["reservation_start"]; ?></td>
                             <td style="text-align:right;"><?php echo $reservation["reservation_end"]; ?></td>
@@ -45,6 +46,12 @@ $reservations = $reservationDB->fetchByClient($_SESSION['client_id']);
                                                             } else {
                                                                 echo "paid";
                                                             } ?></td>
+                            <td>
+                                <form action="deleteReservation.php?reservation_id=<?php echo $reservation['reservation_id'] ?>" method="POST">
+                                    <input class="d-none" name="id" value="">
+                                    <button type="submit" class="btn btn-danger ">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php } ?>
                 <?php endforeach; ?>
