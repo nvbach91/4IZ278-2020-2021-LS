@@ -6,7 +6,7 @@ define('DB_PASS', '');
 define('DB_PREFIX', '');
 
 define('CURRENCY', 'Kč');
-define('PRODUCTS_PER_PAGE', 6);
+define('PRODUCTS_PER_PAGE', 2);
 define('TIME_ZONE', "Europe/Prague");
 
 define('BASE_URL', getBaseUrl());

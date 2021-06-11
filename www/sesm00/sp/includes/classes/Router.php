@@ -10,7 +10,8 @@ class Router
         "order" => "Order",
         "payment" => "Payment",
         "summary" => "Summary",
-        "google" => "Google"
+        "google" => "Google",
+        "profile" => "Profile"
     ];
 
     public static function performRouting() {

@@ -3,8 +3,9 @@
 $home = BASE_URL;
 
 $login = BASE_URL . 'login';
-
+$profile = BASE_URL . 'profile';
 $isLoginShowed = urlMatchPath($login, getCurrentUrl());
+$isProfileShowed = urlMatchPath($profile, getCurrentUrl());
 $cartMsgs = array();
 
 $userLogged = User::isUserLoggedIn();
@@ -33,6 +34,11 @@ if (isset($_POST['action']) && $_POST['action'] == "logout") {
                         <?php endif; ?>
                     </a>
                 </li>
+                <?php if ($userLogged): ?>
+                    <li class="nav-item<?php if ($isProfileShowed) : echo ' active'; endif; ?>">
+                        <a class="nav-link" href="<?php echo $profile; ?>">Profil</a>
+                    </li>
+                <?php endif; ?>
                 <?php if (!$userLogged): ?>
                     <li class="nav-item<?php if ($isLoginShowed) : echo ' active'; endif; ?>">
                         <a class="nav-link" href="<?php echo $login; ?>">Přihlášení</a>
