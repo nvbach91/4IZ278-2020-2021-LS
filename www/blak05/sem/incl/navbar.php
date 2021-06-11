@@ -6,10 +6,10 @@
             </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="./" class="nav-link px-2 <?php echo ($_SESSION['location']=='index' ? 'text-warning' : 'text-white')?>">Domů</a></li>
-          <li><a href="./beers.php" class="nav-link px-2 <?php echo ($_SESSION['location']=='beers' ? 'text-warning' : 'text-white')?>">Naše piva</a></li>
-          <li><a href="./brew.php" class="nav-link px-2 <?php echo ($_SESSION['location']=='brew' ? 'text-warning' : 'text-white')?>">Pivní pomůcky</a></li>
-          <li><a href="./blog.php" class="nav-link px-2 <?php echo ($_SESSION['location']=='blog' ? 'text-warning' : 'text-white')?>">Blog</a></li>
-          <li><a href="./onas.php" class="nav-link px-2 <?php echo ($_SESSION['location']=='onas' ? 'text-warning' : 'text-white')?>">O Pivotéce</a></li>
+          <li><a href="./beers" class="nav-link px-2 <?php echo ($_SESSION['location']=='beers' ? 'text-warning' : 'text-white')?>">Naše piva</a></li>
+          <li><a href="./brew" class="nav-link px-2 <?php echo ($_SESSION['location']=='brew' ? 'text-warning' : 'text-white')?>">Pivní pomůcky</a></li>
+          <li><a href="./blog" class="nav-link px-2 <?php echo ($_SESSION['location']=='blog' ? 'text-warning' : 'text-white')?>">Blog</a></li>
+          <li><a href="./onas" class="nav-link px-2 <?php echo ($_SESSION['location']=='onas' ? 'text-warning' : 'text-white')?>">O Pivotéce</a></li>
         </ul>
         
         <?php 

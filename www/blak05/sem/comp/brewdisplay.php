@@ -5,7 +5,7 @@
 ?>
     <?php foreach($brews as $brew): ?>
         <div class="col-md-3">
-            <a href="brew.php?id=<?php echo $brew['id_product']?>" class="link-dark text-decoration-none">   
+            <a href="nastroj-<?php echo $brew['id_product']?>-<?php echo $brew['name']?>" class="link-dark text-decoration-none">   
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-240 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <h4 class="mb-0"><?php echo $brew['name']; ?></h4>

@@ -23,10 +23,24 @@ class OrderDB extends Database {
     }
     public function fetchName($args)
     {
-        $sql = 'SELECT o.*, s.name AS doprava, p.name AS platba FROM ' . $this->tableName . ' o, Shipping s, Payment p WHERE o.id_user = '. $args .' AND s.id_shipping = o.id_shipping AND p.id_payment = o.id_payment';
+        $sql = 'SELECT o.*, s.name AS doprava, p.name AS platba FROM ' . $this->tableName . ' o, Shipping s, Payment p WHERE o.id_user = '. $args .' AND s.id_shipping = o.id_shipping AND p.id_payment = o.id_payment ORDER BY o.date DESC;';
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
         return $statement->fetchAll();
+    }
+    public function fetchOffset($args)
+    {
+        $sql = 'SELECT o.*, s.name AS doprava, p.name AS platba FROM ' . $this->tableName . ' o, Shipping s, Payment p WHERE o.id_user='.$args[0].' AND s.id_shipping = o.id_shipping AND p.id_payment = o.id_payment ORDER BY o.date DESC LIMIT '.$args[1].' OFFSET ?';
+        $statement = $this->pdo->prepare($sql);
+        //$statement->execute();
+        $statement->bindValue(1, $args[2]);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+    public function fetchCount($args)
+    {
+        $statement = $this->pdo->query("SELECT COUNT(id_order) FROM " . $this->tableName . " WHERE id_user='$args'")->fetchColumn();
+        return $statement;
     }
     public function update($args)
     {

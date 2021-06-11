@@ -19,7 +19,7 @@ class BlogsDB extends Database
     }
     public function fetch($args)
     {
-        $sql = 'SELECT b.*, u.name FROM ' . $this->tableName . ' b, Users u WHERE b.ID_Blog ='. $args . ' AND b.ID_User=u.ID_User';
+        $sql = 'SELECT b.*, u.name FROM ' . $this->tableName . ' b, Users u WHERE b.ID_Blog = '. $args . ' AND b.ID_User=u.ID_User';
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
         return $statement->fetch();

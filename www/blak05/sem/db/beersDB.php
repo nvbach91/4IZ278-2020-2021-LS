@@ -52,6 +52,13 @@ class BeersDB extends Database
         $statement->execute();
         return $statement->fetch();
     }
+    public function fetchBeerID($args)
+    {
+        $sql= "SELECT * FROM " . $this->tableName . ' WHERE id_product="'. $args . '" ';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+        return $statement->fetch();
+    }
     public function fetchBrew($args)
     {
         $sql= "SELECT * FROM " . $this->tableName . ' WHERE id_product="'. $args . '" ';

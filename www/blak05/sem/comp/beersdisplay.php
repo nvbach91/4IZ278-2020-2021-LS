@@ -15,7 +15,7 @@
 ?>
     <?php foreach($beers as $beer): ?>
         <div class="col-md-3">
-            <a href="beer.php?id=<?php echo $beer['id_product']?>" class="link-dark text-decoration-none">   
+            <a href="pivo-<?php echo $beer['id_product']?>-<?php echo $beer['name']?>" class="link-dark text-decoration-none">   
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-240 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <h4 class="mb-0"><?php echo $beer['name']; ?></h4>

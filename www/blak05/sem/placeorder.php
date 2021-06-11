@@ -6,6 +6,10 @@
     require __DIR__ . '/db/paymentsDB.php';
     require __DIR__ . '/db/orderproductDB.php';
 
+    if(count($_SESSION["cart"])==0){
+        header('Location: index.php');
+    }
+
     if (!empty($_POST)) {
 
         $id_shipping = $_POST['id_shipping'];
@@ -20,7 +24,7 @@
         
         
         $ID_User = $user['ID_User'];
-        $total_price = $_SESSION['price'] + $shipping["price"] + $payment["price"];
+        $total_price = $_SESSION['finalPrice'] + $shipping["price"] + $payment["price"];
         $date = date("Y/m/d");
         $ordersDB = new OrderDB();
         $order = $ordersDB->create([$ID_User, $total_price, $date, $id_shipping, $id_payment]);
@@ -34,12 +38,13 @@
         }
 
         $to = $user["email"];
-        $subject = 'Objednávka číslo'. $order["id_order"] ;
+        $subject = 'Objednávka číslo'. $order["id_order"].' přijata!' ;
         $txt = 'Dobrý den, děkujeme za Vaši objednávku!' . '\r\n' . 'Celková výše objednávky je '. $total_price . ' Kč.';
         $headers = "From: info@pivoteka.cz";
         mail($to,$subject,$txt,$headers);
         
         unset($_SESSION['cart']);
+        unset($_SESSION['finalPrice']);
         header('Location: index.php');
     }
 ?>

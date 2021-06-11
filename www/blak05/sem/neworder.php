@@ -13,8 +13,6 @@
     $userid = $_SESSION["user"];
     $usersDB = new UsersDB();
     $user = $usersDB->fetch($userid);
-    $productsDB = new BeersDB();
-    $products = $productsDB->fetchCart();
     $shippingDB = new ShippingDB();
     $shippings = $shippingDB->fetchAll();
     $paymentsDB = new PaymentsDB();
@@ -25,6 +23,9 @@
 <div class="container text-center onas">
     <h1>Dokončení objednávky</h1>
     <br>
+    <?php if(count($_SESSION["cart"])==0): ?>
+        <?php header('Location: index.php'); ?>
+    <?php else: ?>
         <!-- část objednávající-->
         <div class="pt-2" style="max-width: 450px; margin: 0 auto; border: 1px solid black;">
             <h4 class="text-decoration-underline">Osobní údaje</h4>
@@ -39,11 +40,25 @@
         <div class="pt-2" style="max-width: 450px; margin: 0 auto; border: 1px solid black;">
             <h4 class="text-decoration-underline">Objednané produkty</h4>
             <p>
-            <?php foreach($products as $product): ?>
-                <?php $_SESSION["price"] = $_SESSION["price"] + $product['price']?>
-                <?php echo $product['brand']. " ". $product['name'] . " - ". $product['price'] ." Kč" ?><br>
-            <?php endforeach ?>
-            <h4>Celková cena <?php echo $_SESSION["price"] ?>,-</h4>
+                <?php
+                    $iterated = [];
+                    $cartProducts = $_SESSION['cart'];
+                    $finalPrice = 0;
+                ?>
+                <?php foreach($cartProducts as $product): ?>
+                    <?php 
+                        $counter = count(array_keys($cartProducts, $product));
+                        $productsDB = new BeersDB(); 
+                        $celyProduct = $productsDB->fetchBeerID($product); 
+                    ?>
+                    <?php if(($counter == 1) || (count(array_keys($iterated, $product))==0)):?>
+                        <?php echo $celyProduct['brand']?> - <?php echo $celyProduct['name']?> - <?php echo $counter?> kusů<br>
+                        <?php $finalPrice = $finalPrice + $counter * $celyProduct["price"]?>
+                        <?php array_push($iterated,$product); ?>
+                    <?php endif ?>
+                <?php endforeach; ?>
+            <h4>Celková cena <?php echo $finalPrice ?>,-</h4>
+            <?php $_SESSION["finalPrice"] = $finalPrice; ?> 
             <div class="text-muted">něco je špatně? upravte produkty <a class="text-decoration-none text-dark" href="cart.php">zde</a></div>
             </p>
         </div>
@@ -77,6 +92,7 @@
         <br>
         <button class="btn btn-warning btn-block" type="submit">Odeslat objednávku</button>
     </form>
+    <?php endif ?>
 </div>
 </main>
 <?php require __DIR__ . '/incl/footer.php'; ?>

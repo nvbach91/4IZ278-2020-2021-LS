@@ -8,9 +8,9 @@
         }
         $id = $_GET['id'];
 
-        if(in_array($id,$_SESSION['cart'])){
-            $_SESSION['cart'][] = $id;
-        }
+       // if(in_array($id,$_SESSION['cart'])){
+       //     $_SESSION['cart'][] = $id;
+       // }
 
         $_SESSION['cart'][] = $id;
         header('Location: cart.php');

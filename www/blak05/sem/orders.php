@@ -6,9 +6,21 @@
     $usersDB = new UsersDB();
     $user = $usersDB->fetch($username);
     require __DIR__ . '/db/orderDB.php';
-    $ordersDB = new OrderDB();
-    $orders = $ordersDB->fetchName($user["ID_User"]);
     require __DIR__ . '/db/orderproductDB.php';
+
+    if (!empty($_GET)) {
+        $offset = $_GET['offset'];
+    } else {
+        $offset = 0;
+    }
+    $numberOfOrdersPerPagination = 2;
+    $ordersDB = new OrderDB();
+    $numberOfOrders = $ordersDB->fetchCount($user["ID_User"]);
+
+    $ordersDB = new OrderDB();
+    $ordersCount = $ordersDB->fetchOffset([$user["ID_User"],$numberOfOrdersPerPagination,$offset]);
+
+    $numberPaginations = ceil($numberOfOrders / $numberOfOrdersPerPagination);
 
 ?>
 <?php require __DIR__ . '/incl/header.php'; ?>
@@ -18,10 +30,10 @@
     <div class="container text-center onas">
         <h1>Objednávky <?php echo $user["name"]?></h1>
         <br>
-        <?php if(empty($orders)): ?>
+        <?php if(empty($ordersCount)): ?>
             <p>Zatím nebyla provedena žádná objednávka</p>
         <?php else: ?>
-            <?php foreach($orders as $order): ?>
+            <?php foreach($ordersCount as $order): ?>
                 <div style="border: 1px solid black; max-width: 600px; margin: 0 auto; padding: 10px">
                     <h4>Objednávka č. <?php echo $order['id_order']?></h4>
                     <p> zadáno <b><?php echo $order['date']?></b>, celková částka <b><?php echo $order['total_price']?> Kč</b><br>
@@ -29,7 +41,7 @@
                     <h5 class="text-start">Objednáno:<h5>
                     <?php $ordersProductsDB = new OrderProductDB();
                     $orderedproducts = $ordersProductsDB->fetchProduct($order['id_order']); ?>
-                    <div style="max-width: 400px">
+                    <div style="max-width: 450px">
                     <ol>
                     <?php foreach($orderedproducts as $product): ?>
                         <li class="text-start"><?php echo $product["brand"] . " - " .$product["name"] . " - " .$product["price"] . " Kč"?></li>
@@ -39,7 +51,18 @@
                 </div>
                 <br>
             <?php endforeach ?>
-        <?php endif ?>
-    </div>
+        <?php endif ?>                 
+        <nav>
+            <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $numberPaginations; $i++) { ?>
+                <li class="page-item">
+                    <a class="text-warning page-link <?php echo $offset / $numberOfOrdersPerPagination + 1 == $i ? ' active' : ''; ?>" href="orders.php?offset=<?php echo $numberOfOrdersPerPagination * ($i - 1); ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
+        </nav>
+    </div> 
 </main>
 <?php require __DIR__ . '/incl/footer.php'; ?>
