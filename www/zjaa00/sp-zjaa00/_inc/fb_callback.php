@@ -33,8 +33,8 @@ $fb = new \Facebook\Facebook([
   $me = $fb->get('/me?fields=email')->getGraphUser();
   $email = $me['email'];
 
-  /* $minutesOfLogin = 60*12; //v minútach
-   */
+
+  $minutesOfLogin = 60*12; //v minútach
 
   $select = $connect->prepare('
     SELECT * FROM users

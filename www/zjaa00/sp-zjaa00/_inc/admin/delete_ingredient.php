@@ -1,5 +1,5 @@
 <?php
-  require_once "../_inc/config.php";
+  require_once "../config.php";
   
   if ($_GET['drink_id']) {
     $delete = $connect->prepare("

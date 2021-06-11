@@ -145,7 +145,7 @@ if ($total_row):
 				<?php endif; ?>
 			</div>
 
-			<div class="img" style="background-image: url('img/<?= $drink['image'] ?>');"></div>
+			<div class="img" style="background-image: url('img/items/<?= $drink['image'] ?>');"></div>
 
 			<!-- ak sme užívateľ, tak si vieme načítať zo SESSION objednávku a počty jednotlivých drinkov dať na ich kartičky -->
 			<?php if (authorize(1)):

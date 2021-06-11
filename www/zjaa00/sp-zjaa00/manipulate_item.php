@@ -1,6 +1,7 @@
 <?php
   require "./partials/header.php";
   require "./_inc/require_admin.php";
+  require "./classes/Drink.php";
 
   if ($_GET['drink_id']):
     
@@ -56,15 +57,18 @@
     else:
 
       //ak si drink ešte nikto neobjednal je bezpečné tento drink na trvalo vymazať z databáze
-      $delete = $connect->prepare("
+      /* $delete = $connect->prepare("
         DELETE FROM drinks
         WHERE drink_id = :drink_id;;
       ");
       $delete->execute([
         "drink_id" => $_GET['drink_id'],
-        ]);
+      ]); */
+      
+      $drink = new Drink($connect);
+      $drink->delete($_GET['drink_id']);
         
-        header("Location: ./index.php");
+      header("Location: ./index.php");
         
     endif;
   endif;

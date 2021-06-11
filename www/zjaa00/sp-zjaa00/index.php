@@ -13,7 +13,7 @@ if (isset($_SESSION['email']) && !isset($_COOKIE['privilege'])) {
   session_regenerate_id(true);
   
   header('Location: index.php');
-  die(); 
+  die();
 }
 
 require "./partials/header.php";

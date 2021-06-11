@@ -2,6 +2,7 @@
 
   require "./partials/header.php";
   require "./_inc/require_admin.php";
+  require "./classes/Ingredient.php";
 
 ?>
 
@@ -31,14 +32,21 @@
     //ak už existuje ingrediencia s daným menom a percentom alkoholu, tak vyhodíme chybovú hlášku, ak nie tak hlášku úspechu
     if (!$exists):  
       
-      $insert = $connect->prepare("
+      /* $insert = $connect->prepare("
         INSERT INTO ingredients (name, percentage)
         VALUES (:ingr_name, :percentage);
       ");
       $insert->execute([
         ":ingr_name" => $ingr_name,
         ":percentage" => $percentage,
+      ]); */
+      $ingredient = new Ingredient($connect);
+      $args = ([
+        ":name" => $ingr_name,
+        ":percentage" => $percentage,
       ]);
+      $ingredient->create($args);
+
       
       //odchytíme si ID novovytvorenej ingrediencie
       $ingr_id = $connect->lastInsertId();

@@ -6,20 +6,14 @@
 <body id="admin_page">
   <h1>Upraviť drink</h1>
 <?php  
-  
-  $select = $connect->prepare("
-    SELECT drink_id, name as drink_name, volume as drink_volume, price, alcoholic, inflammatory, deadly, available
-    FROM drinks WHERE drink_id = :drink_id;"
-  );
-  $select->execute(['drink_id' => $_GET['drink_id']]);
-  @$drink = $select->fetchAll()[0];
 
-  if (!empty($_POST)):
+  if (!empty($_POST['drink_name'])):
 
     $drink_id = $_GET['drink_id'];
     $drink_name = trim($_POST['drink_name']);
     $drink_volume = round((float) $_POST['drink_volume'], 2);
     $price = round((float) (float) $_POST['price'], 2);
+    $image = trim($_POST['image']);
     $alcoholic = isset($_POST['alcoholic']) ? 1 : (int) 0;
     $inflammatory = isset($_POST['inflammatory']) ? 1 : (int) 0;
     $deadly = isset($_POST['deadly']) ? 1 : (int) 0;
@@ -40,39 +34,43 @@
         name = :drink_name,
         volume = :drink_volume,
         price = :price,
+        image = :image,
         alcoholic = :alcoholic,
         inflammatory = :inflammatory,
         deadly = :deadly
         WHERE drink_id = :drink_id;
       ");
       $update->execute([
-        "drink_id" => $drink_id,
-        "drink_name" => $drink_name,
-        "drink_volume" => $drink_volume,
-        "price" => $price,
-        "alcoholic" => $alcoholic,
-        "inflammatory" => $inflammatory,
-        "deadly" => $deadly,
+        ":drink_id" => $drink_id,
+        ":drink_name" => $drink_name,
+        ":drink_volume" => $drink_volume,
+        ":price" => $price,
+        ":image" => $image,
+        ":alcoholic" => $alcoholic,
+        ":inflammatory" => $inflammatory,
+        ":deadly" => $deadly,
       ]);
 
-      $new_ingr_ids = $_POST['new_ingr_ids'];
-      $old_ingr_ids = $_POST['old_ingr_ids'];
-      $new_ingr_volumes = $_POST['new_ingr_volumes'];
+      @$new_ingr_ids = $_POST['new_ingr_ids'];
+      @$old_ingr_ids = $_POST['old_ingr_ids'];
+      @$new_ingr_volumes = $_POST['new_ingr_volumes'];
 
-      for ($i=0; $i < sizeof($new_ingr_ids); $i++) { 
-        $update = $connect->prepare("
-          UPDATE drinks_ingredients SET
-          drink_id = :drink_id,
-          ingr_id = :new_ingr_id,
-          volume = :new_ingr_volume
-          WHERE ingr_id = :old_ingr_id AND drink_id = :drink_id;
-        ");
-        $update->execute([
-          "drink_id" => $drink_id,
-          "new_ingr_id" => $new_ingr_ids[$i],
-          "new_ingr_volume" => $new_ingr_volumes[$i],
-          "old_ingr_id" => $old_ingr_ids[$i],
-        ]);
+      if (!empty($_POST['new_ingr_ids'])) {
+        for ($i=0; $i < sizeof($new_ingr_ids); $i++) {
+          $update = $connect->prepare("
+            UPDATE drinks_ingredients SET
+            drink_id = :drink_id,
+            ingr_id = :new_ingr_id,
+            volume = :new_ingr_volume
+            WHERE ingr_id = :old_ingr_id AND drink_id = :drink_id;
+          ");
+          $update->execute([
+            ":drink_id" => $drink_id,
+            ":new_ingr_id" => $new_ingr_ids[$i],
+            ":new_ingr_volume" => $new_ingr_volumes[$i],
+            ":old_ingr_id" => $old_ingr_ids[$i],
+          ]);
+        }
       }
 ?>
 
@@ -90,6 +88,13 @@
 
     <?php endif; ?>
   <?php endif;
+
+  $select = $connect->prepare("
+  SELECT drink_id, name as drink_name, volume as drink_volume, price, image, alcoholic, inflammatory, deadly, available
+  FROM drinks WHERE drink_id = :drink_id;"
+  );
+  $select->execute(['drink_id' => $_GET['drink_id']]);
+  @$drink = $select->fetchAll()[0];
   
   $select = $connect->prepare("
     SELECT
@@ -125,6 +130,8 @@
   $select->execute();
   $ingredients = $select->fetchAll();
 
+  $drinks_images = array_slice(scandir("./img/items/"), 2);
+
   ?>
 
     <form action="<?= $_SERVER['PHP_SELF'] ?>?drink_id=<?= $_GET['drink_id'] ?>" class="form-signin" method="POST">
@@ -145,6 +152,13 @@
         <input name="price" required value="<?= $drink['price']; ?>" type="number" min="0.00" step="any" class="form-control" placeholder="Cena drinku" aria-label="Cena drinku" aria-describedby="button-addon2">
         <span class="input-group-text">&euro;</span>
       </div>
+
+      <label for="image" class="form-label">Fotka</label>
+      <select name="image" class="form-select mb-3" aria-label="Meno fotky drinku">
+        <?php foreach($drinks_images as $image): ?>
+          <option <?= ($drink['image'] == $image) ? "selected" : "" ?>><?= $image ?></option>
+        <?php endforeach; ?>
+      </select>
 
       <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
         <input name="alcoholic" <?= $drink['alcoholic'] ? "checked" : "" ?> type="checkbox" class="btn-check" id="alcoholic" autocomplete="off">

@@ -1,6 +1,7 @@
 <?php
   require "./partials/header.php";
   require "./_inc/require_admin.php";
+  require "./classes/Ingredient.php";
 ?>
 
 <body id="admin_page">
@@ -33,13 +34,16 @@
     
     //pokiaľ sme ingredienciu mazali
     if(isset($_POST['delete'])) {
-      $delete = $connect->prepare('
+      /* $delete = $connect->prepare('
         DELETE FROM ingredients
         WHERE ingr_id = :ingr_id;
       ');
       $delete->execute([
         ":ingr_id" => $ingr_id,
-      ]);
+      ]); */
+
+      $ingredient = new Ingredient($connect);
+      $ingredient->delete($ingr_id);
     }
   }
   
