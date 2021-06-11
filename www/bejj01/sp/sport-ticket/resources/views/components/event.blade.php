@@ -35,7 +35,7 @@
                     @csrf
                     <div class="spinner d-flex me-3">
                         <div class="down bg-dark text-white" onclick="this.nextElementSibling.stepDown(1)"><i class="fas fa-minus"></i></div>
-                        <input name="{{$event->event_id}}" class="spinner-number" type="number" min="1" max="10" value="1">
+                        <input name="{{$event->event_id}}" class="spinner-number" type="number" min="1" max="{{$event->capacity}}" value="1">
                         <div class="up bg-dark text-white" onclick="this.previousElementSibling.stepUp(1)"><i class="fas fa-plus"></i></div>
                     </div>
                     <button type="submit" class="ms-3 btn btn-primary text-white">Buy</button>

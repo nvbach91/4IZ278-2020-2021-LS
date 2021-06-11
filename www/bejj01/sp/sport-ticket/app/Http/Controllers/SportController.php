@@ -92,6 +92,9 @@ class SportController extends Controller {
 
         try {
             $sport->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
+            //SQLSTATE[23000]: Integrity constraint violation
+            return redirect()->back()->with('error', 'The record cannot be deleted. Integrity constraint violation')->withInput();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'The record cannot be deleted.')->withInput();
         }

@@ -54,9 +54,18 @@
                 </div>
                 <div id="sports" class="tab-pane fade" role="tabpanel" aria-labelledby="sports-tab">
                     <h3>{{ucfirst($user->username)}}'s favorite sports</h3>
+
+                    @if(isset($message) && !empty($message))
+                    <div class="alert alert-success">
+                        <p>{{$message}}</p>
+                    </div>
+                    @endif
+
                     <ul class="list-group mb-4 col-md-6">
                         @foreach($user->favoriteSports as $favorite)
-                            <li class="list-group-item list-group-item-action list-group-item-dark">{{ucfirst($favorite->sport_name)}}</li>
+                            <li class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-between align-items-center">
+                                {{ucfirst($favorite->sport_name)}}
+                            </li>
                         @endforeach
                     </ul>
                     <a class="btn btn-outline-dark" href="{{route('sports')}}">Go to Sports</a>

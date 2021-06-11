@@ -1,7 +1,16 @@
 window.bootstrap = require('bootstrap');
 
+let currentPage = 1;
+
 $(document).ready(() => {
     lazyload();
+
+    $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+        const page = $(this).attr('href').split('page=')[1];
+        currentPage = page;
+        fetchData();
+    })
 
     const pillElements = document.querySelectorAll('a[data-bs-toggle="pill"]')
 
@@ -88,7 +97,7 @@ window.topFunction = function() {
     document.documentElement.scrollTop = 0;
 }
 
-window.changeSortOrder = () => {
+window.changeSortOrder = (page) => {
     const element = document.getElementById('sort-order-icon');
     if (element.classList.contains('fa-sort-amount-up')) {
         element.classList.remove('fa-sort-amount-up');
@@ -101,23 +110,18 @@ window.changeSortOrder = () => {
     const sortOrder = document.getElementById('sort-order');
     const newOrder = sortOrder.getAttribute('data-sort') === 'asc' ? 'desc' : 'asc';
     sortOrder.setAttribute('data-sort', newOrder);
-    changeSortBy();
+    fetchData();
 }
 
-window.changeSortBy = () => {
-    const sportFilter = document.getElementById('sport-filter').value;
-    filterSport(sportFilter);
-}
-
-window.filterSport = (value) => {
+window.fetchData = () => {
+    const filterValue = document.getElementById('sport-filter').value;
     const orderBy = document.getElementById('sort-by').value;
     const order = document.getElementById('sort-order').getAttribute('data-sort');
 
-    axios.get('/events/get', { params: { filter: value, by: orderBy, order: order } } )
+    axios.get('/events/fetch', { params: { page: currentPage, filter: filterValue, by: orderBy, order: order } } )
         .then(response => {
-            console.log(response.data);
             if (response.status === 200) {
-                document.getElementById('events-group-wrapper').innerHTML = response.data;
+                document.getElementById('render-group-wrapper').innerHTML = response.data;
             }
         })
         .catch(response => console.log(response.data));

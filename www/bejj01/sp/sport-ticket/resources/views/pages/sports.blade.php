@@ -34,12 +34,14 @@
             @foreach($sports as $sport)
                 <div class="d-flex flex-column p-3 me-4">
                     <h5 class="fw-bold text-center mb-0 pb-2 pt-2 bg-secondary text-white">{{ucfirst($sport->sport_name)}}</h5>
-                    <div class="sport-image">
-                        <img class="w-100 lazyload" data-src="{{$sport->img}}" alt="{{$sport->sport_name}} image">
-                        <div class="sport-event-number w-100 h-100">{{$sport->events->count()}} events</div>
-                    </div>
+                    <a href="{{route('events', ['filter' => $sport->sport_id])}}">
+                        <div class="sport-image">
+                            <img class="w-100 lazyload" data-src="{{$sport->img}}" alt="{{$sport->sport_name}} image">
+                            <div class="sport-event-number w-100 h-100">{{$sport->events->count()}} events</div>
+                        </div>
+                    </a>
                     @if(auth()->check())
-                        @can('delete', $sport)
+                        @can('update', $sport)
                             <div class="text-dark">
                                 <button type="button" class="w-100 btn btn-warning br-0" onclick="showOrHideChangeImageInput({{$sport->sport_id}})"><i class="fas fa-edit"></i>Update sport</button>
                                 <div class="change-image-input" id="change-image-input-{{$sport->sport_id}}">

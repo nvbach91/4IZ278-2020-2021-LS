@@ -10,30 +10,27 @@
             </div>
         @endcan
 
-        <div class="d-flex justify-content-end mb-3 border-bottom pb-3">
+        <div class="d-flex justify-content-between mb-3 border-bottom pb-3">
             <div class="d-flex sports-filter col-md-4">
                 <div>
                     <label for="sport-filter">Filter by Sport</label>
-                    <select id="sport-filter" onchange="filterSport(this.value)" name="filter-sport" class="form-select" aria-label="Default select example">
-                        <option selected value="all">All</option>
+                    {{$filter}}
+                    <select id="sport-filter" onchange="fetchData()" name="filter-sport" class="form-select" aria-label="Default select example">
+                        <option {{$filter == 'all' ? 'selected' : ''}} value="all">All</option>
                         @if(auth()->check())
                         <option value="favorites">Favorites</option>
                         @endif
                         @foreach($sports as $sport)
-                            <option value="{{$sport->sport_id}}">{{ucfirst($sport->sport_name)}}</option>
+                            <option {{$sport->sport_id == $filter ? 'selected' : ''}} value="{{$sport->sport_id}}">{{ucfirst($sport->sport_name)}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center align-items-end col-md-4">
-                {{ $events->links() }}
-            </div>
-
             <div class="d-flex col-md-4 justify-content-end">
                 <div>
                     <label for="sort-by">Sort By</label>
-                    <select id="sort-by" onchange="changeSortBy(this.value)" name="sort-by" class="form-select" aria-label="Default select example">
+                    <select id="sort-by" onchange="fetchData()" name="sort-by" class="form-select" aria-label="Default select example">
                         <option value="event_id" data-sorting_type="asc" id="id-sort">Default</option>
                         <option value="price" data-sorting_type="asc" id="price-sort">Price</option>
                         <option value="event_name" data-sorting_type="asc" id="alpha-sort">Event Name</option>
@@ -48,12 +45,8 @@
             </div>
         </div>
 
-        <div class="d-flex flex-wrap justify-content-center mb-3 mt-2" id="events-group-wrapper">
+        <div id="render-group-wrapper">
             @include('components.events-group')
-        </div>
-
-        <div class="d-flex justify-content-center mb-3">
-            {{ $events->links() }}
         </div>
     </div>
 @endsection
