@@ -1,0 +1,23 @@
+{
+    "name": "dev/superbazar",
+    "description": "Super bazar store",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Sestak",
+            "email": "sesm00@vse.cz"
+        }
+    ],
+    "require": {
+        "google/apiclient": "^2.7"
+    },
+    "scripts": {
+        "post-update-cmd": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Oauth2"
+        ]
+    }
+}

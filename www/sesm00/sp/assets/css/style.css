@@ -1,0 +1,43 @@
+.border-flat-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.border-flat-bottom {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.absolute-bottom {
+    bottom: 0px;
+}
+
+.page-container {
+    padding-top: 56px;
+    padding-bottom: 56px;
+}
+
+.order-products {
+    max-height: 488px;
+}
+
+.summary-check-icon {
+    font-size: 8em;
+}
+
+.summary-check-icon .bi-check-circle::before,
+.summary-check-icon .bi-exclamation-triangle::before{
+    display: block;
+}
+
+.pointer-cursor {
+    cursor: pointer;
+}
+
+@media (min-width: 992px) {
+    .navbar-cart {
+        min-width: 20rem;
+        left: -10rem;
+    }
+}
