@@ -55,6 +55,9 @@ $workplaces = $workplaceDB->fetchAllItems();
 
                             </form>
                         </td>
+                        <td>
+                            <a class="btn btn-warning" href="reservationsCalendar.php?ws_id=<?php echo $workplace['ws_id'] ?>">Calendar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -37,6 +37,35 @@ class ReservationDB extends Database
         return $stmt->fetchAll();
     }
 
+    public function fetchCountByClient($client_id)
+    {
+        $sql = "SELECT count(wp.reservation_id)
+            FROM wp_reservation wp 
+            JOIN client c on wp.client_id = c.client_id
+            WHERE wp.client_id = :client_id 
+            AND wp.reservation_start >= NOW()
+            GROUP BY c.client_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['client_id' => $client_id]);
+        return $stmt->fetch();
+    }
+
+    public function fetchByWorkplace($ws_id, $start, $end)
+    {
+        $sql = "SELECT wp.*, w.name  
+            FROM wp_reservation wp 
+            JOIN workplace w on w.ws_id = wp.ws_id
+            WHERE wp.ws_id = :ws_id
+            AND reservation_start <= :end AND reservation_end >= :start";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'ws_id' => $ws_id,
+            'start' => $start,
+            'end' => $end
+        ]);
+        return $stmt->fetchAll();
+    }
+
     public function deleteItem($reservation_id)
     {
         $sql = "DELETE FROM wp_reservation WHERE reservation_id = :reservation_id";
@@ -110,10 +139,10 @@ class ReservationDB extends Database
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "reservation_id" => $id,
-            "start" => $start, 
-            "end" => $end, 
-            "ws_id" => $ws_id, 
-            "total_price" => $total_price, 
+            "start" => $start,
+            "end" => $end,
+            "ws_id" => $ws_id,
+            "total_price" => $total_price,
             "days_of_reservation" => $days_of_reservation
         ]);
     }
