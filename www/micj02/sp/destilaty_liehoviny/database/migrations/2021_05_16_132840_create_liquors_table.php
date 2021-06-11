@@ -18,7 +18,9 @@ class CreateLiquorsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('image');
-            $table->string('category');
+            $table->integer('category');
+            $table->float('volume'); # in liters
+            $table->float('alcohol_percentage');
             $table->float('price');
             $table->string('currency')->default('€');
         });

@@ -76,7 +76,24 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <!-- Page Content -->
+            <div class="container min-vh-100">
+
+                <div class="row">
+                @yield('content')
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+
+            <!-- Footer -->
+            <footer class="py-2 bg-dark">
+                <div class="container">
+                    <p class="m-0 text-white text-muted"><strong>D&L</strong> Copyright &copy; Your Website 2020</p>
+                </div>
+                <!-- /.container -->
+            </footer>
         </main>
     </div>
 </body>
