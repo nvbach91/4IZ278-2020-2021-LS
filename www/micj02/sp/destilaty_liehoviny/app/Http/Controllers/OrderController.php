@@ -37,7 +37,7 @@ class OrderController extends Controller
 //            $data
 //        ]);
 
-        return redirect('/' . auth()->user()->id . '/order/');
+        return redirect('/' . auth()->user()->getAuthIdentifierName() . '/order/');
     }
 
     public function show(Order $order)
