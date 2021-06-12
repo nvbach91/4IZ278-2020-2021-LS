@@ -14,6 +14,7 @@ class CreateUserAddressesTable extends Migration
     public function up()
     {
         Schema::create('user_addresses', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
             $table->string('address_1');
@@ -24,9 +25,7 @@ class CreateUserAddressesTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone_number')->nullable();
-            $table->unsignedBigInteger('user_id');
-
-            $table->index('user_id');
+            $table->unsignedBigInteger('user_id')->index()->constrained()->onDelete('cascade');
         });
     }
 

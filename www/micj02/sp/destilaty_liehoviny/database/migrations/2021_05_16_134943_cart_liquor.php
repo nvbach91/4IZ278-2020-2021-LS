@@ -14,13 +14,11 @@ class CartLiquor extends Migration
     public function up()
     {
         Schema::create('creates_cart_liquor_pivot_table', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('cart_id');
-            $table->unsignedBigInteger('liquor_id');
-
-            $table->index('cart_id');
-            $table->index('liquor_id');
+            $table->unsignedBigInteger('cart_id')->index()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('liquor_id')->index()->constrained()->onDelete('cascade');
         });
     }
 

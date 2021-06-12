@@ -21,9 +21,4 @@ class Session extends Model
     {
         return $this->hasOne(Cart::class);
     }
-
-    public function get_or_create_cart()
-    {
-        return $this->cart() ?: $this->cart()->create();
-    }
 }

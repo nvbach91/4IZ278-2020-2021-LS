@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,9 +10,12 @@ class CartController extends Controller
 {
     public function edit(Request $request)
     {
-        dd($value = $request->session()->get('id'));
-
-        return view('cart.edit', compact('user'));
+        $session = Session::where('id', $request->session()->getId())->first();
+        $cart = $session->cart;
+        if (!$cart) {
+            $cart = $session->cart()->create();
+        }
+        return view('cart.edit', compact('cart'));
     }
 
     public function update(User $user)
