@@ -1,5 +1,5 @@
-<?php require './incl/header.php'; ?>
-<?php include './incl/navbar.php'; ?>
+<?php include __DIR__ . '/includes/header.php'; ?>
+<?php include __DIR__ . '/includes/navbar.php'; ?>
 <div>
   <form>
     <div>
@@ -13,5 +13,6 @@
     <button type="submit"">Login</button>
   </form>
   <div>Don't have an acount? <a href=" registration.php">Register Now</a>
+</div>
 </div>
 <?php include __DIR__ . '/includes/footer.php'; ?>

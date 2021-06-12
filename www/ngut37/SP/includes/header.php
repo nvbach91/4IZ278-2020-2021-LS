@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link href="./assets/css/style.css" type="text/css" rel="stylesheet">
+  <link href="./assets/css/styles.css" type="text/css" rel="stylesheet">
   <title>Ramenify</title>
 </head>
 

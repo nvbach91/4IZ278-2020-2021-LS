@@ -4,7 +4,6 @@
 
 /* NAVBAR */
 .navbar {
-  height: 6vh;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -30,7 +29,6 @@
 
 /* FOOTER */
 .footer {
-  height: 6vh;
   display: flex;
   justify-content: center;
   align-items: baseline;
@@ -38,24 +36,12 @@
 
 /* LANDING */
 .landing {
-  height: 85vh;
   display: flex;
   flex-direction: row;
   width: 100%;
 }
 
-.landing .section {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.landing .ramenImage {
-  width: 500px;
-}
-
 .introText {
   text-align: center;
-  width: 60%;
+  width: 100%
 }

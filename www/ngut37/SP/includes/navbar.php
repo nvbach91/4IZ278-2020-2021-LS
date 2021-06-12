@@ -2,8 +2,7 @@
   <span class="ramenifyLogo">Ramenify</span>
   <div class="controls">
     <div>
-      <span>
-        <a href="login.php">Login</a></span>
+      <span>Shop</span>
       <span>About</span>
     </div>
     <div class="icons">
