@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Session extends Model
+{
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+
+    use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function get_or_create_cart()
+    {
+        return $this->cart() ?: $this->cart()->create();
+    }
+}

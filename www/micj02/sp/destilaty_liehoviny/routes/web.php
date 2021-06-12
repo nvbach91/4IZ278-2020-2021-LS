@@ -24,16 +24,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LiquorController::class, 'index'])->name('liquor.index');
 Route::get('/liquor/{liquor}', [LiquorController::class, 'show'])->name('liquor.show');
 
-Route::get('/{user}/cart/edit', [CartController::class, 'edit'])->name('cart.edit');
-Route::patch('/{user}/cart/edit', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart/edit', [CartController::class, 'edit'])->name('cart.edit');
+Route::patch('/cart/edit', [CartController::class, 'update'])->name('cart.update');
 
 Route::get('/{user}/address/edit', [UserAddressController::class, 'edit'])->name('address.edit');
 Route::patch('/{user}/address', [UserAddressController::class, 'update'])->name('address.update');
 
-Route::get('/{user}/order', [OrderController::class, 'order.index']);
-Route::get('/{user}/order/create', [OrderController::class, 'order.create']);
-Route::post('/{user}/order', [OrderController::class, 'order.store']);
-Route::get('/{user}/order/{order}', [OrderController::class, 'order.show']);
+Route::get('/order', [OrderController::class, 'order.index']);
+Route::get('/order/create', [OrderController::class, 'order.create']);
+Route::post('/order', [OrderController::class, 'order.store']);
+Route::get('/order/{order}', [OrderController::class, 'order.show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

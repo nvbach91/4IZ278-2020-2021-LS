@@ -9,9 +9,11 @@ class Cart extends Model
 {
     use HasFactory;
 
-    public function user()
+    public $fillable = ['session_id', 'total_price'];
+
+    public function session()
     {
-        return$this->belongsTo(User::class);
+        return$this->belongsTo(Session::class);
     }
 
     public function liquors()

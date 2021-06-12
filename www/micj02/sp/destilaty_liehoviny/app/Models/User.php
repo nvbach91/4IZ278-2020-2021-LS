@@ -47,9 +47,9 @@ class User extends Authenticatable
         return $this->hasOne(UserAddress::class);
     }
 
-    public function cart()
+    public function session()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasOne(Session::class);
     }
 
     public function orders()
