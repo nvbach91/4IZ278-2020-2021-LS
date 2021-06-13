@@ -3,10 +3,10 @@
     <div class="container container-fluid col-md-12">
         <div class="row">
             <div n:foreach="$articles as $article" class="card col-md-5 mr-4 ml-lg-5">
-                <div class="card-header">{$article['title']}<span class="float-right" n:if="$article['teamId'] !== null">{$article['teamName']}</span></div>
+                <div class="card-header"><a n:href="Article:detail $article['id']">{$article['title']}</a><span class="float-right" n:if="$article['teamId'] !== null">{$article['teamName']}</span></div>
                 <div class="card-body">
-                    {if strlen($article['content']) > 250}
-                        {mb_substr($article['content'], 0, 250)|noescape} ...
+                    {if strlen($article['content']) > 150}
+                        {mb_substr($article['content'], 0, 150)|noescape} ...
                     {else}
                         {$article['content']|noescape}
                     {/if}

@@ -7,8 +7,7 @@ namespace App\Domain\Enum;
 class EmailRecipientEnum
 {
     public const TEAM = 'TÝM';
-    public const COACHES = 'TRENÉŘI';
-    public const EXECUTIVES = 'VEDENÍ';
+    public const STAFF = 'ZAMĚSTNANCI';
     public const GLOBAL = 'VŠICHNI';
     public const ACTIVE_PLAYERS = 'AKTIVNÍ HRÁČI';
 
@@ -16,8 +15,7 @@ class EmailRecipientEnum
     {
         return [
             self::TEAM,
-            self::COACHES,
-            self::EXECUTIVES,
+            self::STAFF,
             self::GLOBAL,
             self::ACTIVE_PLAYERS,
         ];

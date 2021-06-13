@@ -62,4 +62,9 @@ class PlayerRepository extends Repository
         return $this->where([PlayerEntity::IS_ACTIVE => true])->getAll();
     }
 
+    public function findActiveByTeamId(int $teamId): array
+    {
+        return $this->where([PlayerEntity::TEAM_ID => $teamId, PlayerEntity::IS_ACTIVE => true])->getAll();
+    }
+
 }

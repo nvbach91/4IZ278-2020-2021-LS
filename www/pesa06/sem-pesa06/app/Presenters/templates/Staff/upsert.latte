@@ -39,13 +39,20 @@
             </form>
         </div>
     </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            Pozice
+            <span class="float-right" n:if="$staffId !== null"><a n:href="Staff:addPosition $staffId" class="btn btn-sm btn-outline-primary">Přidat pozici</a></span>
+        </div>
+        {control staffPositionGrid}
+    </div>
 
 </div>
 <script>
     function suggest() {
         let firstName = document.getElementById('firstName').value;
         let lastName = document.getElementById('lastName').value;
-        fetch('http://localhost:800/cechie-dubec/www/member/suggest-member?firstName=' + firstName + '&lastName=' + lastName).then(res => res.json()).then(response => {
+        fetch('http://localhost:800/web-apps/4IZ278-2020-2021-LS/www/pesa06/sem-pesa06/www/backoffice.member/suggest-member?firstName=' + firstName + '&lastName=' + lastName).then(res => res.json()).then(response => {
             if (response.error === true) {
                 document.getElementById('facrId').value = 'Nenalezeno!';
                 document.getElementById('memberId').value = null;

@@ -28,7 +28,7 @@ class MemberRepository extends Repository
     public function suggest(string $firstName, string $lastName): array
     {
         $result = $this->connection->query('
-        SELECT m.id, m.facr_id
+        SELECT m.id, m.facr_id, m.first_name, m.last_name
         FROM member m
         WHERE m.first_name LIKE %~like~ AND m.last_name LIKE %~like~
         ', $firstName, $lastName)->fetch();
@@ -38,8 +38,10 @@ class MemberRepository extends Repository
             ];
         }
         return [
-            'id' => $result['id'],
-            'facrId' => $result['facr_id']
+            'memberId' => $result['id'],
+            'facrId' => $result['facr_id'],
+            'firstName' => $result['first_name'],
+            'lastName' => $result['last_name']
         ];
     }
 
@@ -72,7 +74,7 @@ class MemberRepository extends Repository
         ')->fetchPairs('id', 'email');
     }
 
-    public function getExecutivesMails(): array
+    public function getStaffMails(): array
     {
         return $this->connection->query('
         SELECT m.id, m.email
@@ -81,16 +83,5 @@ class MemberRepository extends Repository
         WHERE m.email IS NOT NULL
         ')->fetchPairs('id', 'email');
     }
-
-    public function getCoachesMails(): array
-    {
-        return $this->connection->query('
-        SELECT m.id, m.email
-        FROM staff s 
-        LEFT JOIN member m ON s.member_id = m.id
-        WHERE m.email IS NOT NULL AND s.position = %s
-        ', StaffTypeEnum::COACH)->fetchPairs('id', 'email');
-    }
-
 
 }

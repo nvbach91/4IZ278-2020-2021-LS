@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Entity;
+namespace Domain\Entity;
 
 
 use DateTime;
@@ -46,12 +46,12 @@ class DocumentEntity extends Entity
         $this->row->{self::TYPE} = $type;
     }
 
-    public function getAmount(): int
+    public function getAmount(): float
     {
         return $this->row->{self::AMOUNT};
     }
 
-    public function setAmount(int $amount): void
+    public function setAmount(float $amount): void
     {
         $this->row->{self::AMOUNT} = $amount;
     }

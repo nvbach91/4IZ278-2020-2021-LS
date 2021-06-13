@@ -5,7 +5,6 @@ namespace App\Components\Form\Login;
 
 
 use Nette\Application\UI\Form;
-use Nette\Forms\FormFactory;
 use Nette\Security\AuthenticationException;
 
 class LoginFormFactory

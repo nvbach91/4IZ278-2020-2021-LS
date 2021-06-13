@@ -14,6 +14,8 @@ parameters:
         port: 587
     commands:
         - App\Service\Console\CreateUserCommand
+    bankNumber: inlocal
+    bankAccountNumber: inlocal
 
 
 application:
@@ -33,7 +35,8 @@ di:
         tags: no
 
 services:
-    router: App\Router\RouterFactory::createRouter
+    router: @App\Router\RouterFactory::createRouter
+    - App\Router\RouterFactory
 
     db:
         factory: LeanMapper\Connection(%leanmapper%)
@@ -46,6 +49,7 @@ services:
 
     - Etyka\Mapper\Mapper
     - LeanMapper\DefaultEntityFactory
+    - Latte\Engine
 
     - Domain\Repository\MemberRepository
     - App\Components\Grid\MemberGridBuilder
@@ -60,6 +64,13 @@ services:
     - Domain\Repository\EmailTemplateRepository
     - App\Components\Grid\EmailTemplateGridBuilder
     - Domain\Repository\AccountRepository
+    - App\Components\Grid\PositionGridBuilder
+    - Domain\Repository\PositionRepository
+    - Domain\Repository\StaffPositionTeamRepository
+    - App\Components\Grid\StaffPositionGridBuilder
+    - App\Components\Grid\AccountGridBuilder
+    - App\Components\Grid\DocumentGridBuilder
+    - Domain\Repository\DocumentRepository
 
 
     - App\Components\Form\Member\MemberFormFactory
@@ -76,12 +87,24 @@ services:
     - App\Components\Form\Email\SendEmailFormProcessor
     - App\Components\Form\Login\LoginFormFactory
     - App\Components\Form\Login\LoginFormProcessor
+    - App\Components\Form\Position\PositionFormFactory
+    - App\Components\Form\Position\PositionFormProcessor
+    - App\Components\Form\Staff\StaffAddPositionFormFactory
+    - App\Components\Form\Staff\StaffAddPositionFormProcessor
+    - App\Components\Form\Account\AccountFormFactory
+    - App\Components\Form\Account\AccountFormProcessor
+    - App\Components\Form\Document\CreateDocumentForTeamFormFactory
+    - App\Components\Form\Document\CreateDocumentForTeamFormProcessor
+    - App\Components\Form\Document\CreateDocumentForMemberFormFactory
+    - App\Components\Form\Document\CreateDocumentForMemberFormProcessor
 
     - App\Service\Import\MemberXlsImportService
     - App\Service\Import\PlayerXlsImportService
 
     - App\Handler\PlayerIsActiveToggleHandler
     - App\Handler\AssignPlayersToTeamsHandler
+    - App\Handler\DeleteStaffPositionTeamPairingHandler
+    - App\Handler\Pdf\PdfExportHandler(%bankAccountNumber%, %bankNumber%)
 
     - App\Service\Email\EmailService(%mailerData%)
 

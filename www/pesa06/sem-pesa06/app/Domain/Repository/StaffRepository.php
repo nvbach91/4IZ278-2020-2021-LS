@@ -26,4 +26,10 @@ class StaffRepository extends Repository
         ', $teamId)->fetchAll(), StaffEntity::class);
     }
 
+    public function prepareSelect(): array
+    {
+        return $this->connection->query('SELECT id, CONCAT(first_name, " ", last_name) AS name
+        FROM staff')->fetchPairs('id', 'name');
+    }
+
 }

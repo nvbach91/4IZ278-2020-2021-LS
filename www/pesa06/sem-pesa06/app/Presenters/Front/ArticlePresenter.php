@@ -25,17 +25,23 @@ class ArticlePresenter extends LayoutPresenter
 
     public function actionDefault(int $page = 0): void
     {
-        bdump($this->articleRepository->findPagedIds($page));
         $this->template->articles = array_map(function (Row $articleRow) {
             try {
                 return $this->articleAssembler->assembly($articleRow['id'])->toArray();
             } catch (ArticleAssemblerException $e) {
                 $this->flashMessage($e->getMessage(), 'alert alert-danger');
-                //TODO
-                $this->redirect('');
             }
         }, $this->articleRepository->findPagedIds($page));
-        bdump($this->template->articles);
+    }
+
+    public function actionDetail(int $id): void
+    {
+        try {
+            $this->template->article = $this->articleAssembler->assembly($id)->toArray();
+        } catch (ArticleAssemblerException $e) {
+            $this->flashMessage($e->getMessage(), 'alert alert-danger');
+            $this->redirect('Article:default');
+        }
     }
 
 }

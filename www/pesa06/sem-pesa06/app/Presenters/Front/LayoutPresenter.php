@@ -26,6 +26,7 @@ class LayoutPresenter extends Presenter
         $this->setLayout(__DIR__ . '/../templates/Front/@layout.latte');
         $this->template->menu = $this->teamRepository->prepareMenu();
         $this->template->logoPath = __DIR__ . '../../files/cechie_dubec_logo.jpeg';
+        $this->template->title = 'abcd';
     }
 
     public function formatTemplateFiles(): array

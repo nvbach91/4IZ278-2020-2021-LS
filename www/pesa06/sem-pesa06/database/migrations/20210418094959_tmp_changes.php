@@ -16,10 +16,18 @@ final class TmpChanges extends AbstractMigration
         $position->addIndex('id');
         $position->save();
 
+        $values = [
+            [
+                'name' => 'ROLE_ADMIN',
+                'created_by' => 'console'
+            ],
+        ];
+        $position->insert($values)->save();
+
         $staffPosition = $this->table('staff_position_team');
         $staffPosition->addColumn('staff_id', 'integer', ['null' => false]);
         $staffPosition->addColumn('position_id', 'integer', ['null' => false]);
-        $staffPosition->addColumn('team_id', 'integer', ['null' => false]);
+        $staffPosition->addColumn('team_id', 'integer', ['null' => true, 'default' => null]);
         $staffPosition->addForeignKey('staff_id', 'staff', 'id');
         $staffPosition->addForeignKey('position_id', 'position', 'id');
         $staffPosition->addForeignKey('team_id', 'team', 'id');
