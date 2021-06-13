@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LiquorController::class, 'index'])->name('liquor.index');
 Route::get('/liquor/{liquor}', [LiquorController::class, 'show'])->name('liquor.show');
 
+Route::post('add-to-cart/{liquor}', [CartController::class, 'add_to_cart'])->name('cart.add_to_cart');
+Route::post('remove-from-cart/{liquor}', [CartController::class, 'remove_from_cart'])->name('cart.add_to_cart');
+
 Route::get('/cart/edit', [CartController::class, 'edit'])->name('cart.edit');
 Route::patch('/cart/edit', [CartController::class, 'update'])->name('cart.update');
 

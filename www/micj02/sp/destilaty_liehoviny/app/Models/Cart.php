@@ -9,7 +9,23 @@ class Cart extends Model
 {
     use HasFactory;
 
-    public $fillable = ['session_id', 'total_price'];
+    public $fillable = ['session_id'];
+
+    public function total_quantity()
+    {
+        return array_sum($this->liquors()->pluck('quantity')->toArray());
+    }
+
+    public function total_price()
+    {
+        $quantity_price_array = $this->fresh()->liquors()->get(['quantity', 'price'])->toArray();
+        $total_price = 0;
+        foreach($quantity_price_array as $qp)
+        {
+            $total_price = $total_price + $qp['quantity'] * $qp['price'];
+        }
+        return $total_price;
+    }
 
     public function session()
     {
@@ -18,6 +34,6 @@ class Cart extends Model
 
     public function liquors()
     {
-        return $this->belongsToMany(Liquor::class);
+        return $this->belongsToMany(Liquor::class)->withPivot('quantity');
     }
 }

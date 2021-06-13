@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'D&L') }}
@@ -75,20 +75,22 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                                 </svg>
-                                Košík
+                                Košík <span id="cart_quantity" class="badge badge-danger">{{ $cart ? $cart->total_quantity() : 0 }}</span>
                             </button>
+
                         </a>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="pt-5 mt-4">
             <!-- Page Content -->
             <div class="container min-vh-100">
 
                 <div class="row">
-                @yield('content')
+                    @include('layouts.sidebar')
+                    @yield('content')
                 </div>
                 <!-- /.row -->
 
@@ -96,7 +98,7 @@
             <!-- /.container -->
 
             <!-- Footer -->
-            <footer class="py-2 bg-dark">
+            <footer class="mt-2 py-4 bg-dark">
                 <div class="container">
                     <p class="m-0 text-white text-muted"><strong>D&L</strong> Copyright &copy; Your Website 2020</p>
                 </div>

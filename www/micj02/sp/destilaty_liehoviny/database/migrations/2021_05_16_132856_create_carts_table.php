@@ -17,7 +17,6 @@ class CreateCartsTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
-            $table->float('total_price')->default(0);
             $table->string('session_id')->index()->constrained('sessions')->onDelete('cascade');
         });
     }
