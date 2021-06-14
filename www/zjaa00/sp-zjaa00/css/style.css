@@ -1,0 +1,1459 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Poppins", sans-serif; /* FONT */
+  background: #111; /* main background */
+}
+#admin_page{
+  background: #fff;
+  margin: 0 auto;
+  max-width: 780px;
+  padding: 15px;
+}
+#admin_page div {
+  margin-bottom: 20px;
+}
+.no_results {
+  padding-left: 10px;
+}
+.manager_tools {
+  display: flex;
+  margin-top: 10px;
+  justify-content: flex-start;
+  width: 100px;
+}
+.manager_tools > a {
+  margin: 0 5px 10px 0;
+}
+#create_buttons {
+  display: flex;
+  margin: 105px 0 -120px 0;
+  justify-content: center;
+}
+  
+#drinks_page {
+  min-height: 101vh; /* always show scrollbar */
+}
+#orders_page {
+  min-height: 101vh; /* always show scrollbar */
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 20px; /* top margin */
+  left: 0;
+  right: 0;
+
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 65px; /* height */
+  width: 90%; /* width */
+  /* max-width: 1510px; */ /* max width on desktop */
+  
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 200;
+  
+  background: rgb(231,66,11); /* background color */
+  background: linear-gradient(52deg, rgba(231,66,11,1) 9%, rgba(231,125,11,1) 34%, rgba(230,169,12,1) 72%, rgba(249,255,0,1) 100%);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  border-radius: 20px; /* border radius */
+}
+
+nav > * {
+  margin: 0 20px 0 0;
+}
+
+nav .logo {
+  color: #fff; /* font color */
+  font-size: 24px; /* font size */
+  font-weight: 700; /* font thickness */
+  text-transform: uppercase; /* font mode */
+  cursor: pointer;
+  padding: 1px 4px; /* border stretch */
+  border: 3px solid #fff; /* border customization */
+  border-radius: 10px; /* border radius */
+
+  /* unselect-ability */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+/* LINKS */
+nav .links > a {
+  color: #fff; /* font color */
+  text-decoration: none;
+  font-size: 18px; /* font size */
+  font-weight: bold;
+  box-shadow: 0px 0px 100px rgba(255, 255, 255, 0) inset;
+
+  padding: 10px;
+  border-radius: 25px;
+
+  transition: box-shadow 0.5s, color 0.2s;
+}
+nav .links a:hover {
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.493) inset;
+  color: #111;
+}
+nav .links a:focus {
+  color: rgba(255, 255, 255, 0.473);
+}
+
+/* SEARCHBAR */
+nav .searchbar {
+  position: relative;
+  height: 42px;
+  width: 25%;
+  min-width: 180px;
+}
+
+nav .search_input {
+  border: none;
+  outline: 0;
+  border-radius: 20px; /* border radius */
+  height: 100%;
+  width: 100%;
+  
+  font-weight: 600; /* font thickness */
+  background: #f5f5f5; /* background color */
+  padding: 0.75rem 1.8rem 0.75rem 2.3rem;
+  opacity: 0.4; /* opacity */
+  transition: 0.5s opacity;
+}
+nav .search_input:focus {
+  opacity: 0.8;
+}
+/* centralise placeholder */
+::-webkit-input-placeholder {
+  text-align: center;
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+:-ms-input-placeholder {
+  text-align: center;
+}
+
+nav .search_icon {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  font-size: 15px;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+nav .clear_icon {
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 10px;
+  font-size: 15px;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+nav .user {
+  display: flex;
+  align-content: center;
+  margin-left: auto;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+nav .menu {
+  right: 2px;
+  bottom: 17px;
+  font-size: 30px;
+  
+}
+nav .login {
+  right: 2px;
+  bottom: 21px;
+}
+nav .login p {
+  display: inline-block;
+}
+
+nav .login > * {
+  color: #fff;  
+  text-decoration: none;
+  font-size: 18px;
+}
+
+
+/* FILTER */
+#filter_slider {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 33px 2vw 0 2vw; /* padding */
+  width: 90%; /* width */
+  height: auto;
+  /* max-width: 1510px; */ /* max width */
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  background: #fff; /* background */
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  border-radius: 0 0 20px 20px;
+}
+
+#filter_slider div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+}
+
+#filter_slider div a {
+  color: #111; /* filter options font color */
+  text-decoration: none;
+  font-size: 15px; /* filter options font size */
+  font-weight: bold; /* filter options font thickness */
+  box-shadow: 0px 0px 100px rgba(255, 255, 255, 0) inset;
+
+  padding: 10px 15px;
+  border-radius: 25px; /* border radius */
+
+  transition: box-shadow 0.5s, color 0.2s;
+}
+#filter_slider div a:first-child {
+  margin-right: 5px; /* space between pairs of filter options */
+}
+#filter_slider .selected {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.493) inset;
+  color: rgba(17, 17, 17, 0.466);
+}
+
+#ok {
+  margin: 10px;
+  text-align: center;
+  background-size: 200% auto;
+  display: block;
+  background-image: linear-gradient( /* background */
+    to right,
+    #F09819 0%,
+    #EDDE5D  51%,
+    #F09819  100%
+  );
+}
+
+#shuffle {
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  background-size: 200% auto;
+  display: block;
+  background-image: linear-gradient( /* background */
+    to right,
+    #757f9a 0%,
+    #d7dde8 51%,
+    #757f9a 100%
+  );
+}
+
+
+/* ORDERS */
+#menu_slider {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  right: 0;
+  margin: 0 5% 0 auto;
+  width: 320px; /* max width */
+  z-index: 100;
+  background: #fff; /* background */
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  height: auto;
+  padding: 35px 32px 25px 32px; /* padding */
+  
+  border-radius: 0 0 20px 20px;
+}
+#menu_slider > a {
+  display: table;
+  margin: 5px auto;
+
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+
+  transition: 0.5s color;
+}
+#menu_slider > a:hover {
+  color: #e41b1b;
+}
+#menu_slider .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px auto 10px auto;
+}
+#menu_slider .head h3 {
+  margin: 0;
+}
+#menu_slider .head a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: 0.5s;
+}
+#menu_slider .head a:hover {
+  color: rgb(54, 54, 54);
+}
+
+#menu_slider .content {
+  font-size: 15px;
+  min-width: 239px;
+}
+#menu_slider .my_order {
+  margin: 0px auto;
+}
+
+#menu_slider .order_item {
+  display: inline-grid;
+  width: 100%;
+  margin: 0 0 5px 0;
+  grid-template-columns: 1fr 1fr 0.1fr 1.5fr 2fr 45px;
+  grid-template-rows: 20px 20px 35px;
+  grid-column-gap: 5px;
+  grid-template-areas:
+  "name name name name . delete"
+  "amount ks times price sum delete"
+  "plus minus . . . .";
+}
+
+.order_item select {
+  grid-area: name;
+  justify-self: left;
+  align-self: center;
+  border: none;
+  background-color: #ffffff12;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+  transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out;
+  
+}
+.order_item select:focus {
+  box-shadow: 0 1px 4px rgb(0 0 0 / 10%), 0 -1px 5px rgb(0 0 0 / 10%);
+  background-color: #ffffff75;
+  outline: none;
+}
+.order_item p {
+  margin: 0;
+}
+.order_item .amount {
+  grid-area: amount;
+  justify-self: right;
+  align-self: center;
+}
+#menu_slider .order_item p:nth-of-type(2) {
+  grid-area: ks;
+  justify-self: left;
+  align-self: center;
+}
+#menu_slider .order_item p:nth-of-type(3) {
+  grid-area: times;
+  justify-self: center;
+  align-self: center;
+}
+.order_item .drink_price {
+  grid-area: price;
+  justify-self: left;
+  align-self: center;
+}
+#menu_slider .order_item p:nth-of-type(5) {
+  grid-area: sum;
+  justify-self: right;
+  align-self: center;
+}
+#menu_slider button,
+#menu_slider input[type='submit'] {
+  background: none;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+}
+.order_item .delete {
+  grid-area: delete;
+  justify-self: right;
+  align-self: center;
+  background: #e41b1b;
+  width: 35px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+.order_item .delete button {
+  color: white;
+  width: 35px;
+  height: 35px;
+}
+.order_item .delete:hover {
+  background: #e41b1b93;
+  color: firebrick;
+}
+.order_item .plus {
+  grid-area: plus;
+  justify-self: stretch;
+  align-self: stretch;
+}
+.order_item .plus button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.order_item .minus {
+  grid-area: minus;
+  justify-self: stretch;
+  align-self: stretch;
+}
+.order_item .minus button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.overall {
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
+  border-top: dotted;
+  border-bottom: dotted;
+  margin: 5px 0 20px 0;
+}
+.overall > * {
+  margin: 1px 0 1px 0;
+}
+
+#order_options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+#order_options > * {
+  font-weight: bold;
+  font-size: 17px;
+  padding: 0;
+  text-decoration: none;
+  color: black;
+}
+#add {
+  transition: 0.5s;
+}
+#menu_slider input[type='submit'] {
+  display: inline-block;
+}
+
+
+/* BOX */
+#drinks_box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-between;
+
+  margin: 139px auto;
+  margin-bottom: 50px;
+  padding: 2%;
+  width: 90%;
+  max-width: 1400px;
+  min-height: 141px;
+
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  border-radius: 20px; /* radius */
+  background-image: linear-gradient(252deg, #292929 0%, black 100%); /* background */
+}
+
+/* LOADING SPINNER */
+#spinner {
+  width: 100%;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto;
+  flex-basis: 100%;
+}
+
+/* NO MATCH MESSAGE */
+#drinks_box > h3,
+#orders_box > h3 {
+  text-align: center;
+  color: #fff;
+  font-size: 25px;
+  margin: 45px 0;
+}
+
+/* CARD */
+#drinks_box .card {
+  position: relative;
+  margin: 25px;
+  padding: 2vw 1.5vw 1.5vw 1.5vw;
+  width: 37%;
+  height: auto;
+
+  display: flex;
+  align-items: stretch;
+
+  background: rgba(54, 54, 54, 0.63);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  border: 0px;
+  border-radius: 20px; /* radius */
+
+  transition: 0.5s;
+}
+#drinks_box .card .add,
+#drinks_box .card .unavailable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+#drinks_box .card .add {
+  font-size: 17px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+#drinks_box .card .unavailable {
+  background: #ffffff96;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#drinks_box .card .add > * {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff7a;
+  border-radius: 0 20px 0 20px;
+}
+/* image */
+#drinks_box .card .img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 370px;
+  pointer-events: none;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: 0.5s;
+}
+
+/* background circle */
+.circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.circle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 145, 0); /* circle background color */
+  clip-path: circle(120px at center);
+  transition: 0.5s;
+}
+
+/* footer .trademark {
+  padding: 2%;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 0.7em;
+
+  width: 90%;
+  max-width: 1400px;
+  
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  border-radius: 20px 20px 0 0;
+  background-image: linear-gradient(252deg, #434343 0%, black 100%);
+} */
+
+#drinks_box .content {
+  position: relative;
+  width: 53%;
+  left: 20%;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.5s;
+}
+
+/* name of a drink */
+#drinks_box .content h2 {
+  color: #111;
+  text-transform: uppercase;
+  font-size: 2.1em;
+  font-weight: 600;
+
+  margin: 0;
+}
+.reg {
+  font-size: 60%;
+  vertical-align: super;
+}
+
+/* volume of drink */
+#drinks_box .content h3 {
+  color: #111;
+  font-size: 1.8em;
+
+  margin: 0 0 5% 0;
+}
+/* deadly drinks' exception */
+#drinks_box .card.deadly:not(.inflammatory) .content h2,
+#drinks_box .card.deadly:not(.inflammatory) .content h3 {
+  color: rgba(255, 255, 255, 0.836);
+}
+/* ingredients */
+#drinks_box .content ul {
+  color: rgba(0, 0, 0, 0.712); /* font color */
+  font-size: 1.1em;
+  font-weight: bold;
+  line-height: 1.4em;
+  letter-spacing: 0.1em;
+
+  margin-bottom: 20px;
+  padding-left: 25px;
+}
+/* deadly drinks' exception */
+#drinks_box .card.deadly:not(.inflammatory) .content ul {
+  color: rgba(255, 255, 255, 0.836);
+}
+
+/* price tag and icons */
+.info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.price_tag {
+  position: relative;
+  width: 4em;
+  height: 4em;
+
+  background: #ffffff7a; /* background color */
+  color: #111; /* font color */
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 1.4em;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.info i {
+  position: relative;
+
+  color: #111; /* icon color */
+  font-size: 3em;
+
+  margin-left: 10px; /* space between info items */
+}
+/* deadly drinks' exception */
+#drinks_box .card.deadly:not(.inflammatory) .info i {
+  color: rgba(255, 255, 255, 0.836); /* color of deadly drink's icons */
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 15px;
+}
+footer > * {
+  margin: 10px;
+}
+
+/* DESKTOP HOVER CONFIG */
+@media (min-width: 1080px) {
+  
+  #ok:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  #shuffle:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  #drinks_box .card:hover .circle::before {
+    background: #e6a50c; /* casual drink's hover card color */
+    clip-path: circle(400px at center);
+  }
+
+  #drinks_box .card.inflammatory:not(.deadly):hover .circle::before {
+    background: #da3c3c; /* inflammatory drink's hover card color */
+  }
+
+  #drinks_box .card.deadly:not(.inflammatory):hover .circle::before {
+    background: #000a01; /* deadly drink's hover card color */
+  }
+
+  #drinks_box .card.inflammatory.deadly:hover .circle::before {
+    background: rgb(218, 60, 60); /* both deadly & inflammatory drink's hover card color */
+    background: linear-gradient(
+      180deg,
+      rgba(218, 60, 60, 1) 0%,
+      rgba(183, 50, 50, 1) 49%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
+
+  #filter_slider a:hover:not(.selected) {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.493) inset;
+    color: rgba(17, 17, 17, 0.466);
+  }
+
+  #drinks_box .card:hover .img {
+    left: 80%;
+    width: 250px;
+    height: 435px;
+  }
+
+  #drinks_box .card:hover .content {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #add:hover {
+    color: #f28e1c;
+  }
+
+}
+
+/* 2 COLUMNS */
+@media (max-width: 1528px) and (min-width: 1080px) {
+  .manager_tools {
+    flex-direction: column;
+  }
+  
+  #drinks_box .card {
+    width: 300px;
+    height: 400px;
+  }
+  #drinks_box .card:hover {
+    height: 600px; /* card on hover height in viewport width interval above */
+  }
+
+  #drinks_box .content {
+    width: 100%; /* content on hover width in viewport width interval above */
+  }
+
+  #drinks_box .card:hover .img {
+    top: 70%;
+    left: 65%;
+    width: 210px;
+    height: 300px;
+  }
+}
+
+/* MOBILE CONFIG */
+@media (max-width: 1079px) {
+  nav {
+    position: relative;
+
+    top: 0;
+    margin-top: 20px;
+  }
+
+  #filter_slider,
+  #menu_slider {
+    position: relative;
+
+    top: 0;
+    margin-top: -30px;
+  }
+  #menu_slider {
+    margin-top: -20px;
+  }
+
+  #create_buttons {
+    margin: 20px 0 20px 0;
+  }
+  .manager_tools {
+    flex-direction: column;
+  }
+
+  #drinks_box {
+    margin: 25px 0;
+
+    width: 100%;
+  }
+
+  #drinks_box .card {
+    width: 375px;
+    height: auto;
+
+    background: #e6a50c; /* casual drink's background on mobile */
+  }
+
+  #drinks_box .card.inflammatory:not(.deadly) {
+    background: #da3c3c; /* inflammatory drink's background on mobile */
+  }
+
+  #drinks_box .card.deadly:not(.inflammatory) {
+    background: #000a01; /* deadly drink's background on mobile */
+  }
+
+  #drinks_box .card.inflammatory.deadly {
+    background: rgb(218, 60, 60); /* both inflammatory & deadly drink's background on mobile */
+    background: linear-gradient(
+      90deg,
+      rgba(218, 60, 60, 1) 0%,
+      rgba(183, 50, 50, 1) 49%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
+
+  .circle {
+    clip-path: circle(0px at center); /* delete circle behind drink */
+  }
+
+  #drinks_box .card .img {
+    width: 45%;
+    height: 105%; /* image size */
+    left: 77%; /* image alignment */
+  }
+
+  #drinks_box .content {
+    visibility: visible;
+    opacity: 1;
+
+    left: 0;
+
+    font-size: 75%; /* price's and ingredients' font size */
+  }
+  
+}
+
+@media (max-width: 902px) {
+  
+  #drinks_box .card {
+    width: 42%;
+    max-width: none;
+    padding: 2vw 1.5vw 2vw 2vw;
+  }
+
+  #drinks_box .content {
+    font-size: 65%;
+  }
+  
+  /* hiding old links and transforming navbar */
+  nav {
+    justify-content: flex-start;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    margin: 0;
+  }
+  nav .links {
+    display: none;
+  }
+
+  /* new navbar */
+  .mobile_links {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0 20px 0; /* new nav's top and bottom margin */
+  }
+  .mobile_links a {
+    text-decoration: none;
+    color: #111; /* font color */
+    background: #fff; /* background color */ 
+    border-radius: 25px; /* radius */
+    font-size: 0.9em;
+    font-weight: bold;
+    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0) inset;
+
+    padding: 10px; /* size */
+    transition: 0.5s background-color;
+  }
+  .mobile_links a:hover,
+  .mobile_links a:focus {
+    background: rgb(231,66,11); /* on click color */
+    background: linear-gradient(52deg, rgba(231,66,11,1) 9%, rgba(231,125,11,1) 34%, rgba(230,169,12,1) 72%, rgba(249,255,0,1) 100%);
+  }
+
+  nav .searchbar {
+    width: 40%;
+  }
+
+  #filter_slider #submit a {
+    justify-content: center;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  #menu_slider {
+    margin-right: auto;
+  }
+
+}
+
+@media (max-width: 690px) {
+  #drinks_box {
+    display: inline-block;
+    width: 100%;
+  }
+
+  #drinks_box .card {
+    width: 85%; /* mobile card width */
+    padding: 3vw 1.5vw 3vw 4vw;
+  }
+
+  #drinks_box .content {
+    border-right: 1px solid #111; /* right border color */
+    padding-right: 5%;
+    font-size: 0.65em;
+  }
+
+  #drinks_box .card.deadly:not(.inflammatory) .content {
+    border-right: 1px solid rgba(255, 255, 255, 0.836); /* deadly card's right border color */
+  }
+}
+
+@media (max-width: 605px) {
+  #filter_slider {
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    overflow: hidden;
+    display: block;
+  }
+
+  #filter_slider div {
+    opacity: 0;
+    margin: 5px auto;
+  }
+  #filter_slider div:not(:last-child) {
+    width: 94%;
+  }
+}
+
+@media (max-width: 530px) {
+  nav {
+    height: auto;
+    padding: 7px;
+    display: grid;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 40px 42px;
+    grid-row-gap: 10px;
+    grid-template-areas:
+    "logo user"
+    "search search"
+  }
+
+  .logo {
+    grid-area: logo;
+    justify-self: left;
+  }
+  
+  nav .user {
+    grid-area: user;
+    justify-self: right;
+  }
+  
+  nav .login {
+    margin: 0 10px 0 0;
+  }
+  nav .login p {
+    display: none;
+  }
+  nav .login i {
+    font-size: 25px;
+  }
+  
+  nav .searchbar {
+    width: 100%;
+    margin: 0;
+    grid-area: search;
+    justify-self: center;
+  }
+
+
+}
+
+@media (max-width: 470px) {
+  #drinks_box .content {
+    border-right: none !important;
+    padding: 0;
+  }
+
+  #filter_slider {
+    width: 100%;
+  }
+  #filter_slider div:not(:last-child) {
+    width: 78%;
+  }
+
+}
+
+@media (max-width: 419px) {
+  #drinks_box .card {
+    padding: 4vw;
+  }
+
+  #drinks_box .card .img {
+    top: 61%;
+    left: 80%;
+    width: 45%;
+    height: 80%;
+  }
+
+  #drinks_box .content {
+    border-right: none;
+    padding-right: 0;
+    width: 73%;
+    font-size: 10px;
+  }
+
+  #drinks_box .content ul {
+    margin-bottom: 5vw;
+  }
+  
+  .price_tag {
+    width: 15vw;
+    height: 15vw;
+    font-size: 1.4em;
+    margin-left: 4vw;
+  }
+
+  @media (max-width: 385px) {
+
+    #menu_slider {
+      width: 100%;
+    }
+
+    #drinks_box .card .img {
+      top: 61%;
+      left: 86%;
+      width: 35%;
+      height: 80%;
+  }
+  }
+
+  @media (max-width: 310px) {
+
+    #filter_slider div:not(:last-child) {
+      width: 88%;
+    }
+
+  }
+}
+
+
+
+/* --------------------------------------------------------------------- */
+/* ORDERS */
+/* --------------------------------------------------------------------- */
+#orders_page > div:nth-of-type(1) {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 50px;
+  height: 200px;
+  background: rgb(231,66,11); /* background color */
+  background: linear-gradient(52deg, rgba(231,66,11,1) 9%, rgba(231,125,11,1) 34%, rgba(230,169,12,1) 72%, rgba(249,255,0,1) 100%);
+}
+#orders_page > div:nth-of-type(1) h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+#orders_page > div:nth-of-type(1) h3 {
+  margin-top: 0;
+}
+
+#stats {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: black;
+  width: 90%;
+  max-width: 350px;
+  min-width: 222px;
+  height: 80px;
+  min-height: 65px;
+  position: absolute;
+  top: 160px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+}
+#stats > div {
+  margin: 0 5px;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  flex-basis: 0;
+  flex: 1 1 0px;
+  overflow: hidden;
+}
+#stats > div > * {
+  text-align: center;
+}
+#stats > div > h3 {
+  color: rgb(231,66,11);
+  margin: 0 0 2px 0;
+  font-size: 20px;
+}
+#stats > div > p {
+  font-variant: small-caps;
+  margin: 0;
+}
+
+
+#orders_box {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.order_card {
+  background: #fff; /* background */
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+  height: auto;
+  padding: 10px 20px 20px 20px; /* padding */
+  border-radius: 5px;
+  width: 320px;
+  min-width: 300px;
+  max-width: 350px;
+  margin: 10px;
+}
+.order_card.open {
+  background: rgb(255, 215, 105); /* background */
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px auto 10px auto;
+}
+.order_card .head h3 {
+  margin: 0;
+}
+.order_card .content {
+  font-size: 15px;
+  min-width: 239px;
+}
+.order_card .my_order {
+  margin: 0px auto;
+}
+.order_card:not(.open) .my_order {
+  overflow: hidden;
+  max-height: 0px;
+  transition-timing-function: ease-in-out;
+  transition: 1s;
+}
+.order_card:hover .my_order {
+  max-height: 100vh;
+}
+
+
+#orders_box .order_item {
+  display: inline-grid;
+  width: 100%;
+  margin: 5px 0;
+  grid-template-columns: 1fr 1fr 0.1fr 1.5fr 2fr;
+  grid-template-rows: 20px 20px;
+  grid-column-gap: 5px;
+  grid-template-areas:
+  "name name name name ."
+  "amount ks times price sum"
+}
+
+.order_item .name {
+  grid-area: name;
+  justify-self: left;
+  align-self: center;
+}
+.order_item .amount {
+  grid-area: amount;
+  justify-self: right;
+  align-self: center;
+}
+#orders_box .order_item p:nth-of-type(3) {
+  grid-area: ks;
+  justify-self: left;
+  align-self: center;
+}
+#orders_box .order_item p:nth-of-type(4) {
+  grid-area: times;
+  justify-self: center;
+  align-self: center;
+}
+.order_item .drink_price {
+  grid-area: price;
+  justify-self: left;
+  align-self: center;
+}
+#orders_box .order_item p:nth-of-type(6) {
+  grid-area: sum;
+  justify-self: right;
+  align-self: center;
+}
+.order_card .overall {
+  margin-bottom: 5px;
+}
+
+
+/* --------------------------------------------------------------------- */
+/* LOGIN / SIGNUP */
+/* --------------------------------------------------------------------- */
+#login_box,
+#signup_box {
+  width: 100%;
+  max-width: 500px;
+  margin: 15vh auto;
+}
+#login_box form,
+#signup_box form {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 5% 10%;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 8px 16px rgb(0 0 0 / 30%);
+}
+
+#login_box h1
+#signup_box h1 {
+  font-size: 30px;
+  text-align: center;
+}
+
+#login_box .alert,
+#signup_box .alert {
+  display: block;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 5px 0;
+  text-align: center;
+}
+
+#login_box .danger,
+#signup_box .danger {
+  background-color: #ffffff12;
+  text-align: center;
+  color: white;
+}
+
+#login_box label,
+#signup_box label {
+  font-size: 18px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+#signup_box small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.493);
+}
+
+#login_box input:not(#show_password input),
+#signup_box input:not(#show_password input) {
+  display: block;
+  width: 100%;
+  height: 30px;
+  border: none;
+  padding: 5px 10px;
+  background-color: #ffffff12;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  -webkit-transition: background-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+  transition: background-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+  transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out;
+  transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+  color: #FFF;
+}
+
+#login_box input:not(#show_password input):focus,
+#signup_box input:not(#show_password input):focus {
+  -webkit-box-shadow: 0 2px 4px #00000f31, 0 8px 16px #00000f31;
+          box-shadow: 0 2px 4px #00000f31, 0 8px 16px #00000f31;
+  background-color: #ffffff75;
+  outline: none;
+}
+#show_password {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  margin-top: 10px;
+}
+
+#show_password {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+#show_password label {
+  font-size: small;
+  color: rgba(255, 255, 255, 0.493);
+  margin: 0 0 0 5px;
+}
+  
+#login_box button {
+  font-weight: bold;
+  margin: 30px 10px 20px 0;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s background-position;
+  background-size: 200% auto;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  display: inline-block;
+  background-image: linear-gradient(to right, #FF8008 0%, #FFC837  51%, #FF8008  100%)
+}
+#login_box button:hover {
+  background-position: right center; /* change the direction of the change here */
+}
+
+#login_box .fb_login {
+  width: 100%;
+  height: 70px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  font-size: 30px;
+  background-color: #4267b2;
+  transition: 0.5s opacity;
+}
+#login_box .fb_login:hover {
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+#signup_box button {
+  font-weight: bold;
+  margin: 30px 10px 20px 0;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s background-position;
+  background-size: 200% auto;
+  color: black;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  display: inline-block;
+  background-image: linear-gradient(to right, #8e9eab 0%, #eef2f3  51%, #8e9eab  100%);
+}
+
+#signup_box button:hover {
+  background-position: right center; /* change the direction of the change here */
+} 
+
+#login_box a,
+#signup_box a {
+  text-decoration: none;
+}
+#login_box a:hover,
+#signup_box a:hover {
+  text-decoration: underline;
+}
+#login_box .home,
+#signup_box .home {
+  color: rgba(255, 255, 255, 0.493);
+}
+
+#login_box .register {
+  color: rgb(68, 68, 255);
+}
