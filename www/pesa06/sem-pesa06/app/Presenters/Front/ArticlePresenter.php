@@ -25,6 +25,8 @@ class ArticlePresenter extends LayoutPresenter
 
     public function actionDefault(int $page = 0): void
     {
+        $this->template->page = $page;
+        $this->template->maxPages = (int)floor(count($this->articleRepository->getAll()) / 4);
         $this->template->articles = array_map(function (Row $articleRow) {
             try {
                 return $this->articleAssembler->assembly($articleRow['id'])->toArray();

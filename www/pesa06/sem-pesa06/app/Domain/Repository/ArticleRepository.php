@@ -19,12 +19,12 @@ class ArticleRepository extends Repository
         return $this->where([ArticleEntity::TEAM_ID => $teamId])->getAll();
     }
 
-    public function findPagedIds(int $page, int $limit = 10): array
+    public function findPagedIds(int $page, int $limit = 4): array
     {
         return $this->connection->query('
         SELECT id
         FROM article
-        ORDER BY created_at DESC
+        ORDER BY created_at DESC 
         LIMIT %i
         OFFSET %i
         ', $limit, ($page * $limit))->fetchAll();

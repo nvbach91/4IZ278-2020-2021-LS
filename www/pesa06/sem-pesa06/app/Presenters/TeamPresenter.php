@@ -6,6 +6,7 @@ namespace App\Presenters;
 
 use App\Components\Form\Team\TeamFormFactory;
 use App\Components\Grid\TeamGridBuilder;
+use App\Domain\Enum\RoleEnum;
 use Domain\Repository\TeamRepository;
 use App\Service\Assembler\TeamAssembler;
 use Nette\Application\UI\Form;
@@ -43,6 +44,20 @@ class TeamPresenter extends LayoutPresenter
     public function actionDetail(int $teamId): void
     {
         $this->template->team = $this->teamAssembler->assembly($teamId)->toArray();
+    }
+
+    public function actionUpsert(?int $teamId): void
+    {
+        $isAdmin = false;
+        foreach ($this->user->getRoles() as $role) {
+            if ($role === RoleEnum::ROLE_ADMIN) {
+                $isAdmin = true;
+            }
+        }
+        if ($isAdmin === false) {
+            $this->flashMessage('Na tuto akci nemáš oprávnění!', 'alert alert-danger');
+            $this->redirect('Team:default');
+        }
     }
 
 }
