@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('main_col')
     <!-- /.col-lg-3 -->
 
     <div class="col-lg-9">
@@ -37,7 +37,7 @@
                             <h4 class="card-title">
                                 <a href="/liquor/{{ $liquor->id }}">{{ $liquor->name }}</a>
                             </h4>
-                            <h5>{{ number_format($liquor->price, 2) }} {{ $liquor->currency }}</h5>
+                            <h5>{{ number_format($liquor->price, 2) }}€</h5>
                         </div>
                         <div class="card-footer">
                             <add-to-cart-button liquor-id="{{ $liquor->id }}"></add-to-cart-button>

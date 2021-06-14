@@ -18,7 +18,7 @@ class Cart extends Model
 
     public function total_price()
     {
-        $quantity_price_array = $this->fresh()->liquors()->get(['quantity', 'price'])->toArray();
+        $quantity_price_array = $this->liquors()->get(['quantity', 'price'])->toArray();
         $total_price = 0;
         foreach($quantity_price_array as $qp)
         {

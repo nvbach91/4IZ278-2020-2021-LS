@@ -9,7 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function order_address()
+    public $fillable = ['state', 'total_price'];
+
+    public function address()
     {
         return $this->hasOne(OrderAddress::class);
     }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('main_col')
 
     <!-- /.col-lg-3 -->
 
@@ -26,34 +26,36 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @foreach($cart->liquors as $liquor )
-                        <div id="{{ $liquor->id }}" class="row">
-                            <div class="col-lg-2">
-                                <a href="/liquor/{{ $liquor->id }}">
-                                    <img class="" src="{{ $liquor->image }}" alt="{{ $liquor->name }}" style="height: 70px; width: auto">
-                                </a>
-                            </div>
-                            <div class="col-lg-4">
-                                <h4 class="product-name"><strong>{{ $liquor->name }}</strong></h4>
-                                <h4><small>Objem: {{ $liquor->volume }}l Alk.: {{ $liquor->alcohol_percentage }}%</small></h4>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <div class="col-lg-5 text-right">
-                                        <h6><strong>{{ $liquor->price }} {{ $liquor->currency }}</strong></h6>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label>
-                                            <input name="quantity" type="text" class="form-control input-group-sm" value="{{ $liquor->pivot->quantity }}">
-                                        </label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <remove-from-cart-button liquor-id="{{ $liquor->id }}" ></remove-from-cart-button>
+                        @if($cart)
+                            @foreach($cart->liquors as $liquor )
+                            <div id="{{ $liquor->id }}" class="row">
+                                <div class="col-lg-2">
+                                    <a href="/liquor/{{ $liquor->id }}">
+                                        <img class="" src="{{ $liquor->image }}" alt="{{ $liquor->name }}" style="height: 70px; width: auto">
+                                    </a>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h4 class="product-name"><strong>{{ $liquor->name }}</strong></h4>
+                                    <h4><small>Objem: {{ $liquor->volume }}l Alk.: {{ $liquor->alcohol_percentage }}%</small></h4>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-lg-5 text-right">
+                                            <h6><strong>{{ $liquor->price }}€</strong></h6>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>
+                                                <input name="quantity" type="text" class="form-control input-group-sm" value="{{ $liquor->pivot->quantity }}">
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <remove-from-cart-button liquor-id="{{ $liquor->id }}" ></remove-from-cart-button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                         <div class="row">
                             <div class="col-lg-8">
                             </div>
@@ -69,12 +71,18 @@
                     <div class="card-footer my-2">
                         <div class="row text-center">
                             <div class="col-lg-8">
-                                <h4 class="text-right">Celková cena <strong>{{ $cart->total_price() }} €</strong></h4>
+                                <h4 class="text-right">Celková cena <strong>{{ $cart ? $cart->total_price() : 0 }} €</strong></h4>
                             </div>
                             <div class="col-lg-4">
-                                <button type="button" class="btn btn-success btn-block">
-                                    Dokončiť nákup
-                                </button>
+                                @if($cart->liquors()->exists())
+                                    <a href="/order/create">
+                                        <button type="button" class="btn btn-success btn-block">
+                                            Dokončiť nákup
+                                        </button>
+                                    </a>
+                                @else
+                                    <strong>Košík je prázdny</strong>
+                                @endif
                             </div>
                         </div>
                     </div>

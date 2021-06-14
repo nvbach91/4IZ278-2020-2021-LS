@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->integer('state');
             $table->float('total_price');
-            $table->unsignedBigInteger('user_id')->index()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->index()->nullable()->constrained()->onDelete('cascade');
         });
     }
 

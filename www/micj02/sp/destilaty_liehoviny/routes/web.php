@@ -33,10 +33,10 @@ Route::patch('/cart/edit', [CartController::class, 'update'])->name('cart.update
 Route::get('/{user}/address/edit', [UserAddressController::class, 'edit'])->name('address.edit');
 Route::patch('/{user}/address', [UserAddressController::class, 'update'])->name('address.update');
 
-Route::get('/order', [OrderController::class, 'order.index']);
-Route::get('/order/create', [OrderController::class, 'order.create']);
-Route::post('/order', [OrderController::class, 'order.store']);
-Route::get('/order/{order}', [OrderController::class, 'order.show']);
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
+Route::post('/o', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

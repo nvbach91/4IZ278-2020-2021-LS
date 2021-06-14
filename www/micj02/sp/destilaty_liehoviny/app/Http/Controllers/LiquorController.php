@@ -18,11 +18,11 @@ class LiquorController extends BaseCartController
         }
 
         $carousel_liquors = Liquor::inRandomOrder()->limit(5)->get();
-        return view('liquor.index', compact('liquors', 'carousel_liquors', 'cart'));
+        return view('liquor.index', compact(['liquors', 'carousel_liquors', 'cart']));
     }
 
     public function show(Liquor $liquor, Request $request) {
         $cart = $this->get_or_create_cart($request);
-        return view('liquor.show', compact('liquor', 'cart'));
+        return view('liquor.show', compact(['liquor', 'cart']));
     }
 }
