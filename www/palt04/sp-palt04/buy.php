@@ -12,15 +12,6 @@
 
   if (isset($_GET)) {
 
-    // $email = @$_COOKIE['email'];
-    // $validation = $connect->prepare("SELECT email FROM users WHERE email = :email;");
-    // $validation->execute(["email" => $email]);
-    // $validation = $validation->fetchColumn();
-
-    // if ($email !== $validation) {
-    //   die('You have to login first!');
-    // }
-
     $cart = $_SESSION['cart'];
 
     if (!in_array($_GET['id'], $cart)){

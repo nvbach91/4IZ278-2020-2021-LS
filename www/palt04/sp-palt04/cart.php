@@ -1,6 +1,5 @@
 <?php
   require("./config/config.php");
-  session_start();
 
   if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -70,3 +69,5 @@
   <div style="padding: 25px; background: #efefef; color: firebrick; border-radius: 10px;"> Cart is empty </div>
 <?php endif; ?>
 </div>
+
+<?php require("./partials/footer.php"); ?>

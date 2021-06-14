@@ -1,7 +1,6 @@
 <?php 
   require("./config/config.php");
 
-  session_start();
 
   if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -35,11 +34,11 @@
 
   $order_id = $connect->lastInsertId();
 
-  foreach ($cart as $item){
+  foreach ($cart as $item_id){
     $stmt = $connect->prepare('INSERT INTO products_orders(order_id, product_id) VALUES (:order_id, :product_id)');
     $stmt->execute([
         'order_id' => $order_id, 
-        'product_id' => $item
+        'product_id' => $item_id
     ]);
   }
 
@@ -109,3 +108,5 @@
         </div>
     </div>
 </div>
+
+<?php require("./partials/footer.php"); ?>
