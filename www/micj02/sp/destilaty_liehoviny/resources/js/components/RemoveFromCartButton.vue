@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    props: ['liquorId'],
+    props: ['liquorId', 'targetUrl'],
 
     mounted() {
         console.log('Component mounted.')
@@ -19,11 +19,11 @@ export default {
 
     methods: {
         removeFromCart() {
-            axios.post('/remove-from-cart/' + this.liquorId)
+            axios.post(this.targetUrl)
                 .then(response => {
                     document.getElementById("cart_quantity").innerHTML = response.data;
                     document.getElementById(this.liquorId).remove();
-                    console.log(response.data);
+                    console.log(this.liquorId);
                 });
         }
     },

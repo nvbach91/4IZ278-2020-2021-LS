@@ -22,7 +22,7 @@
                                     <h6 class="my-0">{{ $liquor->name }}</h6>
                                     <small class="text-muted">Objem: {{ $liquor->volume }}l Alk.: {{ $liquor->alcohol_percentage }}%</small>
                                 </div>
-                                <span class="text-muted">{{ $liquor->pivot->quantity }}x{{ $liquor->price }}€</span>
+                                <span class="text-muted">{{ $liquor->pivot->quantity }}x{{ number_format($liquor->price, 2) }}€</span>
                             </li>
                         @endforeach
                     </ul>
@@ -46,7 +46,7 @@
                                     <h6 class="my-0">{{ $liquor->name }}</h6>
                                     <small class="text-muted">Objem: {{ $liquor->volume }}l Alk.: {{ $liquor->alcohol_percentage }}%</small>
                                 </div>
-                                <span class="text-muted">{{ $liquor->pivot->quantity }}x{{ $liquor->price }}€</span>
+                                <span class="text-muted">{{ $liquor->pivot->quantity }}x{{ number_format($liquor->price, 2) }}€</span>
                             </li>
                         @endforeach
                     </ul>
@@ -56,7 +56,7 @@
 
                     <!-- FORM -->
 
-                    <form class="needs-validation" action="/o" method="post">
+                    <form class="needs-validation" action="{{ route('order.store') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6 mb-3">

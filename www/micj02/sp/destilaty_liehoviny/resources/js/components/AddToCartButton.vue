@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    props: ['liquorId'],
+    props: ['targetUrl'],
 
     mounted() {
         console.log('Component mounted.')
@@ -19,7 +19,7 @@ export default {
 
     methods: {
         addToCart() {
-            axios.post('/add-to-cart/' + this.liquorId)
+            axios.post(this.targetUrl)
                 .then(response => {
                     document.getElementById("cart_quantity").innerHTML = response.data
                     console.log(response.data);

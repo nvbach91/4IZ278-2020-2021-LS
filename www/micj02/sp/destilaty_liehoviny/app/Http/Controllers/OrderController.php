@@ -69,7 +69,18 @@ class OrderController extends Controller
             $order->address()->create($address_data);
             $cart->liquors()->detach();
 
-            Mail::to($address_data['email'])->send(new OrderMail($order));
+//            Mail::to($address_data['email'])->send(new OrderMail($order));
+            $headers = [
+                'MIME-version: 1.0',
+                'Content-type: text/html, charset=utf-8',
+                'From: app@dev.com',
+                'Reply-To: app@dev.com',
+                'X-mailer: PHP/8.0',
+            ];
+            $order_mail = new OrderMail($order);
+            $msg = $order_mail->render();
+
+            mail($address_data['email'], 'Objednávka dokončená!', $msg, implode("\r\n", $headers));
 
             return view('order.finished', compact(['cart', 'order']));
         }

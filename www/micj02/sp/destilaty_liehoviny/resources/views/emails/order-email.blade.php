@@ -20,7 +20,7 @@ zasielame Vám detail objednávky.
             <td>{{ $order->id }}</td>
             <td>{{ $order->created_at }}</td>
             <td>{{ $order->total_price }}€</td>
-            <td>{{ $order->address->address_1 }}, {{ $order->address->city }} <small>{{ $order->address->zipcode }}</small>, {{ config('enums.countries')[$order->address->country] }}</td>
+            <td>{{ $order->address->address_1 }}, {{ $order->address->city }} {{ $order->address->zipcode }}, {{ config('enums.countries')[$order->address->country] }}</td>
             <td>
                 @foreach($order->liquors as $liquor)
                     {{ $liquor->name }}@if(!$loop->last),@endif
