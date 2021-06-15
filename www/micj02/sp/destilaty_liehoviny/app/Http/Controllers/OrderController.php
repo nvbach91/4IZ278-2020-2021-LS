@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderMail;
 use App\Models\Order;
+use App\Models\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -22,22 +20,73 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('order.create');
+        $session = Session::where('id', $request->session()->getId())->first();
+        if ($session and $session->cart) {
+            $cart = $session->cart;
+
+            $user_address =  $session->user ? $session->user->address : null;
+            return view('order.create', compact(['cart', 'user_address']));
+        }
+        return redirect("/");
     }
 
-    public function store()
+    public function store(Request $request)
     {
-//        $data = request()->validate([
-//            'key' => 'value',
-//        ]);
+        $session = Session::where('id', $request->session()->getId())->first();
+        if ($session and $session->cart and $session->cart->liquors()->exists()) {
+            $cart = $session->cart;
+            $address_data = $request->validate([
+                'first_name' => ['required', 'max:255'],
+                'last_name' => ['required', 'max:255'],
+                'email' => ['email', 'required', 'max:255'],
+                'address_1' => ['required', 'max:255'],
+                'address_2' => ['', 'max:255'],
+                'phone_number' => ['', 'max:255'],
+                'city' => ['required', 'max:255'],
+                'zipcode' => ['required', 'max:255'],
+                'country' => ['required', 'integer'],
+                'terms' => ['required'],
+            ]);
+            unset( $address_data['terms']);
+            $order_data = [
+                'state' => config('enums.choices')['ORDER_STATE_CHOICE_NEW'],
+                'total_price' => $cart->total_price(),
+            ];
+            $user = $session->user;
+            if ($user) {
+                $order = $user->orders()->create($order_data);
+            } else {
+                $order = Order::create($order_data);
+            }
+            $liquors = $cart->liquors()->pluck('quantity', 'liquor_id')->toArray();
 
-//        auth()->user()->orders()->create([
-//            $data
-//        ]);
+            foreach ($liquors as $liquor_id => $quantity) {
+                $order->liquors()->attach($liquor_id, ['quantity' => $quantity]);
+            }
 
-        return redirect('/' . auth()->user()->getAuthIdentifierName() . '/order/');
+            $order->address()->create($address_data);
+            $cart->liquors()->detach();
+
+//            Mail::to($address_data['email'])->send(new OrderMail($order));
+            $headers = [
+                'MIME-version: 1.0',
+                'Content-type: text/html, charset=utf-8',
+                'From: app@dev.com',
+                'Reply-To: app@dev.com',
+                'X-mailer: PHP/8.0',
+            ];
+            $order_mail = new OrderMail($order);
+            $msg = $order_mail->render();
+
+            mail($address_data['email'], 'Objednávka dokončená!', $msg, implode("\r\n", $headers));
+
+            return view('order.finished', compact(['cart', 'order']));
+        }
+
+
+        return redirect("/");
     }
 
     public function show(Order $order)

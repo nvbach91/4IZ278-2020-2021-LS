@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Liquor;
 use Illuminate\Http\Request;
 
-class LiquorController extends Controller
+class LiquorController extends BaseCartController
 {
     public function index(Request $request) {
+        $cart = $this->get_or_create_cart($request);
         $category = $request->input('category') + 0;
         if ($category) {
             $liquors = Liquor::where('category', $category)->paginate(4);
@@ -17,11 +18,11 @@ class LiquorController extends Controller
         }
 
         $carousel_liquors = Liquor::inRandomOrder()->limit(5)->get();
-        return view('liquor.index', compact('liquors'), compact('carousel_liquors'));
+        return view('liquor.index', compact(['liquors', 'carousel_liquors', 'cart']));
     }
 
-    public function show(Liquor $liquor) {
-//        $categories = Liquor::groupBy('category')->pluck('category');
-        return view('liquor.show', compact('liquor'));
+    public function show(Liquor $liquor, Request $request) {
+        $cart = $this->get_or_create_cart($request);
+        return view('liquor.show', compact(['liquor', 'cart']));
     }
 }

@@ -14,13 +14,12 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
             $table->integer('state');
             $table->float('total_price');
-            $table->unsignedBigInteger('user_id');
-
-            $table->index('user_id');
+            $table->unsignedBigInteger('user_id')->index()->nullable()->constrained()->onDelete('cascade');
         });
     }
 

@@ -14,12 +14,10 @@ class CreateCartsTable extends Migration
     public function up()
     {
         Schema::create('carts', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
-            $table->float('total_price');
-            $table->unsignedBigInteger('user_id');
-
-            $table->index('user_id');
+            $table->string('session_id')->index()->constrained('sessions')->onDelete('cascade');
         });
     }
 

@@ -13,14 +13,13 @@ class LiquorOrder extends Migration
      */
     public function up()
     {
-        Schema::create('creates_liquor_order_pivot_table', function (Blueprint $table) {
+        Schema::create('liquor_order', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('liquor_id');
-            $table->unsignedBigInteger('order_id');
-
-            $table->index('liquor_id');
-            $table->index('order_id');
+            $table->integer('quantity')->default(0);
+            $table->unsignedBigInteger('order_id')->index()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('liquor_id')->index()->constrained()->onDelete('cascade');
         });
     }
 
@@ -31,6 +30,6 @@ class LiquorOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('creates_liquor_order_pivot_table');
+        Schema::dropIfExists('liquor_order');
     }
 }
