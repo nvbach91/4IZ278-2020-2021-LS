@@ -54,23 +54,7 @@ class ServiceServiceImpl implements IServiceService
         return Service::query()->findOrFail($id);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getAvailableTermins(int $id, ?Carbon $from = null): array
-    {
-        if ($from == null) {
-            $from = Carbon::today();
-        }
-        $service = $this->getById($id);
-        $openingHours = $service->openingHours;
-        $reservation = $service->reservation;
-        $availableTermins = [];
-        for ($i = 0; $i < 7; $i++) {
 
-        }
-        return [];
-    }
 
     /**
      * @param int $id
@@ -90,10 +74,8 @@ class ServiceServiceImpl implements IServiceService
         }
 
         foreach ($openingHours as $openingHour) {
-            $fromTo = new FromTo();
-            $fromTo->from = $openingHour->time_from;
-            $fromTo->to = $openingHour->time_to;
-            array_push($ret[$openingHour->day-1]->openingHours, $fromTo);
+            $fromTo = new FromTo($openingHour->time_from, $openingHour->time_to);
+           array_push($ret[$openingHour->day-1]->openingHours, $fromTo);
         }
         return $ret;
     }

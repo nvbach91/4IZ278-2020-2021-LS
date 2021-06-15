@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Impl\IProfileServiceImpl;
 use App\Services\Impl\IReservationServiceImpl;
 use App\Services\Impl\ServiceServiceImpl;
+use App\Services\IProfileService;
 use App\Services\IReservationService;
 use App\Services\IServiceService;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(IServiceService::class, ServiceServiceImpl::class);
         $this->app->bind(IReservationService::class, IReservationServiceImpl::class);
+        $this->app->bind(IProfileService::class, IProfileServiceImpl::class);
     }
 
     /**

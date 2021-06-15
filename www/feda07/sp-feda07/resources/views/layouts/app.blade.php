@@ -19,10 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+{{--    TODO: logout from profile --}}
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -47,7 +49,7 @@
                         <a class="nav-link" href="{{route('home')}}">{{__('Home')}} <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">{{__('About us')}}<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{route('information')}}">{{__('About us')}}<span class="sr-only">(current)</span></a>
                     </li>
                     <!-- Authentication Links -->
                     @guest

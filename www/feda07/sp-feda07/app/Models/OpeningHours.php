@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
@@ -15,21 +17,27 @@ use Illuminate\Support\Carbon;
  * @property int $service_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\Service $service
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours query()
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereDay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereServiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereTimeFrom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereTimeTo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OpeningHours whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Service $service
+ * @method static Builder|OpeningHours newModelQuery()
+ * @method static Builder|OpeningHours newQuery()
+ * @method static Builder|OpeningHours query()
+ * @method static Builder|OpeningHours whereCreatedAt($value)
+ * @method static Builder|OpeningHours whereDay($value)
+ * @method static Builder|OpeningHours whereId($value)
+ * @method static Builder|OpeningHours whereServiceId($value)
+ * @method static Builder|OpeningHours whereTimeFrom($value)
+ * @method static Builder|OpeningHours whereTimeTo($value)
+ * @method static Builder|OpeningHours whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class OpeningHours extends BaseModel
 {
+    protected $fillable = [
+        'time_from',
+        'time_to',
+        'day',
+        'service_id'
+    ];
 
     protected $casts = [
         "time_from" => "datetime",

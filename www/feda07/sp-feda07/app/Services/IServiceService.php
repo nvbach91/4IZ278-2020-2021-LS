@@ -18,12 +18,6 @@ interface IServiceService
 
     public function getById(int $id): Service;
 
-    /**
-     * @param int $id
-     * @param Carbon|null $from
-     * @return array
-     */
-    public function getAvailableTermins(int $id, ?Carbon $from): array;
 
     public function getOpeningHours(int $id): array;
 

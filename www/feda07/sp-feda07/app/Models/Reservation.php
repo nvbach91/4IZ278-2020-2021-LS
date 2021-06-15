@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,19 +19,19 @@ use Illuminate\Support\Carbon;
  * @property int $service_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\Service $service
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation query()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateFrom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateTo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereServiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereUserId($value)
- * @mixin \Eloquent
+ * @property-read Service $service
+ * @property-read User $user
+ * @method static Builder|Reservation newModelQuery()
+ * @method static Builder|Reservation newQuery()
+ * @method static Builder|Reservation query()
+ * @method static Builder|Reservation whereCreatedAt($value)
+ * @method static Builder|Reservation whereDateFrom($value)
+ * @method static Builder|Reservation whereDateTo($value)
+ * @method static Builder|Reservation whereId($value)
+ * @method static Builder|Reservation whereServiceId($value)
+ * @method static Builder|Reservation whereUpdatedAt($value)
+ * @method static Builder|Reservation whereUserId($value)
+ * @mixin Eloquent
  */
 class Reservation extends BaseModel
 {
@@ -38,6 +40,8 @@ class Reservation extends BaseModel
     protected $fillable = [
         'date_from',
         'date_to',
+        'user_id',
+        'service_id',
     ];
 
     protected $casts = [
@@ -45,21 +49,6 @@ class Reservation extends BaseModel
         'date_to' => 'datetime',
     ];
 
-    /**
-     * @return Carbon
-     */
-    public function getDateFrom(): Carbon
-    {
-        return $this->date_from;
-    }
-
-    /**
-     * @return Carbon
-     */
-    public function getDateTo(): Carbon
-    {
-        return $this->date_to;
-    }
 
     /**
      * @return BelongsTo

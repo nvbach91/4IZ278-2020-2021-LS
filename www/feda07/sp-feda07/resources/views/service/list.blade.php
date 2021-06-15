@@ -6,7 +6,7 @@
         <div class="card-service">
     @forelse($myServices as $service)
 
-        <p>{{$service->name}}</p>
+        <p>Name of service: {{$service->name}}</p>
     @empty
         <p>{{__('No services yet')}}</p>
 

@@ -25,8 +25,14 @@ Auth::routes();
 //Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//About us
+Route::get('/information', [App\Http\Controllers\InformationController::class, 'info'])->name('information');
+
 //Profile
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/edit', [App\Http\Controllers\ProfileController::class, 'editView'])->name('profile.edit');
+Route::post('/profile/edit/post', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit.post');
+Route::post('/profile/reservation', [App\Http\Controllers\ProfileController::class, 'delete'])->name('profile.reservation.delete');
 
 
 //Service
@@ -34,3 +40,7 @@ Route::get('/service', [App\Http\Controllers\ServiceController::class, 'index'])
 Route::get('/service/create', [App\Http\Controllers\ServiceController::class, 'create'])->name('service.create');
 Route::post('/service/create', [App\Http\Controllers\ServiceController::class, 'createForm'])->name('service.create');
 Route::get('/service/{id}', [App\Http\Controllers\ServiceController::class, 'info'])->name('service.info');
+Route::get('/service/{id}/{date}', [App\Http\Controllers\ServiceController::class, 'getAvailableDays'])->name('service.getAvailableDays');
+Route::post('/service/reserve', [App\Http\Controllers\ServiceController::class, 'makeReservation'])->name('service.reserve');
+
+

@@ -10012,7 +10012,9 @@ h3 {
 }
 .card-welcome{
     padding: 40px;
-    background-color: #ffe082;
+    background-color: #fff3b4;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+;
 }
 .welcome-container{
     display: flex;
@@ -10020,6 +10022,7 @@ h3 {
     align-items: center;
     flex-direction: column;
     height: 500px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
 }
 .row-home{
     display: flex;
@@ -10065,4 +10068,42 @@ h3 {
 .col-week{
     margin: 10px
 }
+body{
+    background-color: #e8e8f1;
+    font-family: serif;
+    font-weight: normal;
+}
+.navbar{
+    font-size: larger;
+    background-color: #005176;
+}
+.card-service{
+    font-size: large;
+}
+.card-img-top{
+    max-width: 177px;
+    max-height: 236px;
+}
+.card-search{
+    width:600px;
+    height: 250px;
+    padding: 10px;
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    color: #ccced6;
+    background-color: #00344c;
+    text-shadow: 0.35px 0.35px 0px rgb(187, 187, 187);
+}
+
+.col-home{
+    display: flex;
+    align-items: center;
+}
+.container-information{
+    padding-top: 70px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 

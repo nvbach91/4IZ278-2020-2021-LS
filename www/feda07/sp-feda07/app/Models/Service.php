@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Service
@@ -13,24 +17,24 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property int $duration
  * @property int $user_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OpeningHours[] $openingHours
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|OpeningHours[] $openingHours
  * @property-read int|null $opening_hours_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Reservation[] $reservation
- * @property-read int|null $reservation_count
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Service newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Service newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Service query()
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereDuration($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Service whereUserId($value)
- * @mixin \Eloquent
+ * @property-read Collection|Reservation[] $reservations
+ * @property-read int|null $reservations_count
+ * @property-read User $user
+ * @method static Builder|Service newModelQuery()
+ * @method static Builder|Service newQuery()
+ * @method static Builder|Service query()
+ * @method static Builder|Service whereCreatedAt($value)
+ * @method static Builder|Service whereDescription($value)
+ * @method static Builder|Service whereDuration($value)
+ * @method static Builder|Service whereId($value)
+ * @method static Builder|Service whereName($value)
+ * @method static Builder|Service whereUpdatedAt($value)
+ * @method static Builder|Service whereUserId($value)
+ * @mixin Eloquent
  */
 class Service extends BaseModel
 {
@@ -54,7 +58,7 @@ class Service extends BaseModel
      * @return HasMany
      */
 
-    public function reservation(): HasMany
+    public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
 
