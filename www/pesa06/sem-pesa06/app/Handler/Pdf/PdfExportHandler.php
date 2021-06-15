@@ -70,7 +70,7 @@ class PdfExportHandler
         if ($member === null) {
             throw new PdfExportHandlerException('Člen nenalezen.');
         }
-        $mpdf = new Mpdf(['tempDir' => '/tmp']);
+        $mpdf = new Mpdf(['tempDir' => __DIR__ . '../../../temp/mPDF']);
         $mpdf->WriteHTML($this->latte->renderToString(__DIR__ . '/template/prijataFaktura.latte', [
             'name' => $member->getFirstName(),
             'surname' => $member->getLastName(),
@@ -102,7 +102,7 @@ class PdfExportHandler
         $img = $qrCode->getQrImage();
         $img->setSize(500);
         $writer = new PngWriter();
-        $mpdf = new Mpdf(['tempDir' => '/tmp']);
+        $mpdf = new Mpdf(['tempDir' => __DIR__ . '../../../temp/mPDF']);
         $mpdf->WriteHTML($this->latte->renderToString(__DIR__ . '/template/faktura.latte', [
             'name' => $member->getFirstName(),
             'surname' => $member->getLastName(),
@@ -140,7 +140,7 @@ class PdfExportHandler
         $img = $qrCode->getQrImage();
         $img->setSize(500);
         $writer = new PngWriter();
-        $mpdf = new Mpdf(['tempDir' => '/tmp']);
+        $mpdf = new Mpdf(['tempDir' => __DIR__ . '../../../temp/mPDF']);
         $mpdf->WriteHTML($this->latte->renderToString(__DIR__ . '/template/prispevky.latte', [
             'name' => $member->getFirstName(),
             'surname' => $member->getLastName(),
