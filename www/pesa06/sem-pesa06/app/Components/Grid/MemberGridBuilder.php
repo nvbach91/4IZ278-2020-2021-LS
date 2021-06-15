@@ -51,9 +51,9 @@ class MemberGridBuilder
         $grid->setModel($this->memberRepository->collection());
         $grid->setDefaultPerPage(30);
         $grid->setFilterRenderType(Filter::RENDER_INNER);
+        $grid->setTemplateFile(__DIR__ . '/templates/default.latte');
         $customization = new Customization($grid);
         $customization->setButtonClass('btn-outline-primary');
-        $customization->useTemplateBootstrap();
         $grid->setCustomization($customization);
     }
 

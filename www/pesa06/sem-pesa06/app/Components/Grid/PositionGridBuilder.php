@@ -48,7 +48,7 @@ class PositionGridBuilder
         $grid->setFilterRenderType(Filter::RENDER_INNER);
         $customization = new Customization($grid);
         $customization->setButtonClass('btn-outline-primary');
-        $customization->useTemplateBootstrap();
+        $grid->setTemplateFile(__DIR__ . '/templates/default.latte');
         $grid->setCustomization($customization);
     }
 

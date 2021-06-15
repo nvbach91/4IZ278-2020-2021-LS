@@ -50,7 +50,7 @@ class TeamGridBuilder
         $grid->setDefaultPerPage(30);
         $grid->setFilterRenderType(Filter::RENDER_INNER);
         $customization = new Customization($grid);
-        $customization->useTemplateBootstrap();
+        $grid->setTemplateFile(__DIR__ . '/templates/default.latte');
         $grid->setCustomization($customization);
     }
 

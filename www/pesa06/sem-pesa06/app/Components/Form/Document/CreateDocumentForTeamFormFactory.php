@@ -37,6 +37,7 @@ class CreateDocumentForTeamFormFactory
         $form->addSubmit('submit', 'Odeslat');
         $form->onSuccess[] = function (Form $form) {
             $this->processor->process($form);
+            $form->getPresenter()->redirect('Document:default');
         };
         return $form;
     }
