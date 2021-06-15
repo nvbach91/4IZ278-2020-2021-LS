@@ -3,7 +3,8 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LiquorController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\ProfileController;
+use App\Mail\OrderMail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,13 +31,19 @@ Route::post('remove-from-cart/{liquor}', [CartController::class, 'remove_from_ca
 Route::get('/cart/edit', [CartController::class, 'edit'])->name('cart.edit');
 Route::patch('/cart/edit', [CartController::class, 'update'])->name('cart.update');
 
-Route::get('/{user}/address/edit', [UserAddressController::class, 'edit'])->name('address.edit');
-Route::patch('/{user}/address', [UserAddressController::class, 'update'])->name('address.update');
-
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
 Route::post('/o', [OrderController::class, 'store'])->name('order.store');
-Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
+Route::get('/order/{order}', [OrderController::class, 'show'])->middleware(['auth'])->name('order.show');
+
+Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+
+Route::get('/email', function () {
+    return new OrderMail(\App\Models\Order::first());
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -45,5 +52,3 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

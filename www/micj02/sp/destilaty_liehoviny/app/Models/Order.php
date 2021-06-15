@@ -23,6 +23,6 @@ class Order extends Model
 
     public function liquors()
     {
-        return $this->belongsToMany(Liquor::class)->withPivot('quantity');
+        return $this->belongsToMany(Liquor::class);
     }
 }

@@ -63,36 +63,52 @@
                                 <label for="first_name">Meno</label>
                                 <input type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="first_name"
                                        value="{{ (old('first_name')) ? old('first_name') : (($user_address) ? $user_address->first_name : "") }}" required="">
-                                <div class="invalid-feedback">
-                                    Meno je povinný údaj.
-                                </div>
+                                @if ($errors->has('first_name'))
+                                    <div class="text-danger">
+                                        <strong>Meno je povinný údaj.</strong>
+                                    </div>
+                                @endif
                             </div>
-                            @if ($errors->has('first_name'))
-                                <div class="invalid-feedback">
-                                    Meno je povinný údaj.
-                                </div>
-                            @endif
+
                             <div class="col-md-6 mb-3">
                                 <label for="last_name">Priezvisko</label>
                                 <input type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" id="last_name"
                                        value="{{ (old('last_name')) ? old('last_name') : (($user_address) ? $user_address->last_name : "") }}" required="">
                                 @if ($errors->has('last_name'))
-                                    <div class="invalid-feedback">
-                                        Priezvisko je povinný údaj.
+                                    <div class="text-danger">
+                                        <strong>Priezvisko je povinný údaj.</strong>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email"
-                                   value="{{ (old('email')) ? old('email') : (($user_address) ? $user_address->email : "") }}" required="">
-                            @if ($errors->has('email'))
-                                <div class="invalid-feedback">
-                                    <strong>Prosím uveďte platný email.</strong>
-                                </div>
-                            @endif
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                       name="email" id="email"
+                                       value="{{ (old('email')) ? old('email') : (($user_address) ? $user_address->email : "") }}"
+                                       required="">
+                                @if ($errors->has('email'))
+                                    <div class="text-danger">
+                                        <strong>Prosím uveďte platný email.</strong>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="phone_number">Telefónne číslo<span
+                                        class="text-muted">(Nepovinný údaj)</span></label>
+                                <input type="text"
+                                       class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}"
+                                       name="phone_number" id="phone_number"
+                                       value="{{ (old('phone_number')) ? old('phone_number') : (($user_address) ? $user_address->phone_number : "") }}">
+                                @if ($errors->has('phone_number'))
+                                    <div class="text-danger">
+                                        <strong>Prosím uveďte platné telefónne číslo.</strong>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -100,7 +116,7 @@
                             <input type="text" class="form-control{{ $errors->has('address_1') ? ' is-invalid' : '' }}" name="address_1" id="address_1"
                                    value="{{ (old('address_1')) ? old('address_1') : (($user_address) ? $user_address->address_1 : "") }}" required="">
                             @if ($errors->has('address_1'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     <strong>Prosím uveďte dodaciu adresu.</strong>
                                 </div>
                             @endif
@@ -111,19 +127,8 @@
                             <input type="text" class="form-control{{ $errors->has('address_2') ? ' is-invalid' : '' }}" name="address_2" id="address_2"
                                    value="{{ (old('address_2')) ? old('address_2') : (($user_address) ? $user_address->address_2 : "") }}">
                             @if ($errors->has('address_2'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     <strong>Prosím uveďte platné extra údaje.</strong>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="phone_number">Telefónne číslo<span class="text-muted">(Nepovinný údaj)</span></label>
-                            <input type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" id="phone_number"
-                                   value="{{ (old('phone_number')) ? old('phone_number') : (($user_address) ? $user_address->phone_number : "") }}">
-                            @if ($errors->has('phone_number'))
-                                <div class="invalid-feedback">
-                                    <strong>Prosím uveďte platné telefónne číslo.</strong>
                                 </div>
                             @endif
                         </div>
@@ -134,7 +139,7 @@
                                 <input type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" id="city"
                                        value="{{ (old('city')) ? old('city') : (($user_address) ? $user_address->city : "") }}" required="">
                                 @if ($errors->has('city'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         <strong>Prosím uveďte a platný názov mesta.</strong>
                                     </div>
                                 @endif
@@ -144,7 +149,7 @@
                                 <input type="text" class="form-control{{ $errors->has('zipcode') ? ' is-invalid' : '' }}" name="zipcode" id="zipcode"
                                        value="{{ (old('zipcode')) ? old('zipcode') : (($user_address) ? $user_address->zipcode : "") }}" required="">
                                 @if ($errors->has('zipcode'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         <strong>Prosím uveďte PSČ.</strong>
                                     </div>
                                 @endif
@@ -161,8 +166,17 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('country'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         <strong>Prosím vyberte a platný názov krajiny.</strong>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col-md-6 mb-6">
+                                <label class="form-check-label" for="terms">Súhlasím s podmienkami spracovania osobných údajov</label>
+                                <input name="terms" type="checkbox" class="form-check-inline" id="terms" required>
+                                @if ($errors->has('terms'))
+                                    <div class="text-danger">
+                                        <strong>Súhlas s podmienkami je povinný.</strong>
                                     </div>
                                 @endif
                             </div>

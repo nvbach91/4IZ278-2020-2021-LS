@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <label>
-                                                <input name="quantity" type="text" class="form-control input-group-sm" value="{{ $liquor->pivot->quantity }}">
+                                                <input name="quantity" type="text" class="form-control input-group-sm" readonly value="{{ $liquor->pivot->quantity }}">
                                             </label>
                                         </div>
                                         <div class="col-lg-4">

@@ -7,7 +7,7 @@
     <div class="col-lg-9">
 
         <div class="row justify-content-center">
-           <h2>Objednávka dokončená</h2>
+           <h1>Objednávka dokončená</h1>
         </div>
 
 
