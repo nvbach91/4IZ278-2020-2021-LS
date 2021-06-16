@@ -1,0 +1,26 @@
+.center-button{
+    margin-top: 1%;
+    text-align:center;
+}
+.center-text{
+    text-align:center;
+}
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .accept {
+    padding: 20px;
+    background-color: green; 
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .tablediv {display:block; border-style: solid;  border-width: thin;  }
+  .rowtadiv { display:block;}
+  .celldiv {display:inline-block;
+    width:12%; 
+            height: 15%;}
