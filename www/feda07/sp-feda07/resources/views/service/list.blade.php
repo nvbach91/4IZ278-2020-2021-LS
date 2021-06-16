@@ -5,8 +5,11 @@
         <a href="{{route('service.create')}}">+ Add new service</a>
         <div class="card-service">
     @forelse($myServices as $service)
+        <div class="card card-service">
+            <p>Name of service: {{$service->name}}</p>
 
-        <p>Name of service: {{$service->name}}</p>
+        </div>
+
     @empty
         <p>{{__('No services yet')}}</p>
 

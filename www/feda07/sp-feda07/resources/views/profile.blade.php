@@ -24,7 +24,7 @@
                     <h2>About me: {{$user->about_me}}</h2>
                 </div>
                 <div class="row">
-                    <a href="{{route('profile.edit')}}">Edit</a>
+                    <a class="btn btn-outline-primary"href="{{route('profile.edit')}}">Edit</a>
                 </div>
             </div>
         </div>

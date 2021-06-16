@@ -24,11 +24,7 @@ class EditProfileRequest extends FormRequest
     public function rules()
     {
         return [
-           // 'name' => 'max:255|null',
-           // 'surname' => 'max:255|null',
-           // 'phoneNumber' => 'max:255|null',
-           // 'aboutMe' => 'max:255|null',
-           // 'avatar' => 'image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2047|null',
+           //
         ];
     }
 }

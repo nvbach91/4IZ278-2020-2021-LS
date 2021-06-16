@@ -55,7 +55,7 @@
                 @endforeach
             </div>
         </div>
-
+        <div class="selection-time">
         <form method="POST" action="{{ route('service.reserve') }}">
             @csrf
             <input name="serviceId" value="{{$service->id}}" hidden/>
@@ -85,7 +85,7 @@
             </div>
 
         </form>
-
+        </div>
         <script type="text/javascript">
 
             $.ajaxSetup({

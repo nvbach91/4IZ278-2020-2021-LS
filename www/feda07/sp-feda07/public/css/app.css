@@ -10048,11 +10048,11 @@ h3 {
 
 }
 .row-info-provider{
-    background-color: #ffffce;
+    background-color: #daeeff;
 }
 .row-info-service{
     padding: 20px;
-    background-color: #f0f4c3;
+    background-color: #d2e5f1;
 }
 .card-opening{
     display: flex;
@@ -10061,7 +10061,7 @@ h3 {
     align-items: center;
     padding: 20px;
     margin: 20px;
-    background-color: #ffffce;
+    background-color: #d9edfe;
     border: double;
     border-color: #003d00;
 }
@@ -10105,5 +10105,17 @@ body{
     padding-left: 40px;
     padding-right: 40px;
 }
-
+.card-choose{
+    display: flex;
+    justify-content: center;
+    background-color: #43749d;
+    width: 900px;
+}
+.selection-time{
+    display: flex;
+    justify-content: center;
+}
+.card-service{
+    background-color: #d9edfe;
+}
 
