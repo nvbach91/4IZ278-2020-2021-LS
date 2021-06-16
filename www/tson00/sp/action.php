@@ -32,8 +32,8 @@ if(isset($_POST['registration'])){
         header('Location: registration.php');
     }
 }
-
-elseif(isset($_POST['login'])){
+/*
+if(isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
     $sql = "SELECT password FROM user where email = '$email'";
@@ -47,6 +47,6 @@ elseif(isset($_POST['login'])){
         header('Location: login.php');
     }
 }
-
+*/
 
 ?>

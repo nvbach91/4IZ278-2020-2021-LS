@@ -1,6 +1,57 @@
 <?php require __DIR__ . '/database_connection.php'; ?>
 <?php 
 
+$message = "";
+$password = "";
+$confirm = "";
+$name ="";
+$surname ="";
+$univesity ="";
+$dormitory ="";
+$username ="";
+$phone ="";
+$email ="";
+if(isset($_POST['registration'])){
+    $password = $_POST['password'];
+    $confirm = $_POST['confirm'];
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $univesity =$_POST['university'];
+    $dormitory = $_POST['dormitory'];
+    $username = $_POST['username'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $sqlemail = "SELECT email FROM user where email = '$email'";
+    $statementemail = $pdo->prepare($sqlemail);
+    $statementemail->execute();
+    $emailarray = $statementemail->fetchAll();
+
+    $sqlusername = "SELECT username FROM user where username = '$username'";
+    $statementusername = $pdo->prepare($sqlusername);
+    $statementusername->execute();
+    $usernamearray = $statementusername->fetchAll();
+    if(!empty($emailarray[0]['email'])){
+      $message = 'Tento email je již zaregistrovaný';
+    }elseif(!empty($emailarray[0]['username'])){
+      $message = 'Tento username je již zaregistrovaný';
+    }else{
+    if($password  == $confirm){
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO user (name, surname, id_university, id_dormitory, username, phone, email, password)  
+        VALUES (?,?,?,?,?,?,?,?)";
+         $statement = $pdo->prepare($sql);
+         $statement->execute([$name,$surname,$univesity,$dormitory,$username,$phone,$email ,$hash]);
+         header('Location: login.php');
+    }else{
+        $message = 'Hesla se neshodují';
+    }
+  }
+    
+}
+?>
+<?php 
+
 
 
     $sql = "SELECT * FROM university";
@@ -20,8 +71,11 @@
     <div class="center-text">
         <h1>Registrace</h1>
     </div>
-  <form action="action.php" method="POST" >
-
+  <form action="" method="POST" >
+  <?php if(!empty($message)){?>
+  <div class="alert"><?php if($message!="") { echo $message; } ?></div>
+<?php
+}?>
     <div class="mb-3">
       <label for="name" class="form-label">Jméno</label>
       <input  name="registration" type="hidden">
