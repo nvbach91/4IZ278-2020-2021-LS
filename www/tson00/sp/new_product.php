@@ -26,12 +26,17 @@ if(isset($_POST['newproduct'])){
     $id_user = $_SESSION["id"];
     $id_university = $userarray[0]['id_university'];
     $id_dormitory = $userarray[0]['id_dormitory'];
-
-    $sql = "INSERT INTO product (name, id_university, id_dormitory,id_category,description,price,id_state,id_user,image)  
-    VALUES (?,?,?,?,?,?,?,?,?)";
+    $validity = 1;
+    if(filter_var($image, FILTER_VALIDATE_URL)){
+      $sql = "INSERT INTO product (name, id_university, id_dormitory,id_category,description,price,id_state,id_user,image,validity)  
+              VALUES (?,?,?,?,?,?,?,?,?,?)";
         $statement = $pdo->prepare($sql);
-        $statement->execute([$name,$id_university,$id_dormitory,$category,$description,$price,$state,$id_user,$image]);
+        $statement->execute([$name,$id_university,$id_dormitory,$category,$description,$price,$state,$id_user,$image,$validity]);
         header('Location: myproduct.php');
+    }else{
+      $message = 'URL obrázku je špatný';
+    }
+    
 }
 
 ?>

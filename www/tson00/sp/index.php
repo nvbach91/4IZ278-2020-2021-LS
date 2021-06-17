@@ -3,20 +3,35 @@ session_start();
 
 require __DIR__ . '/database_connection.php';
 $where = "";
-if(isset($_POST['category'])){
-  if(!empty($_POST['category'])){
-    $category = $_POST['category'];
-    $where .= "and cat.id = '".$_POST['category']."'";
+
+if(isset($_GET['category'])){
+  if(!empty($_GET['category'])){
+    $category = $_GET['category'];
+    $where .= "and cat.id = '".$_GET['category']."'";
+    $sqlcat = "SELECT name from product_category where id = $category";
+    $cat = $pdo->prepare($sqlcat);
+    $cat->execute();
+    $catname = $cat->fetchAll();
   }
 }
-if(isset($_POST['university'])){
-  if(!empty($_POST['university'])){
-    $where .= "and uni.id = '".$_POST['university']."'";
+if(isset($_GET['university'])){
+  if(!empty($_GET['university'])){
+    $university = $_GET['university'];
+    $where .= "and uni.id = '".$_GET['university']."'";
+    $sqluni = "SELECT name from university where id =  $university";
+    $uni = $pdo->prepare($sqluni);
+    $uni->execute();
+    $uniname = $uni->fetchAll();
   }
 }
-if(isset($_POST['dormitory'])){
-  if(!empty($_POST['dormitory'])){
-    $where .= "and dorm.id = '".$_POST['dormitory']."'";
+if(isset($_GET['dormitory'])){
+  if(!empty($_GET['dormitory'])){
+    $dormitory = $_GET['dormitory'];
+    $where .= "and dorm.id = '".$_GET['dormitory']."'";
+    $sqldorm = "SELECT name from dormitory where id = $dormitory";
+    $dorm = $pdo->prepare($sqldorm);
+    $dorm->execute();
+    $dormname = $dorm->fetchAll();
   }
 }
 
@@ -26,12 +41,12 @@ if(isset($_SESSION['id'])){
   left join university uni on uni.id = pro.id_university 
   left join dormitory dorm on dorm.id = pro.id_dormitory 
   left join borrowing bor on bor.id_user = pro.id_user
-  left join product_category cat on cat.id = pro.id_category where pro.id_user != '".$_SESSION['id']."' $where";
+  left join product_category cat on cat.id = pro.id_category where pro.id_user != '".$_SESSION['id']."' and pro.id_state=1 $where";
 }else{
   $sql = "SELECT pro.*,uni.id as university_id, uni.name as university_name,dorm.id as dormitory_id, dorm.name as dormitory_name, cat.id as category_id, cat.name as category_name FROM product pro 
   left join university uni on uni.id = pro.id_university 
   left join dormitory dorm on dorm.id = pro.id_dormitory 
-  left join product_category cat on cat.id = pro.id_category where pro.validity=1 $where";
+  left join product_category cat on cat.id = pro.id_category where pro.validity=1 and pro.id_state=1 $where";
 }   
      $statement = $pdo->prepare($sql);
     $statement->execute();
@@ -58,43 +73,8 @@ if(isset($_SESSION['id'])){
 <div class="center-text">
         <h1>Zboží</h1>
     </div>
-    <form action="" method="POST" >
-    <div class="center-text">
+    <?php include './includes/search.php'?> 
 
-    <div class="tablediv">
-            <div class="rowdiv">
-            <div class= "celldiv">
-            <label for="university" class="form-label">Univerzita</label>
-      <select class="form-control" name="university" id="university" >
-      <option value="" style="display:none"></option>  
-        <?php foreach($university as $uni): ?>
-          <option value="<?php echo $uni['id'];?>"><?php echo $uni['name']; ?></option>  
-        <?php endforeach; ?>
-      </select>
-              </div>
-              <div class= "celldiv">
-              <label for="dormitory" class="form-label">Kolej</label>
-      <select class="form-control" name="dormitory" id="dormitory" >
-      <option value="" style="display:none"></option>  
-      </select>
-              </div>
-              <div class= "celldiv">
-              <label for="category" class="form-label">Kategorie</label>
-      <select class="form-control" name="category" id="category" >
-      <option value="" style="display:none"></option>  
-        <?php foreach($category as $cate): ?>
-          <option value="<?php echo $cate['id'];?>"><?php echo $cate['name']; ?></option>  
-        <?php endforeach; ?>
-      </select>
-               </div>
-               <button type="submit" class="btn btn-success">Hledej</button> 
-               <a href="./index.php" class="btn btn-danger"><span class=""></span> Smazat</a>
-
-            </div>
-
-            </div>
-            </div>
-          </form>
           <br>
     <div class="tablediv">
             <div class="rowdiv">
@@ -138,13 +118,15 @@ if(isset($_SESSION['id'])){
                 <?php echo $result['description']; ?>
                </div>
                <div class= "celldiv">
-                  <p><?php echo $result['university_name']; ?></p>      
+                  <p><a href="./index.php?university=<?php echo $result['university_id']; ?>"><span class=""></span><?php echo $result['university_name']; ?></a></p>      
               </div>
                <div class= "celldiv">
-                  <p><?php echo $result['dormitory_name']; ?></p>      
+                  <p><a href="./index.php?dormitory=<?php echo $result['dormitory_id']; ?>"><span class=""></span><?php echo $result['dormitory_name']; ?></a></p>      
+
               </div>
                <div class= "celldiv">
-                  <p><?php echo $result['category_name']; ?></p>      
+                  <p><a href="./index.php?category=<?php echo $result['category_id']; ?>"><span class=""></span><?php echo $result['category_name']; ?></a></p>      
+
               </div>
                 <div class= "celldiv">
                 <a href="./product.php?type=2&id=<?php echo $result['id']?>" class="btn btn-primary"><span class=""></span> Podrobnosti</a>

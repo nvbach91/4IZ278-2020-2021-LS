@@ -82,7 +82,7 @@ require __DIR__ . '/database_connection.php';
                 ?>
                 </div>   
                 <?php               
-                if($result['state_id'] ==1){
+                if($result['state_id'] ==6){
                 ?>
                 <div class= "celldiv"> 
                 <input type="button" class="btn btn-success" id="accept" data-id = "<?php echo $result['id']?>" value = "Schvalit"> 

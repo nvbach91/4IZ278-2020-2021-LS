@@ -24,9 +24,14 @@ if(isset($_POST['changeproduct'])){
 }elseif(isset($_POST['borrowproduct'])){
     $sql = "INSERT INTO borrowing (id_product, id_user,status)  
     VALUES (?,?,?)";
-    $status = 1;
+    $status = 6;
     $statement = $pdo->prepare($sql);
     $statement->execute([$_GET['id'],$_SESSION['id'],$status]);
+
+    $statepro = "UPDATE product SET id_state=2 WHERE id='".$_GET["id"]."'";
+    $stat = $pdo->prepare($statepro);
+    $stat->execute();
+
      header('Location: borrow.php');
 }
 
@@ -168,7 +173,7 @@ if(isset($_POST['changeproduct'])){
           }else{
             ?>
             <div class="center-button">  
-            <h2>Pro vypůjčení je potřeba udělat registraci nebo se přihlasit</h2>
+            <h2>Pro vypůjčení je potřeba udělat <a href="./registration.php?" class="btn btn-primary"><span class=""></span> Registrace</a> nebo <a href="./login.php?" class="btn btn-primary"><span class=""></span> Přihlašení</a></h2>                
             </div><?php
         }
           ?>

@@ -73,7 +73,7 @@ require __DIR__ . '/database_connection.php';
           <div class="center-button">  
 <script>
 $(document).on("click", "#delete", function() { 
-		var $ele = $(this).closest('.row');
+		var $ele = $(this).closest('.rowdiv');
 		$.ajax({
 			url: "deleteproduct.php",
 			type: "POST",

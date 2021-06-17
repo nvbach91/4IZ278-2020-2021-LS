@@ -79,7 +79,7 @@ require __DIR__ . '/database_connection.php';
                 </div>   
 
                 <?php               
-                if($result['state_id'] !=4){
+                if($result['state_id'] !=4 && $result['state_id'] !=3){
                 ?>
                 <div class= "celldiv"> 
 

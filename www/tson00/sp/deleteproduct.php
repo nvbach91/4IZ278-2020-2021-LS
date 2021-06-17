@@ -5,8 +5,10 @@ $id=$_POST['id'];
     $statement = $pdo->prepare($sql);
     $statement->execute();
 
-    $results = $statement->fetchAll();
 
   
+    $sqlbor = "DELETE FROM borrowing WHERE id_product = $id";
+    $stat = $pdo->prepare($sqlbor);
+    $stat->execute();
 
 ?>

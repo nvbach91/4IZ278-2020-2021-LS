@@ -1,5 +1,16 @@
 <?php require __DIR__ . '/database_connection.php'; ?>
 <?php 
+function sendEmail($recipient,$subject, $message){
+  $headers=[
+  'MIME-version: 1.0',
+  'Content-type: text/html, charset=utf-8',
+  'From: app@dev.com',
+  'Reply-To: app@dev.com',
+  'X-Mailer: PHP/8.0',
+  ];
+  $msg ="<h1>Podtvrzení o registrace</h1><p>$message</p>";
+  return mail($recipient,$subject, $msg, implode("\r\n",$headers));
+}
 
 $message = "";
 $password = "";
@@ -14,7 +25,6 @@ $email ="";
 if(isset($_POST['registration'])){
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
-    $hash = password_hash($password, PASSWORD_DEFAULT);
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $univesity =$_POST['university'];
@@ -37,11 +47,14 @@ if(isset($_POST['registration'])){
       $message = 'Tento username je již zaregistrovaný';
     }else{
     if($password  == $confirm){
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $optionhash = ['cost' => 16];
+        $hash = password_hash($password, PASSWORD_BCRYPT,$optionhash);
         $sql = "INSERT INTO user (name, surname, id_university, id_dormitory, username, phone, email, password)  
         VALUES (?,?,?,?,?,?,?,?)";
          $statement = $pdo->prepare($sql);
          $statement->execute([$name,$surname,$univesity,$dormitory,$username,$phone,$email ,$hash]);
+         sendEmail($email, 'Registration','Nyní se můžete přihlašovat do aplikace sousedi https://eso.vse.cz/~tson00/sp/login.php');
+
          header('Location: login.php');
     }else{
         $message = 'Hesla se neshodují';
