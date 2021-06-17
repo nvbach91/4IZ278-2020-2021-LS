@@ -98,10 +98,10 @@ abstract class Database implements DatabaseOperations
         return "You have successfully updated role for user " . $id;
     }
 
-    public function createOrder($userId, $productId, $timestamp)
+    public function createOrder($userId, $productId, $timestamp, $delivery, $payment)
     {
-        $sql = 'INSERT INTO ' . $this->tableName  . ' (user_id, product_id, timestamp) ' 
-        . 'VALUES ("' . $userId . '", "' . $productId . '", "' . $timestamp . '");';
+        $sql = 'INSERT INTO ' . $this->tableName  . ' (user_id, product_id, timestamp, payment, delivery) ' 
+        . 'VALUES ("' . $userId . '", "' . $productId . '", "' . $timestamp . '", " ' . $payment . '", "' . $delivery . '");';
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
     }

@@ -61,6 +61,18 @@ Total price:
     $_SESSION['totalPrice']
     . "
 </p>
+<p>
+Payment method:
+" .
+    $_SESSION['payment']
+    . "
+</p>
+<p>
+Delivery method:
+" .
+    $_SESSION['delivery']
+    . "
+</p>
 </body>
 </html>
 ";
@@ -76,11 +88,13 @@ $mail = mail($to, $subject, $message, $headers);
 
 if ($mail) {
     foreach ($products as $product) {
-        $ordersDB->createOrder($_SESSION['user_id'], $product['id'],$now);
+        $ordersDB->createOrder($_SESSION['user_id'], $product['id'],$now, $_SESSION['delivery'], $_SESSION['payment']);
     }
 
     unset($_SESSION['cart']);
     unset($_SESSION['totalPrice']);
+    unset($_SESSION['delivery']);
+    unset($_SESSION['payment']);
 } else {
     die('Checkout failed');
 }

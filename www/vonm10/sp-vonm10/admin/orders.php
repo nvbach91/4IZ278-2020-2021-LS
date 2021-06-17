@@ -32,6 +32,8 @@ if (!empty($_GET)) {
         $orders = $ordersDB->fetchOrders($userId, $timestamp);
         foreach ($orders as $order) {
             array_push($products, $productsDB->fetch($order['product_id']));
+            $payment = $order['payment'];
+            $delivery = $order['delivery'];
         }
     }
 }
@@ -61,12 +63,14 @@ $totalPrice = 0;
     <? if ($isValidForm) : ?>
         <div>User: <?php echo $userId ?></div>
         <div>Timestamp: <?php echo $timestamp ?></div>
+        <div>Payment method: <?php echo $payment ?></div>
+        <div>Delivery method: <?php echo $delivery ?></div>
         <ul>
             <?php foreach ($products as $product) : ?>
                 <li>
                     <div><?php echo $product['name'] . '(id=' . $product['id'] . ')'; ?></div>
                     <div>
-                        <div>Price: <?php echo $product['price'] ?></div>
+                        Price: <?php echo $product['price'] ?>
                     </div>
                 </li>
                 <?php $totalPrice = $totalPrice + $product['price'] ?>

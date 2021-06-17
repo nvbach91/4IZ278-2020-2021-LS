@@ -13,7 +13,7 @@ $slides = $slidesDB->fetchAll();
     <div class="carousel-inner" role="listbox">
         <?php foreach ($slides as $index => $slide) : ?>
             <div class="carousel-item slide <?php echo $index == 0 ? 'active' : ''; ?>">
-                <img class="d-block img-fluid slide-image" src="<?php echo $slide['img']; ?>" alt="<?php echo $slide['title']; ?>">
+                <a href ="<?php echo URL . '/products/product.php?id=' . $slide['product_id'] ?>"><img class="d-block img-fluid slide-image" src="<?php echo $slide['img']; ?>" alt="<?php echo $slide['title']; ?>"></a>
             </div>
         <?php endforeach; ?>
     </div>

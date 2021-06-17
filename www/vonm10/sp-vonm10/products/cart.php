@@ -32,7 +32,7 @@ $totalPrice = 0;
     <ul>
         <?php foreach ($products as $product) : ?>
             <li>
-                <div><?php echo $product['name'] . '(id=' . $product['id'] . ')'; ?></div>
+                <div><a href = "<?php echo URL . '/products/product.php?id=' . $product['id'] ?>"><?php echo $product['name'] . '(id=' . $product['id'] . ')'; ?></a></div>
                 <div>Price: <?php echo $product['price'] ?></div>
                 <div><a href="remove-item.php?id=<?php echo $product['id']; ?>">Remove from cart</a></div>
             </li>
@@ -42,9 +42,15 @@ $totalPrice = 0;
     </ul>
     <div>Price total: <?php echo $totalPrice ?></div>
     <?php $_SESSION['totalPrice'] = $totalPrice; ?>
+    <? if(isset($_SESSION['login']) && $_SESSION['login']==true) : ?>
     <div>
-        <a href="checkout.php">Checkout</a>
+        <a href="payment.php">Select payment and delivery method</a>
     </div>
+    <? else : ?>
+    <div>You have to be logged in to continue</div>
+    <div><a href="https://eso.vse.cz/~vonm10/beardwithme/login.php">Login</a></div>
+    <div><a href="https://eso.vse.cz/~vonm10/beardwithme/registration.php">Or register</a></div>
+<? endif; ?>
 <? else : ?>
     <div>Your cart is empty</div>
     <div><a href="https://eso.vse.cz/~vonm10/beardwithme/index.php">Back to store</a></div>

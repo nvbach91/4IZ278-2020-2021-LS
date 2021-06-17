@@ -15,6 +15,6 @@ interface DatabaseOperations
     public function addUser($email, $password);
     public function updateRole($id, $newRole);
 
-    public function createOrder($userId, $productId, $timestamp);
+    public function createOrder($userId, $productId, $timestamp, $delivery, $payment);
     public function fetchOrders($userId, $timestamp);
 }
