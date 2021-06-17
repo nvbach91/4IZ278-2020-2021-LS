@@ -42,6 +42,7 @@ class ArticleUpsertFormFactory
         $form = new Form();
         $form->addHidden(self::ID, $article === null ? null : $article->getId());
         $form->addText(self::TITLE, 'Nadpis')
+            ->setRequired()
             ->setDefaultValue($article === null ? null : $article->getTitle());
         $form->addSelect(self::TEAM_ID, 'Tým', ['' => 'Bez týmu'] + $this->teamRepository->fetchPairs('id', 'name'))
             ->setDefaultValue($article === null ? null : $article->getTeamId());

@@ -59,8 +59,16 @@ class PositionGridBuilder
         $grid->addColumnText(self::ACTIONS, 'Akce')
             ->setCustomRender(function (Row $row) {
                 return Html::el('a')
+                    ->setAttribute('class', 'btn btn-sm btn-primary')
                     ->href($this->linkGenerator->link('Backoffice:Position:edit', ['positionId' => $row['id']]))
                     ->setText('Upravit');
+            });
+        $grid->addColumnText('delete', 'Smazat')
+            ->setCustomRender(function (Row $row) {
+                return Html::el('a')
+                    ->setAttribute('class', 'btn btn-sm btn-danger')
+                    ->href($this->linkGenerator->link('Backoffice:Position:deletePosition', ['positionId' => $row['id']]))
+                    ->setText('Smazat');
             });
     }
 

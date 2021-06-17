@@ -29,16 +29,20 @@
                         <ul class="navbar-nav mr-auto">
                             {foreach $menu as $key => $value}
                                 <li class="nav-item">
-                                    <a class="nav-link" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {if $presenter === 'Front:Team' && $action === 'detail'}
+                                        <a class="nav-link {if $parameters['teamId'] === $key}active{/if}" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {else}
+                                        <a class="nav-link" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {/if}
                                 </li>
                             {/foreach}
                         </ul>
                         <ul class="navbar-nav my-2 my-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Article:default">Články</a>
+                                <a class="nav-link{if $presenter === 'Front:Article' && $action === 'default'} active{/if}" n:href="Article:default">Články</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Account:login">Přihlášení</a>
+                                <a class="nav-link{if $presenter === 'Front:Account' && $action === 'login'} active {/if}" n:href="Account:login">Přihlášení</a>
                             </li>
                         </ul>
                     </div>

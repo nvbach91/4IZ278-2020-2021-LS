@@ -26,6 +26,9 @@ class LayoutPresenter extends Presenter
             $this->flashMessage('Please login first!', 'alert alert-danger');
             $this->redirect(':Front:Article:default');
         }
+        $this->template->presenter = $this->getPresenter()->getName();
+        $this->template->action = $this->getAction();
+        $this->template->parameters = $this->getParameters();
         $this->template->menu = $this->teamRepository->prepareMenu();
         $this->template->logoPath = __DIR__ . '../../files/cechie_dubec_logo.jpeg';
     }

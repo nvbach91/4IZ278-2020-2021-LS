@@ -43,7 +43,12 @@ class TeamPresenter extends LayoutPresenter
 
     public function actionDetail(int $teamId): void
     {
-        $this->template->team = $this->teamAssembler->assembly($teamId)->toArray();
+        $team = $this->teamAssembler->assembly($teamId);
+        if ($team === null) {
+            $this->flashMessage('Team not found!', 'alert alert-danger');
+            $this->redirect('default');
+        }
+        $this->template->team = $team->toArray();
     }
 
     public function actionUpsert(?int $teamId): void

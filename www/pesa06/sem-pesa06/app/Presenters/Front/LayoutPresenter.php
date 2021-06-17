@@ -24,6 +24,9 @@ class LayoutPresenter extends Presenter
     {
         parent::beforeRender();
         $this->setLayout(__DIR__ . '/../templates/Front/@layout.latte');
+        $this->template->presenter = $this->getPresenter()->getName();
+        $this->template->action = $this->getAction();
+        $this->template->parameters = $this->getParameters();
         $this->template->menu = $this->teamRepository->prepareMenu();
         $this->template->logoPath = __DIR__ . '../../files/cechie_dubec_logo.jpeg';
     }

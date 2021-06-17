@@ -44,10 +44,10 @@ class PlayerPresenter extends LayoutPresenter
         $this->redirect('Player:default');
     }
 
-    public function actionTogglePlayerIsActive(int $playerId): void
+    public function actionTogglePlayerIsActive(?string $playerId): void
     {
         try {
-            $this->activeToggleHandler->handle($playerId);
+            $this->activeToggleHandler->handle((int)$playerId);
         } catch (PlayerIsActiveToggleHandlerException $exception) {
             $this->flashMessage($exception->getMessage());
         }

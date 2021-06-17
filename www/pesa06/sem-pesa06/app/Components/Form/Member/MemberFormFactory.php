@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Components\Form\Member;
 
 
+use App\Components\Form\Member\Exception\MemberFormException;
 use Domain\Repository\MemberRepository;
 use Nette\Application\UI\Form;
 use Nette\Http\Request;
@@ -56,13 +57,17 @@ class MemberFormFactory
             ->setRequired();
         $form->addText(self::EMAIL, 'Email')
             ->setDefaultValue($member === null ? null : $member->getEmail())
-            ->setRequired()
             ->setHtmlType('email');
         $form->addSubmit('submit', 'submit');
 
         $form->onSuccess[] = function (Form $form){
-            $this->memberFormProcessor->process($form);
-            $form->getPresenter()->redirect('Member:default');
+            try {
+                $this->memberFormProcessor->process($form);
+                $form->getPresenter()->redirect('Member:default');
+            } catch (MemberFormException $exception) {
+                $form->getPresenter()->flashMessage($exception->getMessage(), 'alert alert-danger');
+                $form->getPresenter()->redirect('this');
+            }
         };
 
         return $form;

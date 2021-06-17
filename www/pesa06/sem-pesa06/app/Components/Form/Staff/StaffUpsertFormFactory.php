@@ -47,9 +47,12 @@ class StaffUpsertFormFactory
         if (isset($this->request->getQuery()['staffId'])) {
             /** @var StaffEntity $staff */
             $staff = $this->staffRepository->find((int)$this->request->getQuery()['staffId']);
-            if ($staff->getMemberId() !== null) {
-                $member = $this->memberRepository->findById($staff->getMemberId());
+            $member = null;
+            if ($staff !== null) {
+                if ($staff->getMemberId() !== null) {
+                    $member = $this->memberRepository->findById($staff->getMemberId());
                 }
+            }
         }
         $form = new Form();
         $form->addHidden(self::ID, $staff === null ? null : $staff->getId());

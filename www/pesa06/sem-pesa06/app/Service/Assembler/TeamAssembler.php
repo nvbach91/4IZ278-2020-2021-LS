@@ -37,11 +37,11 @@ class TeamAssembler
         $this->staffPositionTeamRepository = $staffPositionTeamRepository;
     }
 
-    public function assembly(int $teamId): Team
+    public function assembly(int $teamId): ?Team
     {
         $teamEntity = $this->teamRepository->findById($teamId);
         if ($teamEntity === null) {
-            return new Team();
+            return null;
         }
         $team = new Team();
         $team->setTeamId($teamId);

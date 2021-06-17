@@ -45,6 +45,7 @@ class SendEmailFormFactory
             $template = $this->emailTemplateRepository->find((int)$this->request->getQuery()['templateId']);
         }
         $form->addText(self::TITLE, 'Nadpis')
+            ->setRequired()
             ->setDefaultValue($template === null ? null : $template->getTitle());
         $form->addTextArea(self::TEXT, 'Text')
             ->setDefaultValue($template === null ? null : $template->getValue());

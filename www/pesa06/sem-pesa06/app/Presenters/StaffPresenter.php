@@ -63,7 +63,7 @@ class StaffPresenter extends LayoutPresenter
         return $this->staffUpsertFormFactory->create();
     }
 
-    public function actionUpsert(?int $staffId): void
+    public function actionUpsert(?string $staffId): void
     {
         $this->template->staffId = $staffId;
     }

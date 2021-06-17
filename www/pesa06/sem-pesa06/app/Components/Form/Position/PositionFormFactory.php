@@ -39,6 +39,7 @@ class PositionFormFactory
         }
         $form->addHidden(self::ID, $id);
         $form->addText(self::NAME, 'Název')
+            ->setRequired()
             ->setDefaultValue($position === null ? null : $position->getName());
         $form->addSubmit('submit', 'Odeslat');
         $form->onSuccess[] = function (Form $form) {

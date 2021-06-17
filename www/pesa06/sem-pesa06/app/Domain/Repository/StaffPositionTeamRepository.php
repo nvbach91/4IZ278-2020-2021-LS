@@ -31,4 +31,9 @@ class StaffPositionTeamRepository extends Repository
         WHERE spt.team_id = %i AND spt.staff_id = %i
         ', $teamId, $staffId)->fetchAll();
     }
+
+    public function findByPositionId(int $positionId): array
+    {
+        return $this->where([StaffPositionTeamEntity::POSITION_ID => $positionId])->getAll();
+    }
 }

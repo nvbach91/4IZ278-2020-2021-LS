@@ -29,40 +29,44 @@
                         <ul class="navbar-nav mr-auto">
                             {foreach $menu as $key => $value}
                                 <li class="nav-item">
-                                    <a class="nav-link" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {if $presenter === 'Backoffice:Team' && $action === 'detail'}
+                                        <a class="nav-link {if $parameters['teamId'] === (string)$key}active{/if}" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {else}
+                                        <a class="nav-link" n:href="Team:detail, 'teamId' => $key">{$value}</a>
+                                    {/if}
                                 </li>
                             {/foreach}
                         </ul>
                         <ul class="navbar-nav my-2 my-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Article:default">Články</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Article' && $action === 'default'} active{/if}" n:href="Article:default">Články</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Player:default">Hráči</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Player' && $action === 'default'} active{/if}" n:href="Player:default">Hráči</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Member:default">Členové</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Member' && $action === 'default'} active{/if}" n:href="Member:default">Členové</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Team:default">Týmy</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Team' && $action === 'default'} active{/if}" n:href="Team:default">Týmy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Staff:default">Zaměstnanci</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Staff' && $action === 'default'} active{/if}" n:href="Staff:default">Zaměstnanci</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Position:default">Pozice</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Position' && $action === 'default'} active{/if}" n:href="Position:default">Pozice</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="EmailTemplate:default">Emaily</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:EmailTemplate' && $action === 'default'} active{/if}" n:href="EmailTemplate:default">Emaily</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Account:default">Účty</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Account' && $action === 'default'} active{/if}" n:href="Account:default">Účty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Document:default">Dokumenty</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Document' && $action === 'default'} active{/if}" n:href="Document:default">Dokumenty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" n:href="Account:logout">Odhlásit se</a>
+                                <a class="nav-link{if $presenter === 'Backoffice:Account' && $action === 'logout'} active{/if}" n:href="Account:logout">Odhlásit se</a>
                             </li>
                         </ul>
                     </div>

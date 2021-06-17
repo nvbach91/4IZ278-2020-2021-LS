@@ -105,6 +105,7 @@ services:
     - App\Handler\AssignPlayersToTeamsHandler
     - App\Handler\DeleteStaffPositionTeamPairingHandler
     - App\Handler\Pdf\PdfExportHandler(%bankAccountNumber%, %bankNumber%)
+    - App\Handler\DeletePositionHandler
 
     - App\Service\Email\EmailService(%mailerData%)
 

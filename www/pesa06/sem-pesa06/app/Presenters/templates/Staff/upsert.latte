@@ -39,7 +39,7 @@
             </form>
         </div>
     </div>
-    <div class="card mt-4">
+    <div class="card mt-4" n:if="(int)$staffId !== 0">
         <div class="card-header">
             Pozice
             <span class="float-right" n:if="$staffId !== null"><a n:href="Staff:addPosition $staffId" class="btn btn-sm btn-outline-primary">Přidat pozici</a></span>

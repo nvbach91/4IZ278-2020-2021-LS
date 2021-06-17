@@ -63,10 +63,14 @@ class DocumentPresenter extends LayoutPresenter
         return $this->createDocumentForMemberFormFactory->create();
     }
 
-    public function actionExport(int $documentId): void
+    public function actionExport(?string $documentId): void
     {
+        if ($documentId === null) {
+            $this->flashMessage('Document ID cannot be null!', 'alert alert-danger');
+            $this->redirect('default');
+        }
         try {
-            $this->pdfExportHandler->handle($documentId);
+            $this->pdfExportHandler->handle((int)$documentId);
         } catch (PdfExportHandlerException $e) {
             $this->flashMessage($e->getMessage(), 'alert alert-danger');
             $this->redirect('Document:default');

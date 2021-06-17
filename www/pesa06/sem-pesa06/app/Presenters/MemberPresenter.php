@@ -64,7 +64,7 @@ class MemberPresenter extends LayoutPresenter
         $this->sendResponse(new JsonResponse($result));
     }
 
-    public function actionUpsert(?int $memberId): void
+    public function actionUpsert(?string $memberId): void
     {
 
     }

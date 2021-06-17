@@ -39,6 +39,7 @@ class EmailTemplateUpsertFormFactory
         }
         $form->addHidden(self::ID, $template === null ? null : $template->getId());
         $form->addText(self::TITLE, 'Nadpis')
+            ->setRequired()
             ->setDefaultValue($template === null ? null : $template->getTitle());
         $form->addTextArea(self::VALUE, 'Text')
             ->setDefaultValue($template === null ? null : $template->getValue());
