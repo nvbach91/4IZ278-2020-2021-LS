@@ -1,0 +1,25 @@
+{
+  "name": "cechie-dubec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/cechie-dubec/cechie-dubec.git"
+  },
+  "author": "Adam Pesek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/cechie-dubec/cechie-dubec/issues"
+  },
+  "homepage": "https://gitlab.com/cechie-dubec/cechie-dubec#readme"
+}

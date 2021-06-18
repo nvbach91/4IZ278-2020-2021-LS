@@ -1,0 +1,7 @@
+vendor
+log
+temp
+vendor
+node_modules
+app/config/local.neon
+.idea

@@ -1,0 +1,51 @@
+{
+	"name": "nette/web-project",
+	"description": "Nette: Standard Web Project",
+	"keywords": ["nette"],
+	"type": "project",
+	"license": ["MIT", "BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"require": {
+		"php": ">=7.4",
+		"dibi/dibi": "^3.2",
+		"nette/application": "^3.0",
+		"nette/bootstrap": "^3.0",
+		"nette/caching": "^3.0",
+		"nette/database": "^3.0",
+		"nette/di": "^3.0",
+		"nette/finder": "^2.5",
+		"nette/forms": "^3.0",
+		"nette/http": "^3.0",
+		"nette/mail": "^3.0",
+		"nette/robot-loader": "^3.0",
+		"nette/security": "^3.0",
+		"nette/utils": "^3.0",
+		"latte/latte": "^2.5",
+		"tracy/tracy": "^2.6",
+		"robmorgan/phinx": "^0.12",
+		"phpoffice/phpspreadsheet": "1.15.0",
+		"tharos/leanmapper": "^3.4",
+		"etyka/mapper": "dev-master",
+		"o5/grido": "^3.1",
+		"twbs/bootstrap": "4.5.3",
+		"mpdf/mpdf": "^8.0",
+		"endroid/qrcode": "^4.1",
+		"rikudou/czqrpayment": "^5.0"
+	},
+	"require-dev": {
+		"nette/tester": "^2.0",
+		"symfony/thanks": "^1"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://gitlab.etyka.cz/jiri.domjen/mapper"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"App\\": "app"
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}

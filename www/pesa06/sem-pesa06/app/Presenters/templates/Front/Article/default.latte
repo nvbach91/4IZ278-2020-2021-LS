@@ -1,0 +1,28 @@
+{block content}
+<br>
+    <div class="container container-fluid col-md-12 mb-5">
+        <div class="row">
+            <div n:foreach="$articles as $article" class="card col-md-5 mr-4 ml-lg-5 mb-4">
+                <div class="card-header"><a n:href="Article:detail $article['id']">{$article['title']}</a><span class="float-right" n:if="$article['teamId'] !== null">{$article['teamName']}</span></div>
+                <div class="card-body">
+                    {if strlen($article['content']) > 100}
+                        {mb_substr($article['content'], 0, 100)|noescape} ...
+                    {else}
+                        {$article['content']|noescape}
+                    {/if}
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-3">{$article['created']}</div>
+                        <div class="col-md-6">Autor: {$article['author']}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-4 float-right">
+            <div class="col-md-3"><a n:href="default ($page - 1)" class="btn btn-sm btn-outline-dark" n:if="$page > 0">Předchozí</a></div>
+            <div class="col-md-3"><button type="button" class="btn btn-sm btn-dark">{$page + 1} z {$maxPages + 1}</button></div>
+            <div class="col-md-3" n:if="$page < $maxPages"><a n:href="default ($page + 1)" class="btn btn-sm btn-outline-dark">Další</a></div>
+        </div>
+    </div>
+{/block}

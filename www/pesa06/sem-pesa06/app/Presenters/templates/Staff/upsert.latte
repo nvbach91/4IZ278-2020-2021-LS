@@ -1,0 +1,69 @@
+{block content}
+<div class="container align-content-center">
+    <div class="card">
+        <div class="card-header">
+            Editace zaměstnance
+        </div>
+        <div class="card-body">
+            <form n:name="staffUpsertForm">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label firstName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="firstName" class="form-control" id="firstName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {label lastName}
+                    </div>
+                    <div class="col-md-6">
+                        <input n:name="lastName" class="form-control" id="lastName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label>FAČR ID</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input n:name="facrId" disabled class="form-control" id="facrId">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-secondary" onclick="suggest()">Hledat dle jména</button>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" n:name="submit" class="btn btn-outline-info">Odeslat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-4" n:if="(int)$staffId !== 0">
+        <div class="card-header">
+            Pozice
+            <span class="float-right" n:if="$staffId !== null"><a n:href="Staff:addPosition $staffId" class="btn btn-sm btn-outline-primary">Přidat pozici</a></span>
+        </div>
+        {control staffPositionGrid}
+    </div>
+
+</div>
+<script>
+    function suggest() {
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        if (lastName.length < 3 || firstName.length < 3) {
+            alert('Zadejte alespoň 2 znaky u jména i příjmení!');
+            return;
+        }
+        fetch('http://localhost:800/web-apps/4IZ278-2020-2021-LS/www/pesa06/sem-pesa06/www/backoffice.member/suggest-member?firstName=' + firstName + '&lastName=' + lastName).then(res => res.json()).then(response => {
+            if (response.error === true) {
+                document.getElementById('facrId').value = 'Nenalezeno!';
+                document.getElementById('memberId').value = null;
+                return;
+            }
+            document.getElementById('facrId').value = response.facrId;
+            document.getElementById('memberId').value = response.memberId;
+        })
+    }
+</script>
