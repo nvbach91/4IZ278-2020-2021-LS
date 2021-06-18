@@ -94,15 +94,16 @@
                 }
             });
 
-            $("#dateSelection").change((e) => {
+            $("#dateSelection").change((e) => {    //e=event
                 e.preventDefault();
                 $("#timeListSelection").find('option').remove()
-                const timestamp = $("#dateSelection").val();
+                const timestamp = $("#dateSelection").val(); // vybrany value v option u date
+                // dotaz na server pro aktualni casy
                 $.ajax({
                     type: 'GET',
-                    url: "{{ route('service.getAvailableDays', [$service->id, ':timestamp']) }}".replace(":timestamp", timestamp),
+                    url: "{{ route('service.getAvailableDays', [$service->id, ':timestamp']) }}".replace(":timestamp", timestamp), // musime prepsat kvuli js a php
                     success: function (data) {
-                        console.log(data)
+
                         $("#timeListSelection").find('option').remove()
                         const terms = data.availableTimes;
                         if (terms.length === 0) {
@@ -110,6 +111,7 @@
                             opt.val(null)
                             opt.text('no available terms')
                             opt.prop('disabled', true)
+                            opt.prop('selected', true)
                             $("#timeListSelection").append(opt);
                         }
                         for (const i of terms) {
@@ -117,7 +119,10 @@
                             opt.val(i.from)
                             opt.text(moment(i.from).format('HH:mm') + " - " + moment(i.to).format('HH:mm'))
                             opt.prop('disabled', i.isOccupated)
-                            $("#timeListSelection").append(opt);
+                            if (!i.isOccupated){
+                                $("#timeListSelection").append(opt);
+                            }
+
                         }
 
                         $("#timeListSelection").first().prop('selected')

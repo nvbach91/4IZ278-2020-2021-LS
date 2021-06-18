@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @guest
     <div class="container welcome-container">
         <div class="row row-welcome">
             <div class="card-welcome">
@@ -29,4 +30,5 @@
             </div>
         </div>
     </div>
+    @endguest
 @endsection

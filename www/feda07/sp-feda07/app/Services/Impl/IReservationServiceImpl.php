@@ -41,9 +41,10 @@ class IReservationServiceImpl implements IReservationService
         $duration = $service->duration;
 
         foreach ($openingHours as $openingHour) {
-            $possibleTimeFrom = $openingHour->time_from;
-            $possibleTimeTo = $openingHour->time_to;
+            $possibleTimeFrom = $openingHour->time_from->setDate($date->year,$date->month,$date->day);
+            $possibleTimeTo = $openingHour->time_to->setDate($date->year,$date->month,$date->day);
             while ($possibleTimeFrom->isBefore($possibleTimeTo)) {
+
                 $timeFrom = $possibleTimeFrom;
                 $timeTo = $possibleTimeFrom->copy()->add($duration, 'minutes');
                 $isOccupant = $service->reservations->where('date_from', '=', $timeFrom)->count() != 0;

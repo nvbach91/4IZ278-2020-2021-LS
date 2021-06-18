@@ -81,10 +81,10 @@ body{
     max-height: 236px;
 }
 .card-search{
-    width:600px;
-    height: 250px;
-    padding: 10px;
     display: flex;
+    width:600px;
+    height: 150px;
+    padding: 10px;
     justify-content: left;
     flex-direction: row;
     color: #ccced6;
@@ -92,10 +92,6 @@ body{
     text-shadow: 0.35px 0.35px 0px rgb(187, 187, 187);
 }
 
-.col-home{
-    display: flex;
-    align-items: center;
-}
 .container-information{
     padding-top: 70px;
     padding-left: 40px;

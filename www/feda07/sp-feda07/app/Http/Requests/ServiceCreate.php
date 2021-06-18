@@ -35,7 +35,7 @@ class ServiceCreate extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
-            'duration' => 'required|min:1'
+            'duration' => 'required|numeric|gt:0' // numeric= brat jako cislo , gt=vetsi nez
         ];
     }
 }

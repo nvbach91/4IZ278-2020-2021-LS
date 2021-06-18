@@ -10,6 +10,18 @@
 
         </div>
 
+                    <a class="btn btn-secondary" href="{{ route('service.delete') }}"
+                       onclick="event.preventDefault();
+                           document.getElementById('service-delete-form-{{$service->id}}').submit();">
+                        {{ __('Delete') }}
+                    </a>
+
+                    <form id="service-delete-form-{{$service->id}}" action="{{ route('service.delete') }}" method="POST" class="d-none">
+                        <input name="serviceId" type="hidden" value="{{$service->id}}">
+                        @csrf
+                    </form>
+
+
     @empty
         <p>{{__('No services yet')}}</p>
 

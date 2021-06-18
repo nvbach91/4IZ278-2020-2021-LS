@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceCreate;
+use App\Http\Requests\ServiceDeleteRequest;
 use App\Http\Requests\ServiceReserveRequest;
 use App\Services\IReservationService;
 use App\Services\IServiceService;
@@ -43,7 +44,26 @@ class ServiceController extends Controller
 
     public function createForm(ServiceCreate $request): RedirectResponse
     {
-        $this->serviceService->saveNewService($request->name, $request->description, $request->duration);
+
+        $openingHours = [];
+        foreach (range(0, 6) as $day) {
+            $from = $request->get("from-" . $day);
+            $to = $request->get("to-" . $day);
+            if(!(isset($from) && isset($to))){
+                continue;
+            }
+
+            $from = Carbon::now()->setSeconds(0)->setHour(explode(':', $from)[0])->setMinute(explode(':', $from)[1]);
+            $to = Carbon::now()->setSeconds(0)->setHour(explode(':', $to)[0])->setMinute(explode(':', $to)[1]);
+            if($from->isBefore($to) && $to->diffInMinutes($from)>=$request->get('duration')){
+               array_push($openingHours, ['time_from'=>$from, 'time_to'=>$to, 'day'=>$day]);
+            }
+            else{
+                continue;
+            }
+        }
+
+        $this->serviceService->saveNewService($request->name, $request->description, $request->duration, $openingHours);
         return redirect(route('service.index'));
     }
 
@@ -58,18 +78,25 @@ class ServiceController extends Controller
 
     public function getAvailableDays(int $id, int $timestamp)
     {
-//TODO:fix timestamp 
-        $timeList = $this->reservationService->getListOfAllReservationsWithOccupation($id, Carbon::createFromTimestamp($timestamp,date_default_timezone_get()));
+        $timeList = $this->reservationService->getListOfAllReservationsWithOccupation($id, Carbon::createFromTimestamp($timestamp, date_default_timezone_get()));
         return response()->json(['availableTimes' => $timeList]);
 
     }
 
-    public function makeReservation(ServiceReserveRequest $request){
+    public function makeReservation(ServiceReserveRequest $request)
+    {
 
         $userId = Auth::id();
         $serviceId = $request->get('serviceId');
         $dateTime = Carbon::parse($request->get('timeListSelection'))->setTimezone('Europe/Prague');
         $this->reservationService->makeReservation($userId, $serviceId, $dateTime);
-        return redirect(route('service.index'));
+        return redirect(route('home'));
+    }
+
+    public function delete(ServiceDeleteRequest $request)
+    {
+        $id = $request->get('serviceId');
+        $this->serviceService->deleteService($id);
+        return redirect()->route('service.index');
     }
 }

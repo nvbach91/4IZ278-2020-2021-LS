@@ -20,18 +20,11 @@
             @foreach ($services as $service)
                 <a class="row row-home" href="{{ route('service.info', ['id'=>$service->id]) }}">
                     <div class="card card-search mb-3">
-                        <div class="col col-home">
-                            <img class="card-img-top"
-                                 src="{{$service->user->avatar}}"
-                                 alt="Card image cap">
-                        </div>
-                        <div class="col col-home">
                             <div class="card-body-search">
                                 <h5 class="card-title">{{$service->name}}</h5>
-                                <p class="card-text">Description: {{$service->description}}</p>
-                                <p class="card-text">Duration: {{$service->duration}} minutes</p>
+                                <p class="card-text">{{__('Description:')}} {{$service->description}}</p>
+                                <p class="card-text">{{__('Duration: ')}}{{$service->duration}} {{__('minutes')}}</p>
                             </div>
-                        </div>
                     </div>
                 </a>
             @endforeach

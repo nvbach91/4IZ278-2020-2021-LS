@@ -6,6 +6,7 @@ namespace App\Services\Impl;
 
 use App\Dto\FromTo;
 use App\Dto\OpeningHoursDto;
+use App\Models\Reservation;
 use App\Models\Service;
 use App\Models\User;
 use App\Services\IServiceService;
@@ -37,9 +38,10 @@ class ServiceServiceImpl implements IServiceService
      * @param string $name
      * @param string $description
      * @param int $duration
+     * @param array $openingHours
      * @return mixed
      */
-    public function saveNewService(string $name, string $description, int $duration): void
+    public function saveNewService(string $name, string $description, int $duration, array $openingHours): void
     {
         $newService = new Service;
         $newService->name = $name;
@@ -47,6 +49,13 @@ class ServiceServiceImpl implements IServiceService
         $newService->description = $description;
         $newService->user_id = Auth::id();
         $newService->save();
+        foreach( $openingHours as $openingHour){
+            $newService->openingHours()->create([
+                'time_from'=>$openingHour['time_from'],
+                'time_to'=>$openingHour['time_to'],
+                'day'=>$openingHour['day'],
+            ]);
+        }
     }
 
     public function getById(int $id): Service
@@ -65,7 +74,7 @@ class ServiceServiceImpl implements IServiceService
         $service = $this->getById($id);
         $openingHours = $service->openingHours;
         $ret = [];
-        $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        $days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",];
         for ($i = 0; $i < 7; $i++) {
             $day = new OpeningHoursDto;
             $day->name = $days[$i];
@@ -75,8 +84,23 @@ class ServiceServiceImpl implements IServiceService
 
         foreach ($openingHours as $openingHour) {
             $fromTo = new FromTo($openingHour->time_from, $openingHour->time_to);
-           array_push($ret[$openingHour->day-1]->openingHours, $fromTo);
+           array_push($ret[$openingHour->day]->openingHours, $fromTo);
         }
         return $ret;
+    }
+
+    public function deleteService(int $id): void
+    {
+        $service = Service::query()->find($id);
+        $reservation = $service->reservations();
+        $openingHours = $service->openingHours();
+        if(isset($reservation)) {
+            $reservation->delete();
+        }
+        if(isset($openingHours)){
+            $openingHours->delete();
+        }
+        $service->delete();
+
     }
 }
