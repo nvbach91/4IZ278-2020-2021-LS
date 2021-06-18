@@ -25,33 +25,46 @@ abstract class Database implements DatabaseOperations
 
     public function fetch($id)
     {
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE id = ' . $id . ';';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE id = :id;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'id' => $id,
+        ]);
         return $statement->fetchAll()[0];
     }
 
     public function fetchByIds($ids)
     {
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE id IN (' . implode(",", $ids) . ');';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE id IN (:ids);';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'ids' => implode(",", $ids),
+        ]);
         return $statement->fetchAll();
     }
 
     public function fetchByCategory($categoryId)
     {
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE category_id = ' . $categoryId . ';';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE category_id = :category_id;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'category_id' => $categoryId,
+        ]);
         return $statement->fetchAll();
     }
 
+    // parametrizace
     public function add($name, $price, $img, $description, $category)
     {
-        $sql = 'INSERT INTO ' . $this->tableName  . ' (name, price, img, description, category_id)' . 'VALUES ("' . $name . '", "' . $price . '", "' . $img . '", "' . $description . '", "' . $category . '");';
+        $sql = 'INSERT INTO ' . $this->tableName  . ' (name, price, img, description, category_id)' . 'VALUES (:name, :price, :img, :description, :category );';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'name' => $name,
+            'price' => $price,
+            'img' => $img,
+            'description' => $description,
+            'category' => $category,
+        ]);
         return "You have successfully added item " . $name;
     }
 
@@ -65,9 +78,11 @@ abstract class Database implements DatabaseOperations
 
     public function delete($id)
     {
-        $sql = 'DELETE FROM ' . $this->tableName . ' WHERE id = ' . $id . ';';
+        $sql = 'DELETE FROM ' . $this->tableName . ' WHERE id = :id;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'id' => $id,
+        ]);
         return "You have successfully deleted an item";
     }
 
@@ -85,9 +100,12 @@ abstract class Database implements DatabaseOperations
     public function addUser($email, $password)
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql = 'INSERT INTO ' . $this->tableName  . ' (email, password) ' . 'VALUES ("' . $email . '", "' . $hashedPassword . '");';
+        $sql = 'INSERT INTO ' . $this->tableName  . ' (email, password) ' . 'VALUES (:email, :hashed_password);';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'email' => $email,
+            'hashed_password' => $hashedPassword,
+        ]);
     }
 
     public function updateRole($id, $newRole)
@@ -101,16 +119,46 @@ abstract class Database implements DatabaseOperations
     public function createOrder($userId, $productId, $timestamp, $delivery, $payment)
     {
         $sql = 'INSERT INTO ' . $this->tableName  . ' (user_id, product_id, timestamp, payment, delivery) ' 
-        . 'VALUES ("' . $userId . '", "' . $productId . '", "' . $timestamp . '", " ' . $payment . '", "' . $delivery . '");';
+        . 'VALUES (:user_id, :product_id, :timestamp, :delivery, :payment);';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'user_id' => $userId,
+            'product_id' => $productId,
+            'timestamp' => $timestamp,
+            'delivery' => $delivery,
+            'payment' => $payment,
+        ]);
     }
 
     public function fetchOrders($userId, $timestamp)
     {
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE user_id = ' . $userId . ' AND DATE_FORMAT(timestamp, "%Y-%m-%d %H:%i:00") = "' . $timestamp . '";';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE user_id = :user_id AND DATE_FORMAT(timestamp, "%Y-%m-%d %H:%i:00") = :timestamp;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'user_id' => $userId,
+            'timestamp' => $timestamp,
+        ]);
+        return $statement->fetchAll();
+    }
+
+    public function fetchOrdersSeconds($userId, $timestamp)
+    {
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE user_id = :user_id AND timestamp = :timestamp;';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'user_id' => $userId,
+            'timestamp' => $timestamp,
+        ]);
+        return $statement->fetchAll();
+    }
+
+    public function fetchOrdersWithoutTimestamp($userId)
+    {
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE user_id = :user_id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'user_id' => $userId,
+        ]);
         return $statement->fetchAll();
     }
 }

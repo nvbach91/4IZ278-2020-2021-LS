@@ -4,6 +4,7 @@
 session_start();
 if ($_SESSION['admin'] != 3) {
     header('Location: /./~vonm10/beardwithme/index.php');
+    die('Invalid permission');
 }
 
 $usersDB = new UsersDB();
@@ -11,6 +12,7 @@ $userRecords = $usersDB->fetchAll();
 
 if (!empty($_POST)) {
     $usersDB->updateRole($_POST['button'], $_POST['newRole']);
+    header("Refresh:0");
 }
 
 ?>

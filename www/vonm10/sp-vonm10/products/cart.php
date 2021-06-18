@@ -33,14 +33,14 @@ $totalPrice = 0;
         <?php foreach ($products as $product) : ?>
             <li>
                 <div><a href = "<?php echo URL . '/products/product.php?id=' . $product['id'] ?>"><?php echo $product['name'] . '(id=' . $product['id'] . ')'; ?></a></div>
-                <div>Price: <?php echo $product['price'] ?></div>
+                <div>Price: <?php echo $product['price'] ?> eur</div>
                 <div><a href="remove-item.php?id=<?php echo $product['id']; ?>">Remove from cart</a></div>
             </li>
             <hr>
             <?php $totalPrice = $totalPrice + $product['price'] ?>
         <?php endforeach ?>
     </ul>
-    <div>Price total: <?php echo $totalPrice ?></div>
+    <div>Price total: <?php echo $totalPrice ?> eur</div>
     <?php $_SESSION['totalPrice'] = $totalPrice; ?>
     <? if(isset($_SESSION['login']) && $_SESSION['login']==true) : ?>
     <div>

@@ -72,6 +72,9 @@ if (!isset($_SESSION)) {
                     <li class="nav-item">
                         <a class="nav-link" href="https://eso.vse.cz/~vonm10/beardwithme/logout.php">Logout</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://eso.vse.cz/~vonm10/beardwithme/myorders.php">My orders</a>
+                    </li>
                 <? else : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="https://eso.vse.cz/~vonm10/beardwithme/login.php">Login</a>

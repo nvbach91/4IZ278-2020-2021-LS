@@ -3,6 +3,7 @@
 session_start();
 if (!$_SESSION['admin'] || $_SESSION['admin'] == 1) {
     header('Location: /./~vonm10/beardwithme/index.php');
+    die('Invalid permission');
 }
 
 $productsDB = new ProductsDB();
@@ -21,12 +22,17 @@ if (!empty($_POST)) {
     $isValidForm = count($invalidInputs) == 0;
 
     if ($isValidForm) {
-        $productsDB->delete($id);
+        // nejprve select
+        if($productsDB->fetch($id))
+        {
+            $productsDB->delete($id);
+        } else {die('Product does not exist');}
+        
     }
 }
 
 
-
+// vypsat tabulku vsech produktu
 ?>
 
 <?php require __DIR__ . '/../incl/header.php'; ?>

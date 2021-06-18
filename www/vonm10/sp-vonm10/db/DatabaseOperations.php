@@ -17,4 +17,6 @@ interface DatabaseOperations
 
     public function createOrder($userId, $productId, $timestamp, $delivery, $payment);
     public function fetchOrders($userId, $timestamp);
+    public function fetchOrdersWithoutTimestamp($userId);
+    public function fetchOrdersSeconds($userId, $timestamp);
 }

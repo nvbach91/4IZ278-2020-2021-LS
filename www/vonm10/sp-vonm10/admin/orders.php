@@ -4,6 +4,7 @@
 session_start();
 if (!$_SESSION['admin'] || $_SESSION['admin'] == 1) {
     header('Location: /./~vonm10/beardwithme/index.php');
+    die('Invalid permission');
 }
 
 $now = date_create('now')->format('Y-m-d H:i:s');
@@ -22,6 +23,14 @@ if (!empty($_GET)) {
     if (!preg_match('/^[0-9]*$/', $userId)) {
         array_push($invalidInputs, 'ID has to be an integer');
     }
+
+    if(!$timestamp){
+        array_push($invalidInputs, 'Timestamp is empty');
+    }
+    if (!preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/', $timestamp)) {
+        array_push($invalidInputs, 'Timestamp is in incorrect format');
+    }
+
 
     $isValidForm = count($invalidInputs) == 0;
 

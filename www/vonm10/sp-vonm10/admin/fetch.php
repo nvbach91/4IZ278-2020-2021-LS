@@ -4,6 +4,7 @@
 session_start();
 if (!$_SESSION['admin'] || $_SESSION['admin'] == 1) {
     header('Location: /./~vonm10/beardwithme/index.php');
+    die('Invalid permission');
 }
 
 $productsDB = new ProductsDB();
