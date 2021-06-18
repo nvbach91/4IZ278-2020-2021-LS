@@ -73,6 +73,10 @@ Delivery method:
     $_SESSION['delivery']
     . "
 </p>
+<br>
+<p>
+See all your orders <a href='https://eso.vse.cz/~vonm10/beardwithme/myorders.php'>here</a>
+</p>
 </body>
 </html>
 ";
