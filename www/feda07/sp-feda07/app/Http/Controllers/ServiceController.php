@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditServiceRequest;
 use App\Http\Requests\ServiceCreate;
 use App\Http\Requests\ServiceDeleteRequest;
 use App\Http\Requests\ServiceReserveRequest;
@@ -98,5 +99,51 @@ class ServiceController extends Controller
         $id = $request->get('serviceId');
         $this->serviceService->deleteService($id);
         return redirect()->route('service.index');
+    }
+
+
+    public function edit( int $id, EditServiceRequest $request)
+    {
+        $name = $request->get('name');
+        $description = $request->get('description');
+        $duration = $request->get('duration');
+
+        $openingHours = [];
+        foreach (range(0, 6) as $day) {
+            $from = $request->get('from-' . $day);
+            $to = $request->get('to-' . $day);
+            if (!(isset($from) && isset($to))) {
+                continue;
+            }
+
+            $from = Carbon::now()->setSeconds(0)->setHour(explode(':', $from)[0])->setMinute(explode(':', $from)[1]);
+            $to = Carbon::now()->setSeconds(0)->setHour(explode(':', $to)[0])->setMinute(explode(':', $to)[1]);
+            if ($from->isBefore($to) && $to->diffInMinutes($from) >= $request->get('duration')) {
+                array_push($openingHours, ['time_from' => $from, 'time_to' => $to, 'day' => $day]);
+            } else {
+                continue;
+            }
+        }
+        try{
+            $this->serviceService->updateService($id, $name, $description, $duration, $openingHours);
+        } catch (\Exception $exception){
+
+        }
+
+        return redirect()->route('service.index');
+    }
+
+    public function editView(int $id)
+    {
+        $service=        $this->serviceService->getById($id);
+        $openingHours = [];
+        foreach (range(0, 6) as $day) {
+            $openingHours['day-' . $day] = null;
+        }
+        foreach ( $service->openingHours()->get() as $openingHour){
+          $openingHours["day-".$openingHour->day] = $openingHour;
+        }
+
+        return view('service.service-edit', ['service' => $service, 'openingHours' =>$openingHours]);
     }
 }

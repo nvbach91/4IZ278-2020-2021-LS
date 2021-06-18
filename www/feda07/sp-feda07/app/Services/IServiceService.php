@@ -47,4 +47,13 @@ interface IServiceService
      */
     public function deleteService(int $id): void;
 
+    /**
+     * @param int $id
+     * @param string $name
+     * @param string $description
+     * @param int $duration
+     * @param array $openingHours
+     * @return Service
+     */
+    public function updateService(int $id, string $name, string $description, int $duration, array $openingHours): Service;
 }

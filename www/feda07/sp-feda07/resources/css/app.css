@@ -110,3 +110,14 @@ body{
 .card-service{
     background-color: #d9edfe;
 }
+.col-list-services{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+}
+.col-reservation-my-service{
+    background-color: #b3c5d6;
+    display: flex;
+    justify-content: center;
+    max-width: auto;
+}

@@ -30,18 +30,18 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1>My reservations</h1>
+                <h1>{{__('My reservations')}}</h1>
 
             </div>
             <div class="col">
-                <a href="{{route('service.index')}}">My services</a>
+                <a class="h1" href="{{route('service.index')}}" >{{__('My services')}}</a>
             </div>
         </div>
         <div class="row">
             <div class="container-reservation">
                 @forelse($reservations as $reservation)
                     <p>{{$reservation->date_from->format(\App\Constants\TimeConstants::$date)}}  {{$reservation->date_from->format(\App\Constants\TimeConstants::$time)}} - {{$reservation->service->name}}</p>
-                    <a class="btn btn-danger" href="{{ route('profile.reservation.delete') }}"
+                    <a class="btn btn-secondary" href="{{ route('profile.reservation.delete') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('reservation-delete-form-{{$reservation->id}}').submit();">
                         {{ __('Delete') }}

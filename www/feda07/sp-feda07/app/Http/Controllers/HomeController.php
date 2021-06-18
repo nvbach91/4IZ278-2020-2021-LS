@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function index(Request $request): Renderable
     {
         return view('home', [
-            "services" => $this->serviceService->searchService($request->query('query',''))
+            'services' => $this->serviceService->searchService($request->query('query', ''))
         ]);
     }
 }

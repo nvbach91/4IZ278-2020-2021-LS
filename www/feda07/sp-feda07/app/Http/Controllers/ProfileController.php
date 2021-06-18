@@ -52,7 +52,6 @@ class ProfileController extends Controller
 
     public function editView()
     {
-        Log::info( "dfdf");
         return view('profile-edit');
     }
 

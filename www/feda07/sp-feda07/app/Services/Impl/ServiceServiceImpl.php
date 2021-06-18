@@ -11,7 +11,6 @@ use App\Models\Service;
 use App\Models\User;
 use App\Services\IServiceService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ServiceServiceImpl implements IServiceService
@@ -21,8 +20,11 @@ class ServiceServiceImpl implements IServiceService
     public function searchService(?string $query = ""): LengthAwarePaginator
     {
         return Service::query()
-            ->where('name', 'LIKE', "%{$query}%")
-            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->where(function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%");
+                $q->orWhere('description', 'LIKE', "%{$query}%");
+            })
+            ->withCount('openingHours')->having('opening_hours_count', '>', 0)
             ->paginate(5);
     }
 
@@ -49,11 +51,11 @@ class ServiceServiceImpl implements IServiceService
         $newService->description = $description;
         $newService->user_id = Auth::id();
         $newService->save();
-        foreach( $openingHours as $openingHour){
+        foreach ($openingHours as $openingHour) {
             $newService->openingHours()->create([
-                'time_from'=>$openingHour['time_from'],
-                'time_to'=>$openingHour['time_to'],
-                'day'=>$openingHour['day'],
+                'time_from' => $openingHour['time_from'],
+                'time_to' => $openingHour['time_to'],
+                'day' => $openingHour['day'],
             ]);
         }
     }
@@ -62,7 +64,6 @@ class ServiceServiceImpl implements IServiceService
     {
         return Service::query()->findOrFail($id);
     }
-
 
 
     /**
@@ -84,7 +85,7 @@ class ServiceServiceImpl implements IServiceService
 
         foreach ($openingHours as $openingHour) {
             $fromTo = new FromTo($openingHour->time_from, $openingHour->time_to);
-           array_push($ret[$openingHour->day]->openingHours, $fromTo);
+            array_push($ret[$openingHour->day]->openingHours, $fromTo);
         }
         return $ret;
     }
@@ -94,13 +95,46 @@ class ServiceServiceImpl implements IServiceService
         $service = Service::query()->find($id);
         $reservation = $service->reservations();
         $openingHours = $service->openingHours();
-        if(isset($reservation)) {
+        if (isset($reservation)) {
             $reservation->delete();
         }
-        if(isset($openingHours)){
+        if (isset($openingHours)) {
             $openingHours->delete();
         }
         $service->delete();
 
+    }
+
+    public function updateService(int $id, string $name, string $description, int $duration, array $openingHours): Service
+    {
+        $service = Service::query()->find($id);
+        if (isset($name))
+            $service->name = $name;
+        if (isset($description))
+            $service->description = $description;
+        if (isset($duration))
+            $service->duration = $duration;
+        $openingHoursOld = $service->openingHours();
+        try {
+            $reservationCount = Reservation::query()->where('service_id', '=', $id)->count();
+            if ($reservationCount == 0) {
+                if (isset($openingHoursOld)) {
+                    $openingHoursOld->delete();
+                    foreach ($openingHours as $openingHour) {
+                        $service->openingHours()->create([
+                            'time_from' => $openingHour['time_from'],
+                            'time_to' => $openingHour['time_to'],
+                            'day' => $openingHour['day'],
+                        ]);
+                    }
+                }
+            } else {
+                throw new \Exception('You can not change opening hours, because someone reserved this service in this time');
+            }
+        } finally {
+            $service->save();
+        }
+
+        return $service;
     }
 }

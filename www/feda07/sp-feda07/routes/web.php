@@ -43,4 +43,6 @@ Route::get('/service/{id}', [App\Http\Controllers\ServiceController::class, 'inf
 Route::get('/service/{id}/{date}', [App\Http\Controllers\ServiceController::class, 'getAvailableDays'])->name('service.getAvailableDays');
 Route::post('/service/reserve', [App\Http\Controllers\ServiceController::class, 'makeReservation'])->name('service.reserve');
 Route::post('/service/delete', [App\Http\Controllers\ServiceController::class, 'delete'])->name('service.delete');
+Route::get('/services/edit/{id}', [App\Http\Controllers\ServiceController::class, 'editView'])->name('service.edit');
+Route::post('/services/edit/{id}', [App\Http\Controllers\ServiceController::class, 'edit'])->name('service.edit.post');
 
