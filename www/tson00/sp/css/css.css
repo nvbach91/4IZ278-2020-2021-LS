@@ -1,0 +1,40 @@
+.center-button{
+    margin-top: 1%;
+    text-align:center;
+}
+.center-text{
+    text-align:center;
+}
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .accept {
+    padding: 20px;
+    background-color: green; 
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .tablediv {display:block; border-style: solid;  border-width: thin;  }
+  .rowtadiv { display:block;}
+  .celldiv {display:inline-block;
+    width:10%; 
+            height: 15%;}
+            /* Style the buttons */
+#active {
+  
+  background-color:#080808;
+  color: #fff;
+ 
+}
+#active a{
+  
+  background-color:#080808;
+  color: #fff;
+ 
+}
+
