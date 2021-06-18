@@ -52,6 +52,10 @@
     function suggest() {
         let firstName = document.getElementById('firstName').value;
         let lastName = document.getElementById('lastName').value;
+        if (lastName.length < 3 || firstName.length < 3) {
+            alert('Zadejte alespoň 2 znaky u jména i příjmení!');
+            return;
+        }
         fetch('http://localhost:800/web-apps/4IZ278-2020-2021-LS/www/pesa06/sem-pesa06/www/backoffice.member/suggest-member?firstName=' + firstName + '&lastName=' + lastName).then(res => res.json()).then(response => {
             if (response.error === true) {
                 document.getElementById('facrId').value = 'Nenalezeno!';

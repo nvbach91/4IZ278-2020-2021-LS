@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Router;
 
+use Domain\Entity\ArticleEntity;
 use Domain\Entity\TeamEntity;
 use Domain\Repository\ArticleRepository;
 use Domain\Repository\TeamRepository;
@@ -30,8 +31,9 @@ final class RouterFactory
         foreach ($this->teamRepository->getAll() as $team) {
             $this->cache['teams'][strtolower(str_replace(' ', '-', $team->getName()))] = $team->getId();
         }
+        /** @var ArticleEntity $article */
         foreach ($this->articleRepository->getAll() as $article) {
-            $this->cache['articles'][strtolower(str_replace(' ', '-', $article->getTitle()))] = $article->getId();
+            $this->cache['articles'][strtolower(str_replace(' ', '-', $article->getTitle())) . '-' . $article->getCreatedAt()->format('YmdHis')] = $article->getId();
         }
     }
 
@@ -47,14 +49,16 @@ final class RouterFactory
                 'presenter' => 'Article',
                 'action' => 'detail',
                 'id' => [
-                    Route::FILTER_OUT => function (string $articleId): string
-                    {
+                    Route::FILTER_OUT => function (string $articleId): string {
                         $article = $this->articleRepository->find((int)$articleId);
-                        return strtolower(str_replace(' ', '-', $article->getTitle()));
+                        return strtolower(str_replace(' ', '-', $article->getTitle())) . '-' . $article->getCreatedAt()->format('YmdHis');
                     },
-                    Route::FILTER_IN => function (string $slug): int
-                    {
-                        return $this->cache['articles'][$slug];
+                    Route::FILTER_IN => function (string $slug): int {
+                        if (isset($this->cache['articles'][$slug])) {
+                            return $this->cache['articles'][$slug];
+                        } else {
+                            return $this->cache['articles'][array_key_first($this->cache['articles'])];
+                        }
                     }
                 ]
             ]);
@@ -69,7 +73,11 @@ final class RouterFactory
                         return strtolower(str_replace(' ', '-', $team->getName()));
                     },
                     Route::FILTER_IN => function (string $team): int {
-                        return $this->cache['teams'][$team];
+                        if (isset($this->cache['teams'][$team])) {
+                            return $this->cache['teams'][$team];
+                        } else {
+                            return $this->cache['teams'][array_key_first($this->cache['teams'])];
+                        }
                     }
                 ]
             ]);
