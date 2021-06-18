@@ -18,11 +18,10 @@ include __DIR__ . '/navigation.php';
 
             <?php require 'frontend/sliderView.php'; ?>
 
-            <div class="row">
-
+            
                 <?php require 'frontend/productView.php'; ?>
 
-            </div>
+            
         </div>
     </div>
 

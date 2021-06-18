@@ -4,6 +4,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.php"><img src="resources/img/nba_logo.png" height="40px"></a>
+      
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <?php if (!isset($_SESSION['user_email'])): ?>
@@ -26,7 +27,7 @@
             <?php  else: ?>
               
               <a class="dropdown-item" href="orders.php">Orders</a>
-              <a class="dropdown-item" href="cart.php">Cart</a>
+              
             <?php endif; ?>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="logout.php">Log out</a>
@@ -36,5 +37,9 @@
           <?php endif; ?>
         </ul>    
       </div>
+      <?php if(isset($_SESSION['user_email']) && !$_SESSION['admin']): ?>
+        <a class="#" href="cart.php"><img src="https://img.icons8.com/nolan/64/fast-cart.png"/></a>
+        <span class="badge badge-pill badge-warning"><?php if(isset($_SESSION['cart'])):?><?= count($_SESSION['cart'])?><?php else: echo 0;?><?php endif ?></span>
+      <?php endif ?>
     </div>
   </nav>

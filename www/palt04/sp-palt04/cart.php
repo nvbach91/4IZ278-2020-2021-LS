@@ -5,6 +5,10 @@
     $_SESSION['cart'] = [];
   }
 
+  if (!isset($_GET['error'])) {
+
+  }
+
   $ids = $_SESSION['cart'];
   $goods = [];
 
@@ -24,6 +28,9 @@
 ?>
 
 <div class="container">
+  <?php if(isset($_GET['error'])): ?>
+    <div style="padding: 25px; background: #efefef; color: firebrick; border-radius: 10px;"> One of the product is already sold </div>
+  <?php endif ?>
   <?php if ($goods): ?>
     <div class="card">
     <table class="table table-hover shopping-cart-wrap">
@@ -35,8 +42,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php 
-       foreach ($goods as $good) : $totalAmount+= $good['price']?>
+    <?php foreach ($goods as $good) : $totalAmount+= $good['price']?>
         <tr>
           <td>
         <figure class="media">
@@ -52,7 +58,11 @@
           </td>
           <td> 
             <div class="price-wrap"> 
-              <var class="price"><?= $good['price']; echo $currency; ?></var> 
+              <?php if($good['in_stock']==0):?>
+                <p class="text-danger">Sold out</p>
+              <?php else: ?>
+                <var class="price"><?= $good['price']; echo $currency; ?></var>
+              <?php  endif; ?> 
             </div>
           </td>
           <td class="text-right"> 

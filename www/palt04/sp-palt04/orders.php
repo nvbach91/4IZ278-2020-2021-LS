@@ -5,7 +5,7 @@
         header('Location: login.php');
       }
     $i = 0;
-    $stmt = $connect->prepare('SELECT * FROM orders WHERE user_email = :user_email');
+    $stmt = $connect->prepare('SELECT * FROM orders WHERE user_email = :user_email ORDER BY created_at DESC');
     $stmt->execute([
         'user_email' => $_SESSION['user_email']
     ]);

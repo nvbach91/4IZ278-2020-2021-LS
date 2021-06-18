@@ -6,8 +6,9 @@
     $_SESSION['cart'] = [];
   }
 
+  $error = false;
   $cart = $_SESSION['cart'];
-  $date = date("Y-m-d");
+  $date = date("Y-m-d H:i:s");
 
   $ids = $_SESSION['cart'];
   $totalAmount = 0;
@@ -21,8 +22,18 @@
     $goods = $statement->fetchAll();
   }
 
+
   foreach ($goods as $good) {
       $totalAmount += $good['price'];
+      if ($good['in_stock'] == 0) {
+        $error = true;
+        break;
+      }
+  }
+
+  if ($error) {
+    header('Location: cart.php?error=1');
+    die();
   }
 
   $stmt = $connect->prepare('INSERT INTO orders(user_email, created_at, total_amount) VALUES (:user_email, :created_at, :total_amount)');
@@ -40,6 +51,15 @@
         'order_id' => $order_id, 
         'product_id' => $item_id
     ]);
+
+    $stmt = $connect->prepare("
+    UPDATE goods SET
+    in_stock = in_stock -1
+    WHERE id = :id;
+     ");
+  $stmt->execute([
+    "id" => $item_id,
+  ]);
   }
 
   unset($_SESSION['cart']);

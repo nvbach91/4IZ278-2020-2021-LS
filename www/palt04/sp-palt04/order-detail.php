@@ -5,23 +5,30 @@
         header('Location: login.php');
     }
     
-    $stmt = $connect->prepare('SELECT * FROM products_orders WHERE order_id = :order_id');
+    $stmt = $connect->prepare('SELECT product_id FROM products_orders WHERE order_id = :order_id');
     $stmt->execute([
           'order_id' => $_GET['id']
     ]);
 
     $products_ids = $stmt->fetchAll();
-  
-    //var_dump($products);
+    $products_ids = array_values($products_ids);
+    $only_ids = array();
+    foreach($products_ids as $product_id){
+      array_push($only_ids,$product_id['product_id']);
+    }
+   // var_dump($products_ids)."</br>";
 
-    $stmt = $connect->prepare('SELECT * FROM goods');
-    $stmt->execute();
-    $products = $stmt->fetchAll();
+    $statement = $connect->prepare('SELECT * FROM goods WHERE 1');
+    $statement->execute();
+    $products = $statement->fetchAll();
+    //var_dump($products);
 
     $totalAmount = 0;
 
     require("./partials/header.php");
     require("./navigation.php");
+
+
 ?>
 
 
@@ -36,7 +43,7 @@
     </thead>
     <tbody>
     <?php foreach ($products as $product): ?>
-        <?php if(in_array($product['id'],$products_ids)):
+        <?php if(in_array($product['id'],$only_ids)):
         $totalAmount+= $product['price'];?>
         <tr>
           <td>
@@ -62,4 +69,6 @@
 </tbody>
 </table>
 </div>
+<div class="p-3 mb-2 bg-info text-white">Total price: <?php echo $totalAmount; echo $currency?></div>
+<?php require("./partials/footer.php"); ?>
 

@@ -52,7 +52,6 @@
   $goods = $statement->fetchAll(PDO::FETCH_ASSOC);
 
   $numberOfPaginations = ceil($numberOfGoods / $numberOfItemsPerPagination);
-
 ?>
 <div class="row">
 
@@ -72,7 +71,11 @@
           <a href="update-product.php?id=<?= $good['id'] ?>" class="btn btn-primary">Update</a>
           <a href="delete-product.php?id=<?= $good["id"] ?>" class="btn btn-danger">Delete</a>
         <?php  elseif(isset($_SESSION['admin']) && !$_SESSION['admin']): ?>
-          <a href="buy.php?id=<?= $good['id']; ?>" class="btn btn-primary">Buy</a>
+          <?php if($good['in_stock']==0):?>
+            <p class="text-danger"> Sold out :(</p>
+          <?php else: ?>
+            <a href="buy.php?id=<?= $good['id']; ?>" class="btn btn-primary">Buy</a>
+          <?php endif?>
         <?php else:?>
           Please login to buy product.
         <?php endif; ?>
@@ -81,12 +84,14 @@
   </div>   
 <?php endforeach; ?>
 </div>
+<?php if( $numberOfPaginations != 1 ): ?>
 <ul class="pagination mx-auto ">
-      <?php for ($i = 1; $i <= $numberOfPaginations; $i++) { ?>
-        <li class="page-item <?= $offset / $numberOfItemsPerPagination + 1 == $i ? ' active' : ''; ?>">
-        <a class="page-link" href="index.php?offset=<?= $numberOfItemsPerPagination * ($i - 1); ?>">
-          <?= $i; ?>
-        </a>
-        </li>
-      <?php } ?>
+        <?php for ($i = 1; $i <= $numberOfPaginations; $i++) { ?>
+          <li class="page-item <?= $offset / $numberOfItemsPerPagination + 1 == $i ? ' active' : ''; ?>">
+          <a class="page-link" href="index.php?offset=<?= $numberOfItemsPerPagination * ($i - 1); ?>">
+            <?= $i; ?>
+          </a>
+          </li>
+        <?php } ?>  
 </ul>
+<?php endif ?>
