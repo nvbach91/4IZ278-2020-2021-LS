@@ -15,7 +15,7 @@ use App\Http\Models;
 */
 
 Route::get('/', function () {
-    $offers = DB::select('select o.*, s.NAME as STATUS_NAME from offer o join status s on o.STATUS = s.ID where s.NAME = "Volné"');
+    $offers = DB::select('select o.*, s.NAME as STATUS_NAME from offer o join status s on o.STATUS = s.ID where s.NAME = "Volné" OR s.NAME = "Rezervováno"');
     $statuses = \App\Models\Status::All();
         
     return view('index',[
@@ -38,4 +38,8 @@ Route::get('/offer/{offer}/edit', [App\Http\Controllers\OfferController::class, 
 Route::get('/offer', [App\Http\Controllers\OfferController::class, 'index'])->name('index');
 Route::post('/offer', [App\Http\Controllers\OfferController::class, 'store'])->name('store');
 Route::patch('/offer/{offer}', [App\Http\Controllers\OfferController::class, 'update'])->name('offer.update');
-
+Route::patch('/offerReservation/{offer}', [App\Http\Controllers\OfferController::class, 'updateReservation'])->name('offer.update');
+Route::patch('/offer/reserve', [App\Http\Controllers\OfferController::class, 'reserve']);
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('index');
+Route::patch('/profile/{user}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+Route::get('/people', [App\Http\Controllers\PeopleController::class, 'index'])->name('index');

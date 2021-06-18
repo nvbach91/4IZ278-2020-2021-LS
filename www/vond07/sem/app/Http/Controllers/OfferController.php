@@ -17,7 +17,13 @@ class OfferController extends Controller
         join status s on o.STATUS = s.ID
         join size si on si.ID = o.SIZE where ou.ID_USER = :ID', ['ID' => Auth::user()->id]);
 
-        return view('offer.index', compact('offers'));
+        $offersReserved = DB::select('select o.*, s.NAME as STATUS_NAME, si.NAME as SIZE_NAME, u.name as RESERVED_BY_NAME from offer o join offer_user ou on o.ID = ou.ID_OFFER
+        join status s on o.STATUS = s.ID
+        join size si on si.ID = o.SIZE
+        join users u on u.id = o.RESERVED_BY
+        where ou.ID_USER = :ID', ['ID' => Auth::user()->id]);
+
+        return view('offer.index', compact('offers', 'offersReserved'));
     }
 
     public function create()
@@ -43,6 +49,7 @@ class OfferController extends Controller
             'CITY' => 'required',
             'STREET' => 'required',
             'POSTCODE' => 'required',
+            'PICTURE' => '',
         ]);
 
 
@@ -55,7 +62,7 @@ class OfferController extends Controller
         
         \App\Models\OfferUser::create($dataForOfferUserTable);
 
-        dd(request()->all());
+        //dd(request()->all());
 
         //return redirect('/offer');
         return redirect()->action([OfferController::class, 'index']);
@@ -77,8 +84,9 @@ class OfferController extends Controller
 
         $sizes = \App\Models\Size::all();
         $statuses = \App\Models\Status::all();
+        $users = \App\Models\User::all();
         
-        return view('offer.edit', compact('offer', 'sizes', 'statuses'));
+        return view('offer.edit', compact('offer', 'sizes', 'statuses', 'users'));
     }
 
     public function update(\App\Models\Offer $offer)
@@ -92,8 +100,26 @@ class OfferController extends Controller
             'CITY' => 'required',
             'STREET' => 'required',
             'POSTCODE' => 'required',
+            'PICTURE' => '',
+            'RESERVED_BY' => '',
         ]);
         
+        \App\Models\Offer::where('ID', $offer->ID)->update($data);
+
+        //return redirect('/offer');
+        return redirect()->action([OfferController::class, 'index']);
+        //return back()->withInput();
+
+    }
+
+    public function updateReservation(\App\Models\Offer $offer)
+    {
+        $data = request()->validate([
+            'RESERVED_BY' => 'required',
+            'STATUS' => '',
+        ]);
+
+
         \App\Models\Offer::where('ID', $offer->ID)->update($data);
 
         //return redirect('/offer');

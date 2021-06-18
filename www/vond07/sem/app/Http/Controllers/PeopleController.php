@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models;
 
-class HomeController extends Controller
+class PeopleController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,6 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = \App\Models\User::all();
+        return view('people.index', compact('users'));
     }
+
+    public function store(Request $request){
+        $response = array(
+            'status' => 'success',
+            'msg' => $request->message,
+        );
+        return response()->json($response); 
+     }
+
 }

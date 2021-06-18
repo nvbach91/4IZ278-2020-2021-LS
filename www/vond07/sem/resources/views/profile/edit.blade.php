@@ -28,24 +28,6 @@
             </div>
             <div class="col-6">
                 <div class="form-group">
-                    <label for="PICTURE" class="">Obrázek</label>
-
-                    <input id="PICTURE" 
-                        type="text" 
-                        class="form-control @error('PICTURE') is-invalid @enderror" 
-                        name="PICTURE" 
-                        value="{{ old('PICTURE') ?? $offer->PICTURE }}" 
-                        autofocus>
-
-                    @error('PICTURE')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="form-group">
                     <label for="SURFACE" class="">Surface</label>
 
                     <input id="SURFACE" 
@@ -173,29 +155,6 @@
                         autofocus>
 
                     @error('POSTCODE')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-2">
-            <div class="form-group">
-                    <label for="RESERVED_BY" class="">Rezervováno</label>
-
-                    <select id="RESERVED_BY" 
-                        type="text" 
-                        class="form-control @error('RESERVED_BY') is-invalid @enderror" 
-                        name="RESERVED_BY" 
-                        value="{{ old('RESERVED_BY') ?? $offer->RESERVED_BY }}" 
-                        autofocus>
-                        <option value="">Nikdo</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}" {{$user->id == $offer->RESERVED_BY ? 'selected' : ''}}>{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-
-                    @error('RESERVED_BY')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

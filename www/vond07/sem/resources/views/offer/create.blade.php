@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     
-    <form action="/offer" enctype=multipart/form-data method="post">
+    <form action="/~vond07/realitka/offer" enctype=multipart/form-data method="post">
         @csrf
         <div class="row">
             <div class="col-6">
@@ -18,6 +18,24 @@
                         autofocus>
 
                     @error('NAME')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="PICTURE" class="">Obrázek</label>
+
+                    <input id="PICTURE" 
+                        type="text" 
+                        class="form-control @error('PICTURE') is-invalid @enderror" 
+                        name="PICTURE" 
+                        value="{{ old('PICTURE') ?? '' }}" 
+                        autofocus>
+
+                    @error('PICTURE')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

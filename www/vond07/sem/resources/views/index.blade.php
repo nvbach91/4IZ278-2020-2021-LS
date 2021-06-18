@@ -31,7 +31,7 @@
                             <td>{{ $offer->STREET }}</td>
                             <td>{{ $offer->STATUS_NAME }}</td>
                             <td>{{ $offer->PRICE }}</td>
-                            <td><a class="btn btn-primary" href="{{ url('/offer/' . $offer->ID) }}">See offer</a></td>
+                            <td><a class="btn btn-primary" href="{{ url('/offer/' . $offer->ID) }}">Náhled</a></td>
                         </tr>
                     @endforeach
                 </tbody>
