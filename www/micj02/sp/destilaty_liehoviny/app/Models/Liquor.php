@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Liquor extends Model
 {
     use HasFactory;
+    public $fillable = ['name', 'image', 'category', 'volume', 'alcohol_percentage', 'price'];
 
     public function orders()
     {

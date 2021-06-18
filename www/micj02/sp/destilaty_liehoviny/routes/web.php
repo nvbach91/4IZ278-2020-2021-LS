@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminLiquorController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LiquorController;
 use App\Http\Controllers\OrderController;
@@ -42,6 +43,13 @@ Route::post('/profile/{user}', [ProfileController::class, 'update'])->name('prof
 Route::get('/email', function () {
     return new OrderMail(\App\Models\Order::first());
 });
+
+Route::get('/admin/liquors/create', [AdminLiquorController::class, 'create'])->name('admin_liquor.create');
+Route::post('/admin/liquors/store', [AdminLiquorController::class, 'store'])->name('admin_liquor.store');
+Route::get('/admin/liquors', [AdminLiquorController::class, 'index'])->name('admin_liquor.index');
+Route::get('/admin/liquors/{liquor}/edit', [AdminLiquorController::class, 'edit'])->name('admin_liquor.edit');
+Route::post('/admin/liquors/update/{liquor}', [AdminLiquorController::class, 'update'])->name('admin_liquor.update');
+Route::post('/admin/liquors/{liquor}/delete', [AdminLiquorController::class, 'delete'])->name('admin_liquor.delete');
 
 
 Route::get('/dashboard', function () {

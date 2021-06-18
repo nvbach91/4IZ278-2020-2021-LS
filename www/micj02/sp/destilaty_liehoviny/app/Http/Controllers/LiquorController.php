@@ -25,4 +25,14 @@ class LiquorController extends BaseCartController
         $cart = $this->get_or_create_cart($request);
         return view('liquor.show', compact(['liquor', 'cart']));
     }
+
+    public function edit(Liquor $liquor)
+    {
+        return view('liquor.show', compact(['liquor', 'cart']));
+    }
+
+    public function delete(Liquor $liquor)
+    {
+        return view('liquor.show', compact(['liquor', 'cart']));
+    }
 }

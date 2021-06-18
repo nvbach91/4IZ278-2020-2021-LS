@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.navigation')
 
 @section('main_col')
     <!-- /.col-lg-3 -->

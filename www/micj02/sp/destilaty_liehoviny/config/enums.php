@@ -12,6 +12,9 @@ $ORDER_STATE_CHOICE_NEW = 10;
 $ORDER_STATE_CHOICE_PENDING = 20;
 $ORDER_STATE_CHOICE_FINISHED = 30;
 
+$USER_ROLE_CHOICE_BASIC_USER = 10;
+$USER_ROLE_CHOICE_ADMIN = 20;
+
 return [
     'choices' => compact([
             'LIQUOR_CATEGORY_CHOICE_RUM',
@@ -22,6 +25,8 @@ return [
             'ORDER_STATE_CHOICE_NEW',
             'ORDER_STATE_CHOICE_PENDING',
             'ORDER_STATE_CHOICE_FINISHED',
+            'USER_ROLE_CHOICE_BASIC_USER',
+            'USER_ROLE_CHOICE_ADMIN',
         ]
     ),
 

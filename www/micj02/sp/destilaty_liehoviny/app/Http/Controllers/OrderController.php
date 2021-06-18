@@ -49,6 +49,7 @@ class OrderController extends Controller
                 'country' => ['required', 'integer'],
                 'terms' => ['required'],
             ]);
+
             unset( $address_data['terms']);
             $order_data = [
                 'state' => config('enums.choices')['ORDER_STATE_CHOICE_NEW'],
@@ -60,27 +61,17 @@ class OrderController extends Controller
             } else {
                 $order = Order::create($order_data);
             }
-            $liquors = $cart->liquors()->pluck('quantity', 'liquor_id')->toArray();
-
-            foreach ($liquors as $liquor_id => $quantity) {
-                $order->liquors()->attach($liquor_id, ['quantity' => $quantity]);
+            $liquors = $cart->liquors()->get(['quantity', 'liquor_id', 'price'])->toArray();
+            foreach ($liquors as $liquor) {
+                $order->liquors()->attach(
+                    $liquor['liquor_id'],
+                    ['quantity' => $liquor['liquor_id'], 'historic_price' => $liquor['price']]);
             }
 
             $order->address()->create($address_data);
             $cart->liquors()->detach();
 
 //            Mail::to($address_data['email'])->send(new OrderMail($order));
-            $headers = [
-                'MIME-version: 1.0',
-                'Content-type: text/html, charset=utf-8',
-                'From: app@dev.com',
-                'Reply-To: app@dev.com',
-                'X-mailer: PHP/8.0',
-            ];
-            $order_mail = new OrderMail($order);
-            $msg = $order_mail->render();
-
-            mail($address_data['email'], 'Objednávka dokončená!', $msg, implode("\r\n", $headers));
 
             return view('order.finished', compact(['cart', 'order']));
         }
@@ -90,6 +81,11 @@ class OrderController extends Controller
     }
 
     public function show(Order $order)
+    {
+        return view('order.show', compact('order'));
+    }
+
+    public function delete(Order $order)
     {
         return view('order.show', compact('order'));
     }

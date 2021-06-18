@@ -18,6 +18,7 @@ class LiquorOrder extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('quantity')->default(0);
+            $table->float('historic_price');
             $table->unsignedBigInteger('order_id')->index()->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('liquor_id')->index()->constrained()->onDelete('cascade');
         });

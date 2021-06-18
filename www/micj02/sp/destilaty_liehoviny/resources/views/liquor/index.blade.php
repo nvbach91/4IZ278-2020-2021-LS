@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.navigation')
 
 @section('main_col')
     <!-- /.col-lg-3 -->
@@ -14,7 +14,9 @@
             <div class="carousel-inner" role="listbox">
                 @foreach($carousel_liquors as $index => $liquor)
                 <div class="carousel-item slide text-center {{ $index === 0 ? "active" : "" }} card">
-                    <a href="{{ route('liquor.show', ['liquor' => $liquor->id]) }}"><img class="m-1" src="{{ asset($liquor->image) }}" alt="{{ $liquor->name }}" style="height: 600px; width: auto"></a>
+                    <a href="{{ route('liquor.show', ['liquor' => $liquor->id]) }}">
+                        <img class="m-1" src="{{ asset($liquor->image) }}" alt="{{ $liquor->name }}" style="height: 600px; width: auto">
+                    </a>
                 </div>
                 @endforeach
             </div>

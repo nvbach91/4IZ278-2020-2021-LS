@@ -12,6 +12,7 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $subject = 'Objednávka dokončená!';
     private $order;
 
     /**
