@@ -1,0 +1,12 @@
+{
+    "name": "mv/facebool",
+    "authors": [
+        {
+            "name": "Matyas Vondra",
+            "email": "vonm10@vse.cz"
+        }
+    ],
+    "require": {
+        "facebook/graph-sdk": "^5.1"
+    }
+}
