@@ -24,8 +24,9 @@ class ServiceServiceImpl implements IServiceService
                 $q->where('name', 'LIKE', "%{$query}%");
                 $q->orWhere('description', 'LIKE', "%{$query}%");
             })
-            ->withCount('opening_hours')->having('opening_hours_count', '>', 0)
-            ->paginate(5);
+            ->paginate(2);
+//            ->withCount('openingHours')->having('opening_hours_count', '>', 0)
+//            ->paginate(5);
     }
 
     /**
