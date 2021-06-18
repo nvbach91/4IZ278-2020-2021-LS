@@ -22,5 +22,19 @@
   .tablediv {display:block; border-style: solid;  border-width: thin;  }
   .rowtadiv { display:block;}
   .celldiv {display:inline-block;
-    width:12%; 
+    width:10%; 
             height: 15%;}
+            /* Style the buttons */
+#active {
+  
+  background-color:#080808;
+  color: #fff;
+ 
+}
+#active a{
+  
+  background-color:#080808;
+  color: #fff;
+ 
+}
+

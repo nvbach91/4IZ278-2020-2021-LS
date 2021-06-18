@@ -16,14 +16,16 @@ if(isset($_POST['profile'])){
     $phone = $_POST['phone'];
 
     if(!empty($password) && !empty($confirm)){
+   
         if($password  == $confirm){
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $update = "UPDATE user SET password='".$hash."' WHERE id='".$_SESSION["id"]."'";
+          $optionhash = ['cost' => 16];
+          $hash = password_hash($password, PASSWORD_BCRYPT,$optionhash);
+          $update = "UPDATE user SET password='".$hash."' WHERE id='".$_SESSION["id"]."'";
             $stat = $pdo->prepare($update);
             $stat->execute();
-        }else{
-            $message = 'Hesla se neshodují';
-        }
+      }else{
+          $message = 'Hesla se neshodují';
+      }
     }
     $update = "UPDATE user SET phone='".$phone."',id_university='".$univesity."',id_dormitory='".$dormitory."' WHERE id='".$_SESSION["id"]."'";
     $statementupt = $pdo->prepare($update);
@@ -92,7 +94,7 @@ if(isset($_POST['profile'])){
 </div>
 <div class="mb-3">
   <label for="phone" class="form-label">Telefon</label>
-  <input  type="number" name="phone" value="<?php echo $profileresult[0]['phone'];?>" class="form-control" id="phone" aria-describedby="phone" required>
+  <input  type="number" name="phone" max = "999999999" value="<?php echo $profileresult[0]['phone'];?>" class="form-control" id="phone" aria-describedby="phone" required>
 </div>
 <div class="center-button">  
 <button type="submit" class="btn btn-primary">Uložit změny</button> 

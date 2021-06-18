@@ -1,9 +1,9 @@
 <?php
 
 const DB_HOST = 'localhost';
-const DB_DATABASE = '';
-const DB_USERNAME = '';
-const DB_PASSWORD = '';
+const DB_DATABASE = 'tson00';
+const DB_USERNAME = 'tson00';
+const DB_PASSWORD = 'paedeu9EiM3maighep';
 
 
 

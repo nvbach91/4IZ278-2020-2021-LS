@@ -46,7 +46,15 @@ if(isset($_POST['registration'])){
     }elseif(!empty($emailarray[0]['username'])){
       $message = 'Tento username je již zaregistrovaný';
     }else{
-    if($password  == $confirm){
+      $number = preg_match('@[0-9]@', $password);
+      $uppercase = preg_match('@[A-Z]@', $password);
+      $lowercase = preg_match('@[a-z]@', $password);
+      $specialChars = preg_match('@[^\w]@', $password);
+      
+      if(strlen($password) < 8 || !$number || !$uppercase || !$lowercase || !$specialChars) {
+      $message =  "Heslo musí obsahovat 8 znaků, aspoň jedné číslo, velké a malé písmeno a jeden znak";
+      } else {
+      if($password  == $confirm){
         $optionhash = ['cost' => 16];
         $hash = password_hash($password, PASSWORD_BCRYPT,$optionhash);
         $sql = "INSERT INTO user (name, surname, id_university, id_dormitory, username, phone, email, password)  
@@ -59,6 +67,8 @@ if(isset($_POST['registration'])){
     }else{
         $message = 'Hesla se neshodují';
     }
+      }
+    
   }
     
 }
@@ -92,7 +102,7 @@ if(isset($_POST['registration'])){
     <div class="mb-3">
       <label for="name" class="form-label">Jméno</label>
       <input  name="registration" type="hidden">
-      <input  type="text" name="name" value="" class="form-control" id="name" aria-describedby="name" required>
+      <input  type="text" name="name" value="<?php echo @$_POST['name'] ?>" class="form-control" id="name" aria-describedby="name" required>
     </div>
     <div class="mb-3">
       <label for="surname" class="form-label">Příjmení</label>
@@ -131,7 +141,7 @@ if(isset($_POST['registration'])){
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">Telefon</label>
-      <input  type="number" name="phone" value="" class="form-control" id="phone" aria-describedby="phone" required>
+      <input  type="number" name="phone" value=""  max="999999999" class="form-control" id="phone" aria-describedby="phone" required>
     </div>
     <div class="center-button">  
     <button type="submit" class="btn btn-primary">Registrace</button> 

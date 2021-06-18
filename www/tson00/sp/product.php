@@ -5,6 +5,7 @@ require __DIR__ . '/database_connection.php';
 $message = "";
 $price = "";
 $description = "";
+$alert="";
 if(isset($_POST['changeproduct'])){
     $price = $_POST['price'];
     $description = $_POST['description'];
@@ -22,6 +23,18 @@ if(isset($_POST['changeproduct'])){
     }
     $message = 'Uloženo';
 }elseif(isset($_POST['borrowproduct'])){
+  $id_product = @$_GET['id'];
+  $sql = "SELECT * FROM borrowing WHERE id_product = :id_product and status != 1;";
+  $statement = $pdo->prepare($sql);
+  $statement->execute([
+      'id_product' => $id_product,
+  ]);
+
+  $borstat = $statement->fetchAll();
+
+  if(!empty($borstat)){
+    $alert = "Zboží je již vypůjčené";
+  }else{
     $sql = "INSERT INTO borrowing (id_product, id_user,status)  
     VALUES (?,?,?)";
     $status = 6;
@@ -33,6 +46,7 @@ if(isset($_POST['changeproduct'])){
     $stat->execute();
 
      header('Location: borrow.php');
+  }
 }
 
 
@@ -58,6 +72,10 @@ if(isset($_POST['changeproduct'])){
 <?php include './includes/navigation.php'?> 
 <?php if(!empty($message)){?>
   <div class="accept"><?php if($message!="") { echo $message; } ?></div>
+<?php
+}?>
+<?php if(!empty($alert)){?>
+  <div class="alert"><?php if($alert!="") { echo $alert; } ?></div>
 <?php
 }?>
 <form action="" method="POST" >
