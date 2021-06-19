@@ -3,7 +3,9 @@
 session_start();
 if (!$_SESSION['admin'] || $_SESSION['admin'] == 1) {
     header('Location: /./~vonm10/beardwithme/index.php');
-    die('Invalid permission');
+    http_response_code(403);
+    die();
+    
 }
 
 $productsDB = new ProductsDB();
@@ -23,11 +25,12 @@ if (!empty($_POST)) {
 
     if ($isValidForm) {
         // nejprve select
-        if($productsDB->fetch($id))
-        {
+        if ($productsDB->fetch($id)) {
             $productsDB->delete($id);
-        } else {die('Product does not exist');}
-        
+        } else {
+            http_response_code(404);
+            die();
+        }
     }
 }
 
