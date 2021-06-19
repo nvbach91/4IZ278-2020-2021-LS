@@ -4,7 +4,8 @@
 session_start();
 if ($_SESSION['admin'] != 3) {
     header('Location: /./~vonm10/beardwithme/index.php');
-    die('Invalid permission');
+    http_response_code(403);
+    die();
 }
 
 $usersDB = new UsersDB();

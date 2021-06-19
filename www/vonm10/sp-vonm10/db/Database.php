@@ -70,9 +70,15 @@ abstract class Database implements DatabaseOperations
 
     public function update($id, $newName, $newPrice, $newImg, $newDescription)
     {
-        $sql = 'UPDATE ' . $this->tableName . ' SET name = "' . $newName . '", price = ' . $newPrice . ', img = "' . $newImg . '", description = "' . $newDescription . '" WHERE id = ' . $id . ';';
+        $sql = 'UPDATE ' . $this->tableName . ' SET name = :newName, price = :newPrice, img = :newImg, description = :newDescription WHERE id = :id;';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'name' => $newName,
+            'price' => $newPrice,
+            'img' => $newImg,
+            'description' => $newDescription,
+            'id' => $id,
+        ]);
         return "You have successfully updated item " . $newName;
     }
 
