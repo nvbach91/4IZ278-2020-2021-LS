@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/models/ProjectDB.php';
+require_once __DIR__ . '/models/UsersTask.php';
 
 if ((!($_SESSION['user_email']))) {
     header('Location: index.php');
@@ -9,8 +10,9 @@ if ((!($_SESSION['user_email']))) {
 }
 
 $projectManager = new ProjectDB();
+$tasksManager = new UsersTask();
 $projects = $projectManager->fetchProjectByEmail($_SESSION['user_email']);
-
+$tasks = $tasksManager->fetchAllUsersTasks($_SESSION['user_email']);
 //Head
 include "components/head.php";
 //Navigation
@@ -28,7 +30,7 @@ include "components/nav.php";
             <h2>Project List</h2>
             <div class="projects">
                 <?php foreach ($projects as  $project) { ?>
-                    <div class="card" style="width: 18rem;">
+                    <div class="card mb-2 me-2" style="width: 18rem;">
                         <div class="card-body">
                             <h4 class="card-title"><?php echo $project['name']; ?></h4>
                             <p class="card-text"><?php echo $project['description']; ?></p>
@@ -41,12 +43,14 @@ include "components/nav.php";
         </div>
         <div class="col-4">
             <h2>Project Tasks</h2>
-            <div class="card" style="width: 100%;">
-                <div class="card-body d-flex justify-content-around align-items-baseline">
-                    <h5 class="card-title">Project Name - Ticket title</h5>
-                    <a href="#" class="btn btn-primary">View</a>
+            <?php foreach ($tasks as $task) : ?>
+                <div class="card" style="width: 100%;">
+                    <div class="card-body d-flex justify-content-around align-items-baseline">
+                        <h5 class="card-title"><?php echo $task['name'] . ' - ' . $task['description']; ?></h5>
+                        <a href="task.php?id=<?php echo $task[task_id]?>" class="btn btn-primary">View</a>
+                    </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

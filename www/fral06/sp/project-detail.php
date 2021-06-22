@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UserDB.php';
 require_once __DIR__ . '/models/TaskDB.php';
