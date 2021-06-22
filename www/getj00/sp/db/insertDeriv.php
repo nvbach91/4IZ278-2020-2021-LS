@@ -1,4 +1,4 @@
-<?php require '_formData.php'; ?>
+<?php require '../include/_formData.php'; ?>
 
 <?php
     $inputErrors = [];
@@ -29,7 +29,7 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '_dbConnect.php';
+            include '../include/_dbConnect.php';
         
             $insertDeriv = $pdo->prepare("INSERT INTO Odvozenina (tvar, jazyk, vyznam, souhlasky, souprava) VALUES (:tvar, :jazodv, :vyz, :souhl, :soup);");
             $insertDeriv->execute(['tvar'=> $tvar, 'jazodv'=> $jazyk, 'vyz' => $vyznam, 'souhl'=> $souhlasky, 'soup'=> $souprava]);
@@ -37,7 +37,7 @@
     }
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Vložit odvozeninu nebo speciální slovo</h1>
 <br>
@@ -94,4 +94,4 @@ sdfsdfsdf ddd    A       mis \/  efgergreegegege
 
 ?>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>

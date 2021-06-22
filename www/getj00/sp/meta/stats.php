@@ -1,5 +1,5 @@
 <?php
-include '_dbConnect.php';
+include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
 $poctyKorenu = $pdo->prepare("SELECT souprava, count(souprava) pocet, min(delka) nejkratsi, avg(delka) prumernaDelka, max(delka) nejdelsi FROM Koren GROUP BY souprava ORDER BY souprava ASC");
@@ -13,7 +13,7 @@ $poctyOdvozenin->execute();
 
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Statistiky</h1>
 <br>
@@ -66,4 +66,4 @@ foreach($poctyKorenu->fetchAll() as $row){
 </tbody>
 </table>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>

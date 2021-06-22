@@ -1,5 +1,5 @@
 
-<?php require '_formData.php'; ?>
+<?php require '../include/_formData.php'; ?>
 
 <?php
 
@@ -54,7 +54,7 @@
             $succMsg = 'Validace uspesna.';
         
             // Prepare database and queries
-            include '_dbConnect.php';
+            include '../include/_dbConnect.php';
         
             $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
             $insertOrigin = $pdo->prepare("INSERT INTO Puvod (jazyk, slovo, prepis) VALUES (:jazpuv, :sl, :prep);");
@@ -78,7 +78,7 @@
 
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Vložit vstup kořenovníku</h1>
 <br>
@@ -175,5 +175,5 @@ bbb          B                 jpn \/  eee  eee               ces \/  sddf    sd
 
 ?>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>
 

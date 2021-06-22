@@ -1,4 +1,4 @@
-<?php require '_formData.php'; ?>
+<?php require '../include/_formData.php'; ?>
 
 <?php
     $inputErrors = [];
@@ -30,7 +30,7 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '_dbConnect.php';
+            include '../include/_dbConnect.php';
             
             $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
             $insertIdiom = $pdo->prepare("INSERT INTO Idiom (tvar, jazyk, vyznam) VALUES (:tvar, :jazid, :vyz);");
@@ -49,7 +49,7 @@
     }
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Vložit použití kořenu v idiomu nebo složenině</h1>
 <br>
@@ -115,4 +115,4 @@ Pouziti: Koren <-> Idiom
 
 ?>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>

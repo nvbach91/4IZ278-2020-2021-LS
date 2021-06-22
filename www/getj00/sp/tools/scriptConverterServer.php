@@ -2,7 +2,7 @@
 <?php
 
 // AJAX SERVER SIDE
-require '_scriptData.php';
+require '../include/_scriptData.php';
 
 // mb_str_split is in PHP 7.4
 function utf8_str_split(string $input, int $splitLength = 1){
@@ -15,7 +15,7 @@ function utf8_str_split(string $input, int $splitLength = 1){
 $sourceScriptName = $_GET['script'];
 $sourceText = htmlspecialchars($_GET['text']);
 
-echo '<table align="center"><thead><td>Písmo</td><td>Text</td></thead>';
+echo '<table><thead><td>Písmo</td><td>Text</td></thead>';
 
 if($sourceText){
     foreach($scriptNames as $curScriptName){

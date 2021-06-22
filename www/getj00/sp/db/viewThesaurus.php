@@ -1,7 +1,8 @@
 <?php
-include '_dbConnect.php';
+include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
+// very exquisite
 $thesaurus = $pdo->prepare("
     SELECT Antosynonymum.souhlasky1, Antosynonymum.souprava1,
             Koren1.delka delka1, Puvod1.jazyk jazyk1, Puvod1.prepis prepis1,
@@ -37,7 +38,7 @@ $thesaurus->execute();
 
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Thesaurus</h1>
 <br>
@@ -58,5 +59,5 @@ foreach($thesaurus->fetchAll() as $row){
 </tbody>
 </table>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>
 

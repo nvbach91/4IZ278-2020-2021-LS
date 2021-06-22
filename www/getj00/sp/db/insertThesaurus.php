@@ -1,4 +1,4 @@
-<?php require '_formData.php'; ?>
+<?php require '../include/_formData.php'; ?>
 
 <?php
     $inputErrors = [];
@@ -26,7 +26,7 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '_dbConnect.php';
+            include '../include/_dbConnect.php';
         
             $insertThesaurus = $pdo->prepare("INSERT INTO Antosynonymum (souhlasky1, souprava1, typ, souhlasky2, souprava2) VALUES (:souhl1, :soup1, :typ, :souhl2, :soup2);");
             $insertThesaurus->execute(['souhl1'=> $souhlasky1, 'soup1'=> $souprava1, 'typ' => $typ, 'souhl2'=> $souhlasky2, 'soup2'=> $souprava2]);
@@ -35,7 +35,7 @@
 ?>
 
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Vložit vazbu thesauru</h1>
 <br>
@@ -126,4 +126,4 @@ bbb          B        A/S/V
 
 ?>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>

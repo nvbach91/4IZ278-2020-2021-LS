@@ -1,5 +1,5 @@
 <?php
-include '_dbConnect.php';
+include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
 $odvozenina = $pdo->prepare("SELECT * FROM Odvozenina ORDER BY souhlasky, souprava ASC");
@@ -7,7 +7,7 @@ $odvozenina->execute();
 
 ?>
 
-<?php include '_header.php'; ?>
+<?php include '../include/_header.php'; ?>
 
 <h1>Odvozeniny a speciální slova</h1>
 <br>
@@ -24,4 +24,4 @@ foreach($odvozenina->fetchAll() as $row){
 </tbody>
 </table>
 
-<?php include '_footer.php'; ?>
+<?php include '../include/_footer.php'; ?>
