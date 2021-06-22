@@ -2,7 +2,10 @@
 //Head
 include "components/head.php";
 //Navigation
-include "components/nav.php"
+include "components/nav.php";
+
+session_start();
+
 ?>
 
 <div class="container">

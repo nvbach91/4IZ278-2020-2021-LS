@@ -1,13 +1,24 @@
 <?php
+
+require_once __DIR__ . '/models/ProjectDB.php';
+require_once __DIR__ . '/models/UserDB.php';
 //Head
 include "components/head.php";
 //Navigation
-include "components/nav.php"
+include "components/nav.php";
+
+$projectManager = new ProjectDB();
+$userManager = new UserDB();
+$project = $projectManager->fetchProjectById(htmlspecialchars($_GET['id']));
+$author = $userManager->fetchUserByEmail($project['author']);
+
+
 ?>
 
 <div class="container text-center ">
-    <h1 class="mt-5 mb-3" >Project Name</h1>
-    <p>Lorem impsum dollor Lorem impsum dollorLorem impsum dollorLorem impsum dollorLorem impsum dollorLorem impsum dollor Lorem impsum dollor</p>
+    <h1 class="mt-5 mb-3" ><?php echo $project['name']?></h1>
+    <p><?php echo $project['desc']?></p>
+    <p>Author: <?php echo $author['firstName'] .' '. $author['lastName'] ?></p>
     <div class="row">
         <div class="col-3">
             <div class="project-row">

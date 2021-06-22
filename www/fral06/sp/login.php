@@ -35,10 +35,10 @@ include "components/nav.php"
         <form action="POST">
             <h1 class="h3 mb-3 fw-normal">Please sign</h1>
             <div>
-                <input type="email" aria-label="Email address" class="form-control" id="email" placeholder="name@example.com">
+                <input type="email" aria-label="Email address" class="form-control" name="email" id="email" placeholder="name@example.com">
             </div>
             <div class="mb-3">
-                <input type="password" aria-label="Password" class="form-control" id="password" placeholder="Password">
+                <input type="password" aria-label="Password" class="form-control" name="password" id="password" placeholder="Password">
             </div>
 
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
