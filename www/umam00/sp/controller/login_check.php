@@ -8,7 +8,7 @@
             {
                 include('model/user_ver.php');
                 $_SESSION["VER"] = $ver;
-                header("Refresh:0");
+                include ('reset_page.php');
             }
             else
             {

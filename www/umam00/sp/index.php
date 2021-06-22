@@ -4,6 +4,7 @@
     {
         include ('model/pdo.php');
         include ('model/login_ver.php');
+        include ('model/fce.php');
 
         if($data)
         {
@@ -12,7 +13,7 @@
         }
         else
         {
-            include('logout.php');
+            include('controller/logout.php');
         }
     }
     else

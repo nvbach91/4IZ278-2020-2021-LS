@@ -1,1 +1,3 @@
-<a href="."><img class="logo" src="assets/svg/logo-color.svg" alt="noter... logo"></a>
+<a href=".">
+<div class="logo_anim" id="logo_animation"></div>
+</a>

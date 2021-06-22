@@ -9,14 +9,6 @@
     <div class="inp form-floating">
         <textarea id="mytextarea" name="text"></textarea>
     </div>
-    <script>
-    tinymce.init({
-      selector: 'textarea',
-      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-      toolbar_mode: 'floating',
-   });
-  </script>
     <button type="submit" name="btn_add_note" class="btn-log" value="enter">save</button>
     <?php include ('controller/fce_error.php'); ?>
 </form>

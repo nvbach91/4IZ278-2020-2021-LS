@@ -1,6 +1,13 @@
 <?php
 
-$host = 'localhost';
+if ($_SERVER['SERVER_NAME'] !="localhost")
+{
+    $host = 'md102.wedos.net';
+}
+else
+{
+    $host = "localhost";
+}
 $db   = 'd268369_noter';
 $user = 'a268369_noter';
 $pass = '4kGz]V58`';

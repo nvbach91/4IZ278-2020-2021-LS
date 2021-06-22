@@ -10,7 +10,63 @@
     $error  : #e23a3a;
     $white  : #fff;
     $shadow :   25px 22px 74px -34px rgba(0,0,0,0.32);
+    $border :   0px 0px 0px 2px rgb(241, 241, 241);
+    $border-hover :   0px 0px 0px 3px rgb(242, 203, 5);
 
+    @keyframes toggleOn
+    {
+    0%
+       {
+           transform: rotate(0deg);
+       }
+    15%
+       {
+           transform: rotate(5deg);
+       }
+    100%
+       {
+           transform: rotate(90deg);
+       }
+    }
+
+    @keyframes toggleOff
+    {
+    0%
+       {
+           transform: rotate(90deg);
+       }
+    15%
+       {
+           transform: rotate(95deg);
+       }
+    100%
+       {
+           transform: rotate(180deg);
+       }
+    }
+
+    @keyframes slideIn
+    {
+        0%
+        {
+            left:-200px;
+        }
+        100%
+        {
+            left: 0px;
+        }
+    }
+    @keyframes slideOut
+    {
+        0%
+        {
+            left:0px;
+        }
+        100%
+        {
+            left: -200px;
+        }
+    }
 
 /*----------------------------------------------------------------*/
 
@@ -23,10 +79,33 @@
 :is(h1, h2, h3, h4, h5, h6)
 {
     font-family: $main_font;
+    a
+    {
+        text-decoration: none;
+        color:$grey;
+        transition: 0.3s;
+        &:hover
+        {
+            color:$black;
+        }
+    }
+    .active
+    {
+        color:$black;
+    }
 }
 a
 {
     color:$orange;
+    text-decoration: none !important;
+}
+.smooth
+{
+    -webkit-transition: all 0.3s ease;  
+    -moz-transition: all 0.3s ease;  
+    -o-transition: all 0.3s ease;  
+    -ms-transition: all 0.3s ease;  
+    transition: all 0.3s ease;
 }
 ::selection
 {
@@ -35,10 +114,12 @@ a
 }
 body
 {
-    margin: 0;
+    margin: 0 !important;
     height: 100vh;
     font-family: $comp_font;
-    color:$black
+    color:$black;
+    width:100vw;
+    overflow-x: hidden;
 }
 .vertic-100
 {
@@ -86,11 +167,12 @@ p
     margin-top:1rem;
     width: 100%;
     text-align: center;
+    font-weight: bold;
 }
 /*login*/
-.logo
+.logo_anim
 {
-    height: 2.5em;
+    width: 30%;
 }
 
 .login-form
@@ -105,13 +187,13 @@ p
         {
             width: 100%;
             border-radius: 3px;
-            height: 4em;
             &:focus
             {
                 outline: none !important;
                 border:2px solid $yellow;
                 box-shadow: none;
             }
+
         }
         .text-area
         {
@@ -120,7 +202,7 @@ p
         a
         {
             float:right;
-            color:$orange;
+            color:$orange !important;
             margin:1rem 0 2rem 0;
         }
         label
@@ -137,7 +219,29 @@ p
     height: 4em;
     background-color: $yellow;
     color:$black;
+    transition: 0.3s;
     font-weight: bold;
+    &:hover
+    {
+        background-color: $black;
+        color:$white;
+    }
+}
+.btn-del
+{
+    border-style: none;
+    width: 100%;
+    border-radius: 3px;
+    height: 4em;
+    transition: 0.3s;
+    background-color: $orange;
+    color:$black;
+    font-weight: bold;
+    &:hover
+    {
+        background-color: $black;
+        color:$white;
+    }
 }
 .or
 {
@@ -162,7 +266,7 @@ p
 
 
 /*main page*/
-.main .side-bar
+.side-bar
 {
     z-index: 999;
     background-color: $yellow;
@@ -203,26 +307,14 @@ p
                     position: relative;
                     width: inherit;
                     z-index: 3;
-                    &:before
-                    {
-                        content: "";
-                        position: absolute;
-                        width: 100%;
-                        height: 0px;
-                        left:0px;
-                        bottom:0px;
-                        z-index: 2;
-                        background-color: $black;
-                        transition: 0.3s;
-                    }
                     &:hover 
                     {
-                        text-shadow: 0px 0px 0px #191919;
-                        &::before
-                        {
-                            height: 10%;
-                        }
+                        text-shadow: 0px 0px 1px #191919;
                     }
+                }
+                .active
+                {
+                    text-shadow: 0px 0px 1px #191919;
                 }
 
             }
@@ -238,38 +330,93 @@ p
         border:none;
         background: none;
     }
+
+}
+.burger-menu
+{
+    display: none;
+    position: fixed;
+    top:0;
+    right: 0.5em;
+    ::selection
+    {
+        background-color: transparent;
+    }
+    i
+    {
+        font-size: 3rem;
+        line-height: 5rem;
+        color: $yellow;
+        transition: 0.3s;
+        &:hover
+        {
+            cursor: pointer;
+        }
+    }
+    &:active .side-bar
+    {
+        display: block !important;
+        opacity: 1;
+    }
 }
 .main-container
 {
-    padding: 5em 5em 0em 14em;
     .main-headline
     {
         margin-bottom:2em;
+        h1
+        {
+            font-size: 2rem;
+        }
     }
 
     .note
     {
-        box-shadow: $shadow;
-        margin:1em;
+        box-shadow: $border;
         padding: 1.5em;
+        border-radius: 4px;
+        transition: 0.3s;
+        position: relative;
+        min-height: 315px;
+        &:hover
+        {
+            box-shadow: $border-hover;
+        }
         h2
         {
             font-size:1.5rem;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
         }
         .note-body
         {
-            p
+            position: relative;
+            *
             {
                 font-family:$comp_font;
-                font-size:0.8rem;   
+                font-size:0.8rem !important;   
+                -webkit-hyphens: auto;
+                -moz-hyphens: auto;
+                -ms-hyphens: auto;
+                hyphens: auto;
             }
+        }
+        .fill_link
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left: 0;
         }
     }
 }
 
 .insert-btn
 {
-    position: absolute;
+    position: fixed;
     bottom:0;
     right: 0;
     margin:3rem;
@@ -300,4 +447,139 @@ p
     height: 100vh;
     padding: 5em 12em 0em 14em;
     z-index: 2;
+}
+
+
+.grid {
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  }
+
+
+.date
+{
+    position: absolute;
+    right: 1em;
+    bottom: 0.8em;
+    font-size: 0.8rem;
+    color: $grey;
+    margin: 0;
+}
+
+.on
+{
+    animation: toggleOn 0.3s forwards;
+    i
+    {
+        color:$grey;
+    }
+}
+
+.off
+{
+    animation: toggleOff 0.3s forwards;
+
+    i
+    {
+        color:$yellow;
+    }
+}
+
+.slide-in
+{
+    animation: slideIn 0.3s forwards;
+    display: block !important;
+    opacity: 1 !important;
+}
+
+.slide-out
+{
+    animation: slideOut 0.3s forwards;
+    display: block !important;
+    opacity:0 !important;
+}
+.small_title
+{
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.inp_members
+{
+    height: 10em !important;
+}
+
+/*------------- RESPONSIVE -----------------------*/
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .side-bar
+    {
+        display: none;
+        opacity: 0;
+    }
+    .main-container, .note-editor
+    {
+        padding: 1em 1em 0em 1em;
+    }
+    .burger-menu
+     {
+         display: block;
+     }
+     .sub-title
+    {
+        padding:0;
+    }
+    .title
+    {
+        font-size:2rem;
+        font-weight: 800;
+        margin-bottom:1em;
+    }
+    .login-form {
+        margin-top: 1rem;
+    }
+    .login-form .inp {
+        position: relative;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .btn-fb {
+        border-style: none;
+        width: 100%;
+        border-radius: 3px;
+        height: 4em;
+        background-color: #0084ff;
+        color: white;
+        margin-bottom: 0em;
+    }
+    .side-bar
+    {
+        .logout {
+            bottom: 4em;
+        }
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+    .main-container, .note-editor
+    {
+        padding: 5em 2em 0 11em;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }

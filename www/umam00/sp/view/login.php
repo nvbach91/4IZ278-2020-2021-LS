@@ -3,14 +3,14 @@
 <html lang="en">
 <?php include('view/head.php') ?>
 <body>
-<div class="row gx-0">
-        <div class="col-12 col-md-5 gx-0">
-            <div class="vertic-100 p-5">
-                <div class="row gx-0 h-100">
-                    <div class="col-12">
+<div class="row">
+        <div class="col-12 col-md-5">
+            <div class="vertic-100 p-4 p-sm-5">
+                <div class="row h-100">
+                    <div class="col-12 mb-sm-0 mb-5 p-0">
                         <?php require('view/logo.php');?>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 gx-0 ">
                         <h1 class="bold">Sign in</h1>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="login-form ">
                             <div class="inp form-floating">
@@ -33,9 +33,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-7 gx-0">
-            <div class="vertic-100 bg-yellow d-flex">
-                <div class="row gx-0 my-auto p-5 d-flex">
+        <div class="col-12 col-md-7 gx-0 d-none d-sm-block">
+            <div class="vertic-100 p-4 p-sm-0 bg-yellow d-flex ">
+                <div class="row gx-0 my-auto p-1 p-sm-5 d-flex">
                     <div class="col-12">
                         <h2 class="title center">welcome to noter</h2>
                     </div>

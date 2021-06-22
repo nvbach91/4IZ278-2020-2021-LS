@@ -7,8 +7,8 @@
             {
                 if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
                 {
+                    $email=$_POST["email"];
                     include('model/email_ver.php');
-
                     if ($data)
                     {
                         $error_msg = "This email is already in use.";

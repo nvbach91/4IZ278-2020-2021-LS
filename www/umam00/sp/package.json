@@ -14,6 +14,8 @@
     "node-sass": "^5.0.0"
   },
   "dependencies": {
-    "locomotive-scroll": "^4.0.6"
+    "locomotive-scroll": "^4.0.6",
+    "lottie-web": "^5.7.11",
+    "masonry-layout": "^4.2.2"
   }
 }
