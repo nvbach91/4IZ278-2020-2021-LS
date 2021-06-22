@@ -13,7 +13,7 @@ abstract class Database {
         try {
             $this->pdo = new PDO(
             /* DSN */
-                'mysql:host=' . 'localhost' . ';dbname=' . 'project-planner' . ';charset=utf8mb4',
+                'mysql:host=' . 'localhost' . ';dbname=' . 'mydb' . ';charset=utf8mb4',
                 /* USR */
                 'root',
                 /* PWD */

@@ -8,7 +8,7 @@ class UserDB extends Database
 
     public function insert($email, $hashedPassword, $role, $firstName, $lastName)
     {
-        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(email, hashedPassword, role, firstName, lastName ) VALUES (?, ?, ?, ?,?)');
+        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(email, passwordHash, role, firstName, lastName ) VALUES (?, ?, ?, ?,?)');
         $statement->execute([
             $email,
             $hashedPassword,
@@ -25,6 +25,13 @@ class UserDB extends Database
             $email
         ]);
         return @$statement->fetchAll()[0];
+    }
+
+    public function fetchAll()
+    {
+        $statement = $this->pdo->prepare('SELECT email, firstName, lastName FROM ' . $this->table);
+        $statement->execute();
+        return @$statement->fetchAll();
     }
 
 }

@@ -5,6 +5,10 @@ include "components/head.php";
 include "components/nav.php";
 
 session_start();
+
+if ((($_SESSION['user_email']))) {
+    header('Location: main.php');
+}
 ?>
 
 <h1>heya</h1>

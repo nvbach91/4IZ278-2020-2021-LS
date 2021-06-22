@@ -7,15 +7,13 @@ class ProjectDB extends Database
 
     private $table = 'projects';
 
-    public function insert($email, $hashedPassword, $role, $firstName, $lastName)
+    public function insert($title, $description, $author)
     {
-        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(email, hashedPassword, role, firstName, lastName ) VALUES (?, ?, ?, ?,?)');
+        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(name, description, author) VALUES (?, ?, ?)');
         $statement->execute([
-            $email,
-            $hashedPassword,
-            $role,
-            $firstName,
-            $lastName
+            $title,
+            $description,
+            $author,
         ]);
     }
 
@@ -26,6 +24,15 @@ class ProjectDB extends Database
             $id
         ]);
         return @$statement->fetchAll()[0];
+    }
+
+    public function fetchProjectByEmail($email)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE author = ?');
+        $statement->execute([
+            $email
+        ]);
+        return @$statement->fetchAll();
     }
 
 }

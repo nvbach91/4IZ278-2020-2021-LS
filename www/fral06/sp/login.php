@@ -1,27 +1,26 @@
 <?php
-
+session_start();
+require_once __DIR__ . '/models/UserDB.php';
 
 $invalidInputs = [];
 $msg = '';
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
+
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
-    $usersDB = new UsersDB();
-    $user = $usersDB->fetchUserByEmail($email);
+    $userManager = new UserDB();
+    $user = $userManager->fetchUserByEmail($email);
 
-
-    if (@password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
+    if (@password_verify($password, $user['passwordHash'])) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
 
-
+            var_dump($_SESSION);
         header('Location: main.php');
     } else {
         $msg = 'Combination of email and password is incorrect';
-        $msgClass = 'alert-danger';
     }
 }
 //Head
@@ -32,9 +31,12 @@ include "components/nav.php"
 
 <div class="container d-flex align-items-center justify-content-center">
     <main class="form-signin text-center">
-        <form action="POST">
+        <form method="POST">
             <h1 class="h3 mb-3 fw-normal">Please sign</h1>
-            <div>
+            <?php if ($msg != '') : ?>
+                <div class="alert alert-danger"><?php echo $msg; ?></div>
+            <?php endif; ?>
+            <div class="mb-3">
                 <input type="email" aria-label="Email address" class="form-control" name="email" id="email" placeholder="name@example.com">
             </div>
             <div class="mb-3">
