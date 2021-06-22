@@ -1,3 +1,10 @@
 <?php
-setcookie('name', '', time());
+
+session_start();
+
+session_destroy();
+
 header('Location: index.php');
+
+
+?>

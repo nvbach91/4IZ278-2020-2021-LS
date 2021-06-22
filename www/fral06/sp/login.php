@@ -1,4 +1,29 @@
 <?php
+
+
+$invalidInputs = [];
+$msg = '';
+
+if ('POST' == $_SERVER['REQUEST_METHOD']) {
+    $email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['password']);
+
+    $usersDB = new UsersDB();
+    $user = $usersDB->fetchUserByEmail($email);
+
+
+    if (@password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_email'] = $user['email'];
+        $_SESSION['role'] = $user['role'];
+
+
+        header('Location: main.php');
+    } else {
+        $msg = 'Combination of email and password is incorrect';
+        $msgClass = 'alert-danger';
+    }
+}
 //Head
 include "components/head.php";
 //Navigation
