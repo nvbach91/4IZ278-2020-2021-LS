@@ -5,17 +5,15 @@ require_once __DIR__ . '/Database.php';
 class TaskDB extends Database {
     private $table = 'tasks';
 
-    public function insert($email, $hashedPassword, $role, $firstName, $lastName)
+    public function insert($title, $description, $storyPoints, $projectId)
     {
-        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(email, hashedPassword, role, firstName, lastName ) VALUES (?, ?, ?, ?,?)');
+        $statement = $this->pdo->prepare('INSERT INTO ' . $this->table . '(title, description, storyPoints, project_id ) VALUES (?, ?, ?, ?)');
         $statement->execute([
-            $email,
-            $hashedPassword,
-            $role,
-            $firstName,
-            $lastName
+            $title,
+            $description,
+            $storyPoints,
+            $projectId
         ]);
-
     }
 
     public function fetchByProject($id)

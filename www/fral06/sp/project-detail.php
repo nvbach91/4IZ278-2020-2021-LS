@@ -19,6 +19,9 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
 ?>
 
 <div class="container text-center ">
+    <div class="text-start mt-3">
+        <a role="link" class="btn btn-success" href="create-ticket.php?project_id=<?php echo htmlspecialchars($_GET['id']) ?>">Add Task</a>
+    </div>
     <h1 class="mt-5 mb-3" ><?php echo $project['name']?></h1>
     <p><?php echo $project['description']?></p>
     <p>Author: <?php echo $author['firstName'] .' '. $author['lastName'] ?></p>
@@ -33,7 +36,7 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                         <div class="project-item">
                             <div class="project-item__info">
                                 <a href="#" class="link project-item__id"><?php echo $task['task_id']?></a>
-                                <div class="project-item__title"><?php echo $task['description']?></div>
+                                <div class="project-item__title"><?php echo $task['title']?></div>
                                 <div class="project-item__assignee"><?php echo $task['description']?></div>
                             </div>
                             <div class="project-item__points"><?php echo $task['storyPoints']?></div>

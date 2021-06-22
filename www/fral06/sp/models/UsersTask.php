@@ -9,7 +9,7 @@ class UsersTask extends Database
     public function fetchAllUsersTasks($email)
     {
         $statement = $this->pdo->prepare(
-            'SELECT tasks.description, projects.name, tasks.task_id  FROM ' . $this->table . ' LEFT JOIN `tasks` USING(`project_id`) LEFT JOIN `projects` USING(`project_id`) WHERE `email` = ?');
+            'SELECT tasks.title, projects.name, tasks.task_id  FROM ' . $this->table . ' LEFT JOIN `tasks` USING(`project_id`) LEFT JOIN `projects` USING(`project_id`) WHERE `email` = ?');
         $statement->execute([
             $email
         ]);

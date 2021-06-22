@@ -19,24 +19,24 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     }
 
     if (!$title) {
-        array_push($invalidInputs, 'Email is empty');
+        array_push($invalidInputs, 'Title is empty');
         $msg = 'Title is empty';
     }
 
     if (!$description) {
-        array_push($invalidInputs, 'Password is empty');
+        array_push($invalidInputs, 'Description is empty');
         $msg = 'Description is empty';
     }
 
 
     if (strlen($title) < 2) {
         array_push($invalidInputs, 'Project name length');
-        $msg = 'Project name has to have 3 characters min.';
+        $msg = 'Project name has to have 2 characters min.';
     }
 
     if (strlen($description) < 2) {
         array_push($invalidInputs, 'Description length');
-        $msg = 'Description  has to have 3 characters min.';
+        $msg = 'Description  has to have 2 characters min.';
     }
 
     if (empty($invalidInputs)) {
