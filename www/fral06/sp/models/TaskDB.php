@@ -18,7 +18,7 @@ class TaskDB extends Database {
 
     public function fetchByProject($id)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE project_id =? ');
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE project_id = ?');
         $statement->execute([
             $id
         ]);
@@ -27,9 +27,30 @@ class TaskDB extends Database {
 
     public function fetchByUser($email)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE email =? LIMIT 1');
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE email = ? LIMIT 1');
         $statement->execute([
             $email
+        ]);
+        return @$statement->fetchAll()[0];
+    }
+
+    public function fetchById($id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE task_id = ? LIMIT 1');
+        $statement->execute([
+            $id
+        ]);
+        return @$statement->fetchAll()[0];
+    }
+
+    public function updateTask($title, $description, $storyPoints, $taskId)
+    {
+        $statement = $this->pdo->prepare('UPDATE ' . $this->table . ' SET title = ?, description = ?, storyPoints = ?  WHERE task_id = ?');
+        $statement->execute([
+            $title,
+            $description,
+            $storyPoints,
+            $taskId
         ]);
         return @$statement->fetchAll()[0];
     }

@@ -8,7 +8,18 @@ if ((!($_SESSION['user_email']))) {
     die();
 }
 
+if (!isset($_GET['id'])) {
+    header('Location: main.php');
+}
+
 $projectManager = new ProjectDB();
+$project = $projectManager->fetchProjectById(htmlspecialchars($_GET['id']));
+if (!$project) {
+    header('Location: main.php');
+}
+var_dump($project);
+
+
 $userManger = new UserDB();
 $users = $userManger->fetchAll();
 
@@ -45,8 +56,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     }
 
     if (empty($invalidInputs)) {
-        $projectManager->insert($title, $description, $_SESSION['user_email']);
-        header('Location: main.php');
+        $projectManager->updateProject($title, $description, $_GET['id']);
+        header('Location: project-detail.php?id=' . $_GET['id']);
 
     }
 }
@@ -62,26 +73,26 @@ include "components/nav.php"
     <div class="container d-flex align-items-center justify-content-center">
         <main class="form-signin text-center">
             <form method="POST">
-                <h1 class="h3 mb-3 fw-normal">Create a new project</h1>
+                <h1 class="h3 mb-3 mt-3 fw-normal">Edit the project</h1>
                 <?php if ($msg != '') : ?>
                     <div class="alert alert-danger"><?php echo $msg; ?></div>
                 <?php endif; ?>
                 <div class="mb-3">
-                    <input type="text" aria-label="Project title" class="form-control" name="title" id="title" placeholder="Project title">
+                    <input type="text" aria-label="Project title" class="form-control" value="<?php echo $project['name'] ?>" name="title" id="title" placeholder="Project title">
                 </div>
                 <div class="mb-3">
-                    <textarea aria-label="Project description" class="form-control" placeholder="Project description" name="description" id="description"></textarea>
+                    <textarea aria-label="Project description" class="form-control" placeholder="Project description" name="description" id="description"><?php echo $project['description'] ?></textarea>
                 </div>
                 <div class="mb-3">
 
                     <select name="users[]" id="users" class="form-select" multiple aria-label="select multiple users">
                         <?php foreach ($users as $user) :?>
-                          <option value="<?php  echo $user['email']; ?>"><?php  echo $user['lastName'] . ', ' . $user['firstName']?></option>
-                     <?php endforeach; ?>
+                            <option value="<?php  echo $user['email']; ?>" ><?php  echo $user['lastName'] . ', ' . $user['firstName']?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Create a Project!</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Edit!</button>
                 <p class="mt-5 mb-3 text-muted">© 2021</p>
             </form>
         </main>

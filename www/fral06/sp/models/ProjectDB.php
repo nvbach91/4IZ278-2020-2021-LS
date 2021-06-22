@@ -35,4 +35,15 @@ class ProjectDB extends Database
         return @$statement->fetchAll();
     }
 
+    public function updateProject($title, $description, $projectId)
+    {
+        $statement = $this->pdo->prepare('UPDATE ' . $this->table . ' SET name = ?, description = ?  WHERE project_id = ?');
+        $statement->execute([
+            $title,
+            $description,
+            $projectId
+        ]);
+        return @$statement->fetchAll()[0];
+    }
+
 }

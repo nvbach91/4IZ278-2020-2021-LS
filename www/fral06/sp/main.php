@@ -47,7 +47,7 @@ include "components/nav.php";
                 <div class="card" style="width: 100%;">
                     <div class="card-body d-flex justify-content-around align-items-baseline">
                         <h5 class="card-title"><?php echo $task['name'] . ' - ' . $task['title']; ?></h5>
-                        <a href="task.php?id=<?php echo $task[task_id]?>" class="btn btn-primary">View</a>
+                        <a href="ticket-detail.php?id=<?php echo $task[task_id]?>" class="btn btn-primary">View</a>
                     </div>
                 </div>
             <?php endforeach; ?>
