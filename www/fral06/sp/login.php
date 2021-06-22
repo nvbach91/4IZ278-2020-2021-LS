@@ -43,7 +43,8 @@ include "components/nav.php"
                 <input type="password" aria-label="Password" class="form-control" name="password" id="password" placeholder="Password">
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary mb2" type="submit">Sign in</button>
+            <a href="registration.php" class="btn btn-link">Create an account.</a>
             <p class="mt-5 mb-3 text-muted">© 2021</p>
         </form>
     </main>

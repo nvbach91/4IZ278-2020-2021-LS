@@ -88,7 +88,8 @@ include "components/nav.php"
                 <input type="password" aria-label="Password again" class="form-control" name="passwordAgain" id="passwordAgain" placeholder="Password Again">
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+            <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Sign up</button>
+            <a href="login.php" class="btn btn-link">Already member?</a>
             <p class="mt-5 mb-3 text-muted">© 2021</p>
         </form>
     </main>

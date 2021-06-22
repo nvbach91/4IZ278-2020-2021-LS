@@ -38,7 +38,7 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
         <a role="link" class="btn btn-success" href="edit-project.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Edit Project</a>
 
     </div>
-    <h1 class="mt-5 mb-3" ><?php echo $project['name']?></h1>
+    <h1 class=" mb-3" ><?php echo $project['name']?></h1>
     <p><?php echo $project['description']?></p>
     <p>Author: <?php echo $author['firstName'] .' '. $author['lastName'] ?></p>
     <div class="row">
@@ -50,12 +50,15 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                 <?php foreach ($tasks as $task) : ?>
                 <?php if($task['status'] == 1 ) :?>
                         <div class="project-item">
-                            <div class="project-item__info">
-                                <a href="ticket-detail.php?id=<?php echo $task['task_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
-                                <div class="project-item__title"><?php echo $task['title']?></div>
-                                <div class="project-item__assignee"><?php echo $task['description']?></div>
+                            <div class="project-item__text mb-1">
+                                <div class="project-item__info">
+                                    <a href="ticket-detail.php?id=<?php echo $task['task_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
+                                    <div class="project-item__title"><?php echo $task['title']?></div>
+                                    <div class="project-item__assignee"><?php echo $task['description']?></div>
+                                </div>
+                                <div class="project-item__points"><?php echo $task['storyPoints']?></div>
                             </div>
-                            <div class="project-item__points"><?php echo $task['storyPoints']?></div>
+                            <button class="btn btn-success">In progress</button>
                         </div>
                     <?php endif;?>
                 <?php endforeach; ?>
