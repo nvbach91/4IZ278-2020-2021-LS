@@ -52,7 +52,7 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                         <div class="project-item">
                             <div class="project-item__text mb-1">
                                 <div class="project-item__info">
-                                    <a href="ticket-detail.php?id=<?php echo $task['task_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
+                                    <a href="ticket-detail.php?id=<?php echo $task['task_id']?>&projectId=<?php echo $task['project_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
                                     <div class="project-item__title"><?php echo $task['title']?></div>
                                     <div class="project-item__assignee"><?php echo $task['description']?></div>
                                 </div>

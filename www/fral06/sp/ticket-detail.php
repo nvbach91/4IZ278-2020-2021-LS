@@ -31,7 +31,10 @@ include "components/nav.php";
     <h1 class="text-center mb-5">Ticket details</h1>
     <div class="mb-3">
         <button class="btn btn-primary">Move next</button>
-        <button class="btn btn-danger">Delete ticket</button>
+        <form class="d-inline" action="delete-ticket.php?projectId=<?php echo $_GET['projectId'] ?>" method="post">
+            <input class="d-none" name="id" value="<?php echo $ticket['task_id'] ?>" >
+            <button type="submit" class="btn btn-danger">Delete ticket</button>
+        </form>
         <a class="btn btn-danger" href="edit-ticket.php?id=<?php echo $ticket['task_id']?>">Edit</a>
     </div>
     <div class="mb-2">

@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/Database.php';
 
-class UsersTask extends Database
+class UsersTaskDB extends Database
 {
     private $table = 'asigned_tasks';
 
@@ -14,6 +14,13 @@ class UsersTask extends Database
             $email
         ]);
         return @$statement->fetchAll();
+    }
+
+    public function deleteUsersTask($id) {
+        $statement = $this->pdo->prepare('DELETE FROM ' . $this->table . ' WHERE task_id= ?');
+        $statement->execute([
+            $id
+        ]);
     }
 
 }

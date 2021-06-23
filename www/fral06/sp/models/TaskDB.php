@@ -54,4 +54,11 @@ class TaskDB extends Database {
         ]);
         return @$statement->fetchAll()[0];
     }
+
+    public function deleteTask($id) {
+        $statement = $this->pdo->prepare('DELETE FROM ' . $this->table . ' WHERE task_id= ?');
+        $statement->execute([
+            $id
+        ]);
+    }
 }
