@@ -35,7 +35,7 @@ else
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/8gxgmy973um1c2ei41zy8lf5j7k5gb4t1euobmb786ato0py/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
+    <script src="assets/src/ks/facebook.js"></script>
 
     <title>Noter...</title>
 

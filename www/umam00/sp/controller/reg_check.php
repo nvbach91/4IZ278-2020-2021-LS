@@ -19,7 +19,7 @@
                     else
                     {
                         include('model/user_insert.php');
-                        header("location: .",  true,  301 );  exit;
+                        include('controller/reset_page.php');
                     }
                 }
                 else

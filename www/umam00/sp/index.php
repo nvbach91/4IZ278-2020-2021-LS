@@ -1,10 +1,10 @@
 <?php
     session_start();
+    include ('controller/fce.php');
     if(isset($_SESSION["VER"]))
     {
         include ('model/pdo.php');
         include ('model/login_ver.php');
-        include ('model/fce.php');
 
         if($data)
         {
