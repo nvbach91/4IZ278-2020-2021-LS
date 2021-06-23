@@ -3,6 +3,7 @@ session_start();
 
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UsersTaskDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 
 if ((!($_SESSION['user_email']))) {
     header('Location: index.php');
@@ -10,8 +11,14 @@ if ((!($_SESSION['user_email']))) {
 }
 
 $projectManager = new ProjectDB();
+$userProjectManager = new UsersProjectDB();
 $tasksManager = new UsersTaskDB();
-$projects = $projectManager->fetchProjectByEmail($_SESSION['user_email']);
+if ($_SESSION['role'] == 1 ) {
+    $projects = $userProjectManager->fetchAllUsersProjects($_SESSION['user_email']);
+
+} else {
+    $projects = $projectManager->fetchProjectByEmail($_SESSION['user_email']);
+}
 $tasks = $tasksManager->fetchAllUsersTasks($_SESSION['user_email']);
 //Head
 include "components/head.php";

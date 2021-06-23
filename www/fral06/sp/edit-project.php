@@ -14,10 +14,9 @@ if (!isset($_GET['id'])) {
 
 $projectManager = new ProjectDB();
 $project = $projectManager->fetchProjectById(htmlspecialchars($_GET['id']));
-if (!$project) {
+if (!$project || ($_SESSION['user_email'] != $project['author'] && $_SESSION['role'] !=2)) {
     header('Location: main.php');
 }
-var_dump($project);
 
 
 $userManger = new UserDB();

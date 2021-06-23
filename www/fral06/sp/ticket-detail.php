@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/models/TaskDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 
 if ((!($_SESSION['user_email']))) {
     header('Location: index.php');
@@ -19,6 +20,15 @@ $ticket = $taskManager->fetchById(htmlspecialchars($_GET['id']));
 if(!$ticket) {
     header('Location: main.php');
 }
+
+$usersProjectManager = new UsersProjectDB();
+$userHasProject = $usersProjectManager->fetchUsersProject($_SESSION['user_email'],$ticket['project_id']);
+
+if ($_SESSION['role'] != 2 && !$userHasProject) {
+    header('Location: main.php');
+}
+
+
 $moveForwardText = '';
 $moveBackText = '';
 if ($ticket['status'] == 1) {

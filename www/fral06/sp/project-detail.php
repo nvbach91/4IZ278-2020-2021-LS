@@ -8,6 +8,7 @@ if ((!($_SESSION['user_email']))) {
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UserDB.php';
 require_once __DIR__ . '/models/TaskDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 //Head
 include "components/head.php";
 //Navigation
@@ -17,9 +18,16 @@ if(!isset($_GET['id'])){
     header('Location: main.php');
 }
 
+
 $projectManager = new ProjectDB();
 $userManager = new UserDB();
 $taskManager = new TaskDB();
+$usersProjectManager = new UsersProjectDB();
+$userHasProject = $usersProjectManager->fetchUsersProject($_SESSION['user_email'],$_GET['id']);
+
+if ($_SESSION['role'] != 2 && !$userHasProject) {
+    header('Location: main.php');
+}
 
 $project = $projectManager->fetchProjectById(htmlspecialchars($_GET['id']));
 

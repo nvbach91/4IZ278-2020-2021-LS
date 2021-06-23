@@ -2,8 +2,10 @@
 session_start();
 require_once __DIR__ . '/models/TaskDB.php';
 require_once __DIR__ . '/models/ProjectDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 
-if ((!($_SESSION['user_email']))) {
+
+if (!($_SESSION['user_email']) ||  !isset($_GET['project_id'])) {
     header('Location: index.php');
     die();
 }
@@ -12,6 +14,13 @@ if ((!($_SESSION['user_email']))) {
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
     $invalidInputs = [];
     $msg = '';
+
+    $usersProjectManager = new UsersProjectDB();
+    $userHasProject = $usersProjectManager->fetchUsersProject($_SESSION['user_email'], $_GET['project_id']);
+
+    if ($_SESSION['role'] != 2 && !$userHasProject) {
+        header('Location: main.php');
+    }
 
     $taskManager = new TaskDB();
     $projectManager= new ProjectDB();
