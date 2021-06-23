@@ -58,7 +58,11 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                                 </div>
                                 <div class="project-item__points"><?php echo $task['storyPoints']?></div>
                             </div>
-                            <button class="btn btn-success">In progress</button>
+                                <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                                    <input class="d-none" name="status" value="<?php echo ($task['status']+1) ?>" >
+                                    <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                                    <button type="submit" class="btn btn-success">Start work</button>
+                                </form>
                         </div>
                     <?php endif;?>
                 <?php endforeach; ?>
@@ -76,11 +80,24 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                     <?php if($task['status'] == 2 ) :?>
                         <div class="project-item">
                             <div class="project-item__info">
-                                <a href="#" class="link project-item__id"><?php echo $task['task_id']?></a>
+                                <a href="ticket-detail.php?id=<?php echo $task['task_id']?>&projectId=<?php echo $task['project_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
                                 <div class="project-item__title"><?php echo $task['description']?></div>
                                 <div class="project-item__assignee"><?php echo $task['description']?></div>
                             </div>
                             <div class="project-item__points"><?php echo $task['storyPoints']?></div>
+                            <div class="project-item__controllers">
+                                <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                                    <input class="d-none" name="status" value="<?php echo ($task['status']+1) ?>" >
+                                    <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                                    <button type="submit" class="btn btn-success">Start Review'</button>
+                                </form>
+                                <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                                    <input class="d-none" name="status" value="<?php echo ($task['status']-1) ?>" >
+                                    <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                                    <button type="submit" class="btn btn-primary">Pending</button>
+                                </form>
+                            </div>
+
                         </div>
                     <?php endif;?>
                 <?php endforeach; ?>
@@ -96,11 +113,23 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                     <?php if($task['status'] == 3 ) :?>
                         <div class="project-item">
                             <div class="project-item__info">
-                                <a href="#" class="link project-item__id"><?php echo $task['task_id']?></a>
+                                <a href="ticket-detail.php?id=<?php echo $task['task_id']?>&projectId=<?php echo $task['project_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
                                 <div class="project-item__title"><?php echo $task['description']?></div>
                                 <div class="project-item__assignee"><?php echo $task['description']?></div>
                             </div>
                             <div class="project-item__points"><?php echo $task['storyPoints']?></div>
+                            <div class="project-item__controllers">
+                                <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                                    <input class="d-none" name="status" value="<?php echo ($task['status']+1) ?>" >
+                                    <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                                    <button type="submit" class="btn btn-success">Done</button>
+                                </form>
+                                <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                                    <input class="d-none" name="status" value="<?php echo ($task['status']-1) ?>" >
+                                    <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                                    <button type="submit" class="btn btn-primary">Send back to dev</button>
+                                </form>
+                            </div>
                         </div>
                     <?php endif;?>
                 <?php endforeach; ?>
@@ -115,11 +144,16 @@ $tasks = $taskManager->fetchByProject($project['project_id']);
                    <?php if($task['status'] == 4 ) :?>
                        <div class="project-item">
                            <div class="project-item__info">
-                               <a href="#" class="link project-item__id"><?php echo $task['task_id']?></a>
+                               <a href="ticket-detail.php?id=<?php echo $task['task_id']?>&projectId=<?php echo $task['project_id']?>" class="link project-item__id"><?php echo $task['task_id']?></a>
                                <div class="project-item__title"><?php echo $task['description']?></div>
                                <div class="project-item__assignee"><?php echo $task['description']?></div>
                            </div>
                            <div class="project-item__points"><?php echo $task['storyPoints']?></div>
+                           <form class="d-inline"  action="moveTicket.php?projectId=<?php echo  $task['project_id']?>" method="post">
+                               <input class="d-none" name="status" value="<?php echo ($task['status']-1) ?>" >
+                               <input class="d-none" name="id" value="<?php echo $task['task_id'] ?>" >
+                               <button type="submit" class="btn btn-primary">Back to Review</button>
+                           </form>
                        </div>
                    <?php endif;?>
                <?php endforeach; ?>

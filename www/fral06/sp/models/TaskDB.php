@@ -55,6 +55,15 @@ class TaskDB extends Database {
         return @$statement->fetchAll()[0];
     }
 
+    public function updateTaskStatus($status, $taskId) {
+        $statement = $this->pdo->prepare('UPDATE ' . $this->table . ' SET status = ? WHERE task_id = ?');
+        $statement->execute([
+            $status,
+            $taskId
+        ]);
+        return @$statement->fetchAll()[0];
+    }
+
     public function deleteTask($id) {
         $statement = $this->pdo->prepare('DELETE FROM ' . $this->table . ' WHERE task_id= ?');
         $statement->execute([
