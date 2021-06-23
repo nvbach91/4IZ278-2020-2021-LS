@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/includes/header.php' ?>
+<?php require_once __DIR__ . '/includes/header.php' ?>
 
 
   <main class="main main--main">

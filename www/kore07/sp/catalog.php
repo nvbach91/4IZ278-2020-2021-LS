@@ -1,7 +1,4 @@
-
-
-
-<?php require __DIR__ . '/includes/header.php' ?>
+<?php require_once __DIR__ . '/includes/header.php' ?>
 
 
   <main class="main">
@@ -105,7 +102,7 @@
           <div class="content-container">
             <section class="catalog">
               <h2 class="visually-hidden">Products</h2>
-              <?php require __DIR__ . '/components/ProductDisplay.php'; ?>
+              <?php require __DIR__ . '/components/displayProduct.php'; ?>
           </div>
 
         </div>

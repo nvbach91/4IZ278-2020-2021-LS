@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/Database.php'; ?>
+<?php require_once __DIR__ . '/Database.php'; ?>
 <?php
 
 class UsersDB extends Database {
@@ -9,13 +9,14 @@ class UsersDB extends Database {
         $statement->execute();
         return $statement->fetchAll();
     }
+    
     public function create($args) {
-        $sql = 'INSERT INTO ' . $this->tableName . '(name, email, age) VALUES (:name, :email, :age)';
+        $sql = 'INSERT INTO ' . $this->tableName . '(user_name, user_email, user_password) VALUES (:name, :email, :password)';
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
-            'name' => $args['name'], 
-            'email' => $args['email'], 
-            'age' => $args['age'],
+            'name' => $args['user_name'], 
+            'email' => $args['user_email'], 
+            'password' => $args['user_hashedPassword'], 
         ]);
     }
 }

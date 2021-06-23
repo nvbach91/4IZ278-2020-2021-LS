@@ -1,3 +1,20 @@
+<?php 
+  if(!isset($_SESSION)){
+    session_start();
+  }
+
+  if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+  }
+
+  $count = 0;
+
+  foreach ($_SESSION['cart'] as $key=>$value) {
+    $count = $count + $_SESSION['cart'][$key]['qnt'];
+  };
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +31,7 @@
     <link href="css/style.css" rel="stylesheet" />
 </head>
 
+
 <body class="page">
   <div class="main-container">
     <header class="main-header">
@@ -21,25 +39,30 @@
         <img class="main-logo" src="img/logo.svg" width="163" height="35" alt="Logo iDevice" />
       </a>
       <ul class="user-navigation">
-        <li class="user-navigation-item">
+        <li class="user-navigation-item search-item">
           <form class="search-form" method="post" action="">
             <input class="search-form-input" type="search" name="search" placeholder="Search" />
             <button type="submit" class="search-form-button">Search</button>
           </form>
         </li>
-        <li class="user-navigation-item">
-          <a class="user-navigation-link login-link profile-link" href="#">
-            Sign in
-          </a>
-        </li>
-        <li class="user-navigation-item">
-          <a class="user-navigation-link compare-link" href="#">
-            Compare
-          </a>
-        </li>
-        <li class="user-navigation-item">
-          <a class="user-navigation-link cart-link" href="#">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="user-navigation-item profile-item">
+              <a class="user-navigation-link profile-link" href="profile.php"> <?php echo $_SESSION['user_email']; ?></a>
+            </li>
+            <li class="user-navigation-item signout-item">
+              <a class="user-navigation-link signout-link" href="components/signout.php"></a>
+            </li>
+        <?php else: ?>
+            <li class="user-navigation-item signin-item">
+              <a class="user-navigation-link login-link" href="signin.php">Sign in</a>
+            </li>
+        <?php endif; ?>
+        <li class="user-navigation-item cart-item">
+          <a class="user-navigation-link cart-link" href="cart.php">
             Cart
+            <?php if (isset($_SESSION['cart'])): ?>
+              <span class="user-navigation-item cart-count">(<?php echo $count; ?>)</span>
+            <?php endif; ?>
           </a>
         </li>
       </ul>
