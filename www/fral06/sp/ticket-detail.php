@@ -3,8 +3,9 @@ session_start();
 
 require_once __DIR__ . '/models/TaskDB.php';
 require_once __DIR__ . '/models/UsersProjectDB.php';
+require_once __DIR__ . '/models/UsersTaskDB.php';
 
-if ((!($_SESSION['user_email']))) {
+if (!($_SESSION['user_email'])) {
     header('Location: index.php');
     die();
 }
@@ -28,6 +29,8 @@ if ($_SESSION['role'] != 2 && !$userHasProject) {
     header('Location: main.php');
 }
 
+$usersTaskManager = new UsersTaskDB();
+$assignee =$usersTaskManager->fetchAssignee($ticket['task_id']);
 
 $moveForwardText = '';
 $moveBackText = '';
@@ -91,8 +94,22 @@ include "components/nav.php";
         <p class="mb-0"><?php echo $ticket['description'] ?></p>
     </div>
     <div class="mb-2">
-        <span class="fw-bold">Assignee: </span> <span class="fst-italic">Unassigned</span>
-        <form method="post" class="d-inline"><button class="btn btn-link" type="submit">Assign to me</button></form>
+        <span class="fw-bold">Assignee: </span>
+        <span class="fst-italic"> <?php  echo $assignee ?  $assignee['lastName'] . ', '. $assignee['firstName'] : 'Unassigned' ; ?></span>
+        <?php if(!$assignee) : ?>
+        <form method="post" action="assign-ticket.php" class="d-inline">
+            <input class="d-none" name="id" value="<?php echo $ticket['task_id'] ?>" >
+            <input class="d-none" name="projectId" value="<?php echo $ticket['project_id'] ?>" >
+            <button class="btn btn-link" type="submit">Assign to me</button>
+        </form>
+        <?php endif; ?>
+        <?php if($assignee) : ?>
+            <form method="post" action="unassign-ticket.php" class="d-inline">
+                <input class="d-none" name="id" value="<?php echo $ticket['task_id'] ?>" >
+                <input class="d-none" name="projectId" value="<?php echo $ticket['project_id'] ?>" >
+                <button class="btn btn-link" type="submit">Unassign to me</button>
+            </form>
+        <?php endif; ?>
     </div>
     <div class="mb-2">
         <span class="fw-bold">Story points: </span> <?php echo $ticket['storyPoints'] ?>

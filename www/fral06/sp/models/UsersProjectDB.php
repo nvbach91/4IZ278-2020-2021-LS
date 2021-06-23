@@ -15,14 +15,43 @@ class UsersProjectDB extends Database
         ]);
         return @$statement->fetchAll();
     }
-    public function fetchUsersProject($email, $proejctId)
+
+    public function fetchUsersProject($email, $projectId)
     {
         $statement = $this->pdo->prepare(
             'SELECT *  FROM ' . $this->tableName . ' WHERE `email` = ? AND `project_id` = ? LIMIT 1');
         $statement->execute([
             $email,
-            $proejctId
+            $projectId
         ]);
         return @$statement->fetchAll()[0];
     }
+
+    public function fetchProjectAssignees($projectId)
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT *  FROM ' . $this->tableName . ' WHERE  `project_id` = ?');
+        $statement->execute([
+            $projectId
+        ]);
+        return @$statement->fetchAll();
+    }
+
+    public function insert($projectId, $email)
+    {
+        $statement = $this->pdo->prepare('INSERT INTO ' . $this->tableName . ' (project_id, email ) VALUES (?, ?)');
+        $statement->execute([
+            $projectId,
+            $email,
+        ]);
+    }
+
+    public function deleteUserProject($userId, $projectId) {
+        $statement = $this->pdo->prepare('DELETE FROM ' . $this->tableName . ' WHERE project_id= ? AND email = ?');
+        $statement->execute([
+            $projectId,
+            $userId
+        ]);
+    }
+
 }

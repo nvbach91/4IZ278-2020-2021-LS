@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UserDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 
 if ((!($_SESSION['user_email']))) {
     header('Location: index.php');
@@ -17,6 +18,9 @@ $project = $projectManager->fetchProjectById(htmlspecialchars($_GET['id']));
 if (!$project || ($_SESSION['user_email'] != $project['author'] && $_SESSION['role'] !=2)) {
     header('Location: main.php');
 }
+
+$usersProjectManager = new UsersProjectDB();
+$assignees = $usersProjectManager->fetchProjectAssignees($_GET['id']);
 
 
 $userManger = new UserDB();
@@ -55,12 +59,36 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     }
 
     if (empty($invalidInputs)) {
+       foreach ($pickedUsers as $newAsg) {
+           if(!isAssigne($newAsg, $assignees)){
+               $usersProjectManager->insert($_GET['id'], $newAsg);
+           }
+       }
+       foreach ($assignees as $assignee) {
+           $assigned = false;
+           foreach ($pickedUsers as $pickedUser) {
+               if($assignee['email'] == $pickedUser) {
+                   $assigned = true;
+                   break;
+               }
+           }
+           if (!$assigned) {
+               $usersProjectManager->deleteUserProject($assignee['email'], $_GET['id']);
+           }
+       }
         $projectManager->updateProject($title, $description, $_GET['id']);
         header('Location: project-detail.php?id=' . $_GET['id']);
 
     }
 }
 
+function isAssigne($email,$assignees) {
+    foreach ($assignees as $assignee) {
+        if($assignee['email'] == $email)
+            return true;
+    }
+    return false;
+}
 
 
 //Head
@@ -86,7 +114,10 @@ include "components/nav.php"
 
                     <select name="users[]" id="users" class="form-select" multiple aria-label="select multiple users">
                         <?php foreach ($users as $user) :?>
-                            <option value="<?php  echo $user['email']; ?>" ><?php  echo $user['lastName'] . ', ' . $user['firstName']?></option>
+                            <option value="<?php  echo $user['email']; ?>"
+                                <?php echo isAssigne($user['email'], $assignees) ? 'selected' : '' ?>>
+                                    <?php  echo $user['lastName'] . ', ' . $user['firstName']?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
