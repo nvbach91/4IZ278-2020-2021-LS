@@ -1,21 +1,8 @@
+<?php require __DIR__ . '/utils/mail.php'; ?>
 <?php
 $invalidInputs = [];
-$errors = [];
-$success = [];
 
-function sendMail($name, $email, $message)
-{
-    $recepient = 'ditm01@vse.cz';
-    $mailSubject = $name . ' has a question';
-    $headers = [
-        'MIME-Version: 1.0',
-        'Content-type: text/html, charset=utf-8',
-        'From: ' . $email,
-        'Reply-To: ' . $email,
-        'X-Mailer: PHP/8.0',
-    ];
-    return mail($recepient, $mailSubject, $message, implode("\r\n", $headers));
-}
+$mail = new Mail();
 
 if (!empty($_POST)) {
     $name = htmlspecialchars(trim($_POST['name']));
@@ -31,7 +18,7 @@ if (!empty($_POST)) {
     }
 
     if (empty($invalidInputs)) {
-        sendMail($name, $email, $message);
+        $mail->sendContactMail($name, $email, $message);
     }
 }
 ?>

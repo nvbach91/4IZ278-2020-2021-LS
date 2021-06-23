@@ -41,3 +41,8 @@ footer{
 .footer-links:hover {
     color: white;
 }
+
+.cart-thumbnail {
+    width: 100px;
+    border-radius: 5px;
+}

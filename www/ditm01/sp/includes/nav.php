@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+?>
+
+
 <nav class="navbar navbar-expand-md py-2 mb-3 navbar-dark bg-dark">
   <div class="container-fluid d-flex justify-content-center">
     <a class="navbar-brand ms-5 text-uppercase" href="index.php">MechPress</a>
@@ -17,21 +24,23 @@
         </li>
       </ul>
       <ul class="navbar-nav me-5 d-flex flex-row">
-        <li class="nav-item px-1">
-          <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'login') ? ' active' : '' ?>" href="login.php">
-            <i class="bi bi-person-circle fs-4"></i>
-          </a>
-        </li>
+        <?php if (isset($_SESSION['user_id'])) : ?>
+          <li class="nav-item px-1 my-auto">
+            <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'logout') ? ' active' : '' ?>" href="logout.php">Logout</a>
+          </li>
+        <?php else : ?>
+          <li class="nav-item px-1">
+            <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'login') ? ' active' : '' ?>" href="login.php">
+              <i class="bi bi-person-circle fs-4"></i>
+            </a>
+          </li>
+        <?php endif; ?>
         <li class="nav-item px-1">
           <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'cart') ? ' active' : '' ?>" href="cart.php">
             <i class="bi bi-basket3-fill fs-4"></i>
           </a>
         </li>
       </ul>
-      <!--form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form-->
     </div>
   </div>
 </nav>
