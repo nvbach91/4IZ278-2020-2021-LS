@@ -6,29 +6,3 @@
   <button class="close-button" type="button" aria-label="Close map"></button>
 </section>
 
-
-<!-- CONTUCT POPUP -->
-<section class="contact-popup popup hidden">
-  <h2 class="visually-hidden">Contact us</h2>
-  <form class="popup-form" method="post" action="">
-    <button class="close-button" type="button" aria-label="Close form"></button>
-
-    <div class="popup-container">
-      <p class="contact-popup-input popup-input">
-        <label for="contact_name">Full name:</label>
-        <input type="text" name="name" id="contact_name" placeholder="Full name" />
-      </p>
-
-      <p class="contact-popup-input popup-input">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="contact-email" placeholder="email@example.com" />
-      </p>
-    </div>
-
-    <label for="text">Comment</label>
-    <textarea name="text" id="text" placeholder="Write your comment"></textarea>
-
-    <button class="button popup-button" type="submit">Send</button>
-  </form>
-</section>
-

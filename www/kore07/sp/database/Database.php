@@ -38,7 +38,7 @@ abstract class Database implements DatabaseOperations {
             $wheres[] = $key . ' = ' . $value;
         }
         $sql .= implode(' && ', $wheres);
-        echo $sql;
+
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
     }

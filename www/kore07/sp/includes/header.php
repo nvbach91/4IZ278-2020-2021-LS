@@ -9,9 +9,12 @@
 
   $count = 0;
 
-  foreach ($_SESSION['cart'] as $key=>$value) {
-    $count = $count + $_SESSION['cart'][$key]['qnt'];
-  };
+  if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $key=>$value) {
+      $count = $count + $_SESSION['cart'][$key]['qnt'];
+    };
+  }
+
 
 ?>
 
@@ -39,11 +42,8 @@
         <img class="main-logo" src="img/logo.svg" width="163" height="35" alt="Logo iDevice" />
       </a>
       <ul class="user-navigation">
-        <li class="user-navigation-item search-item">
-          <form class="search-form" method="post" action="">
-            <input class="search-form-input" type="search" name="search" placeholder="Search" />
-            <button type="submit" class="search-form-button">Search</button>
-          </form>
+        <li class="user-navigation-item catalog-item">
+          <a class="nav-link nav-catalog" href="catalog.php">Products</a>
         </li>
         <?php if (isset($_SESSION['user_id'])): ?>
             <li class="user-navigation-item profile-item">
@@ -66,7 +66,7 @@
           </a>
         </li>
       </ul>
-      <nav class="main-nav">
+      <!-- <nav class="main-nav">
         <ul class="nav-list">
           <li class="nav-item">
             <a class="nav-link nav-catalog" href="catalog.php">Products</a>
@@ -91,10 +91,10 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link delivery-link" href="#">Shipping</a></li>
-          <li class="nav-item"><a class="nav-link guarantee-link" href="#">Payment</a></li>
-          <li class="nav-item"><a class="nav-link contacts-link" href="#">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link delivery-link" href="#"></a></li>
+          <li class="nav-item"><a class="nav-link guarantee-link" href="#"></a></li>
+          <li class="nav-item"><a class="nav-link contacts-link" href="#"></a></li>
         </ul>
-      </nav>
+      </nav> -->
     </header>
   </div>

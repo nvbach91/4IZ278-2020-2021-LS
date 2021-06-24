@@ -6,9 +6,9 @@
 
     $usersDB = new UsersDB();
     
-    $submittedForm = !empty($_POST);
+    $isSubmitted = !empty($_POST);
     
-    if ($submittedForm) {
+    if ($isSubmitted) {
         $name = trim(@$_POST['name']);
         $email = trim(@$_POST['email']);
         $address = trim(@$_POST['address']);

@@ -12,12 +12,18 @@
             'Reply-To: ' . $sender,
             'X-Mailer: PHP/'.phpversion()
         ],
-        'Confirmation' => function ($recipient) {
+        'Registration confirmation' => function ($recipient) {
             return (
-                "<h2>Confirmation</h2>" .
-                "<p>Thank you!</p>" .
+                "<h2>Registration confirmation</h2>" .
+                "<p>Thank you for your registration on the website iDevice!</p>" .
                 "<h4>You registered email:</h4>" .
                 "<p><a href='mailto:$recipient'>$recipient</a></p>"
+            );
+        },
+        'Order confirmation' => function () {
+            return (
+                "<h2>Order confirmation</h2>" .
+                "<p>Thank you for yor order!</p>"
             );
         },
     ];

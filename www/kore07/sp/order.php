@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/components/checkLoggedUser.php'; ?>
-<?php require_once __DIR__ . '/components/saveUserInfo.php'; ?>
+<?php require_once __DIR__ . '/utils/utils.php'; ?>
 <?php require_once __DIR__ . '/components/getUser.php'; ?>
 <?php require_once __DIR__ . '/database/ProductsDB.php'; ?>
 
@@ -31,6 +31,7 @@
     }
 
     $isSubmitted = (!empty($_POST) && ('POST' == $_SERVER['REQUEST_METHOD']));
+    $errors = [];
 
     if ($isSubmitted) {
         $name = htmlspecialchars(trim($_POST['name']));
@@ -43,23 +44,27 @@
         $delivery = $_POST['delivery'];
         $payment = $_POST['payment'];
 
-        $orderInfo = array(
-            'name' => $name,
-            'email' => $email,
-            'address' => $address,
-            'zip' => $zip,
-            'city' => $city,
-            'country' => $country,
-            'phone' => $phone,
-            'delivery' => $delivery,
-            'payment' => $payment,
-            'total' => $sum,
-            'date' => date("Y-m-d H:i:s"),
-        );
+        $errors = validate($_POST);
 
-        $_SESSION['order_info'] = $orderInfo;
+        if (empty($errors)) {
+            $orderInfo = array(
+                'name' => $name,
+                'email' => $email,
+                'address' => $address,
+                'zip' => $zip,
+                'city' => $city,
+                'country' => $country,
+                'phone' => $phone,
+                'delivery' => $delivery,
+                'payment' => $payment,
+                'total' => $sum,
+                'date' => date("Y-m-d H:i:s"),
+            );
 
-        header('Location: components/placeOrder.php');
+            $_SESSION['order_info'] = $orderInfo;
+
+            header('Location: components/placeOrder.php');
+        }
     }
 
 ?>
@@ -116,6 +121,11 @@
         </section>
         <section class="order-form_section form-section">
             <h2 class="popup-title">Order Info</h2>
+            <?php if ($isSubmitted && !empty($errors)): ?>
+                <div class="popup-alert alert alert-danger">
+                    <?php echo implode('<br>', array_values($errors)); ?>
+                </div>
+            <?php endif; ?>
             <form class="sign-form popup-form" method="post">
                 <div class="order_popup-container">
                     <p class="popup-input">

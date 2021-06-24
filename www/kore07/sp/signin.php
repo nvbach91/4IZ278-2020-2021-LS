@@ -47,7 +47,7 @@
                 <?php echo implode('<br>', array_values($errors)); ?>
             </div>
         <?php endif; ?>
-        <form class="popup-form sign-form" method="post" action="">
+        <form class="popup-form sign-form" method="post">
             <div class="popup-container">
                 <p class="popup-input">
                 <label for="signin_email">E-mail:</label>

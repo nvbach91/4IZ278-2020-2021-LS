@@ -26,7 +26,7 @@
                   The longest selfie stick available in our store.<br />
                   Eight (Eight, Karl!) Meters long and weighing only 5 kilograms.
                 </p>
-                <a class="button slider-button" href="#">More</a>
+                <a class="button slider-button" href="catalog.php">More</a>
                 <dl class="terms-list">
                   <div class="term-item">
                     <dt class="term">8,5 m</dt>
@@ -53,7 +53,7 @@
                   Motivating fitness bracelets help you find your strength
                   do not miss classes and follow a diet.
                 </p>
-                <a class="button slider-button" href="#">More</a>
+                <a class="button slider-button" href="catalog.php">More</a>
                 <dl class="terms-list">
                   <div class="term-item">
                     <dt class="term">48 hours</dt>
@@ -72,7 +72,7 @@
                   This seemingly ordinary quadcopter is equipped with
                   a powerful laser disguised as a standard camera.
                 </p>
-                <a class="button slider-button" href="#">More</a>
+                <a class="button slider-button" href="catalog.php">More</a>
                 <dl class="terms-list">
                   <div class="term-item">
                     <dt class="term">800 m</dt>
@@ -92,39 +92,33 @@
         <h2 class="visually-hidden">Popular goods</h2>
         <ul class="popular-list">
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-1.svg" width="97" height="55" alt="Virtual reality">
-              <span>Virtual reality</span>
             </a>
           </li>
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-2.svg" width="86" height="117" alt="Monopods for selfie">
-              <span>Monopods for selfie</span>
             </a>
           </li>
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-3.svg" width="71" height="87" alt="Action cameras">
-              <span>Action cameras</span>
             </a>
           </li>
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-4.svg" width="107" height="65" alt="Fitness trackers">
-              <span>Fitness trackers</span>
             </a>
           </li>
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-5.svg" width="56" height="98" alt="Smartwatch">
-              <span>Smartwatch</span>
             </a>
           </li>
           <li class="popular-item">
-            <a class="popular-link" href="#">
+            <a class="popular-link" href="catalog.php">
               <img class="popular-icon" src="img/popular-6.svg" width="132" height="69" alt="Drones">
-              <span>Drones</span>
             </a>
           </li>
         </ul>
@@ -204,7 +198,6 @@
             <li class="info-item">FedEx</li>
             <li class="info-item">UPS</li>
           </ul>
-          <a class="button info-button" href="#">More about us</a>
         </section>
         <section class="contacts">
           <h2>Contact us</h2>
@@ -213,8 +206,7 @@
             At the same time, you can check the functionality of the purchase.
             Anything can happen.
           </p>
-          <a href="map.html" class="map"><img src="img/map.jpg" width="560" height="222" alt="Map" /></a>
-          <a class="button contacts-button" href="form.html">Contact us</a>
+          <a href="#" class="map"><img src="img/map.jpg" width="560" height="222" alt="Map" /></a>
         </section>
       </div>
 
