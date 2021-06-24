@@ -1,0 +1,26 @@
+.vse-fab {
+    width: 54px;
+    height: 54px;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    background-color: blue;
+    z-index: 1200;
+}
+
+.vse-fab i {
+    color: white;
+}
+
+.vse-fab:hover {
+    background-color: blue;
+}
+
+.vse-fab:active, .cube-fab:focus {
+    background-color: blue;
+}
