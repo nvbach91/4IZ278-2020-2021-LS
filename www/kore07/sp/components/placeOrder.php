@@ -36,7 +36,7 @@
     }
 
 
-    sendEmail($_SESSION['user_email'], 'Confirmation');
+    sendEmail($_SESSION['user_email'], 'Order confirmation');
     $_SESSION['cart'] = [];
     header('Location: ../success.php');
 ?>
