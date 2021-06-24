@@ -47,6 +47,9 @@ include "components/nav.php";
                         </div>
                     </div>
                 <?php } ?>
+                <?php if(count($projects) == 0) : ?>
+                    <p>You are not working on any projects.</p>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -60,6 +63,9 @@ include "components/nav.php";
                     </div>
                 </div>
             <?php endforeach; ?>
+            <?php if(count($tasks) == 0) : ?>
+                <p>You don't have any assigned tasks</p>
+            <?php endif; ?>
         </div>
     </div>
 </div>
