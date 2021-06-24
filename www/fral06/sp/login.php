@@ -16,6 +16,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     if (@password_verify($password, $user['passwordHash'])) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['firstName'] = $user['firstName'];
+        $_SESSION['lastName'] = $user['lastName'];
 
             var_dump($_SESSION);
         header('Location: main.php');

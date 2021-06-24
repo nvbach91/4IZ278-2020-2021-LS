@@ -13,6 +13,7 @@ if ((!($_SESSION['user_email']))) {
 $projectManager = new ProjectDB();
 $userProjectManager = new UsersProjectDB();
 $tasksManager = new UsersTaskDB();
+echo $_SESSION['role'] ;
 if ($_SESSION['role'] == 1 ) {
     $projects = $userProjectManager->fetchAllUsersProjects($_SESSION['user_email']);
 
@@ -32,6 +33,7 @@ include "components/nav.php";
     <div>
         <a href="new-project.php" class="btn btn-link">New project</a>
     </div>
+    <h1 class="text-center mb-2">Welcome <?php echo $_SESSION['firstName']?>!</h1>
     <div class="row">
         <div class="col-8">
             <h2>Project List</h2>

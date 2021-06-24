@@ -1,5 +1,10 @@
-/*LOGIN*/
+/*NAV*/
 
+#navbar {
+    flex-grow: 0;
+}
+
+/*LOGIN*/
 .form-signin {
     width: 100%;
     max-width: 330px;
@@ -7,6 +12,7 @@
     margin: auto;
 }
 
+/*PROJECT*/
 .projects {
     width: 100%;
     display: flex;

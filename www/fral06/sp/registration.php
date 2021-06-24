@@ -49,7 +49,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
             $userManager->insert($email, $hashedPassword, 1, $firstName, $lastName);
 
-            header('Location: index.php');
+            header('Location: index.php?registration=1');
         }
     }
 }

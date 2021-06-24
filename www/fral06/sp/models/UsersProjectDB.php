@@ -44,6 +44,7 @@ class UsersProjectDB extends Database
             $projectId,
             $email,
         ]);
+        return @$statement->fetchAll();
     }
 
     public function deleteUserProject($userId, $projectId) {

@@ -15,6 +15,7 @@ class ProjectDB extends Database
             $description,
             $author,
         ]);
+        return @$this->pdo->lastInsertId();
     }
 
     public function fetchProjectById($id)

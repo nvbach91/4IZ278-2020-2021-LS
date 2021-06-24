@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UserDB.php';
+require_once __DIR__ . '/models/UsersProjectDB.php';
 
 if ((!($_SESSION['user_email']))) {
     header('Location: index.php');
@@ -10,6 +11,7 @@ if ((!($_SESSION['user_email']))) {
 
 $projectManager = new ProjectDB();
 $userManger = new UserDB();
+$usersProjectManager = new UsersProjectDB();
 $users = $userManger->fetchAll();
 
 $invalidInputs = [];
@@ -19,8 +21,10 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     $title = htmlspecialchars(trim(($_POST['title'])));
     $description = htmlspecialchars(trim(($_POST['description'])));
     $pickedUsers = [];
-    foreach ($_POST['users'] as $user){
-        array_push($pickedUsers, htmlspecialchars(trim($user)));
+    if (isset($_POST['users']) && is_array($_POST['users'])) {
+        foreach ($_POST['users'] as $user){
+            array_push($pickedUsers, htmlspecialchars(trim($user)));
+        }
     }
 
     if (!$title) {
@@ -45,8 +49,14 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     }
 
     if (empty($invalidInputs)) {
-        $projectManager->insert($title, $description, $_SESSION['user_email']);
-        header('Location: main.php');
+        $projectId = ($projectManager->insert($title, $description, $_SESSION['user_email']));
+        $usersProjectManager->insert($projectId, $_SESSION['user_email']);
+        if (count($pickedUsers )> 0) {
+            foreach ($pickedUsers as $user) {
+                $usersProjectManager->insert($projectId, $user);
+            }
+        }
+       header('Location: main.php');
 
     }
 }
@@ -60,29 +70,33 @@ include "components/nav.php"
 ?>
 
     <div class="container d-flex align-items-center justify-content-center">
-        <main class="form-signin text-center">
+        <main class="form-signin ">
             <form method="POST">
-                <h1 class="h3 mb-3 fw-normal">Create a new project</h1>
+                <h1 class="h3 mb-3 fw-normal text-center">Create a new project</h1>
                 <?php if ($msg != '') : ?>
                     <div class="alert alert-danger"><?php echo $msg; ?></div>
                 <?php endif; ?>
                 <div class="mb-3">
+                    <label class="form-label" for="title">Title:</label>
                     <input type="text" aria-label="Project title" class="form-control" name="title" id="title" placeholder="Project title">
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="description">Description:</label>
                     <textarea aria-label="Project description" class="form-control" placeholder="Project description" name="description" id="description"></textarea>
                 </div>
                 <div class="mb-3">
-
-                    <select name="users[]" id="users" class="form-select" multiple aria-label="select multiple users">
+                    <label class="form-label" for="users">Add members to project:</label>
+                    <select name="users[]" id="users" class="form-select"  multiple aria-label="select multiple users">
                         <?php foreach ($users as $user) :?>
-                          <option value="<?php  echo $user['email']; ?>"><?php  echo $user['lastName'] . ', ' . $user['firstName']?></option>
+                            <?php if($user['email'] != $_SESSION['user_email']) : ?>
+                                <option value="<?php  echo $user['email']; ?>"><?php  echo $user['lastName'] . ', ' . $user['firstName']?></option>
+                            <?php endif; ?>
                      <?php endforeach; ?>
                     </select>
                 </div>
 
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Create a Project!</button>
-                <p class="mt-5 mb-3 text-muted">© 2021</p>
+                <p class="mt-5 mb-3 text-muted text-center">© 2021</p>
             </form>
         </main>
     </div>
