@@ -50,6 +50,14 @@ include ('model/user_data.php');
                                 }
                                 ?>
                                 </p>
+                                <p class="succ_msg">
+                                <?php 
+                                if(isset($_GET['success']))
+                                {
+                                        echo "Data updated succesfully!";
+                                }
+                                ?>
+                                </p>
                             </form>
                         </div>
                     </div>

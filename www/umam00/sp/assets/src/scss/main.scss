@@ -169,6 +169,36 @@ p
     text-align: center;
     font-weight: bold;
 }
+.owner-label
+{
+    display: block;
+    background-color: black;
+    width: auto;
+    color: white;
+    line-height: 2em;
+    border-radius: 3px;
+    margin-left: 0.8em;
+    position: relative;
+    .label
+    {
+        left: 0px;
+        opacity:0;
+        transition: 0.3s;
+        width: 150px;
+        position: absolute;
+        font-size: 0.7em;
+        top: 0px;
+        color: black;
+    }
+    &:hover
+    {
+        .label
+        {
+            left: 75px;
+            opacity:1;
+        }
+    }
+}
 /*login*/
 .logo_anim
 {
@@ -466,7 +496,15 @@ p
     color: $grey;
     margin: 0;
 }
-
+.owner
+{
+    position: absolute;
+    left: 1em;
+    bottom: 0.8em;
+    font-size: 0.8rem;
+    color: $grey;
+    margin: 0;
+}
 .on
 {
     animation: toggleOn 0.3s forwards;

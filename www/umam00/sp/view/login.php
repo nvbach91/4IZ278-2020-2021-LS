@@ -62,6 +62,12 @@ $quotes = [
                             <button class="btn-fb">Sign in via <b>facebook</b></button>
                             <hr>
                             <p class="reg">dont have an account? <a href="registration.php">Sing up</a></p>
+                            <div
+                                class="fb-like"
+                                data-share="true"
+                                data-width="450"
+                                data-show-faces="true">
+                            </div>
                         </div>
                         <?php } ?>
                 </div>

@@ -75,7 +75,17 @@ function GetName($id)
     $result = $stmt->get_result();
     $data = $result->fetch_array(MYSQLI_ASSOC);
     return $data['name'];
-
+}
+function getProjectOwner($id_project)
+{
+    include ('model/pdo.php');
+    $sql = "SELECT users.name from users, projects where projects.user_id = users.id_user and projects.id_project = ?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $id_project);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_array(MYSQLI_ASSOC);
+    return $data['name'];
 }
 function GetProjectDesc($id)
 {
@@ -326,4 +336,20 @@ function randomQuotes($quotes = [])
     echo $quotes[rand(0, count($quotes)-1)];
 }
 
+function passValid($password)
+{
+$number = preg_match('@[0-9]@', $password);
+$uppercase = preg_match('@[A-Z]@', $password);
+$lowercase = preg_match('@[a-z]@', $password);
+$specialChars = preg_match('@[^\w]@', $password);
+ 
+if(strlen($password) < 8 || !$number || !$uppercase || !$lowercase || !$specialChars)
+{
+ return false;
+}
+else
+{
+ return true;
+}
+}
 ?>

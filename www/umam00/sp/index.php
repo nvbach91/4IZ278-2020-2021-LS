@@ -1,5 +1,6 @@
 <?php
     session_start();
+    include ('model/fb_conf.php');
     include ('controller/fce.php');
     if(isset($_SESSION["VER"]))
     {

@@ -2,6 +2,7 @@
         <div class="row main-headline">
             <h1 class="bold"><?php echo GetProjectName($_GET['projects']); ?></h1>
             <p class="text-muted"><?php echo GetProjectDesc($_GET['projects']); ?></p>
+            <span class="owner-label"><span class="label">Project owner</span><?php echo getProjectOwner($_GET['projects']); ?></span>
         </div>
         <div class="grid">
             <?php

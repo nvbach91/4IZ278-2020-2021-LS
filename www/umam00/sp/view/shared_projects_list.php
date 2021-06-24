@@ -27,7 +27,8 @@
                             ?>
                             </p>
                         </div>
-                        <span class="date"><?php echo date('d.m.Y', strtotime($row["date_of_creation"])); ?></span>                   
+                        <span class="date"><?php echo date('d.m.Y', strtotime($row["date_of_creation"])); ?></span>    
+                        <span class="owner"><?php echo getProjectOwner($row['id_project']); ?></span>                 
                         <a class="fill_link" href="?projects=<?php echo $row['id_project'];?>"></a>
                    </div>
                 </div>

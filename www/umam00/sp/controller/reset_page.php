@@ -19,11 +19,11 @@ else
 
     if ($_SERVER['SERVER_NAME'] !="localhost")
     {
-        header("Refresh:0; url=/");
+        print '<script type="text/javascript">window.location.replace("/");</script>';
     }
     else
     {
-        header("Refresh:0; url=.");
+        print '<script type="text/javascript">window.location.replace(".");</script>';
     }
     exit();
 }

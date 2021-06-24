@@ -5,26 +5,35 @@
         {
             if ($_POST["password"] == $_POST["password_check"])
             {
-                if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+                if(passValid($_POST["password"]))
                 {
-                    $email=$_POST["email"];
-                    include('model/email_ver.php');
-                    if ($data)
+                    if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
                     {
-                        $error_msg = "This email is already in use.";
-                        $email = null;
-                        $stmt->close();
-                        $conn->close();
+                        $email=$_POST["email"];
+                        include('model/email_ver.php');
+                        if ($data)
+                        {
+                            $error_msg = "This email is already in use.";
+                            $email = null;
+                            $stmt->close();
+                            $conn->close();
+                        }
+                        else
+                        {
+                            include('model/user_insert.php');
+                            include('controller/reset_page.php');
+                        }
                     }
                     else
                     {
-                        include('model/user_insert.php');
-                        include('controller/reset_page.php');
+                        $error_msg = "Email format is incorrect.";
                     }
+
                 }
                 else
                 {
-                    $error_msg = "Email format is incorrect.";
+                    $error_msg = "Password must be at least 8 characters in length and must contain at least one number, one upper case letter, one lower case letter and one special character.";
+
                 }
             }
             else {

@@ -24,6 +24,8 @@ if(isset($_POST["btn_reset_pass"]))
             'X-Mailer: PHP/' . phpversion();
 
             mail($to, $subject, $message, $headers);
+
+            $succes = true;
         }
         else
         {
@@ -34,4 +36,5 @@ if(isset($_POST["btn_reset_pass"]))
     {
         $error_msg = "You have to write your email.";
     }
+
 }

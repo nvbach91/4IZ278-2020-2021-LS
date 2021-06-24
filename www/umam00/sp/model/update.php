@@ -75,7 +75,7 @@ if(isset($_POST["btn_update_user"]) and $_POST["btn_update_user"] == "update")
                 $stmt->close();
                 $conn->close();
             }
-            if (isset($_POST["new_pass"]))
+            if ($_POST["new_pass"] != null)
             {
                 if(isset($_POST["new_pass_check"]) and $_POST["new_pass_check"] == $_POST["new_pass"])
                 {
@@ -106,7 +106,7 @@ if(isset($_POST["btn_update_user"]) and $_POST["btn_update_user"] == "update")
     }
     else
     {
-        $error_msg = null;
+        $error_msg = "&success";
     }
 
     $exit_page = "?settings".$error_msg;  
