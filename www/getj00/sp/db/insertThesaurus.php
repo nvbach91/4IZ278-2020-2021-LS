@@ -18,7 +18,7 @@
         }
         
         // Validate
-        if($souhlasky1 && $souhlasky2 && !preg_match($consRegex, $souhlasky1) && !preg_match($consRegex, $souhlasky1)){
+        if($souhlasky1 && $souhlasky2 && !preg_match($consRegex, $souhlasky1) && !preg_match($consRegex, $souhlasky2)){
             array_push($inputErrors, $consError);
         }
         

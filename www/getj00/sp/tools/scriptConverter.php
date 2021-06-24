@@ -29,7 +29,7 @@
 <br>
 <div align="center">
     <label for="SourceText" class="form-label">Zdrojový text:</label>
-    <input name="sourceText" type="text" value="" size="128" class="form-control" id="SourceText" onkeyup="convert(this.value)">
+    <input name="sourceText" type="text" value="" size="128" class="form-control" id="SourceText" onkeyup="convertDebounced()">
 </div>
 <br>
 <div align="center">
@@ -42,7 +42,16 @@
 
 <script language="javascript">
 <!--
-    function convert(text){
+    // https://www.freecodecamp.org/news/javascript-debounce-example/
+    function debounce(func, timeout = 250){
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+
+    function convert(){
         if (text.length == 0) {
             document.getElementById("ConvertedText").innerHTML = "<h2>... čeká se na vstup ...</h2>";
             return;
@@ -55,10 +64,13 @@
             };
             var script = document.querySelector('select[name="script"]');
             //var script = document.querySelector('input[name="script"]:checked');
+            var text = document.querySelector('input[name="sourceText"]').value;
             xmlhttp.open("GET", "/~getj00/sp/tools/scriptConverterServer.php?script=" + (script != null ? script.value : "latin") + "&text=" + text, true);
             xmlhttp.send();
         }
     }
+    
+    const convertDebounced = debounce(() => convert());
 
 //-->
 

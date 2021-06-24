@@ -1,8 +1,5 @@
 <?php include '../include/_header.php'; ?>
 
-<?php
-    require '../include/_scriptData.php';
-?>
 
 <h1>Vyhledávání</h1>
 <br>
@@ -21,7 +18,7 @@
 <br>
 <div align="center">
     <label for="Query" class="form-label">Hledaný výraz:</label>
-    <input name="query" type="text" value="" size="128" class="form-control" id="Query" onkeyup="search(this.value)">
+    <input name="query" type="text" value="" size="128" class="form-control" id="Query" onkeyup="searchDebounced()">
 </div>
 <br>
 <div align="center">
@@ -34,7 +31,16 @@
 
 <script language="javascript">
 <!--
-    function search(text){
+    // https://www.freecodecamp.org/news/javascript-debounce-example/
+    function debounce(func, timeout = 250){
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+
+    function search(){
         if (text.length == 0) {
             document.getElementById("Results").innerHTML = "<h2>... čeká se na vstup ...</h2>";
             return;
@@ -46,10 +52,13 @@
                 }
             };
             var ql = document.querySelector('input[name="queryLang"]:checked');
+            var text = document.querySelector('input[name="query"]').value;
             xmlhttp.open("GET", "/~getj00/searchServer.php?queryLang=" + (ql != null ? ql.value : "gesel") + "&query=" + text, true);
             xmlhttp.send();
         }
     }
+    
+    const searchDebounced = debounce(() => search());
 
 //-->
 

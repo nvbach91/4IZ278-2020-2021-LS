@@ -31,6 +31,26 @@ if($sourceText){
 }
 echo '</table>';
 
+echo '<br>';
+
+// JSON at specific request (not that it would be exactly readable but anyway)
+// {\n"latin":"abcd",\n "cyrillic": "абцд"}
+echo "{\n\"Písmo\":\"Text\""; // need to deal with trailing comma
+if($sourceText){
+    foreach($scriptNames as $curScriptName){
+        if($curScriptName == $sourceScriptName) continue;
+        echo ",\n\"$curScriptName\": \"";
+        foreach(utf8_str_split($sourceText) as $curChar) {
+            $curCharIndex = array_search($curChar, $scripts[$sourceScriptName]);
+            echo $scripts[$curScriptName][$curCharIndex];        
+        }
+        echo "\"";
+        
+    }
+}
+echo "\n}\n";
+
+
 ?>
 
 

@@ -8,7 +8,7 @@
         // Obtain individual fields
         $tvar=htmlspecialchars($_POST['tvar']);
         $jazyk = htmlspecialchars($_POST['jazyk']);
-        $vyznam = htmlspecialchars($_POST['vyznam']);        
+        $vyznam = htmlspecialchars($_POST['vyznam']);
         $souhlasky = htmlspecialchars($_POST['souhlasky']);
         $souprava = htmlspecialchars($_POST['souprava']);
         
@@ -21,7 +21,7 @@
         }
         
         // Validate
-        if($souhlasky1 && $souhlasky2 && !preg_match($consRegex, $souhlasky1) && !preg_match($consRegex, $souhlasky1)){
+        if($souhlasky !preg_match($consRegex, $souhlasky)){
             array_push($inputErrors, $consError);
         }
         

@@ -22,7 +22,7 @@
         }
         
         // Validate
-        if($souhlasky && $souhlasky && !preg_match($consRegex, $souhlasky1) && !preg_match($consRegex, $souhlasky1)){
+        if($souhlasky && !preg_match($consRegex, $souhlasky)){
             array_push($inputErrors, $consError);
         }
         
