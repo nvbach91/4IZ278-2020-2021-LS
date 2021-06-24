@@ -6,8 +6,8 @@
     </div>
     <div class="carousel-inner">
         <?php foreach ($firstProducts as $index => $firstProduct) : ?>
-            <div class="carousel-item <?php echo $index == 0 ? 'active' : ''; ?>">
-                <img src="<?php echo $firstProduct['image']; ?>" class="w-100 h-50" alt="<?php echo $firstProduct['name']; ?>">
+            <div class="carousel-item  <?php echo $index == 0 ? 'active' : ''; ?>">
+                <img src="<?php echo $firstProduct['image']; ?>" class="w-25" alt="<?php echo $firstProduct['name']; ?>">
                 <div class="carousel-caption d-none d-md-block">
                     <h5><?php echo $firstProduct['name']; ?></h5>
                     <p><?php echo $firstProduct['description']; ?></p>

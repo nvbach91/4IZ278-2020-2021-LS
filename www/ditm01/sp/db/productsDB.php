@@ -57,14 +57,14 @@ class ProductsDB extends Database {
     }
 
     public function sumPrice($question_marks, $ids) {
-        $sql = "SELECT SUM(price) FROM products WHERE id IN ($question_marks)";
+        $sql = "SELECT SUM(price) FROM $this->tableName WHERE id IN ($question_marks)";
         $statement = $this->pdo->prepare($sql);
         $statement->execute(array_values($ids));;
         return $statement->fetchColumn();
     }
 
     public function findProduct($id) {
-        $sql = "SELECT * FROM products WHERE id = :id";
+        $sql = "SELECT * FROM $this->tableName WHERE id = :id";
         $statement = $this->pdo->prepare($sql);
         $statement->execute(
             ['id' => $id

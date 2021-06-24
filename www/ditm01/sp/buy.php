@@ -4,19 +4,19 @@ if(!isset($_SESSION)){
     session_start();
 }
 
-$products = New ProductsDB();
+$productsDB = New ProductsDB();
 
 if (!@$_SESSION['cart']) {
     $_SESSION['cart'] = [];
 }
 
 $id = $_GET['id'];
-$good = $products->findProduct($id);
-if (!$good) {
+$product = $productsDB->findProduct($id);
+if (!$product) {
     exit('Items not found');
 }
 
-array_push($_SESSION['cart'], $good['id']);
+array_push($_SESSION['cart'], $product['id']);
 
 header('Location: cart.php');
 ?>

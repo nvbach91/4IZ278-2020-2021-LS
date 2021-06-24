@@ -19,6 +19,11 @@ if (is_array($ids) && count($ids)) {
     $priceTotal = $productsDB->sumPrice($question_marks, $ids);
 }
 
+if (strpos('javascript:history.go(-1)', 'shop')) {
+    $previous = 'javascript:history.go(-1)';
+} else {
+    $previous = 'shop.php';
+}
 ?>
 
 <?php include __DIR__ . '/includes/header.php'; ?>
@@ -27,6 +32,7 @@ if (is_array($ids) && count($ids)) {
     <div class="text-center mb-2">
         <h1>Cart</h1>
     </div>
+    <a class="btn btn-primary mb-5" href="<?php echo $previous ?>" role="button">continue shopping</a>
     <?php if (@$products) : ?>
         <table class="table">
             <thead>
@@ -49,7 +55,7 @@ if (is_array($ids) && count($ids)) {
                     <tr>
                         <th scope="row" colspan="2">Total:</th>
                         <td><?php echo $priceTotal , ' ', CURRENCY; ?></td>
-                        <td><a class="btn btn-dark" href="">Order</a></td>
+                        <td><a class="btn btn-dark" href="order.php">Order</a></td>
                     </tr>
             </tbody>
         </table>
