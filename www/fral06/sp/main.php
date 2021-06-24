@@ -13,7 +13,7 @@ if ((!($_SESSION['user_email']))) {
 $projectManager = new ProjectDB();
 $userProjectManager = new UsersProjectDB();
 $tasksManager = new UsersTaskDB();
-echo $_SESSION['role'] ;
+
 if ($_SESSION['role'] == 1 ) {
     $projects = $userProjectManager->fetchAllUsersProjects($_SESSION['user_email']);
 
