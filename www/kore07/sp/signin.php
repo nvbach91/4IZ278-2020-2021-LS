@@ -12,8 +12,8 @@
     $submittedForm = (!empty($_POST) && ('POST' == $_SERVER['REQUEST_METHOD']));
 
     if ($submittedForm) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
 
         $existing_user = $usersDB->fetchBy('user_email', $email);
 

@@ -28,7 +28,6 @@
         </div>
         <div class="catalog-item-hover">
           <a class="button catalog-button" href='buy.php?id=<?php echo $product['product_id']; ?>'>Add to cart</a>
-          <a class="catalog-compare-link" href="#">Add to compare</a>
         </div>
       </article>
     </li>

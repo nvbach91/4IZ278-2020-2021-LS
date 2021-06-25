@@ -46,6 +46,9 @@
           <a class="nav-link nav-catalog" href="catalog.php">Products</a>
         </li>
         <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="user-navigation-item order-item">
+              <a class="user-navigation-link order-link" href="orders.php"> My orders </a>
+            </li>
             <li class="user-navigation-item profile-item">
               <a class="user-navigation-link profile-link" href="profile.php"> <?php echo $_SESSION['user_email']; ?></a>
             </li>

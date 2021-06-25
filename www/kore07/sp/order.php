@@ -2,6 +2,7 @@
 <?php require_once __DIR__ . '/utils/utils.php'; ?>
 <?php require_once __DIR__ . '/components/getUser.php'; ?>
 <?php require_once __DIR__ . '/database/ProductsDB.php'; ?>
+<?php require_once __DIR__ . '/database/UsersDB.php'; ?>
 
 <?php
     if(!isset($_SESSION)){
@@ -12,6 +13,7 @@
         $_SESSION['cart'] = [];
     }
 
+    $usersDB = new UsersDB();
     $productsDB = new ProductsDB();
 
     $products = [];
@@ -60,6 +62,22 @@
                 'total' => $sum,
                 'date' => date("Y-m-d H:i:s"),
             );
+
+            $sets = array(
+                'user_name' => $name,
+                'user_email' => $email,
+                'user_address' => $address,
+                'user_zip' => $zip,
+                'user_city' => $city,
+                'user_country' => $country,
+                'user_phone' => $phone,
+            );
+    
+            $wheres = array(
+                'user_id' => $_SESSION['user_id'],
+            );
+    
+            $usersDB->updateBy($wheres, $sets);
 
             $_SESSION['order_info'] = $orderInfo;
 

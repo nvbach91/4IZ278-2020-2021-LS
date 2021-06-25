@@ -13,8 +13,8 @@
     if ($submittedForm) {
         $name = trim(@$_POST['name']);
         $email = trim(@$_POST['email']);
-        $password = @$_POST['password'];
-        $confirm = @$_POST['confirm'];
+        $password = trim(@$_POST['password']);
+        $confirm = trim(@$_POST['confirm']);
 
         if ($password !== $confirm) {
             $errors['password'] = 'Your passwords do not match';

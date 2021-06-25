@@ -192,7 +192,16 @@ input[type="radio"].visually-hidden {
 
 .user-navigation-item.profile-item {
   margin-right: 15px;
+  /* margin-left: auto; */
+}
+
+.user-navigation-item.order-item {
+  margin-right: 50px;
   margin-left: auto;
+}
+
+.order-link {
+  padding: 2px 0;
 }
 
 .user-navigation-item.signout-item {
@@ -239,6 +248,16 @@ input[type="radio"].visually-hidden {
 
 .cart-link:active::before {
   opacity: 0.3;
+}
+
+
+/* ORDERS PROFILE */
+
+.order-list_item{
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
 }
 
 

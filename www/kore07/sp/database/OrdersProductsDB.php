@@ -12,11 +12,12 @@
         }
 
         public function create($args) {
-            $sql = 'INSERT INTO ' . $this->tableName . '(order_id, product_id) VALUES (:order_id, :product_id)';
+            $sql = 'INSERT INTO ' . $this->tableName . '(order_id, product_id, order_product_quantity) VALUES (:order_id, :product_id, :order_product_quantity)';
             $statement = $this->pdo->prepare($sql);
             $statement->execute([
                 'order_id' => $args['order_id'], 
                 'product_id' => $args['product_id'], 
+                'order_product_quantity' => $args['product_quantity'], 
             ]);
         }
     }
