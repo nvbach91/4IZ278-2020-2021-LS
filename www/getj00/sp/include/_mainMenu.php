@@ -2,7 +2,7 @@
 <?php
 $urlPrefix = "https://eso.vse.cz/~getj00/sp/";
 ?>
-
+<br><br>
 <div class="menu">
 
 <h3>Vložit:</h3>
@@ -36,4 +36,4 @@ $urlPrefix = "https://eso.vse.cz/~getj00/sp/";
     <li><a href="<?php echo $urlPrefix; ?>meta/contact.php">Kontakty na správce</a></li>
 </ul>
 </div>
-
+<br>
