@@ -3,6 +3,45 @@
 
 <?php
 
+include '../include/_dbConnect.php';
+
+// "Don't repat yourself" my ass with this OOP boilerplate
+
+class DBInsertDictEntry extends DBConnection{
+
+    private $insertRoot;
+    private $insertOrigin;
+    private $insertTransl;
+    private $insertDictEntry;
+
+    public function __construct(){
+        parent::__construct();
+        $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
+        $insertOrigin = $pdo->prepare("INSERT INTO Puvod (jazyk, slovo, prepis) VALUES (:jazpuv, :sl, :prep);");
+        $insertTransl = $pdo->prepare("INSERT INTO Preklad (jazyk, podstatne, pridavne, sloveso, prislovce) VALUES (:jazpr, :pod, :prid, :slso, :prisl);");
+        $insertDictEntry = $pdo->prepare("INSERT INTO VstupSlovniku (souhlasky, souprava, jazyk, prepis, radek) VALUES (:souhl, :soup, :jazpuv, :prep, (SELECT MAX(radek) FROM Preklad));");
+    
+    }
+
+    public function getInsertRoot(){
+        return $insertRoot;
+    }
+    
+    public function getInsertOrigin(){
+        return $insertOrigin;
+    }
+    
+    public function getInsertTransl(){
+        return $insertTransl;
+    }
+    
+    public function getInsertDictEntry(){
+        return $insertDictEntry;
+    }
+
+}
+
+
     $inputErrors = [];
     $isSub = !empty($_POST);
     
@@ -23,12 +62,12 @@
         $sloveso = htmlspecialchars($_POST['sloveso']);
         $prislovce = htmlspecialchars($_POST['prislovce']);
         
-        if(isset($_POST['koren'])) $koren = $_POST['koren'] ? true : false;
-        if(isset($_POST['puvod'])) $puvod = $_POST['puvod'] ? true : false;
-        if(isset($_POST['preklad'])) $preklad = $_POST['preklad'] ? true : false;
-        if(!($koren && $puvod && $preklad)){
+	    $koren = isset($_POST['koren']);
+        $puvod = isset($_POST['puvod']);
+        $preklad = isset($_POST['preklad']);
+        /*if(!($koren && $puvod && $preklad)){
             array_push($inputErrors, "Nic nebylo zaškrtnuto, že se má vložit.");
-        }
+		}
         
         
         // Check required fields
@@ -48,30 +87,38 @@
         }
         if($prepis && !preg_match('/^[ \p{Latin}]+$/', $prepis)){
             array_push($inputErrors, "Přepis musí být latinkou.");
-        }
+		}*/
         
         if(!count($inputErrors)){
             $succMsg = 'Validace uspesna.';
         
             // Prepare database and queries
-            include '../include/_dbConnect.php';
-        
-            $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
-            $insertOrigin = $pdo->prepare("INSERT INTO Puvod (jazyk, slovo, prepis) VALUES (:jazpuv, :sl, :prep);");
-            $insertTransl = $pdo->prepare("INSERT INTO Preklad (jazyk, podstatne, pridavne, sloveso, prislovce) VALUES (:jazpr, :pod, :prid, :slso, :prisl);");
-            $insertDictEntry = $pdo->prepare("INSERT INTO VstupSlovniku (souhlasky, souprava, jazyk, prepis, radek) VALUES (:souhl, :soup, :jazpuv, :prep, SELECT MAX(radek) FROM Preklad);");
-
+            $dbInsertDictEntry = new DBInsertDictEntry();
+            
             if($koren){
-                $insertRoot->execute(['souhl'=> $souhlasky, 'soup'=> $souprava, 'del' => $delka]);
+				$dbInsertDictEntry->executeQuery(
+				    $dbInsertDictEntry->getInsertRoot(),
+				    ['souhl'=> $souhlasky, 'soup'=> $souprava, 'del' => $delka]
+				);	
             }
+            
             if($puvod){
-                $insertOrigin->execute(['jazpuv'=> $jazykPuvod, 'sl'=> $slovo, 'prep' => $prepis]);
+                $dbInsertDictEntry->executeQuery(
+                    $dbInsertDictEntry->getInsertOrigin(), 
+                    ['jazpuv'=> $jazykPuvod, 'sl'=> $slovo, 'prep' => $prepis]
+                );
             }
             if($preklad){
-                $insertTransl->execute(['jazpr'=> $jazykPreklad, 'pod'=> $podstatne, 'prid' => $pridavne, 'slso' => $sloveso, 'prisl' => $prislovce]);
+                $dbInsertDictEntry->executeQuery(
+                    $dbInsertDictEntry->getInsertTransl(), 
+                    ['jazpr'=> $jazykPreklad, 'pod'=> $podstatne, 'prid' => $pridavne, 'slso' => $sloveso, 'prisl' => $prislovce]
+                );
             }
             if($koren && $puvod && $preklad){
-                $insertDictEntry->execute(['souhl'=> $souhlasky, 'soup'=> $souprava, 'jazpuv' => $jazykPuvod, 'prep' => $prepis]);
+                $dbInsertDictEntry->executeQuery(
+                    $dbInsertDictEntry->getInsertDictEntry(), 
+                    ['souhl'=> $souhlasky, 'soup'=> $souprava, 'jazpuv' => $jazykPuvod, 'prep' => $prepis]
+                );
             }
         }
     }
@@ -161,7 +208,7 @@
 if(!empty($_POST)){
     echo "<h2>Odesláno:</h2>";
     print_r($_POST);
-
+	print_r($inputErrors);
 }
 
 /*
@@ -174,6 +221,8 @@ bbb          B                 jpn \/  eee  eee               ces \/  sddf    sd
 */
 
 ?>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>
 

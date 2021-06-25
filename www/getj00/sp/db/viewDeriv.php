@@ -2,8 +2,23 @@
 include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
-$odvozenina = $pdo->prepare("SELECT * FROM Odvozenina ORDER BY souhlasky, souprava ASC");
-$odvozenina->execute();
+
+class DBViewDeriv extends DBConnection{
+    private $viewDeriv;
+    
+    public function __construct(){
+        parent::__construct();
+        $viewDeriv = $pdo->prepare("SELECT * FROM Odvozenina ORDER BY souhlasky, souprava ASC");
+    }
+
+    public function getViewDeriv(){
+        return $viewDeriv;
+    }
+
+}
+
+$dbViewDeriv = new DBViewDeriv();
+$dbViewDeriv->executeQuery($dbViewDeriv->getViewDeriv(), []);
 
 ?>
 
@@ -15,7 +30,7 @@ $odvozenina->execute();
 <td>Tvar</td> <td>Jazyk</td> <td>Význam</td> <td>Souhlásky</td> <td>Souprava</td>
 </thead><tbody>
 <?php
-foreach($odvozenina->fetchAll() as $row){
+foreach($dbViewDeriv->fetchResults($dbViewDeriv->getViewDeriv()) as $row){
     echo '<tr><td>';
     echo $row['tvar'].TD.$row['jazyk'].TD.$row['vyznam'].TD.$row['souhlasky'].TD.$row['souprava'];
     echo '</td></tr>';
@@ -23,5 +38,7 @@ foreach($odvozenina->fetchAll() as $row){
 ?>
 </tbody>
 </table>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

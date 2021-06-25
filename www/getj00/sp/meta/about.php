@@ -151,5 +151,6 @@ Koren je centrální tabulkou, mazání odkud proto kaskáduje.
 
 </p>
 
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

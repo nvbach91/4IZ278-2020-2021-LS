@@ -29,7 +29,7 @@
 <br>
 <div align="center">
     <label for="SourceText" class="form-label">Zdrojový text:</label>
-    <input name="sourceText" type="text" value="" size="128" class="form-control" id="SourceText" onkeyup="convertDebounced()">
+    <input name="sourceText" type="text" value="" size="128" class="form-control" id="SourceText" onkeyup="convert(this.value)">
 </div>
 <br>
 <div align="center">
@@ -51,7 +51,7 @@
         };
     }
 
-    function convert(){
+    function convert(text){
         if (text.length == 0) {
             document.getElementById("ConvertedText").innerHTML = "<h2>... čeká se na vstup ...</h2>";
             return;
@@ -64,8 +64,8 @@
             };
             var script = document.querySelector('select[name="script"]');
             //var script = document.querySelector('input[name="script"]:checked');
-            var text = document.querySelector('input[name="sourceText"]').value;
-            xmlhttp.open("GET", "/~getj00/sp/tools/scriptConverterServer.php?script=" + (script != null ? script.value : "latin") + "&text=" + text, true);
+            //var text = document.querySelector('input[name="sourceText"]').value;
+            xmlhttp.open("GET", "https://eso.vse.cz/~getj00/sp/tools/scriptConverterServer.php?script=" + (script != null ? script.value : "latin") + "&text=" + text, true);
             xmlhttp.send();
         }
     }
@@ -76,6 +76,7 @@
 
 </script>
 
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>
 

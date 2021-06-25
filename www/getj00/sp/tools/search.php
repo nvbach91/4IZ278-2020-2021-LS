@@ -18,7 +18,7 @@
 <br>
 <div align="center">
     <label for="Query" class="form-label">Hledaný výraz:</label>
-    <input name="query" type="text" value="" size="128" class="form-control" id="Query" onkeyup="searchDebounced()">
+    <input name="query" type="text" value="" size="128" class="form-control" id="Query" onkeyup="search(this.value)">
 </div>
 <br>
 <div align="center">
@@ -40,7 +40,7 @@
         };
     }
 
-    function search(){
+    function search(text){
         if (text.length == 0) {
             document.getElementById("Results").innerHTML = "<h2>... čeká se na vstup ...</h2>";
             return;
@@ -52,8 +52,8 @@
                 }
             };
             var ql = document.querySelector('input[name="queryLang"]:checked');
-            var text = document.querySelector('input[name="query"]').value;
-            xmlhttp.open("GET", "/~getj00/searchServer.php?queryLang=" + (ql != null ? ql.value : "gesel") + "&query=" + text, true);
+            //var text = document.querySelector('input[name="query"]').value;
+            xmlhttp.open("GET", "https://eso.vse.cz/~getj00/sp/tools/searchServer.php?queryLang=" + (ql != null ? ql.value : "gesel") + "&query=" + text, true);
             xmlhttp.send();
         }
     }
@@ -64,5 +64,6 @@
 
 </script>
 
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

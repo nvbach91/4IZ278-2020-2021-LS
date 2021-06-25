@@ -1,6 +1,25 @@
 <?php require '../include/_formData.php'; ?>
 
 <?php
+
+include '../include/_dbConnect.php';
+
+class DBInsertDeriv extends DBConnection{
+
+    private $insertDeriv;
+
+    public function __construct(){
+        parent::__construct();
+        $insertDeriv = $pdo->prepare("INSERT INTO Odvozenina (tvar, jazyk, vyznam, souhlasky, souprava) VALUES (:tvar, :jazodv, :vyz, :souhl, :soup);");
+    
+    }
+
+    public function getInsertDeriv(){
+        return $insertDeriv;
+    }
+
+}
+
     $inputErrors = [];
     $isSub = !empty($_POST);
     
@@ -21,7 +40,7 @@
         }
         
         // Validate
-        if($souhlasky !preg_match($consRegex, $souhlasky)){
+        if($souhlasky && !preg_match($consRegex, $souhlasky)){
             array_push($inputErrors, $consError);
         }
         
@@ -29,10 +48,12 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '../include/_dbConnect.php';
-        
-            $insertDeriv = $pdo->prepare("INSERT INTO Odvozenina (tvar, jazyk, vyznam, souhlasky, souprava) VALUES (:tvar, :jazodv, :vyz, :souhl, :soup);");
-            $insertDeriv->execute(['tvar'=> $tvar, 'jazodv'=> $jazyk, 'vyz' => $vyznam, 'souhl'=> $souhlasky, 'soup'=> $souprava]);
+            $dbInsertDeriv = new DBInsertDeriv();
+            
+            $dbInsertDeriv->executeQuery(
+                $dbInsertDeriv->getInsertDeriv(),
+                ['tvar'=> $tvar, 'jazodv'=> $jazyk, 'vyz' => $vyznam, 'souhl'=> $souhlasky, 'soup'=> $souprava]
+            );
         }
     }
 ?>
@@ -84,7 +105,8 @@
 
 if(!empty($_POST)){
     echo "<h2>Odesláno:</h2>";
-    print_r($_POST);
+	print_r($_POST);
+	print_r($inputErrors);
 }
 
 /*
@@ -93,5 +115,7 @@ sdfsdfsdf ddd    A       mis \/  efgergreegegege
 */
 
 ?>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

@@ -2,13 +2,29 @@
 include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
-// Not done
-$dictEntry = $pdo->prepare("
-    SELECT *
-    FROM Idiom
-;
-");
-$thesaurus->execute();
+// SQL view code not done
+
+class DBViewIdiom extends DBConnection{
+    private $viewIdiom;
+    
+    public function __construct(){
+        parent::__construct();
+        $viewIdiom = $pdo->prepare("
+            SELECT *
+            FROM Idiom
+            ;
+        ");
+    }
+
+    public function getViewIdiom(){
+        return $viewIdiom;
+    }
+
+}
+
+$dbViewIdiom = new DBViewIdiom();
+$dbViewIdiom->executeQuery($dbViewIdiom->getViewIdiom(), []);
+
 
 ?>
 
@@ -20,7 +36,7 @@ $thesaurus->execute();
 <td>Tvar</td> <td>Vyznam</td>
 </thead><tbody>
 <?php
-foreach($dictEntry->fetchAll() as $row){
+foreach($dbViewIdiom->fetchResults($dbViewIdiom->getViewIdiom()) as $row){
     echo '<tr><td>';
     echo $row['tvar'].TD.$row['vyznam'];
     echo '</td></tr>';
@@ -28,5 +44,7 @@ foreach($dictEntry->fetchAll() as $row){
 ?>
 </tbody>
 </table>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

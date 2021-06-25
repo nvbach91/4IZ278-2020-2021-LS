@@ -2,13 +2,28 @@
 include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
-// Not done
-$dictEntry = $pdo->prepare("
-    SELECT *
-    FROM VstupSlovniku
-;
-");
-$thesaurus->execute();
+// SQL view code not done
+
+class DBViewDictEntry extends DBConnection{
+    private $viewDictEntry;
+    
+    public function __construct(){
+        parent::__construct();
+        $viewDictEntry = $pdo->prepare("
+            SELECT *
+            FROM VstupSlovniku
+        ;
+        ");
+    }
+
+    public function getViewDictEntry(){
+        return $viewDictEntry;
+    }
+
+}
+
+$dbViewDictEntry = new DBViewDictEntry();
+$dbViewDictEntry->executeQuery($dbViewDictEntry->getViewDictEntry(), []);
 
 ?>
 
@@ -20,7 +35,7 @@ $thesaurus->execute();
 <td>Souhlásky</td> <td>Souprava</td> <td>Jazyk</td> <td>Přepis</td> <td>Řadek</td>
 </thead><tbody>
 <?php
-foreach($dictEntry->fetchAll() as $row){
+foreach($dbViewDictEntry->fetchResults($dbViewDictEntry->getViewDictEntry()) as $row){ // such encapsulation, very verbose, much OOP, wow
     echo '<tr><td>';
     echo $row['souhlasky'].TD.$row['souprava'].TD.$row['jazyk'].TD.$row['prepis'].TD.$row['radek'];
     echo '</td></tr>';
@@ -28,5 +43,7 @@ foreach($dictEntry->fetchAll() as $row){
 ?>
 </tbody>
 </table>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

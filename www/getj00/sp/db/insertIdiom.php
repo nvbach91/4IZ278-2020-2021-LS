@@ -1,6 +1,36 @@
 <?php require '../include/_formData.php'; ?>
 
 <?php
+
+include '../include/_dbConnect.php';
+
+class DBInsertIdiom extends DBConnection{
+
+    private $insertRoot;
+    private $insertIdiom;
+    private $insertUsage;
+
+    public function __construct(){
+        parent::__construct();
+        $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
+        $insertIdiom = $pdo->prepare("INSERT INTO Idiom (tvar, jazyk, vyznam) VALUES (:tvar, :jazid, :vyz);");
+        $insertUsage = $pdo->prepare("INSERT INTO Pouziti (souhlasky, souprava, tvar, jazyk) VALUES (:souhl, :soup, :tvar, :jazid);");
+    }
+
+    public function getInsertRoot(){
+        return $insertRoot;
+    }
+    
+    public function getInsertIdiom(){
+        return $insertIdiom;
+    }
+    
+    public function getInsertUsage(){
+        return $insertUsage;
+    }
+
+}
+
     $inputErrors = [];
     $isSub = !empty($_POST);
     
@@ -13,8 +43,8 @@
         $souprava = htmlspecialchars($_POST['souprava']);
         $delka = strlen($souhlasky);
         
-        if(isset($_POST['koren'])) $koren = $_POST['koren'] ? true : false;
-        if(isset($_POST['idiom'])) $koren = $_POST['idiom'] ? true : false;
+        $koren = isset($_POST['koren']);
+        $koren = isset($_POST['idiom']);
         
         // Check required fields
         if(!$souhlasky || !$souhlasky){
@@ -30,20 +60,27 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '../include/_dbConnect.php';
+            $dbInsertIdiom = new DBInsertIdiom();
             
-            $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
-            $insertIdiom = $pdo->prepare("INSERT INTO Idiom (tvar, jazyk, vyznam) VALUES (:tvar, :jazid, :vyz);");
-            $insertUsage = $pdo->prepare("INSERT INTO Pouziti (souhlasky, souprava, tvar, jazyk) VALUES (:souhl, :soup, :tvar, :jazid);");
+
             
             if($koren){
-                $insertRoot->execute(['souhl' => $souhlasky1, 'soup' => $souprava1, 'del' => $delka]);
+                echo $dbInsertIdiom->executeQuery(
+                    $dbInsertIdiom->getInsertRoot, 
+                    ['souhl' => $souhlasky1, 'soup' => $souprava1, 'del' => $delka]
+                );
             }
             if($idiom){
-                $insertIdiom->execute(['tvar' => $tvar, 'jazid' => $jazyk, 'vyz' => $vyznam]);
+                echo $dbInsertIdiom->executeQuery(
+                    $dbInsertIdiom->getInsertIdiom, 
+                    ['tvar' => $tvar, 'jazid' => $jazyk, 'vyz' => $vyznam]
+                );
             }
             if($koren && $idiom){
-                $insertUsage->execute(['souhl' => $souhlasky, 'soup' => $souprava, 'tvar' => $tvar, 'jazid' => $jazyk]);
+                echo $insertUsage->executeQuery(
+                    $dbInsertIdiom->getInsertUsage, 
+                    ['souhl' => $souhlasky, 'soup' => $souprava, 'tvar' => $tvar, 'jazid' => $jazyk]
+                );
             }
         }
     }
@@ -103,7 +140,8 @@
 
 if(!empty($_POST)){
     echo "<h2>Odesláno:</h2>";
-    print_r($_POST);
+	print_r($_POST);
+	print_r($inputErrors);
 }
 
 /*
@@ -114,5 +152,7 @@ Pouziti: Koren <-> Idiom
 */
 
 ?>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>

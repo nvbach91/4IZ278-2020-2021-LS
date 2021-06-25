@@ -21,5 +21,7 @@
 <a href="http://modarchive.org/index.php?request=view_artist_modules&query=85964">ModArchive</a>
 <a href="https://github.com/637man/">GitHub</a>
 
+<?php include "../include/_mainMenu.php"; ?>
+
 <?php include '../include/_footer.php'; ?>
 

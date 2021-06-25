@@ -3,38 +3,55 @@ include '../include/_dbConnect.php';
 const TD = '</td><td>';
 
 // very exquisite
-$thesaurus = $pdo->prepare("
-    SELECT Antosynonymum.souhlasky1, Antosynonymum.souprava1,
-            Koren1.delka delka1, Puvod1.jazyk jazyk1, Puvod1.prepis prepis1,
-            Puvod1.slovo slovo1, Antosynonymum.typ, Antosynonymum.souhlasky2,
-            Antosynonymum.souprava2, Koren2.delka delka2, Puvod2.jazyk jazyk2,
-            Puvod2.prepis prepis2, Puvod2.slovo slovo2
-    FROM Antosynonymum JOIN Koren Koren1 ON (
-                Antosynonymum.souhlasky1 = Koren1.souhlasky 
-                AND Antosynonymum.souprava1 = Koren1.souprava
-            )           
-            JOIN VstupSlovniku VstupSlovniku1 ON (
-                Antosynonymum.souhlasky1 = VstupSlovniku1.souhlasky
-                AND Antosynonymum.souprava1 = VstupSlovniku1.souprava
-            ) JOIN Puvod Puvod1 ON (
-                VstupSlovniku1.jazyk = Puvod1.jazyk 
-                AND VstupSlovniku1.prepis = Puvod1.prepis
-            )
 
-            JOIN Koren Koren2 ON (
-                Antosynonymum.souhlasky2 = Koren2.souhlasky 
-                AND Antosynonymum.souprava2 = Koren2.souprava
-            )
-            JOIN VstupSlovniku VstupSlovniku2 ON (
-            Antosynonymum.souhlasky2 = VstupSlovniku2.souhlasky
-            AND Antosynonymum.souprava2 = VstupSlovniku2.souprava
-            ) JOIN Puvod Puvod2 ON (
-                VstupSlovniku2.jazyk = Puvod2.jazyk 
-                AND VstupSlovniku2.prepis = Puvod2.prepis
-            )
-;
-");
-$thesaurus->execute();
+class DBViewThesaurus extends DBConnection{
+    private $viewThesaurus;
+    
+    public function __construct(){
+        parent::__construct();
+        $viewThesaurus = $pdo->prepare("
+            SELECT Antosynonymum.souhlasky1, Antosynonymum.souprava1,
+                Koren1.delka delka1, Puvod1.jazyk jazyk1, Puvod1.prepis prepis1,
+                Puvod1.slovo slovo1, Antosynonymum.typ, Antosynonymum.souhlasky2,
+                Antosynonymum.souprava2, Koren2.delka delka2, Puvod2.jazyk jazyk2,
+                Puvod2.prepis prepis2, Puvod2.slovo slovo2
+            FROM Antosynonymum JOIN Koren Koren1 ON (
+                    Antosynonymum.souhlasky1 = Koren1.souhlasky 
+                    AND Antosynonymum.souprava1 = Koren1.souprava
+                )           
+                JOIN VstupSlovniku VstupSlovniku1 ON (
+                    Antosynonymum.souhlasky1 = VstupSlovniku1.souhlasky
+                    AND Antosynonymum.souprava1 = VstupSlovniku1.souprava
+                ) JOIN Puvod Puvod1 ON (
+                    VstupSlovniku1.jazyk = Puvod1.jazyk 
+                    AND VstupSlovniku1.prepis = Puvod1.prepis
+                )
+
+                JOIN Koren Koren2 ON (
+                    Antosynonymum.souhlasky2 = Koren2.souhlasky 
+                    AND Antosynonymum.souprava2 = Koren2.souprava
+                )
+                JOIN VstupSlovniku VstupSlovniku2 ON (
+                Antosynonymum.souhlasky2 = VstupSlovniku2.souhlasky
+                AND Antosynonymum.souprava2 = VstupSlovniku2.souprava
+                ) JOIN Puvod Puvod2 ON (
+                    VstupSlovniku2.jazyk = Puvod2.jazyk 
+                    AND VstupSlovniku2.prepis = Puvod2.prepis
+                )
+            ;
+        ");
+
+    }
+
+    public function getViewThesaurus(){
+        return $viewThesaurus;
+    }
+
+}
+
+$dbViewThesaurus = new DBViewThesaurus();
+$dbViewThesaurus->executeQuery($dbViewThesaurus->getViewThesaurus(), []);
+
 
 ?>
 
@@ -48,7 +65,7 @@ $thesaurus->execute();
 <td>Souhlásky 2</td> <td>Souprava 2</td> <td>Jazyk 2</td> <td>Slovo 2</td> <td>Přepis 2</td>
 </thead><tbody>
 <?php
-foreach($thesaurus->fetchAll() as $row){
+foreach($dbViewThesaurus->fetchResults($dbViewThesaurus->getViewThesaurus()) as $row){
     echo '<tr><td>';
     echo $row['souhlasky1'].TD.$row['souprava1'].TD.$row['jazyk1'].TD.$row['prepis1'].TD.$row['slovo1'].TD
         .$row['typ'].TD
@@ -58,6 +75,8 @@ foreach($thesaurus->fetchAll() as $row){
 ?>
 </tbody>
 </table>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>
 

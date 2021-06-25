@@ -11,7 +11,7 @@ $searchKoren = $pdo->prepare("select * from Koren where souhlasky like '%:cons%'
 $searchPuvod = $pdo->prepare("select * from Puvod where prepis like '%:transc%' or slovo like '%:orig%'");
 $searchPreklad = $pdo->prepare("select * from Preklad where podstatne like '%:subst%' or pridavne like '%:adj%' or sloveso like %:verb% or prislovce like '%:adv%'");
 $searchOdvozenina = $pdo->prepare("select * from Odvozenina where tvar like '%:form' or vyznam like '%:mean%'");
-$searchIdiom = $pdo->prepare("select * from Idiom where tvar like '%:form' or vyznam like '%:mean'");
+$searchIdiom = $pdo->prepare("select * from Idiom where vyraz like '%:form' or vyznam like '%:mean'");
 
 echo '<table><thead><td>Písmo</td><td>Text</td></thead>';
 

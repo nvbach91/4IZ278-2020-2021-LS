@@ -1,6 +1,25 @@
 <?php require '../include/_formData.php'; ?>
 
 <?php
+
+include '../include/_dbConnect.php';
+
+class DBInsertThesaurus extends DBConnection{
+
+    private $insertThesaurus;
+
+    public function __construct(){
+        parent::__construct();
+        $insertThesaurus = $pdo->prepare("INSERT INTO Antosynonymum (souhlasky1, souprava1, typ, souhlasky2, souprava2) VALUES (:souhl1, :soup1, :typ, :souhl2, :soup2);");
+    }
+
+    public function getInsertThesaurus(){
+        return $insertThesaurus;
+    }
+
+}
+
+
     $inputErrors = [];
     $isSub = !empty($_POST);
     
@@ -26,10 +45,11 @@
             $succMsg = 'Validace uspesna.';
         
             // Put it in the database
-            include '../include/_dbConnect.php';
-        
-            $insertThesaurus = $pdo->prepare("INSERT INTO Antosynonymum (souhlasky1, souprava1, typ, souhlasky2, souprava2) VALUES (:souhl1, :soup1, :typ, :souhl2, :soup2);");
-            $insertThesaurus->execute(['souhl1'=> $souhlasky1, 'soup1'=> $souprava1, 'typ' => $typ, 'souhl2'=> $souhlasky2, 'soup2'=> $souprava2]);
+            $dbInsertThesaurus = new DBInsertThesaurus();
+            $dbInsertThesaurus->executeQuery(
+                $dbInsertThesaurus->getInsertThesaurus(), 
+                ['souhl1'=> $souhlasky1, 'soup1'=> $souprava1, 'typ' => $typ, 'souhl2'=> $souhlasky2, 'soup2'=> $souprava2]
+            );
         }
     }
 ?>
@@ -114,7 +134,7 @@
 if(!empty($_POST)){
     echo "<h2>Odesláno:</h2>";
     print_r($_POST);
-
+	print_r($inputErrors);
 }
 
 /*
@@ -125,5 +145,7 @@ bbb          B        A/S/V
 */
 
 ?>
+
+<?php include "../include/_mainMenu.php"; ?>
 
 <?php include '../include/_footer.php'; ?>
