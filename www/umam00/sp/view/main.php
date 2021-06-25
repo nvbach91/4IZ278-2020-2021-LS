@@ -78,7 +78,7 @@
             include('controller/reset_page.php');
         }
     }
-    elseif(empty($_GET))
+    elseif(empty($_GET) or isset($_GET["btn_search"]))
     {
         include ('view/notes_list.php'); 
     }

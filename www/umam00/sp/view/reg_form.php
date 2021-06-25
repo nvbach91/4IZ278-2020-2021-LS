@@ -32,8 +32,6 @@
                             <button type="submit" name="btn_reg" class="btn-log">Sign up</button>
                             <p class="error_msg"><?php include('controller/fce_error.php')?></p>
                         </form>
-                        <p class="or">or</p>
-                        <button class="btn-fb" >Sign up via <b>facebook</b></button>
                     </div>
                 </div>
             </div>

@@ -58,16 +58,8 @@ $quotes = [
                                 <button type="submit" name="btn_login" class="btn-log">Sign in</button>
                                 <p class="error_msg"><?php include('controller/fce_error.php') ?></p>
                             </form>
-                            <p class="or">or</p>
-                            <button class="btn-fb">Sign in via <b>facebook</b></button>
                             <hr>
                             <p class="reg">dont have an account? <a href="registration.php">Sing up</a></p>
-                            <div
-                                class="fb-like"
-                                data-share="true"
-                                data-width="450"
-                                data-show-faces="true">
-                            </div>
                         </div>
                         <?php } ?>
                 </div>

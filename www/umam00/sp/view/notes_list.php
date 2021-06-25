@@ -1,6 +1,10 @@
 <div class="main-container">
+        <div class="search_bar">
+
+        </div>
         <div class="row main-headline">
-            <h1 class="bold">your notes</h1>
+            <h1 class="bold col-6">your notes</h1>
+            <?php include ('view/search_bar.php'); ?>
         </div>
         <div class="grid">
             <?php

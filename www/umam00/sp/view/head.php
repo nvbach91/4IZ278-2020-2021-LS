@@ -22,7 +22,7 @@ else
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="assets/src/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/src/css/main.css?v=7" rel="stylesheet">
+    <link href="assets/src/css/main.css?v=10" rel="stylesheet">
     <link href="assets/src/css/content.css" rel="stylesheet">
 
     <!-----------fonts / icons ---------->
