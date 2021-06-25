@@ -67,9 +67,17 @@ $dbViewThesaurus->executeQuery($dbViewThesaurus->getViewThesaurus(), []);
 <?php
 foreach($dbViewThesaurus->fetchResults($dbViewThesaurus->getViewThesaurus()) as $row){
     echo '<tr><td>';
-    echo $row['souhlasky1'].TD.$row['souprava1'].TD.$row['jazyk1'].TD.$row['slovo1'].TD.$row['prepis1'].TD
-        .$row['typ'].TD
-        .$row['souhlasky2'].TD.$row['souprava2'].TD.$row['jazyk2'].TD.$row['slovo2'].TD.$row['prepis2'];
+    echo    htmlspecialchars($row['souhlasky1']).TD.
+            htmlspecialchars($row['souprava1']).TD.
+            htmlspecialchars($row['jazyk1']).TD.
+            htmlspecialchars($row['slovo1']).TD.
+            htmlspecialchars($row['prepis1']).TD.
+            htmlspecialchars($row['typ']).TD.
+            htmlspecialchars($row['souhlasky2']).TD.
+            htmlspecialchars($row['souprava2']).TD.
+            htmlspecialchars($row['jazyk2']).TD.
+            htmlspecialchars($row['slovo2']).TD.
+            htmlspecialchars($row['prepis2']);
     echo '</td></tr>';
 }
 ?>

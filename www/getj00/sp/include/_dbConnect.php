@@ -7,7 +7,7 @@ class DBConnection{
     // specific queries are to be added by inheritance
 
     public function __construct(){
-        $this->pdo=new PDO('mysql:host=localhost;dbname=getj00;charset=utf8mb4', 'getj00', 'MoreKebabs.637');
+        $this->pdo=new PDO('mysql:host=localhost;dbname=getj00;charset=utf8mb4', 'getj00', '[REDACTED]');
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }

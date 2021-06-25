@@ -13,7 +13,7 @@ class DBModifyOrigin extends DBConnection{
     public function __construct(){
         parent::__construct();
         // get origin state (optimistic locking? however the slovo state is not exposed, gets overwritten anyway)
-        $this->modifyOrigin = $this->pdo->prepare("UPDATE Puvod SET slovo = :sl WHERE jazyk = :jaz AND prepis = :prep;");
+        $this->modifyOrigin = $this->pdo->prepare("UPDATE Puvod SET slovo = :sl WHERE Puvod.jazyk = :jaz AND Puvod.prepis = :prep;");
     }
 
     public function getModifyOrigin(){

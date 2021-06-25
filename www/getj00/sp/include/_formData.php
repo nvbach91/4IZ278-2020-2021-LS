@@ -2,7 +2,7 @@
 
 // Maybe make a database table with all the codes. May complicate i18n a bit.
 $langCodes = [
-    'ces','amh','ara','chu','cym','deu','dsb','dut','eng','epo','fas','fin',
+    'ces','amh','arb','chu','cym','deu','dsb','dut','eng','epo','fas','fin',
     'fra','fry','gla','ell','heb','hrv','hun','hsb','ido','isl','jbo','jpn',
     'kor','lat','mkd','mlt','nav','non','nor','pol','por','roh','ron','rus',
     'san','srp','tlh','slk','slv','spa','swa','swe','tur','tat','ukr','vie',

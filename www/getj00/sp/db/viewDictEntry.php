@@ -37,7 +37,11 @@ $dbViewDictEntry->executeQuery($dbViewDictEntry->getViewDictEntry(), []);
 <?php
 foreach($dbViewDictEntry->fetchResults($dbViewDictEntry->getViewDictEntry()) as $row){ // such encapsulation, very verbose, much OOP, wow
     echo '<tr><td>';
-    echo $row['souhlasky'].TD.$row['souprava'].TD.$row['jazyk'].TD.$row['prepis'].TD.$row['radek'];
+    echo    htmlspecialchars($row['souhlasky']).TD.
+            htmlspecialchars($row['souprava']).TD.
+            htmlspecialchars($row['jazyk']).TD.
+            htmlspecialchars($row['prepis']).TD.
+            htmlspecialchars($row['radek']);
     echo '</td></tr>';
 }
 ?>

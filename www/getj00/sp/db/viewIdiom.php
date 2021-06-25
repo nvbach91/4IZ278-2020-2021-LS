@@ -38,7 +38,7 @@ $dbViewIdiom->executeQuery($dbViewIdiom->getViewIdiom(), []);
 <?php
 foreach($dbViewIdiom->fetchResults($dbViewIdiom->getViewIdiom()) as $row){
     echo '<tr><td>';
-    echo $row['vyraz'].TD.$row['vyznam'];
+    echo htmlspecialchars($row['vyraz']).TD.htmlspecialchars($row['vyznam']);
     echo '</td></tr>';
 }
 ?>

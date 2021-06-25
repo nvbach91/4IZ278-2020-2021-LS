@@ -32,7 +32,11 @@ $dbViewDeriv->executeQuery($dbViewDeriv->getViewDeriv(), []);
 <?php
 foreach($dbViewDeriv->fetchResults($dbViewDeriv->getViewDeriv()) as $row){
     echo '<tr><td>';
-    echo $row['tvar'].TD.$row['jazyk'].TD.$row['vyznam'].TD.$row['souhlasky'].TD.$row['souprava'];
+    echo    htmlspecialchars($row['tvar']).TD.
+            htmlspecialchars($row['jazyk']).TD.
+            htmlspecialchars($row['vyznam']).TD.
+            htmlspecialchars($row['souhlasky']).TD.
+            htmlspecialchars($row['souprava']);
     echo '</td></tr>';
 }
 ?>

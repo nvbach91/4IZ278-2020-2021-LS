@@ -25,11 +25,11 @@ class DBInsertThesaurus extends DBConnection{
     
     if($isSub){
         // Obtain individual fields 
-        $souhlasky1 = htmlspecialchars($_POST['souhlasky1']);
-        $souprava1 = htmlspecialchars($_POST['souprava1']);
+        $souhlasky1 = strip_tags($_POST['souhlasky1']);
+        $souprava1 = strip_tags($_POST['souprava1']);
         $typ=$_POST['typ'];
-        $souhlasky2 = htmlspecialchars($_POST['souhlasky2']);
-        $souprava2 = htmlspecialchars($_POST['souprava2']);
+        $souhlasky2 = strip_tags($_POST['souhlasky2']);
+        $souprava2 = strip_tags($_POST['souprava2']);
         
         // Check required fields
         if(!$souhlasky1 || !$souhlasky2){
