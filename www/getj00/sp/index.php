@@ -23,6 +23,7 @@ Bonus:
 -->
 
 <h1>~~~ GeSeLátor ~~~</h1>
+<br>
 
 <?php include 'include/_mainMenu.php'; ?>
 

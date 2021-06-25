@@ -20,6 +20,11 @@ $urlPrefix = "https://eso.vse.cz/~getj00/sp/";
     <li><a href="<?php echo $urlPrefix; ?>db/viewIdiom.php">Idiomy a složeniny</a></li>
     <li><a href="<?php echo $urlPrefix; ?>db/viewDeriv.php">Odvozeniny a speciální slova</a></li>
 </ul>
+<h3>Další operace s databází:</h3>
+<ul>
+    <li><a href="<?php echo $urlPrefix; ?>db/modifyOrigin.php">Změnit nebo přidat původní slovo k přepisu</a></li>
+    <li><a href="<?php echo $urlPrefix; ?>db/removeRoot.php">Vymazat kořen z celého jazyka</a></li>
+</ul>
 <br>
 <h3>Nástroje:</h3>
 <ul>
