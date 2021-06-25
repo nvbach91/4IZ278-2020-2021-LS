@@ -34,7 +34,7 @@ if (!empty($_POST)) {
         $user_id = (int) $usersDB->findUserId($email);
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_email'] = $email;
-        header("Location: login.php?ref=registration&email=$email");
+        header("Location: login?ref=registration&email=$email");
     }
 }
 ?>

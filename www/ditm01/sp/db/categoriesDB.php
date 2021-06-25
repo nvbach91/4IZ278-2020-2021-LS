@@ -10,5 +10,14 @@ class CategoriesDB extends Database {
         $statement->execute();
         return $statement->fetchAll();        
     }
+
+    public function fetchId($id) {
+        $sql = "SELECT id FROM $this->tableName WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'id' => $id
+        ]);
+        return $statement->fetchAll();
+    }
 }
 ?>

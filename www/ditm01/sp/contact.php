@@ -23,7 +23,7 @@ if (!empty($_POST)) {
 
     if (empty($invalidInputs)) {
         $mail->sendContactMail($name, $email, $message);
-        header('Location: contact.php?ref=success');
+        header('Location: contact?ref=success');
     }
 }
 ?>

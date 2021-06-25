@@ -27,8 +27,8 @@ class ProductsDB extends Database {
     }
     
 
-    public function fetchCategoryProducts($nameCategory, $nItems, $offset) {
-        $sql = "SELECT * FROM $this->tableName WHERE categories_id IN (SELECT id from categories WHERE name = '$nameCategory') LIMIT $nItems OFFSET ?;";
+    public function fetchCategoryProducts($Category_id, $nItems, $offset) {
+        $sql = "SELECT * FROM $this->tableName WHERE categories_id IN (SELECT id from categories WHERE id = '$Category_id') LIMIT $nItems OFFSET ?;";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $offset, PDO::PARAM_INT);
         $statement->execute();
@@ -42,8 +42,8 @@ class ProductsDB extends Database {
         return $statement->fetchColumn();
     }
 
-    public function countCategoryProducts($nameCategory) {
-        $sql = "SELECT COUNT(id) FROM $this->tableName WHERE categories_id IN (SELECT id from categories WHERE name = '$nameCategory')";
+    public function countCategoryProducts($Category_id) {
+        $sql = "SELECT COUNT(id) FROM $this->tableName WHERE categories_id IN (SELECT id from categories WHERE id = '$Category_id')";
         $statement = $this->pdo->prepare($sql);
         $statement->execute();;
         return $statement->fetchColumn();

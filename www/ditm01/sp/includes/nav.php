@@ -14,29 +14,29 @@ if (!isset($_SESSION)) {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav nav-pills mx-auto">
         <li class="nav-item px-2">
-          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'index') ? ' active' : '' ?>" href="index.php">Home</a>
+          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'index') ? ' active' : '' ?>" href="index">Home</a>
         </li>
         <li class="nav-item px-2">
-          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'shop') ? ' active' : '' ?>" href="shop.php">Shop</a>
+          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'shop') ? ' active' : '' ?>" href="shop">Shop</a>
         </li>
         <li class="nav-item px-2">
-          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'contact') ? ' active' : '' ?>" href="contact.php">Contact</a>
+          <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'contact') ? ' active' : '' ?>" href="contact">Contact</a>
         </li>
       </ul>
       <ul class="navbar-nav me-5 d-flex flex-row">
         <?php if (isset($_SESSION['user_id'])) : ?>
           <li class="nav-item px-1 my-auto">
-            <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'logout') ? ' active' : '' ?>" href="logout.php">Logout</a>
+            <a class="nav-link text-uppercase <?php echo strpos($_SERVER['REQUEST_URI'], 'logout') ? ' active' : '' ?>" href="logout">Logout</a>
           </li>
         <?php else : ?>
           <li class="nav-item px-1">
-            <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'login') ? ' active' : '' ?>" href="login.php">
+            <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'login') ? ' active' : '' ?>" href="login">
               <i class="bi bi-person-circle fs-4"></i>
             </a>
           </li>
         <?php endif; ?>
         <li class="nav-item px-1">
-          <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'cart') ? ' active' : '' ?>" href="cart.php">
+          <a class="nav-link <?php echo strpos($_SERVER['REQUEST_URI'], 'cart') ? ' active' : '' ?>" href="cart">
             <i class="bi bi-basket3-fill fs-4"></i>
           </a>
         </li>

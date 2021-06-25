@@ -1,10 +1,10 @@
 <?php require __DIR__ . '/db/productsDB.php'; ?>
-<?php 
-if(!isset($_SESSION)){
+<?php
+if (!isset($_SESSION)) {
     session_start();
 }
 
-$productsDB = New ProductsDB();
+$productsDB = new ProductsDB();
 
 if (!@$_SESSION['cart']) {
     $_SESSION['cart'] = [];
@@ -18,5 +18,5 @@ if (!$product) {
 
 array_push($_SESSION['cart'], $product['id']);
 
-header('Location: cart.php');
+header('Location: cart');
 ?>

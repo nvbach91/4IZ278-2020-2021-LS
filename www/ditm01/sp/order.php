@@ -1,33 +1,53 @@
 <?php require __DIR__ . '/db/productsDB.php'; ?>
 <?php require __DIR__ . '/db/ordersDB.php'; ?>
-<?php require __DIR__ . '/db/ordersContentDB.php'; ?>
-<?php 
-if(!isset($_SESSION)){
-    session_start();
-}
-$productsDB = new ProductsDB();
-$ordersDB = new OrdersDB();
-$ordersContentDB = new OrdersContentDB();
+<?php require __DIR__ . '/db/usersDB.php'; ?>
+<?php require __DIR__ . '/db/ordersProductsDB.php'; ?>
+<?php
 
-$ids = @$_SESSION['cart'];
-$user_id = @$_SESSION['user_id'];
-$user_email = @$_SESSION['user_email'];
+    if(!isset($_SESSION)){
+        session_start();
+    }
 
-if (is_array($ids) && count($ids)) {
-    $question_marks = str_repeat('?,', count($ids) - 1) . '?';
-    $products = $productsDB->fetchCartProducts($question_marks, $ids);
-    $priceTotal = $productsDB->sumPrice($question_marks, $ids);
-}
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $productsDB = new ProductsDB();
+    $ordersDB = new OrdersDB();
+    $usersDB = new UsersDB();
+    $ordersProductsDB = new OrdersProductsDB();
+
+    $orderInfo = array(
+        'date' => $_SESSION['deliveryInfo']['date'],
+        'delivery' => $_SESSION['deliveryInfo']['delivery'],
+        'payment' => $_SESSION['deliveryInfo']['payment'],
+        'total_price' => $_SESSION['deliveryInfo']['total_price'],
+        'user_id' => $_SESSION['user_id']
+    );
+
+    $order = $ordersDB->createOrder($orderInfo);
+    $order_id = $ordersDB->findLastOrderID();
+
+    foreach ($_SESSION['cart'] as $key=>$product) {
+        $orderContent = [
+            'order_id' => $order_id,
+            'product_id' => $product
+        ];
+        $ordersProduct = $ordersProductsDB->createOrderProducts($orderContent);
+    }
+
+    $userInfo = array(
+        'address' => $_SESSION['deliveryInfo']['address'],
+        'zip' => $_SESSION['deliveryInfo']['zip'],
+        'city' => $_SESSION['deliveryInfo']['city'],
+        'country' => $_SESSION['deliveryInfo']['country'],
+        'phone' => $_SESSION['deliveryInfo']['phone'],
+        'user_id' => $_SESSION['user_id']
+    );
 
 
-$order = $ordersDB->createOrder($priceTotal, $user_id);
-$order_id = $ordersDB->findLastOrderID();
-$quantity = 1;
+    $usersDB->updateUser($userInfo);
 
-foreach ($_SESSION['cart'] as $key=>$product) {
-    $ordersContent = $ordersContentDB->createOrderContent($order_id, $product, $quantity);
-}
-
-unset($_SESSION['cart']);
-header('Location: index.php?ref=order');
+    unset($_SESSION['cart']);
+    header('Location: index?ref=order');
 ?>

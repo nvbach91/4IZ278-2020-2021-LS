@@ -23,7 +23,7 @@ if (!empty($_POST)) {
         if (@password_verify($password, $existing_user['password'])) {
             $_SESSION['user_id'] = $existing_user['id'];
             $_SESSION['user_email'] = $existing_user['email'];
-            header('Location: index.php?ref=login');
+            header('Location: index?ref=login');
         } else {
             array_push($invalidInputs, "Wrong sign in credentials");
         }

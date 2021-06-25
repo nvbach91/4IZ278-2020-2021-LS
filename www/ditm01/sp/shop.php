@@ -1,21 +1,32 @@
 <?php require __DIR__ . '/db/productsDB.php'; ?>
 <?php require __DIR__ . '/db/categoriesDB.php'; ?>
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 $productsDB = new ProductsDB();
-$categoriesDB = New CategoriesDB();
+$categoriesDB = new CategoriesDB();
 
 $nItems = 9;
 $categories = $categoriesDB->fetchAll();
 
+if (isset($_GET['category'])) {
+    $id = $_GET['category'];
+    $categories_id = $categoriesDB->fetchId($id);
+    if ($categories_id == NULL) {
+        header("Location: 404");
+    }
+}
+
 if (isset($_GET['offset'])) {
-    $offset = (int)$_GET['offset']; 
+    $offset = (int)$_GET['offset'];
 } else {
     $offset = 0;
 }
 
 if (isset($_GET['category'])) {
-    $nameCategory = $_GET['category'];
-    $numberOfproducts = $productsDB->countCategoryProducts($nameCategory);
+    $Category_id = $_GET['category'];
+    $numberOfproducts = $productsDB->countCategoryProducts($Category_id);
 } else {
     $numberOfproducts = $productsDB->countAllProducts();
 }
@@ -28,13 +39,15 @@ if (isset($_GET['category'])) {
 }
 
 if (isset($_GET['category'])) {
-    $nameCategory = $_GET['category'];
-    $products = $productsDB->fetchCategoryProducts($nameCategory, $nItems, $offset);
+    $Category_id = $_GET['category'];
+    $products = $productsDB->fetchCategoryProducts($Category_id, $nItems, $offset);
 } else {
     $products = $productsDB->fetchAllProducts($nItems, $offset);
 }
-?>
 
+$current =  $_SERVER['REQUEST_URI'];
+$_SESSION['shop_url'] = $current;
+?>
 <?php include __DIR__ . '/includes/header.php'; ?>
 <?php include __DIR__ . '/includes/nav.php'; ?>
 <main class="container-sm">
@@ -42,7 +55,7 @@ if (isset($_GET['category'])) {
         <div class="col-md-4 col-lg-3 col-xl-2">
             <div class="list-group">
                 <?php foreach ($categories as $category) : ?>
-                    <a href="shop.php?category=<?php echo $category['name'] ?>" class="list-group-item list-group-item-action <?php echo isset($_GET['category']) && $_GET['category'] == $category['name']  ? ' active' : '' ?>"><?php echo $category['name']; ?></a>
+                    <a href="shop?category=<?php echo $category['id'] ?>" class="list-group-item list-group-item-action <?php echo isset($_GET['category']) && $_GET['category'] == $category['id']  ? ' active' : '' ?>"><?php echo $category['name']; ?></a>
                 <?php endforeach; ?>
             </div>
         </div>

@@ -4,12 +4,15 @@
 class OrdersDB extends Database {
     protected $tableName = 'orders';
 
-    function createOrder($priceTotal, $user_id) {
-        $sql = "INSERT INTO $this->tableName(total_price, users_id) VALUES (:total_price, :users_id)";
+    function createOrder($orderInfo) {
+        $sql = "INSERT INTO $this->tableName(total_price, users_id, date, delivery, payment) VALUES (:total_price, :users_id, :date, :delivery, :payment)";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
-            'users_id' => $user_id,
-            'total_price' => $priceTotal
+            'total_price' => $orderInfo['total_price'],
+            'users_id' => $orderInfo['user_id'],
+            'date' => $orderInfo['date'],
+            'delivery' => $orderInfo['delivery'],
+            'payment' => $orderInfo['payment']
         ]);
     }
 

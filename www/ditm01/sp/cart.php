@@ -5,12 +5,6 @@ if (!isset($_SESSION)) {
 }
 
 $productsDB = new ProductsDB();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
 $ids = @$_SESSION['cart'];
 
 if (is_array($ids) && count($ids)) {
@@ -19,11 +13,7 @@ if (is_array($ids) && count($ids)) {
     $priceTotal = $productsDB->sumPrice($question_marks, $ids);
 }
 
-if (strpos('javascript:history.go(-1)', 'shop')) {
-    $previous = 'javascript:history.go(-1)';
-} else {
-    $previous = 'shop.php';
-}
+$previous = $_SESSION['shop_url'];
 ?>
 
 <?php include __DIR__ . '/includes/header.php'; ?>
@@ -55,7 +45,7 @@ if (strpos('javascript:history.go(-1)', 'shop')) {
                     <tr>
                         <th scope="row" colspan="2">Total:</th>
                         <td><?php echo $priceTotal , ' ', CURRENCY; ?></td>
-                        <td><a class="btn btn-dark" href="order.php">Order</a></td>
+                        <td><a class="btn btn-dark" href="checkout">Checkout</a></td>
                     </tr>
             </tbody>
         </table>

@@ -4,7 +4,7 @@
 class UsersDB extends Database {
     protected $tableName = 'users';
 
-    function createUser($name, $email, $hashedPassword) {
+    public function createUser($name, $email, $hashedPassword) {
         $sql = "INSERT INTO $this->tableName(name, email, password) VALUES (:name, :email, :password)";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
@@ -14,7 +14,7 @@ class UsersDB extends Database {
         ]);
     }
 
-    function findUser($email) {
+    public function findUser($email) {
         $sql = "SELECT * FROM $this->tableName WHERE email = :email";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
@@ -23,13 +23,26 @@ class UsersDB extends Database {
         return @$statement->fetchAll()[0];
     }
 
-    function findUserId($email) {
+    public function findUserId($email) {
         $sql = "SELECT id FROM $this->tableName WHERE email = :email";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
             'email' => $email
         ]);
         return $statement->fetchColumn();
+    }
+
+    public function updateUser($userInfo) {
+        $sql = "UPDATE $this->tableName SET phone = :phone, address = :address, zip = :zip, city = :city, country = :country WHERE id = :user_id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'phone' => $userInfo['phone'],
+            'address' => $userInfo['address'],
+            'zip' => $userInfo['zip'],
+            'city' => $userInfo['city'],
+            'country' => $userInfo['country'],
+            'user_id' => $userInfo['user_id']
+        ]);
     }
 }
 ?>
