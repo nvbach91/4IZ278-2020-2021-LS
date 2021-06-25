@@ -83,6 +83,7 @@ class DBInsertIdiom extends DBConnection{
                 );
             }
         }
+        //header("refresh:5;url=https://eso.vse.cz/~getj00/sp/db/viewIdiom.php");
     }
 ?>
 

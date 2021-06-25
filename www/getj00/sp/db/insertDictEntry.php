@@ -1,6 +1,4 @@
-
 <?php require '../include/_formData.php'; ?>
-
 <?php
 
 include '../include/_dbConnect.php';
@@ -121,6 +119,7 @@ class DBInsertDictEntry extends DBConnection{
                 );
             }
         }
+        //header("refresh:5;url=https://eso.vse.cz/~getj00/sp/db/viewDictEntry.php");
     }
 
 ?>

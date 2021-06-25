@@ -11,7 +11,7 @@ class DBViewIdiom extends DBConnection{
         parent::__construct();
         $this->viewIdiom = $this->pdo->prepare("
             SELECT *
-            FROM Idiom
+            FROM Slozenina
             ;
         ");
     }
@@ -33,12 +33,12 @@ $dbViewIdiom->executeQuery($dbViewIdiom->getViewIdiom(), []);
 <h1>Kořenovník</h1>
 <br>
 <table><thead>
-<td>Tvar</td> <td>Vyznam</td>
+<td>Výraz</td> <td>Vyznam</td>
 </thead><tbody>
 <?php
 foreach($dbViewIdiom->fetchResults($dbViewIdiom->getViewIdiom()) as $row){
     echo '<tr><td>';
-    echo $row['tvar'].TD.$row['vyznam'];
+    echo $row['vyraz'].TD.$row['vyznam'];
     echo '</td></tr>';
 }
 ?>

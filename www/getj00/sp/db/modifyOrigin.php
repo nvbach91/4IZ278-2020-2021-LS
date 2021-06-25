@@ -12,6 +12,7 @@ class DBModifyOrigin extends DBConnection{
 
     public function __construct(){
         parent::__construct();
+        // get origin state (optimistic locking? however the slovo state is not exposed, gets overwritten anyway)
         $this->modifyOrigin = $this->pdo->prepare("UPDATE Puvod SET slovo = :sl WHERE jazyk = :jaz AND prepis = :prep;");
     }
 
@@ -31,13 +32,8 @@ class DBModifyOrigin extends DBConnection{
         $slovo = htmlspecialchars($_POST['prepis']);
         
         // Check required fields
-        if(!$souhlasky){
-            array_push($inputErrors, "Souhlásky musí být vyplněny.");
-        }
-        
-        // Validate
-        if($souhlasky && !preg_match($consRegex, $souhlasky)){
-            array_push($inputErrors, $consError);
+        if(!$prepis){
+            array_push($inputErrors, "Přepis musí být vyplněn.");
         }
         
         if(!count($inputErrors)){
@@ -47,7 +43,7 @@ class DBModifyOrigin extends DBConnection{
             $dbModifyOrigin = new DBModifyOrigin();
             $dbModifyOrigin->executeQuery(
                 $dbModifyOrigin->getModifyOrigin(), 
-                ['sl'=> $slovo, 'jaz' => $jazyk, 'prep'=> $prepis]
+                ['sl'=> $slovo, 'jaz' => $jazykPuvod, 'prep'=> $prepis]
             );
         }
     }

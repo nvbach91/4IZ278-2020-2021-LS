@@ -51,6 +51,7 @@ class DBInsertThesaurus extends DBConnection{
                 ['souhl1'=> $souhlasky1, 'soup1'=> $souprava1, 'typ' => $typ, 'souhl2'=> $souhlasky2, 'soup2'=> $souprava2]
             );
         }
+        //header("refresh:5;url=https://eso.vse.cz/~getj00/sp/db/viewThesaurus.php");
     }
 ?>
 

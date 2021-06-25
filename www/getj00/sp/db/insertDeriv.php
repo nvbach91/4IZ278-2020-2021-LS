@@ -55,6 +55,7 @@ class DBInsertDeriv extends DBConnection{
                 ['tvar'=> $tvar, 'jazodv'=> $jazyk, 'vyz' => $vyznam, 'souhl'=> $souhlasky, 'soup'=> $souprava]
             );
         }
+        //header("refresh:5;url=https://eso.vse.cz/~getj00/sp/db/viewDeriv.php");
     }
 ?>
 

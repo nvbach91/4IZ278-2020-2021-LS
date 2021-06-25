@@ -62,7 +62,7 @@ class DBRemoveRoot extends DBConnection{
         <input name="souhlasky" type="text" value="<?php isset($souhlasky1) ? $souhlasky1 : ''; ?>" size="16" class="form-control" id="Souhlasky1">
 
         <label for="Souprava1" class="form-label select-label">Souprava:</label>
-        <select name="souprava1" id="Souprava1" class="select select-initialized form-control">
+        <select name="souprava" id="Souprava" class="select select-initialized form-control">
             <?php
             for($i=0; $i<sizeof($ctxCodes); $i++){
                 echo "<option value=\"$ctxCodes[$i]\">$ctxCodes[$i] - $ctxNames[$i]</option>";
