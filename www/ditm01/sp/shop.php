@@ -14,7 +14,9 @@ if (isset($_GET['category'])) {
     $id = $_GET['category'];
     $categories_id = $categoriesDB->fetchId($id);
     if ($categories_id == NULL) {
+        http_response_code(404);
         header("Location: 404");
+        exit;
     }
 }
 
