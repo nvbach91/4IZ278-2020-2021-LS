@@ -1,0 +1,21 @@
+{
+  "name": "umachanov.com",
+  "version": "1.0.0",
+  "description": "gfx portfolio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Umachanov Magomed",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^5.0.0"
+  },
+  "dependencies": {
+    "locomotive-scroll": "^4.0.6",
+    "lottie-web": "^5.7.11",
+    "masonry-layout": "^4.2.2"
+  }
+}

@@ -1,0 +1,1 @@
+<a href="." class="logo" ><img src="assets/svg/logo-black.svg" alt="noter... logo"></a>
