@@ -44,7 +44,7 @@
     <?php else : ?>
       <?php foreach($orders as $order): ?>
       <li class="order-list_item">
-        <h2>Order</h2>
+        <h2>Order <?php echo ($order) ? $order['order_id'] : ''?></h2>
         <article class="order-list_item-block">
           <div class="order-description-wrapper">
             <h2 class="order-list_item-description">Products</h2>
@@ -69,3 +69,38 @@
     <?php endif; ?>
   </ul>
 </section>
+
+
+<?php 
+/*
+// $_SESSION['products'][$uniqueID] = $ordersDB->fetchByOrder($_SESSION['user_id'], $uniqueID);
+$order = $ordersDB->fetchOneByOrder($_SESSION['user_id'], $uniqueID);
+$order['products'] = [];
+$productIds = $orderProductsDb->fetchAllByOrderId($uniqueID);
+[
+  [
+    productId => 5,
+    quantity => 1
+  ],
+  [
+    productId => 4,
+    quantity => 1
+  ],
+  [
+    productId => 2,
+    quantity => 7
+  ],
+  [
+    productId => 0,
+    quantity => 6
+  ]
+]
+foreach([1,5,4,3] as $orderItem) {
+  $product = $productDB->fetchById($orderItem['productId'])
+  $product['quantity'] = $orderItem['quantity']
+  array_push($order['products'], $product);
+}
+$orders[] = $order;
+*/
+
+?>
