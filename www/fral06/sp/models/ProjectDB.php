@@ -27,6 +27,13 @@ class ProjectDB extends Database
         return @$statement->fetchAll()[0];
     }
 
+    public function fetchAll()
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table );
+        $statement->execute();
+        return @$statement->fetchAll();
+    }
+
     public function fetchProjectByEmail($email)
     {
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE author = ?');

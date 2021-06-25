@@ -3,6 +3,7 @@ session_start();
 
 require_once __DIR__ . '/models/ProjectDB.php';
 require_once __DIR__ . '/models/UsersTaskDB.php';
+require_once __DIR__ . '/models/TaskDB.php';
 require_once __DIR__ . '/models/UsersProjectDB.php';
 
 if ((!($_SESSION['user_email']))) {
@@ -13,12 +14,13 @@ if ((!($_SESSION['user_email']))) {
 $projectManager = new ProjectDB();
 $userProjectManager = new UsersProjectDB();
 $tasksManager = new UsersTaskDB();
+$taskCountManager = new TaskDB();
 
 if ($_SESSION['role'] == 1 ) {
     $projects = $userProjectManager->fetchAllUsersProjects($_SESSION['user_email']);
 
-} else {
-    $projects = $projectManager->fetchProjectByEmail($_SESSION['user_email']);
+} else if($_SESSION['role'] == 2) {
+    $projects = $projectManager->fetchAll();
 }
 $tasks = $tasksManager->fetchAllUsersTasks($_SESSION['user_email']);
 //Head
@@ -43,6 +45,20 @@ include "components/nav.php";
                         <div class="card-body">
                             <h4 class="card-title"><?php echo $project['name']; ?></h4>
                             <p class="card-text"><?php echo $project['description']; ?></p>
+                            <div class="card_tasks mb-2">
+                                <span class="badge rounded-pill bg-secondary" title="Ready tasks">
+                                    <?php echo $taskCountManager->fetchCountStatusByProject($project['project_id'], 1)?>
+                                </span>
+                                <span class="badge rounded-pill bg-warning" title="Tasks in progress">
+                                    <?php echo $taskCountManager->fetchCountStatusByProject($project['project_id'], 2)?>
+                                </span>
+                                <span class="badge rounded-pill bg-primary" title="Tasks in review">
+                                    <?php echo $taskCountManager->fetchCountStatusByProject($project['project_id'], 3)?>
+                                </span>
+                                <span class="badge rounded-pill bg-success" title="Done tasks">
+                                    <?php echo $taskCountManager->fetchCountStatusByProject($project['project_id'], 4)?>
+                                </span>
+                            </div>
                             <a href="project-detail.php?id=<?php echo $project['project_id']; ?>" class="btn btn-primary">Project Detail</a>
                         </div>
                     </div>

@@ -37,6 +37,16 @@ class UsersProjectDB extends Database
         return @$statement->fetchAll();
     }
 
+    public function fetchProjectAssigneesWithName($projectId)
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT `firstName`, `lastName` FROM ' . $this->tableName .' LEFT JOIN `users` USING(`email`) WHERE  `project_id` = ?');
+        $statement->execute([
+            $projectId
+        ]);
+        return @$statement->fetchAll();
+    }
+
     public function insert($projectId, $email)
     {
         $statement = $this->pdo->prepare('INSERT INTO ' . $this->tableName . ' (project_id, email ) VALUES (?, ?)');

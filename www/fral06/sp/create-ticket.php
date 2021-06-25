@@ -10,10 +10,11 @@ if (!($_SESSION['user_email']) ||  !isset($_GET['project_id'])) {
     die();
 }
 
+$invalidInputs = [];
+$msg = '';
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
-    $invalidInputs = [];
-    $msg = '';
+
 
     $usersProjectManager = new UsersProjectDB();
     $userHasProject = $usersProjectManager->fetchUsersProject($_SESSION['user_email'], $_GET['project_id']);

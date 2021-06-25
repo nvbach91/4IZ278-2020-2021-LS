@@ -25,6 +25,16 @@ class TaskDB extends Database {
         return @$statement->fetchAll();
     }
 
+    public function fetchCountStatusByProject($id, $status)
+    {
+        $statement = $this->pdo->prepare('SELECT COUNT(task_id) FROM ' . $this->table . ' WHERE `project_id` = ? AND `status` = ?');
+        $statement->execute([
+            $id,
+            $status
+        ]);
+        return @$statement->fetchAll()[0]['COUNT(task_id)'];
+    }
+
     public function fetchByUser($email)
     {
         $statement = $this->pdo->prepare('SELECT * FROM ' . $this->table . ' WHERE email = ? LIMIT 1');
