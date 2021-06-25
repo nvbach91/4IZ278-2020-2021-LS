@@ -9,28 +9,28 @@ class DBStats extends DBConnection{
     
     public function __construct(){
         parent::__construct();
-        $poctyKorenu = $pdo->prepare("SELECT souprava, count(souprava) pocet, min(delka) nejkratsi, avg(delka) prumernaDelka, max(delka) nejdelsi FROM Koren GROUP BY souprava ORDER BY souprava ASC");
-        $poctyPuvodu = $pdo->prepare("SELECT jazyk, count(jazyk) pocet FROM Puvod GROUP BY jazyk");
-        $poctyOdvozenin = $pdo->prepare("SELECT souhlasky, souprava, count(tvar) pocet FROM Odvozenina GROUP BY souhlasky, souprava ORDER BY pocet DESC");
+        $this->poctyKorenu = $this->pdo->prepare("SELECT souprava, count(souprava) pocet, min(delka) nejkratsi, avg(delka) prumernaDelka, max(delka) nejdelsi FROM Koren GROUP BY souprava ORDER BY souprava ASC");
+        $this->poctyPuvodu = $this->pdo->prepare("SELECT jazyk, count(jazyk) pocet FROM Puvod GROUP BY jazyk");
+        $this->poctyOdvozenin = $this->pdo->prepare("SELECT souhlasky, souprava, count(tvar) pocet FROM Odvozenina GROUP BY souhlasky, souprava ORDER BY pocet DESC");
     }
 
     public function getPoctyKorenu(){
-        return $poctyKorenu;
+        return $this->poctyKorenu;
     }
     public function getPoctyPuvodu(){
-        return $poctyKorenu;
+        return $this->poctyKorenu;
     }
     public function getPoctyOdvozenin(){
-        return $poctyKorenu;
+        return $this->poctyKorenu;
     }
     
 
 }
 
 $dbStats = new DBStats();
-$dbStats->executeQuery($dbViewStats->getPoctyKorenu(), []);
-$dbStats->executeQuery($dbViewStats->getPoctyPuvodu(), []);
-$dbStats->executeQuery($dbViewStats->getPoctyOdvozenin(), []);
+$dbStats->executeQuery($dbStats->getPoctyKorenu(), []);
+$dbStats->executeQuery($dbStats->getPoctyPuvodu(), []);
+$dbStats->executeQuery($dbStats->getPoctyOdvozenin(), []);
 
 ?>
 

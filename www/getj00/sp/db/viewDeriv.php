@@ -8,11 +8,11 @@ class DBViewDeriv extends DBConnection{
     
     public function __construct(){
         parent::__construct();
-        $viewDeriv = $pdo->prepare("SELECT * FROM Odvozenina ORDER BY souhlasky, souprava ASC");
+        $this->viewDeriv = $this->pdo->prepare("SELECT * FROM Odvozenina ORDER BY souhlasky, souprava ASC");
     }
 
     public function getViewDeriv(){
-        return $viewDeriv;
+        return $this->viewDeriv;
     }
 
 }

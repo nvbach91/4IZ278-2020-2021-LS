@@ -9,7 +9,7 @@ class DBViewDictEntry extends DBConnection{
     
     public function __construct(){
         parent::__construct();
-        $viewDictEntry = $pdo->prepare("
+        $this->viewDictEntry = $this->pdo->prepare("
             SELECT *
             FROM VstupSlovniku
         ;
@@ -17,7 +17,7 @@ class DBViewDictEntry extends DBConnection{
     }
 
     public function getViewDictEntry(){
-        return $viewDictEntry;
+        return $this->viewDictEntry;
     }
 
 }

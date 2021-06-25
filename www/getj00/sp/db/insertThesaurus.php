@@ -10,11 +10,11 @@ class DBInsertThesaurus extends DBConnection{
 
     public function __construct(){
         parent::__construct();
-        $insertThesaurus = $pdo->prepare("INSERT INTO Antosynonymum (souhlasky1, souprava1, typ, souhlasky2, souprava2) VALUES (:souhl1, :soup1, :typ, :souhl2, :soup2);");
+        $this->insertThesaurus = $this->pdo->prepare("INSERT INTO Antosynonymum (souhlasky1, souprava1, typ, souhlasky2, souprava2) VALUES (:souhl1, :soup1, :typ, :souhl2, :soup2);");
     }
 
     public function getInsertThesaurus(){
-        return $insertThesaurus;
+        return $this->insertThesaurus;
     }
 
 }

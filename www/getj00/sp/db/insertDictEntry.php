@@ -16,27 +16,27 @@ class DBInsertDictEntry extends DBConnection{
 
     public function __construct(){
         parent::__construct();
-        $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
-        $insertOrigin = $pdo->prepare("INSERT INTO Puvod (jazyk, slovo, prepis) VALUES (:jazpuv, :sl, :prep);");
-        $insertTransl = $pdo->prepare("INSERT INTO Preklad (jazyk, podstatne, pridavne, sloveso, prislovce) VALUES (:jazpr, :pod, :prid, :slso, :prisl);");
-        $insertDictEntry = $pdo->prepare("INSERT INTO VstupSlovniku (souhlasky, souprava, jazyk, prepis, radek) VALUES (:souhl, :soup, :jazpuv, :prep, (SELECT MAX(radek) FROM Preklad));");
+        $this->insertRoot = $this->pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
+        $this->insertOrigin = $this->pdo->prepare("INSERT INTO Puvod (jazyk, slovo, prepis) VALUES (:jazpuv, :sl, :prep);");
+        $this->insertTransl = $this->pdo->prepare("INSERT INTO Preklad (jazyk, podstatne, pridavne, sloveso, prislovce) VALUES (:jazpr, :pod, :prid, :slso, :prisl);");
+        $this->insertDictEntry = $this->pdo->prepare("INSERT INTO VstupSlovniku (souhlasky, souprava, jazyk, prepis, radek) VALUES (:souhl, :soup, :jazpuv, :prep, (SELECT MAX(radek) FROM Preklad));");
     
     }
 
     public function getInsertRoot(){
-        return $insertRoot;
+        return $this->insertRoot;
     }
     
     public function getInsertOrigin(){
-        return $insertOrigin;
+        return $this->insertOrigin;
     }
     
     public function getInsertTransl(){
-        return $insertTransl;
+        return $this->insertTransl;
     }
     
     public function getInsertDictEntry(){
-        return $insertDictEntry;
+        return $this->insertDictEntry;
     }
 
 }

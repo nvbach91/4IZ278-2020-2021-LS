@@ -12,21 +12,21 @@ class DBInsertIdiom extends DBConnection{
 
     public function __construct(){
         parent::__construct();
-        $insertRoot = $pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
-        $insertIdiom = $pdo->prepare("INSERT INTO Idiom (tvar, jazyk, vyznam) VALUES (:tvar, :jazid, :vyz);");
-        $insertUsage = $pdo->prepare("INSERT INTO Pouziti (souhlasky, souprava, tvar, jazyk) VALUES (:souhl, :soup, :tvar, :jazid);");
+        $this->insertRoot = $this->pdo->prepare("INSERT INTO Koren (souhlasky, souprava, delka) VALUES (:souhl, :soup, :del);");
+        $this->insertIdiom = $this->pdo->prepare("INSERT INTO Idiom (tvar, jazyk, vyznam) VALUES (:tvar, :jazid, :vyz);");
+        $this->insertUsage = $this->pdo->prepare("INSERT INTO Pouziti (souhlasky, souprava, tvar, jazyk) VALUES (:souhl, :soup, :tvar, :jazid);");
     }
 
     public function getInsertRoot(){
-        return $insertRoot;
+        return $this->insertRoot;
     }
     
     public function getInsertIdiom(){
-        return $insertIdiom;
+        return $this->insertIdiom;
     }
     
     public function getInsertUsage(){
-        return $insertUsage;
+        return $this->insertUsage;
     }
 
 }

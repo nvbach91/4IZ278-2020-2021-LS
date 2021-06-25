@@ -9,7 +9,7 @@ class DBViewThesaurus extends DBConnection{
     
     public function __construct(){
         parent::__construct();
-        $viewThesaurus = $pdo->prepare("
+        $this->viewThesaurus = $this->pdo->prepare("
             SELECT Antosynonymum.souhlasky1, Antosynonymum.souprava1,
                 Koren1.delka delka1, Puvod1.jazyk jazyk1, Puvod1.prepis prepis1,
                 Puvod1.slovo slovo1, Antosynonymum.typ, Antosynonymum.souhlasky2,
@@ -44,7 +44,7 @@ class DBViewThesaurus extends DBConnection{
     }
 
     public function getViewThesaurus(){
-        return $viewThesaurus;
+        return $this->viewThesaurus;
     }
 
 }

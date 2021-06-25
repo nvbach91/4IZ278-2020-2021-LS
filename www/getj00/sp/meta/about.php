@@ -25,15 +25,15 @@ cizojazyčných systémech.
 ' a b c d e f g h i j k l m n o p q r s t u v w x y z
 </pre>
 <p>
-Výslovnost písmen ', C, G, H, J, X závisí na konkrétním jazyce původu.
-' - 3ayn v arabských kořenech, glotální zastavení jindy
-C - v arabských kořenech Þ nebo Đ, v japonských Ts, může také spodobit na Dz
-G - v arabských kořenech ghayn neboli francouzské R, v ostatních G
-H - sjednocuje H, Ch i *dýchání na brýle*
-J - většinou Č nebo Dž, ale může zmutovat v Sz a Ż/Rz
-Q - Qáf, ve starých verzích i oba 3ayny a Ch
-R - čte se jako německé hrdelní, a to i v japonských slovech
-X - většinou Š, ale může spodobit na Ž
+Výslovnost písmen ', C, G, H, J, X závisí na konkrétním jazyce původu.<br>
+' - 3ayn v arabských kořenech, glotální zastavení jindy<br>
+C - v arabských kořenech Þ nebo Đ, v japonských Ts, může také spodobit na Dz<br>
+G - v arabských kořenech ghayn neboli francouzské R, v ostatních G<br>
+H - sjednocuje H, Ch i *dýchání na brýle*<br>
+J - většinou Č nebo Dž, ale může zmutovat v Sz a Ż/Rz<br>
+Q - Qáf, ve starých verzích i oba 3ayny a Ch<br>
+R - čte se jako německé hrdelní, a to i v japonských slovech<br>
+X - většinou Š, ale může spodobit na Ž<br>
 </p>
 <p>
 Samohlásky A a I alternují do souhlásky Y, a samohlásky O a U alternují do 

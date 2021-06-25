@@ -9,7 +9,7 @@ class DBViewIdiom extends DBConnection{
     
     public function __construct(){
         parent::__construct();
-        $viewIdiom = $pdo->prepare("
+        $this->viewIdiom = $this->pdo->prepare("
             SELECT *
             FROM Idiom
             ;
@@ -17,7 +17,7 @@ class DBViewIdiom extends DBConnection{
     }
 
     public function getViewIdiom(){
-        return $viewIdiom;
+        return $this->viewIdiom;
     }
 
 }

@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -21,6 +21,8 @@ Bonus:
 - uživatelské účty pro žebříčky
 
 -->
+
+<h1>~~~ GeSeLátor ~~~</h1>
 
 <?php include 'include/_mainMenu.php'; ?>
 

@@ -7,13 +7,13 @@ class DBConnection{
     // specific queries are to be added by inheritance
 
     public function __construct(){
-        $pdo=new PDO('mysql:host=localhost;dbname=getj00;charset=utf8mb4', 'getj00', 'MoreKebabs.637');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->pdo=new PDO('mysql:host=localhost;dbname=getj00;charset=utf8mb4', 'getj00', 'MoreKebabs.637');
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
     public function __toString(){
-        return $pdo->__toString();
+        return $this->pdo->__toString();
     }
 
     public function executeQuery($query, $params){

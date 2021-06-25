@@ -10,12 +10,12 @@ class DBInsertDeriv extends DBConnection{
 
     public function __construct(){
         parent::__construct();
-        $insertDeriv = $pdo->prepare("INSERT INTO Odvozenina (tvar, jazyk, vyznam, souhlasky, souprava) VALUES (:tvar, :jazodv, :vyz, :souhl, :soup);");
+        $this->insertDeriv = $this->pdo->prepare("INSERT INTO Odvozenina (tvar, jazyk, vyznam, souhlasky, souprava) VALUES (:tvar, :jazodv, :vyz, :souhl, :soup);");
     
     }
 
     public function getInsertDeriv(){
-        return $insertDeriv;
+        return $this->insertDeriv;
     }
 
 }
